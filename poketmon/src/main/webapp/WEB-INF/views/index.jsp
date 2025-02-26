@@ -5,8 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>포켓몬</title>
+<link type="text/css" rel="stylesheet" href="/css/styles.css" >
 </head>
 <body>
-	<h2>포켓몬 </h2>
+	<h2>포켓몬</h2>
+	
+	<a href="member/login">로그인</a>
+	
+	<script src="/js/index.js"></script>
 </body>
 </html>
