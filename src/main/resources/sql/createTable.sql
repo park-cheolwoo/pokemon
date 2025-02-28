@@ -52,7 +52,7 @@ CREATE TABLE attack (
 CREATE TABLE habitat (
 	id NUMBER(5) PRIMARY KEY,
 	name VARCHAR2(100) NOT NULL,
-	original_name VARCHAR2(100) NOT NULL,
+	original_name VARCHAR2(100),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL
 );
