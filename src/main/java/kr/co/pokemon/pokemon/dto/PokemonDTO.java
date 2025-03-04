@@ -1,9 +1,8 @@
 package kr.co.pokemon.pokemon.dto;
 
-import java.sql.Timestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +13,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class HabitatDTO {
+public class PokemonDTO {
 
 	private int id;
 	private String name;
-	private String originalName;
-	private Timestamp updatedAt;
-	private Timestamp createdAt;
+	private String image;
+	private String image3d;
+
+	@JsonProperty(value = "gender_rate")
+	private int genderRate;
+	
+	@JsonProperty(value = "has_gender_differences")
+	private boolean genderDiff;
+
+	private String genus;
+	private int height;
+	private int weight;
+	private String flavorText;
 
 }

@@ -2,35 +2,35 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.pokemon.pokemon.dao.HabitatMapper">
+<mapper namespace="kr.co.pokemon.pokemon.dao.AbilityMapper">
 
-  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.HabitatDTO" autoMapping="true">
-  	<result column="original_name" property="originalName" />
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.AbilityDTO" autoMapping="true">
+    <result column="flavor_text" property="flavorText" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageDTO">
-    SELECT * FROM habitat OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+    SELECT * FROM ability OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
 
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
-    SELECT * FROM habitat WHERE id = #{id}
+    SELECT * FROM ability WHERE id = #{id}
   </select>
   
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
-	    WHEN EXISTS (SELECT 1 FROM habitat WHERE id = #{id}) THEN 1
+	    WHEN EXISTS (SELECT 1 FROM ability WHERE id = #{id}) THEN 1
 	    ELSE 0
 	END
 	FROM dual
   </select>
   
   <insert id="insert">
-  	INSERT INTO habitat
-  		( id, original_name )
+  	INSERT INTO ability
+  		( id, name, description, flavor_text )
   	VALUES
-  		( #{id}, #{originalName} )
+  		( #{id}, #{name}, #{description, jdbcType=CLOB}, #{flavorText, jdbcType=CLOB} )
   </insert>
 
 </mapper>

@@ -1,9 +1,6 @@
 package kr.co.pokemon.pokemon.dto;
 
-import java.sql.Timestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,13 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class HabitatDTO {
+public class SpritesDTO {
 
 	private int id;
-	private String name;
-	private String originalName;
-	private Timestamp updatedAt;
-	private Timestamp createdAt;
+	private String backDefault;
+	private String backFemale;
+	private String backShiny;
+	private String backShinyFemale;
+	private String frontDefault;
+	private String frontFemale;
+	private String frontShiny;
+	private String frontShinyFemale;
 
 }

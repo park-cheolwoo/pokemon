@@ -8,8 +8,8 @@ CREATE TABLE evolution_trigger (
 CREATE TABLE ability (
 	id NUMBER(5) PRIMARY KEY,
 	name VARCHAR2(100) NOT NULL,
-	description CLOB NOT NULL,
-	flaver_text CLOB NOT NULL,
+	description CLOB DEFAULT 'NO_TEXT' NOT NULL,
+	flavor_text CLOB DEFAULT 'NO_TEXT' NOT NULL,
 	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL
@@ -40,7 +40,7 @@ CREATE TABLE attack (
 	types_id NUMBER(5) NOT NULL,
 	name VARCHAR2(100) NOT NULL,
 	description CLOB NOT NULL,
-	flover_text CLOB NOT NULL,
+	flavor_text CLOB NOT NULL,
 	damage NUMBER(5) DEFAULT 0 NOT NULL,
 	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
@@ -51,8 +51,8 @@ CREATE TABLE attack (
 
 CREATE TABLE habitat (
 	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	original_name VARCHAR2(100),
+	name VARCHAR2(100),
+	original_name VARCHAR2(100) NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL
 );
@@ -88,10 +88,10 @@ CREATE TABLE pokemon (
 	image3d VARCHAR2(255) DEFAULT '/images/no-pokemon.png' NOT NULL,
 	gender_rate NUMBER(2) NOT NULL,
 	gender_diff NUMBER(1) DEFAULT 0 NOT NULL CHECK(gender_diff BETWEEN 0 AND 1),
-	genera VARCHAR2(100) NOT NULL,
+	genus VARCHAR2(100) NOT NULL,
 	height NUMBER(10) NOT NULL,
 	weight NUMBER(10) NOT NULL,
-	flaver_text CLOB NOT NULL,
+	flavor_text CLOB NOT NULL,
 	evolution_id NUMBER(5) NOT NULL,
 	egg_group_id NUMBER(5) NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,

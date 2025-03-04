@@ -14,14 +14,6 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 
 	@Autowired
 	private EvolutionTriggerMapper evolutionTriggerMapper;
-	
-	@Override
-	public <T> void getDataFromAPI(T dto) throws Exception {
-		EvolutionTriggerDTO castedDTO = (EvolutionTriggerDTO) dto;
-		if (evolutionTriggerMapper.existById(castedDTO.getId()) == 0) {
-			evolutionTriggerMapper.insert((EvolutionTriggerDTO) dto);
-		}
-	}
 
 	@Override
 	public List<EvolutionTriggerDTO> getAll(PageDTO page) {
@@ -31,6 +23,13 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 	@Override
 	public EvolutionTriggerDTO getById(int id) {
 		return evolutionTriggerMapper.selectById(id);
+	}
+
+	@Override
+	public void getDataFromAPI(EvolutionTriggerDTO dto) throws Exception {
+		if (evolutionTriggerMapper.existById(dto.getId()) == 0) {
+			evolutionTriggerMapper.insert((EvolutionTriggerDTO) dto);
+		}
 	}
 
 }
