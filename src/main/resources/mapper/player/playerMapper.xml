@@ -40,5 +40,8 @@
   <delete id="deletePlayer">
   	delete from player where id = #{id} 
   </delete>
+ <select id="selectlogin" resultType="kr.co.pokemon.player.dto.PlayerDTO">
+    select * from player where id = #{id} and pw = #{pw}
+  </select>
 
 </mapper>

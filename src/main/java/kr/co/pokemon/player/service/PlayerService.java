@@ -14,5 +14,9 @@ public interface PlayerService {
 	PlayerDTO updatePlayer(int id, PlayerDTO player);
 	
 	void deletePlayer(int id);
+	
+	PlayerDTO login(PlayerDTO pdto);
+	
+	PlayerDTO login(String id, String pw);
 
 }

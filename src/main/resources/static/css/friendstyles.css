@@ -1,0 +1,365 @@
+@font-face {
+      font-family: 'BMHANNA';
+      src: url("C:\Users\KOSMO\Downloads\BM-fonts-package\ttfBMHANNA_11yrs_ttf.ttf") format('truetype');
+    }
+*{
+	  font-family: 'BMHANNA', sans-serif;
+      font-weight: 400;
+      margin:0; padding:0;
+}
+.flist-container{
+	position: relative;
+	z-index:1;
+    display: flex;
+    height: 100vh;
+    background : url('/images/flistback.png') no-repeat center center/ cover;
+}
+.flist-box{
+	position: absolute;
+	top: 15%;
+  	left: 25%;
+  	width:53%;
+  	height:69%;	
+  	z-index:2;
+}
+.close{
+	position: absolute;
+	top: 8%;
+  	left: 93%;
+  	z-index:5;
+}
+.closebtn{
+	position: absolute;
+	top: 8.1%;
+  	left: 93%;
+  	width:3.6%;
+  	height:6%;
+  	border:none;
+  	background:none;
+  	z-index:6;
+  	cursor: pointer;
+}
+/*친구 목록 창*/
+.imgflist1{
+	position: absolute;
+	top: 0.2%;
+  	left: 6%;
+  	z-index:5;
+}
+.imgflist2{
+	position: absolute;
+	top: 0.1%;
+  	left: 6%;
+  	z-index:4;
+}
+.imgfplus1{
+	position: absolute;
+	top: 0.1%;
+  	left: 36%;
+  	z-index:5;
+}
+.imgfplus2{
+	position: absolute;
+	top: 0%;
+  	left: 35%;
+  	z-index:4;
+}
+.imgfpls1{
+	position: absolute;
+	top: 0.2%;
+  	left: 65.2%;
+  	z-index:5;
+}
+.imgfpls2{
+	position: absolute;
+	top: 0%;
+  	left: 65%;
+  	z-index:4;
+}
+.flistbtn{
+	position: absolute;
+	top: 0%;
+  	left: 7%;
+  	font-size:36px;
+  	color:white;
+  	border:none;
+  	width:26%;
+  	height:13%;
+  	background:none;
+  	z-index:10;
+  	cursor: pointer;
+}
+.fplusbtn{
+	position: absolute;
+	top: 0%;
+  	left: 36.5%;
+  	width:26%;
+  	height:13%;
+  	font-size:36px;
+  	color:white;
+  	border:none;
+  	background:none;
+  	z-index:10;
+  	cursor: pointer;
+}
+.fplsbtn{
+	position: absolute;
+	top: 0%;
+  	left: 65.5%;
+  	width:26%;
+  	height:13%;
+  	font-size:36px;
+  	color:white;
+  	border:none;
+  	background:none;
+  	z-index:10;
+  	cursor: pointer;
+}
+.msball1{
+	position: absolute;
+	top: 20%;
+  	left: 15%;
+}
+.wdpanner1{
+	position: absolute;
+	top: 20%;
+  	left: 30%;
+	
+}
+.fname1{
+	position: absolute;
+	top: 25%;
+  	left: 35%;
+  	font-size:36px;
+	color:white;
+}
+.wdtrade1{
+	position: absolute;
+	top: 23%;
+  	left: 70%;
+}
+.tradebtn1{
+	position: absolute;
+	top: 23.5%;
+  	left: 71%;
+  	font-size:24px;
+	color:white;
+  	width:15.5%;
+  	height:7%;
+  	border:none;
+  	background:none;
+}
+.msball2{
+	position: absolute;
+	top: 45%;
+  	left: 15%;
+}
+.wdpanner2{
+	position: absolute;
+	top: 45%;
+  	left: 30%;
+	
+}
+.fname2{
+	position: absolute;
+	top: 50%;
+  	left: 35%;
+  	font-size:36px;
+	color:white;
+}
+.wdtrade2{
+	position: absolute;
+	top: 48%;
+  	left: 70%;
+}
+.tradebtn2{
+	position: absolute;
+	top: 48.5%;
+  	left: 71%;
+  	font-size:24px;
+	color:white;
+	width:15.5%;
+  	height:7%;
+  	border:none;
+  	background:none;
+}
+.msball3{
+	position: absolute;
+	top: 70%;
+  	left: 15%;
+}
+.wdpanner3{
+	position: absolute;
+	top: 70%;
+  	left: 30%;
+	
+}
+.fname3{
+	position: absolute;
+	top: 75%;
+  	left: 35%;
+  	font-size:36px;
+	color:white;
+}
+.wdtrade3{
+	position: absolute;
+	top: 74%;
+  	left: 70%;
+}
+.tradebtn3{
+	position: absolute;
+	top: 74.5%;
+  	left: 71%;
+  	font-size:24px;
+	color:white;
+	width:15.5%;
+  	height:7%;
+  	border:none;
+  	background:none;
+}
+/*친구추가 창*/
+#content2{
+	position: absolute;
+	top: 14%;
+  	left: 6%;
+  	width:87%;
+  	height:80%;
+}
+.myprofile{
+	position: absolute;
+	top: 5%;
+	left:40%;
+	font-size:36px;
+	color:white;
+}
+.wdmyprofile{
+	position: absolute;
+	top: 15%;
+	left:25%;
+}
+.myprofilecode{
+	position: absolute;
+	top: 18%;
+	left:30%;
+	font-size:36px;
+	color:white;
+}
+.fiendprofile{
+	position: absolute;
+	top: 45%;
+	left:40%;
+	font-size:36px;
+	color:white;
+}
+.wdfriendprofile{
+	position: absolute;
+	top: 55%;
+	left:25%;
+}
+.friendcode{
+	position: absolute;
+	top: 58%;
+	left:27%;
+	font-size:36px;
+	color:white;
+	background:none;
+	border:none;
+	text-align: center;
+}
+.friendplus{
+	position: absolute;
+	top: 75%;
+	left:40%;
+	
+}
+.friendplusbtn{
+	position: absolute;
+	top: 75.5%;
+	left: 41%;
+	width: 18%;
+	height: 8.5%;
+	font-size:24px;
+	color:white;
+	background:none;
+	border:none;
+}
+/*친구 요청 창*/
+#content3{
+	position: absolute;
+	top: 14%;
+  	left: 6%;
+  	width:87%;
+  	height:80%;
+}
+.msball4{
+	position: absolute;
+	top: 7.5%;
+  	left: 10.4%;
+}
+.wdpanner4{
+	position: absolute;
+	top: 7.7%;
+  	left: 27.5%;
+}
+.fname4{
+	position: absolute;
+	top: 13.5%;
+  	left: 33.5%;
+  	font-size:36px;
+	color:white;
+}
+.wdtrade4{
+	position: absolute;
+	top: 11.5%;
+  	left: 73.5%;
+}
+.tradebtn4{
+	position: absolute;
+	top: 12.5%;
+  	left: 76%;
+  	font-size:24px;
+	color:white;
+  	width:15.5%;
+  	height:7%;
+  	border:none;
+  	background:none;
+}
+.msball5{
+	position: absolute;
+	top: 38.6%;
+  	left: 10.4%;
+}
+.wdpanner5{
+	position: absolute;
+	top: 38.5%;
+  	left: 27.5%;
+}
+.fname5{
+	position: absolute;
+	top: 45%;
+  	left: 33.5%;
+  	font-size:36px;
+	color:white;
+}
+.wdtrade5{
+	position: absolute;
+	top: 42.5%;
+  	left: 73.5%;
+}
+.tradebtn5{
+	position: absolute;
+	top: 44%;
+  	left: 76%;
+  	font-size:24px;
+	color:white;
+  	width:15.5%;
+  	height:7%;
+  	border:none;
+  	background:none;
+}
+.hiddenbox{
+	display:none;
+}
+.hidden{
+	display:none;
+}

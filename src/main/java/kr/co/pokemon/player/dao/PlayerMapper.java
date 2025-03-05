@@ -18,5 +18,7 @@ public interface PlayerMapper {
 	void updatePlayerBySystem(PlayerDTO player);
 	
 	void deletePlayer(int id);
+	PlayerDTO selectLogin(PlayerDTO pdto);
+	PlayerDTO selectLogin2(String id, String pw);
 	
 }
