@@ -1,12 +1,16 @@
 package kr.co.pokemon.data.service;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,9 @@ public class APIServiceImpl implements APIService {
 	private String apiBaseUrl;
 	
 	@Autowired
+	private ApplicationContext applicationContext;
+	
+	@Autowired
 	private DataSource dataSource;
 	
 	@Autowired
@@ -42,12 +49,21 @@ public class APIServiceImpl implements APIService {
 		}
 	}
 	
-	public <S extends APIGetable> boolean setData(String uri, Class<?> dto, S service) {
+	public <D, S extends APIGetable<D>> boolean setData(String uri, Class<S> serviceClass) {
 		APIPageDTO apiPageDTO = getDataDTOFromAPI(uri, APIPageDTO.class);
+		
+		if (apiPageDTO.getCount() > 20) {
+			apiPageDTO = getDataDTOFromAPI(String.format("%s?limit=%d", uri, apiPageDTO.getCount() + 1), APIPageDTO.class);
+		}
 
 		try {
-			while (apiPageDTO.getCurrPage() < apiPageDTO.getCount()) {
-				service.getDataFromAPI(getDataDTOFromAPI(String.format("%s/%d", uri, apiPageDTO.getCurrPage() + 1), dto));
+			S service = applicationContext.getBean(serviceClass);
+			Class<D> dto = (Class<D>) ((ParameterizedType) serviceClass.getGenericInterfaces()[0])
+					.getActualTypeArguments()[0];
+
+			while (apiPageDTO.hasNextPage()) {
+				String pageUri = apiPageDTO.getCurrUrl().substring(apiBaseUrl.length());
+				service.getDataFromAPI(getDataDTOFromAPI(pageUri, dto));
 				apiPageDTO.nextPage();
 			}
 		} catch (Exception e) {

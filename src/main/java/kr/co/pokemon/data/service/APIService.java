@@ -6,6 +6,6 @@ public interface APIService {
 
 	void initTable() throws SQLException;
 	
-	public <S extends APIGetable> boolean setData(String uri, Class<?> dto, S service);
+	public <D, S extends APIGetable<D>> boolean setData(String uri, Class<S> service);
 
 }

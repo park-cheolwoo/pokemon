@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LanguageNameDTO {
+public class LanguageDTO {
 
 	private String name;
-	private LanguageDTO language;
+	private String url;
 
 }

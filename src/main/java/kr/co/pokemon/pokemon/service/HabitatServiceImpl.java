@@ -26,11 +26,10 @@ public class HabitatServiceImpl implements HabitatService {
 	}
 
 	@Override
-	public <T> void getDataFromAPI(T dto) throws Exception {
-		HabitatDTO castedDTO = (HabitatDTO) dto;
-		
-		if (habitatMapper.existById(castedDTO.getId()) == 0) {
-			habitatMapper.insert(castedDTO);
+	public void getDataFromAPI(HabitatDTO dto) throws Exception {
+		if (habitatMapper.existById(dto.getId()) == 0) {
+			dto.setOriginalName(dto.getName());
+			habitatMapper.insert(dto);
 		}
 		
 	}
