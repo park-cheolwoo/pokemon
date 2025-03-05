@@ -1,0 +1,302 @@
+*{margin:0; padding:0;}
+#back { 
+  position: fixed;  
+  top: 0;           
+  left: 0;          
+  width: 1920px;     
+  height: 1080px;    
+}
+#dark { 
+  position: fixed;  
+  top: 0;           
+  left: 0;          
+  width: 1920px;     
+  height: 1080px;    
+  background-color: rgba(0, 0, 0, 0.45); 
+}
+.schang1{
+  position: fixed;
+  top:104px;
+  left: 421px;
+  width: 1145px;
+  height: 864px;
+}
+.schang2{
+  position: fixed;
+  top:104px;
+  left: 421px;
+  width: 1145px;
+  height: 864px;
+}
+.schang3{
+  position: fixed;
+  top:104px;
+  left: 421px;
+  width: 1145px;
+  height: 864px;
+}
+.schang4{
+  position: fixed;
+  top:104px;
+  left: 421px;
+  width: 1145px;
+  height: 864px;
+}
+.order{
+  position: fixed;
+  top:241px;
+  left: 1321px;
+  width: 90px;
+  height: 48px;
+  font-size: 48px;
+  color: white;
+}
+.pokeimg1, .pokeimg2, .pokeimg3 {
+  position: fixed;
+  top: 245px;
+  left: 809px;
+  width: 390px;
+  height: 390px;
+}
+.pokeimg1 img, .pokeimg2 img, .pokeimg3 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지가 div 크기에 맞게 잘리며, 비율을 유지합니다. */
+}
+
+.Answer_sheet{
+  position: fixed;
+  top:710px;
+  left: 784px;
+  width: 450px;
+  height: 119px;
+}
+.Answer_sheet input{
+  background: none;
+  position: fixed;
+  top:705px;
+  left: 800px;
+  width: 420px;
+  height: 119px;
+  font-size: 48px;
+  text-align: center;
+  border: none;
+  outline: none;
+  color: white;
+}
+.prev1{
+  position: fixed;
+  top:709px;
+  left: 622px;
+  width: 110px;
+  height: 110px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.prev2{
+  position: fixed;
+  top:709px;
+  left: 622px;
+  width: 110px;
+  height: 110px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.next1{
+  position: fixed;
+  top:710px;
+  left: 1282px;
+  width: 110px;
+  height: 109px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.next2{
+  position: fixed;
+  top:710px;
+  left: 1282px;
+  width: 110px;
+  height: 109px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.next3{
+  position: fixed;
+  top:710px;
+  left: 1282px;
+  width: 110px;
+  height: 109px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.problem1{
+  position: fixed;
+  top:300px;
+  left: 606px;
+  width: 200px;
+  height: 200px;
+}
+.problem1 img{
+  width: 200px;
+  height: 200px;
+}
+.inproble1 {
+  position: fixed;
+  top:490px;
+  left: 597px;
+  width: 216px;
+  height: 40px;
+  text-align: center;
+  font-size: 36px;
+  color: white;
+}
+.wrong1 {
+  position: fixed;
+  top:490px;
+  left: 597px;
+  width: 216px;
+  height: 40px;
+  text-align: center;
+  text-decoration: line-through;
+  font-size: 36px;
+  color: white;
+  text-decoration-color: rgb(204, 46, 46); 
+  text-decoration-thickness: 5px;
+}
+.Correct1 {
+  position: fixed;
+  top:535px;
+  left: 637px;
+  width: 144px;
+  height: 32px;
+  text-align: center;
+  font-size: 24px;
+  color: #9DE78A;
+}
+
+.problem2{
+  position: fixed;
+  top:300px;
+  left: 896px;
+  width: 200px;
+  height: 200px;
+}
+.problem2 img{
+  width: 200px;
+  height: 200px;
+}
+.inproble2 {
+  position: fixed;
+  top:490px;
+  left: 888px;
+  width: 216px;
+  height: 40px;
+  text-align: center;
+  font-size: 36px;
+  color: white;
+}
+.wrong2 {
+  position: fixed;
+  top:490px;
+  left: 888px;
+  width: 216px;
+  height: 40px;
+  text-align: center;
+  text-decoration: line-through;
+  font-size: 36px;
+  color: white;
+  text-decoration-color: rgb(204, 46, 46); 
+  text-decoration-thickness: 5px;
+}
+.Correct2 {
+  position: fixed;
+  top:535px;
+  left: 927px;
+  width: 144px;
+  height: 32px;
+  text-align: center;
+  font-size: 24px;
+  color: #9DE78A;
+}
+
+.problem3{
+  position: fixed;
+  top:300px;
+  left: 1186px;
+  width: 200px;
+  height: 200px;
+}
+.problem3 img{
+  width: 200px;
+  height: 200px;
+}
+.inproble3 {
+  position: fixed;
+  top:490px;
+  left: 1177px;
+  width: 216px;
+  height: 40px;
+  text-align: center;
+  font-size: 36px;
+  color: white;
+}
+.wrong3 {
+  position: fixed;
+  top:490px;
+  left: 1177px;
+  width: 216px;
+  height: 40px;
+  text-align: center;
+  text-decoration: line-through;
+  font-size: 36px;
+  color: white;
+  text-decoration-color: rgb(204, 46, 46); 
+  text-decoration-thickness: 5px;
+}
+.Correct3 {
+  position: fixed;
+  top:535px;
+  left: 1216px;
+  width: 144px;
+  height: 32px;
+  text-align: center;
+  font-size: 24px;
+  color: #9DE78A;
+}
+
+.score{
+  font-size: 64px;
+  color: white;
+  position: fixed;
+  top:670px;
+  left: 645px;
+}
+.goldfinch{
+  font-size: 64px;
+  color: white;
+  position: fixed;
+  top:670px;
+  left: 966px;
+}
+.get{
+  position: fixed;
+  top:667px;
+  left: 1251px;
+  width: 80px;
+  height: 85px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
