@@ -1,7 +1,14 @@
 package kr.co.pokemon.data.service;
 
-public interface APIGetable {
+import java.util.List;
 
-	 <T> void getDataFromAPI(T dto) throws Exception;
+import kr.co.pokemon.data.dto.PageDTO;
+
+public interface APIGetable<D> {
+
+	List<D> getAll(PageDTO page);
+	D getById(int id);
+
+	void getDataFromAPI(D dto) throws Exception;
 
 }
