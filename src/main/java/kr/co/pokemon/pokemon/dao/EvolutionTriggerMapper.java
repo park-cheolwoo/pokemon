@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.pokemon.data.dto.PageDTO;
+import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.pokemon.dto.EvolutionTriggerDTO;
 
 @Mapper
 public interface EvolutionTriggerMapper {
 
-	List<EvolutionTriggerDTO> selectAll(PageDTO page);
+	List<EvolutionTriggerDTO> selectAll(PageRequestDTO page);
 	
 	EvolutionTriggerDTO selectById(int id);
 

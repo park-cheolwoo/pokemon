@@ -1,34 +1,27 @@
 package kr.co.pokemon.pokemon.dto;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import kr.co.pokemon.data.dto.LanguageNameDTO;
+import kr.co.pokemon.data.dto.NamesGroup;
+import kr.co.pokemon.data.dto.EntityDTO;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EggGroupDTO {
+public class EggGroupDTO extends EntityDTO implements NamesGroup {
 
-	private int id;
 	private String name;
 	private List<LanguageNameDTO> names;
-	private Timestamp updatedAt;
-	private Timestamp createdAt;
-	
-	public Optional<String> getLanguagesName(String languageName) {
-		return names.stream()
-				.filter(name -> name.getLanguage().getName().equals(languageName))
-				.findFirst().map(LanguageNameDTO::getName);
-	}
 
 }

@@ -9,7 +9,7 @@
     <result column="updated_at" property="updatedAt" />
   </resultMap>
 
-  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageDTO">
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
     SELECT * FROM egg_group OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
 

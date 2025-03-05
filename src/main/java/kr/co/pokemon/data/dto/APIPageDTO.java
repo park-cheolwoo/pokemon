@@ -5,10 +5,12 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,15 +19,7 @@ public class APIPageDTO {
 	private int currPage = 0;
 	private int count;
 	private String next;
-	private List<PageResult> results;
-
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class PageResult {
-		private String name;
-		private String url;
-	}
+	private List<APIPageResultDTO> results;
 
 	public String getCurrUrl() {
 		return this.results.get(currPage).getUrl();
