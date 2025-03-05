@@ -33,28 +33,23 @@ public class AttackServiceImpl implements AttackService {
 
 	@Override
 	public int getDataFromAPI(AttackDTO dto) throws Exception {
-		try {
-			int typesId = APIServiceImpl.getIdByUrl(dto.getType().getUrl());
-			dto.setTypesId(typesId);
-			
-			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-			dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
+		int typesId = APIServiceImpl.getIdByUrl(dto.getType().getUrl());
+		dto.setTypesId(typesId);
+		
+		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+		dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
 			dto.setDescription(effect),
 			() -> dto.setDescription("NO-TEXT")
-					);
-			
-			dto.getLanguagesFlavorText("ko").ifPresentOrElse(flavor ->
+		);
+		
+		dto.getLanguagesFlavorText("ko").ifPresentOrElse(flavor ->
 			dto.setFlavorText(flavor),
 			() -> dto.setFlavorText("NO-TEXT")
-					);
+		);
 			
-			attackMapper.insert(dto);
+		attackMapper.insert(dto);
 
-			return 1;
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
-		return 0;
+		return 1;
 	}
 
 }

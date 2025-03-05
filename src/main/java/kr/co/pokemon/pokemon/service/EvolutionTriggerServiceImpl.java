@@ -27,15 +27,12 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 
 	@Override
 	public int getDataFromAPI(EvolutionTriggerDTO dto) throws Exception {
-		try {
-			if (evolutionTriggerMapper.existById(dto.getId()) == 0) {
-				evolutionTriggerMapper.insert((EvolutionTriggerDTO) dto);
-				
-				return 1;
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+		if (evolutionTriggerMapper.existById(dto.getId()) == 0) {
+			evolutionTriggerMapper.insert((EvolutionTriggerDTO) dto);
+			
+			return 1;
 		}
+
 		return 0;
 	}
 

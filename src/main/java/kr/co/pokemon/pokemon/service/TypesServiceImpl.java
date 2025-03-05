@@ -31,17 +31,12 @@ public class TypesServiceImpl implements TypesService {
 
 	@Override
 	public int getDataFromAPI(TypesDTO dto) throws Exception {
-		
-		try {
-			if (typesMapper.existById(dto.getId()) == 0) {
-				dto.setOriginalName(dto.getName());
-				dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-				typesMapper.insert(dto);
-				
-				return 1;
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+		if (typesMapper.existById(dto.getId()) == 0) {
+			dto.setOriginalName(dto.getName());
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+			typesMapper.insert(dto);
+			
+			return 1;
 		}
 		
 		return 0;

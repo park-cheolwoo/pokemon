@@ -69,41 +69,37 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 
 		AtomicInteger count = new AtomicInteger(0);
 
-		try {
-			DamageRelations dr = dto.getDamageRelations();
-			
-			dr.getDoubleDamageTo().stream()
-			.forEach(types -> {
-				int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
-				dto.setFromId(dto.getId());
-				dto.setToId(to_id);
-				dto.setEffect(2);
-				typesRelationshipMapper.insert(dto);
-				count.incrementAndGet();
-			});
-			
-			dr.getHalfDamageTo().stream()
-			.forEach(types -> {
-				int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
-				dto.setFromId(dto.getId());
-				dto.setToId(to_id);
-				dto.setEffect(1);
-				typesRelationshipMapper.insert(dto);
-				count.incrementAndGet();
-			});
-			
-			dr.getNoDamageTo().stream()
-			.forEach(types -> {
-				int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
-				dto.setFromId(dto.getId());
-				dto.setToId(to_id);
-				dto.setEffect(0);
-				typesRelationshipMapper.insert(dto);
-				count.incrementAndGet();
-			});
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
+		DamageRelations dr = dto.getDamageRelations();
+		
+		dr.getDoubleDamageTo().stream()
+		.forEach(types -> {
+			int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
+			dto.setFromId(dto.getId());
+			dto.setToId(to_id);
+			dto.setEffect(2);
+			typesRelationshipMapper.insert(dto);
+			count.incrementAndGet();
+		});
+		
+		dr.getHalfDamageTo().stream()
+		.forEach(types -> {
+			int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
+			dto.setFromId(dto.getId());
+			dto.setToId(to_id);
+			dto.setEffect(1);
+			typesRelationshipMapper.insert(dto);
+			count.incrementAndGet();
+		});
+		
+		dr.getNoDamageTo().stream()
+		.forEach(types -> {
+			int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
+			dto.setFromId(dto.getId());
+			dto.setToId(to_id);
+			dto.setEffect(0);
+			typesRelationshipMapper.insert(dto);
+			count.incrementAndGet();
+		});
 
 		return count.get();
 	}

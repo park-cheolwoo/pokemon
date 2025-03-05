@@ -27,25 +27,22 @@ public class AbilityServiceImpl implements AbilityService {
 
 	@Override
 	public int getDataFromAPI(AbilityDTO dto) throws Exception {
-		try {
-			if (abilityMapper.existById(dto.getId()) == 0) {
-				String languageName = "ko";
-				dto.getLanguagesName(languageName).ifPresent(name -> dto.setName(name));
-				dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
-					dto.setDescription(effect),
-					() -> dto.setDescription("NO-TEXT")
-				);
-				dto.getLanguagesFlavorText(languageName).ifPresentOrElse(flavor ->
-					dto.setFlavorText(flavor),
-					() -> dto.setFlavorText("NO-TEXT")
-				);
+		if (abilityMapper.existById(dto.getId()) == 0) {
+			String languageName = "ko";
+			dto.getLanguagesName(languageName).ifPresent(name -> dto.setName(name));
+			dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
+				dto.setDescription(effect),
+				() -> dto.setDescription("NO-TEXT")
+			);
+			dto.getLanguagesFlavorText(languageName).ifPresentOrElse(flavor ->
+				dto.setFlavorText(flavor),
+				() -> dto.setFlavorText("NO-TEXT")
+			);
 
-				abilityMapper.insert(dto);
-				return 1;
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+			abilityMapper.insert(dto);
+			return 1;
 		}
+
 		return 0;
 	}
 

@@ -27,16 +27,14 @@ public class EggGroupServiceImpl implements EggGroupService {
 
 	@Override
 	public int getDataFromAPI(EggGroupDTO dto) throws Exception {
-		try {
-			if (eggGroupMapper.existById(dto.getId()) == 0) {
-				dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-				eggGroupMapper.insert(dto);
+		if (eggGroupMapper.existById(dto.getId()) == 0) {
+			dto.setOriginalName(dto.getName());
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+			eggGroupMapper.insert(dto);
 
-				return 1;
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
+			return 1;
 		}
+
 		return 0;
 	}
 
