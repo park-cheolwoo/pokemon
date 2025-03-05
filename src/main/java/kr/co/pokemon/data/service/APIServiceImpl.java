@@ -1,10 +1,8 @@
 package kr.co.pokemon.data.service;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Optional;
 
 import javax.sql.DataSource;
 
@@ -21,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.annotation.PostConstruct;
 import kr.co.pokemon.data.dto.APIPageDTO;
+import kr.co.pokemon.data.dto.APIResponseDTO;
 
 @Service
 public class APIServiceImpl implements APIService {
@@ -39,7 +38,7 @@ public class APIServiceImpl implements APIService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Override
 	@PostConstruct
 	public void initTable() throws SQLException {
@@ -49,13 +48,14 @@ public class APIServiceImpl implements APIService {
 		}
 	}
 	
-	public <D, S extends APIGetable<D>> boolean setData(String uri, Class<S> serviceClass) {
+	public <D, S extends APIGetable<D>> APIResponseDTO setData(String uri, Class<S> serviceClass) {
 		APIPageDTO apiPageDTO = getDataDTOFromAPI(uri, APIPageDTO.class);
 		
 		if (apiPageDTO.getCount() > 20) {
 			apiPageDTO = getDataDTOFromAPI(String.format("%s?limit=%d", uri, apiPageDTO.getCount() + 1), APIPageDTO.class);
 		}
 
+		int dataCount = 0;
 		try {
 			S service = applicationContext.getBean(serviceClass);
 			Class<D> dto = (Class<D>) ((ParameterizedType) serviceClass.getGenericInterfaces()[0])
@@ -63,14 +63,14 @@ public class APIServiceImpl implements APIService {
 
 			while (apiPageDTO.hasNextPage()) {
 				String pageUri = apiPageDTO.getCurrUrl().substring(apiBaseUrl.length());
-				service.getDataFromAPI(getDataDTOFromAPI(pageUri, dto));
+				dataCount += service.getDataFromAPI(getDataDTOFromAPI(pageUri, dto));
 				apiPageDTO.nextPage();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return new APIResponseDTO("fail", dataCount);
 		}
-		return true;
+		return new APIResponseDTO("success", dataCount);
 	}
 
 	private <T> T getDataDTOFromAPI(String uri, Class<T> dto) {
@@ -85,6 +85,13 @@ public class APIServiceImpl implements APIService {
 
 	private String getDataFromAPI(String uri) {
 		return restTemplate.getForEntity(apiBaseUrl + uri, String.class).getBody();
+	}
+	
+	public static int getIdByUrl(String url) {
+		String[] separatedUrl = url.split("/");
+		String extractId = separatedUrl[separatedUrl.length - 1];
+
+		return Integer.parseInt(extractId);
 	}
 
 }

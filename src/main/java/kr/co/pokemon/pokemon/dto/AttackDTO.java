@@ -1,6 +1,5 @@
 package kr.co.pokemon.pokemon.dto;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,6 +12,7 @@ import kr.co.pokemon.data.dto.FlavorTextEntryDTO;
 import kr.co.pokemon.data.dto.FlavorTextGroup;
 import kr.co.pokemon.data.dto.LanguageNameDTO;
 import kr.co.pokemon.data.dto.NamesGroup;
+import kr.co.pokemon.data.dto.APIPageResultDTO;
 import kr.co.pokemon.data.dto.EntityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,21 +25,27 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AbilityDTO extends EntityDTO implements EffectGroup, FlavorTextGroup, NamesGroup {
+public class AttackDTO extends EntityDTO implements EffectGroup, FlavorTextGroup, NamesGroup {
 
+	private int id;
+	private int typesId;
 	private String name;
 	private String description;
 	private String flavorText;
+	
+	@JsonProperty(value = "power")
+	private int damage;
+
 	private boolean isActive;
-	private Timestamp updatedAt;
-	private Timestamp createdAt;
 
 	private List<LanguageNameDTO> names;
-	
+
 	@JsonProperty(value = "effect_entries")
 	private List<EffectEntryDTO> effectEntries;
 	
 	@JsonProperty(value = "flavor_text_entries")
 	private List<FlavorTextEntryDTO> flavorTextEntries;
+	
+	private APIPageResultDTO type;
 
 }

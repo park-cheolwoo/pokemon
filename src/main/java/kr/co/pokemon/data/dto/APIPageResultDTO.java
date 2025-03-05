@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LanguageDTO {
-
+public class APIPageResultDTO {
 	private String name;
 	private String url;
-
 }
