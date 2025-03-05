@@ -1,0 +1,15 @@
+/* Google Fonts - Hanna */
+@import url('https://fonts.googleapis.com/earlyaccess/hanna.css');
+
+/* Reset CSS (로컬 파일 불러오기) */
+@import url('/css/reset.css');  /* reset.css는 static 폴더 내에 있어야 합니다. */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;  
+}
+
+body {
+  font-family: 'Hanna', sans-serif;
+}
