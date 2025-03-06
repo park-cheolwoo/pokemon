@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.pokemon.dao.AttackMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.AttackDTO" autoMapping="true">
+    <result column="types_id" property="typesId" />
+    <result column="flavor_text" property="flavorText" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM attack OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectByTypesId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM attack WHERE types_id = #{typesId}
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM attack WHERE id = #{id}
+  </select>
+  
+  <select id="existById" resultType="int" parameterType="int">
+	SELECT CASE
+	    WHEN EXISTS (SELECT 1 FROM attack WHERE id = #{id}) THEN 1
+	    ELSE 0
+	END
+	FROM dual
+  </select>
+  
+  <insert id="insert">
+  	INSERT INTO attack
+  		( id, types_id, name, description, flavor_text, damage )
+  	VALUES
+  		( #{id}, #{typesId}, #{name}, #{description, jdbcType=CLOB}, #{flavorText, jdbcType=CLOB}, #{damage} )
+  </insert>
+
+</mapper>

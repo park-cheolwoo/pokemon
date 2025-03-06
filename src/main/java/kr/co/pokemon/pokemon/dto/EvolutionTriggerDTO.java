@@ -1,22 +1,20 @@
 package kr.co.pokemon.pokemon.dto;
 
-import java.sql.Timestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import kr.co.pokemon.data.dto.EntityDTO;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EvolutionTriggerDTO {
+public class EvolutionTriggerDTO extends EntityDTO {
 
-	private int id;
 	private String name;
-	private Timestamp updatedAt;
-	private Timestamp createdAt;
 
 }

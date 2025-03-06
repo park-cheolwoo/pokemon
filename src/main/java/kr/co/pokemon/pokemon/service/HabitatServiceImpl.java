@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.pokemon.data.dto.PageDTO;
+import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.pokemon.dao.HabitatMapper;
 import kr.co.pokemon.pokemon.dto.HabitatDTO;
 
@@ -16,7 +16,7 @@ public class HabitatServiceImpl implements HabitatService {
 	HabitatMapper habitatMapper;
 	
 	@Override
-	public List<HabitatDTO> getAll(PageDTO page) {
+	public List<HabitatDTO> getAll(PageRequestDTO page) {
 		return habitatMapper.selectAll(page);
 	}
 
@@ -26,12 +26,19 @@ public class HabitatServiceImpl implements HabitatService {
 	}
 
 	@Override
-	public void getDataFromAPI(HabitatDTO dto) throws Exception {
-		if (habitatMapper.existById(dto.getId()) == 0) {
-			dto.setOriginalName(dto.getName());
-			habitatMapper.insert(dto);
+	public int getDataFromAPI(HabitatDTO dto) throws Exception {
+		try {
+			if (habitatMapper.existById(dto.getId()) == 0) {
+				dto.setOriginalName(dto.getName());
+				habitatMapper.insert(dto);
+				
+				return 1;
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
 		
+		return 0;
 	}
 
 }

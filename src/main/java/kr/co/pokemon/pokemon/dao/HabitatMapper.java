@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.pokemon.data.dto.PageDTO;
+import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.pokemon.dto.HabitatDTO;
 
 @Mapper
 public interface HabitatMapper {
 
-	List<HabitatDTO> selectAll(PageDTO pate);
+	List<HabitatDTO> selectAll(PageRequestDTO pate);
 	
 	HabitatDTO selectById(int id);
 	
