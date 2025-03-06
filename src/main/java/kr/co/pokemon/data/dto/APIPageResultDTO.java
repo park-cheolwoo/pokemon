@@ -10,6 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class APIPageResultDTO {
+
 	private String name;
 	private String url;
+
 }

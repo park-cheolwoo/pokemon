@@ -7,32 +7,32 @@ import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
-import kr.co.pokemon.pokemon.dao.EggGroupMapper;
-import kr.co.pokemon.pokemon.dto.EggGroupDTO;
+import kr.co.pokemon.pokemon.dao.StatMapper;
+import kr.co.pokemon.pokemon.dto.StatDTO;
 
 @Service
-public class EggGroupServiceImpl implements EggGroupService {
+public class StatServiceImpl implements StatService {
 	
-	private final DBTables dbTable = DBTables.EGG_GROUP;
-	
+	private final DBTables dbTable = DBTables.STAT;
+
 	@Autowired
-	private EggGroupMapper eggGroupMapper;
-
+	private StatMapper statMapper;
+	
 	@Override
-	public List<EggGroupDTO> getAll(PageRequestDTO page) {
-		return eggGroupMapper.selectAll(page);
+	public List<StatDTO> getAll(PageRequestDTO page) {
+		return statMapper.selectAll(page);
 	}
 
 	@Override
-	public EggGroupDTO getById(int id) {
-		return eggGroupMapper.selectById(id);
+	public StatDTO getById(int id) {
+		return statMapper.selectById(id);
 	}
 
 	@Override
-	public int getDataFromAPI(EggGroupDTO dto) throws Exception {
+	public int getDataFromAPI(StatDTO dto) throws Exception {
 		dto.setOriginalName(dto.getName());
 		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-		eggGroupMapper.insert(dto);
+		statMapper.insert(dto);
 
 		return 1;
 	}
@@ -43,8 +43,8 @@ public class EggGroupServiceImpl implements EggGroupService {
 	}
 
 	@Override
-	public void insert(EggGroupDTO dto) {
-		eggGroupMapper.insert(dto);
+	public void insert(StatDTO dto) {
+		statMapper.insert(dto);
 	}
 	
 	@Override

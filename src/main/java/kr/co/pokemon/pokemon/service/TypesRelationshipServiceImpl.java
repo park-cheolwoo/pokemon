@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
-import kr.co.pokemon.data.service.APIServiceImpl;
+import kr.co.pokemon.data.model.DBTables;
+import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.pokemon.dao.TypesMapper;
 import kr.co.pokemon.pokemon.dao.TypesRelationshipMapper;
 import kr.co.pokemon.pokemon.dto.TypesDTO;
@@ -19,6 +20,8 @@ import kr.co.pokemon.pokemon.dto.TypesRelationshipDTO.TypesSummary;
 
 @Service
 public class TypesRelationshipServiceImpl implements TypesRelationshipService {
+	
+	private final DBTables dbTable = DBTables.TYPES_RELATIONSHIP;
 
 	@Autowired
 	private TypesRelationshipMapper typesRelationshipMapper;
@@ -69,43 +72,54 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 
 		AtomicInteger count = new AtomicInteger(0);
 
-		try {
-			DamageRelations dr = dto.getDamageRelations();
-			
-			dr.getDoubleDamageTo().stream()
-			.forEach(types -> {
-				int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
-				dto.setFromId(dto.getId());
-				dto.setToId(to_id);
-				dto.setEffect(2);
-				typesRelationshipMapper.insert(dto);
-				count.incrementAndGet();
-			});
-			
-			dr.getHalfDamageTo().stream()
-			.forEach(types -> {
-				int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
-				dto.setFromId(dto.getId());
-				dto.setToId(to_id);
-				dto.setEffect(1);
-				typesRelationshipMapper.insert(dto);
-				count.incrementAndGet();
-			});
-			
-			dr.getNoDamageTo().stream()
-			.forEach(types -> {
-				int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
-				dto.setFromId(dto.getId());
-				dto.setToId(to_id);
-				dto.setEffect(0);
-				typesRelationshipMapper.insert(dto);
-				count.incrementAndGet();
-			});
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
+		DamageRelations dr = dto.getDamageRelations();
+		
+		dr.getDoubleDamageTo().stream()
+		.forEach(types -> {
+			int to_id = APIService.getIdByUrl(types.getUrl());
+			dto.setFromId(dto.getId());
+			dto.setToId(to_id);
+			dto.setEffect(2);
+			typesRelationshipMapper.insert(dto);
+			count.incrementAndGet();
+		});
+		
+		dr.getHalfDamageTo().stream()
+		.forEach(types -> {
+			int to_id = APIService.getIdByUrl(types.getUrl());
+			dto.setFromId(dto.getId());
+			dto.setToId(to_id);
+			dto.setEffect(1);
+			typesRelationshipMapper.insert(dto);
+			count.incrementAndGet();
+		});
+		
+		dr.getNoDamageTo().stream()
+		.forEach(types -> {
+			int to_id = APIService.getIdByUrl(types.getUrl());
+			dto.setFromId(dto.getId());
+			dto.setToId(to_id);
+			dto.setEffect(0);
+			typesRelationshipMapper.insert(dto);
+			count.incrementAndGet();
+		});
 
 		return count.get();
+	}
+
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(TypesRelationshipDTO dto) {
+		typesRelationshipMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }

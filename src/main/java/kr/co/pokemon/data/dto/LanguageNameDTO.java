@@ -12,6 +12,6 @@ import lombok.Setter;
 public class LanguageNameDTO {
 
 	private String name;
-	private LanguageDTO language;
+	private APIPageResultDTO language;
 
 }

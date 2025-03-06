@@ -9,7 +9,7 @@
     <result column="LAST_DDL_TIME" property="updatedAt" />
   </resultMap>
 
-  <select id="getInfoByTableName" resultMap="dataResultMap">
+  <select id="getTableInfoByName" resultMap="dataResultMap">
 	SELECT
 		UPPER(#{tableName}) AS "name", 0 AS "COUNT", CREATED, LAST_DDL_TIME
 	FROM
@@ -17,13 +17,25 @@
 	WHERE
 		OBJECT_TYPE = 'TABLE' AND OBJECT_NAME = UPPER(#{tableName})
   </select>
+    
+  <select id="existSequenceByName" resultType="int">
+  	SELECT COUNT(SEQUENCE_NAME) FROM USER_SEQUENCES WHERE SEQUENCE_NAME = UPPER(#{sequenceName})
+  </select>
   
-  <select id="getCountByTableName" resultType="int">
+  <select id="getTableDataCountByName" resultType="int">
   	SELECT COUNT(*) FROM ${tableName}
   </select>
   
-  <delete id="deleteDataByTableName">
-  	TRUNCATE TABLE ${tableName};
+  <delete id="dropTableByName">
+  	DROP TABLE ${tableName} CASCADE CONSTRAINTS
+  </delete>
+  
+  <delete id="dropSequenceByName">
+  	DROP SEQUENCE ${sequenceName}
+  </delete>
+  
+  <delete id="deleteDataByName">
+  	DELETE FROM ${tableName}
   </delete>
 
 </mapper>
