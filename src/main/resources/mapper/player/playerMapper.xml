@@ -10,13 +10,16 @@
   <select id="selectById" resultType="kr.co.pokemon.player.dto.PlayerDTO">
     select * from player where id = #{id}
   </select>
+  <select id="chooseById" resultType="kr.co.pokemon.player.dto.PlayerDTO">
+    select * from player where id = #{id}
+  </select>
   
-  <insert id="insertPlayer">
+  <insert id="insertPlayer" parameterType="PlayerDTO">
   	insert into player 
-  		(id, nickname, tag, password)
+  		(id, nickname, tag, password, lv, experience, gameMoney, realMoney)
   	values (
-  		#{id}, #{nickname}, #{tag}, #{password} 
-  	) where id = #{id}
+  		#{id}, #{nickname}, #{tag}, #{password}, 1,0,0,0 
+  	)
   </insert>
   
   <update id="updatePlayer">
@@ -28,6 +31,7 @@
   		description = #{description}
   	) where id = #{id}
   </update>
+  
   <update id="updatePlayerBySystem">
   	update player set (
   		lv = #{lv},
@@ -40,5 +44,9 @@
   <delete id="deletePlayer">
   	delete from player where id = #{id} 
   </delete>
+  
+ <select id="selectLogin" parameterType="map" resultType="kr.co.pokemon.player.dto.PlayerDTO">
+        select * from player where id = #{id} and password = #{password}
+    </select>
 
 </mapper>
