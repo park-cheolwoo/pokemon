@@ -11,6 +11,7 @@
 	<h2>포켓몬</h2>
 	
 	<a href="member/login">로그인</a>
+	<a href="/mypage/mypage">마이페이지</a>
 	
 	<script src="/js/index.js"></script>
 </body>
