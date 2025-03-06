@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.pokemon.dao.AbilityMapper;
 import kr.co.pokemon.pokemon.dto.AbilityDTO;
 
 @Service
 public class AbilityServiceImpl implements AbilityService {
 
+	private final DBTables dbTable = DBTables.ABILITY; 
+	
 	@Autowired
 	private AbilityMapper abilityMapper;
 	
@@ -27,23 +30,34 @@ public class AbilityServiceImpl implements AbilityService {
 
 	@Override
 	public int getDataFromAPI(AbilityDTO dto) throws Exception {
-		if (abilityMapper.existById(dto.getId()) == 0) {
-			String languageName = "ko";
-			dto.getLanguagesName(languageName).ifPresent(name -> dto.setName(name));
-			dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
-				dto.setDescription(effect),
-				() -> dto.setDescription("NO-TEXT")
-			);
-			dto.getLanguagesFlavorText(languageName).ifPresentOrElse(flavor ->
-				dto.setFlavorText(flavor),
-				() -> dto.setFlavorText("NO-TEXT")
-			);
+		String languageName = "ko";
+		dto.getLanguagesName(languageName).ifPresent(name -> dto.setName(name));
+		dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
+			dto.setDescription(effect),
+			() -> dto.setDescription("NO-TEXT")
+		);
+		dto.getLanguagesFlavorText(languageName).ifPresentOrElse(flavor ->
+			dto.setFlavorText(flavor),
+			() -> dto.setFlavorText("NO-TEXT")
+		);
+		abilityMapper.insert(dto);
 
-			abilityMapper.insert(dto);
-			return 1;
-		}
+		return 1;
+	}
 
-		return 0;
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(AbilityDTO dto) {
+		abilityMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }

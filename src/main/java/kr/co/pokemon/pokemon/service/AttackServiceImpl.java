@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
-import kr.co.pokemon.data.service.APIServiceImpl;
+import kr.co.pokemon.data.model.DBTables;
+import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.pokemon.dao.AttackMapper;
 import kr.co.pokemon.pokemon.dto.AttackDTO;
 
 @Service
 public class AttackServiceImpl implements AttackService {
+	
+	private final DBTables dbTable = DBTables.ATTACK;
 
 	@Autowired
 	AttackMapper attackMapper;
@@ -33,7 +36,7 @@ public class AttackServiceImpl implements AttackService {
 
 	@Override
 	public int getDataFromAPI(AttackDTO dto) throws Exception {
-		int typesId = APIServiceImpl.getIdByUrl(dto.getType().getUrl());
+		int typesId = APIService.getIdByUrl(dto.getType().getUrl());
 		dto.setTypesId(typesId);
 		
 		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
@@ -46,10 +49,24 @@ public class AttackServiceImpl implements AttackService {
 			dto.setFlavorText(flavor),
 			() -> dto.setFlavorText("NO-TEXT")
 		);
-			
 		attackMapper.insert(dto);
 
 		return 1;
+	}
+
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(AttackDTO dto) {
+		attackMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }

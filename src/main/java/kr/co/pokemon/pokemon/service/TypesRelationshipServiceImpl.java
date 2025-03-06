@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
-import kr.co.pokemon.data.service.APIServiceImpl;
+import kr.co.pokemon.data.model.DBTables;
+import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.pokemon.dao.TypesMapper;
 import kr.co.pokemon.pokemon.dao.TypesRelationshipMapper;
 import kr.co.pokemon.pokemon.dto.TypesDTO;
@@ -19,6 +20,8 @@ import kr.co.pokemon.pokemon.dto.TypesRelationshipDTO.TypesSummary;
 
 @Service
 public class TypesRelationshipServiceImpl implements TypesRelationshipService {
+	
+	private final DBTables dbTable = DBTables.TYPES_RELATIONSHIP;
 
 	@Autowired
 	private TypesRelationshipMapper typesRelationshipMapper;
@@ -73,7 +76,7 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 		
 		dr.getDoubleDamageTo().stream()
 		.forEach(types -> {
-			int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
+			int to_id = APIService.getIdByUrl(types.getUrl());
 			dto.setFromId(dto.getId());
 			dto.setToId(to_id);
 			dto.setEffect(2);
@@ -83,7 +86,7 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 		
 		dr.getHalfDamageTo().stream()
 		.forEach(types -> {
-			int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
+			int to_id = APIService.getIdByUrl(types.getUrl());
 			dto.setFromId(dto.getId());
 			dto.setToId(to_id);
 			dto.setEffect(1);
@@ -93,7 +96,7 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 		
 		dr.getNoDamageTo().stream()
 		.forEach(types -> {
-			int to_id = APIServiceImpl.getIdByUrl(types.getUrl());
+			int to_id = APIService.getIdByUrl(types.getUrl());
 			dto.setFromId(dto.getId());
 			dto.setToId(to_id);
 			dto.setEffect(0);
@@ -102,6 +105,21 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 		});
 
 		return count.get();
+	}
+
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(TypesRelationshipDTO dto) {
+		typesRelationshipMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }

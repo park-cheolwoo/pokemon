@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.pokemon.dao.TypesMapper;
 import kr.co.pokemon.pokemon.dto.TypesDTO;
 
 @Service
 public class TypesServiceImpl implements TypesService {
+	
+	private final DBTables dbTable = DBTables.TYPES;
 
 	@Autowired
 	private TypesMapper typesMapper;
@@ -31,15 +34,26 @@ public class TypesServiceImpl implements TypesService {
 
 	@Override
 	public int getDataFromAPI(TypesDTO dto) throws Exception {
-		if (typesMapper.existById(dto.getId()) == 0) {
-			dto.setOriginalName(dto.getName());
-			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-			typesMapper.insert(dto);
-			
-			return 1;
-		}
+		dto.setOriginalName(dto.getName());
+		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+		typesMapper.insert(dto);
 		
-		return 0;
+		return 1;
+	}
+
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(TypesDTO dto) {
+		typesMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }

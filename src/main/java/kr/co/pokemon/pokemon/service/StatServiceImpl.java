@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.pokemon.dao.StatMapper;
 import kr.co.pokemon.pokemon.dto.StatDTO;
 
 @Service
 public class StatServiceImpl implements StatService {
+	
+	private final DBTables dbTable = DBTables.STAT;
 
 	@Autowired
 	private StatMapper statMapper;
@@ -32,6 +35,21 @@ public class StatServiceImpl implements StatService {
 		statMapper.insert(dto);
 
 		return 1;
+	}
+
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(StatDTO dto) {
+		statMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }
