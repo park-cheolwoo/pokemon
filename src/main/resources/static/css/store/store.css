@@ -1,16 +1,6 @@
-/* 폰트 import */
-@font-face {
-	font-family: 'BMHANNA';
-	src: url("/font/BMHANNA_11yrs_ttf.ttf") format('truetype');
-}
+@import url('/css/stlyes.css');
 
 * {
-	/* 공용 설정 */
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	/* 폰트 설정 */
-	font-family: 'BMHANNA', sans-serif;
 	font-weight: 400;
 	/* 드래그 제한 */
 	-webkit-user-select: none;
@@ -104,7 +94,7 @@ body {
 .item_cost {
 	width: 92px;
 	height: 41px;
-	line-height: 41px; 
+	line-height: 41px;
 	position: absolute;
 	top: 682px;
 	left: 349px;
@@ -183,7 +173,7 @@ body {
 	height: 114px;
 	position: absolute;
 	top: 563px;
-	left: 1820px;
+	left: 1817px;
 	z-index: 1;
 }
 
@@ -272,7 +262,7 @@ body {
 	z-index: 9;
 }
 
-.item_buy_container, .item_confirm_container {
+.item_buy_container, .item_confirm_container, .item_describe_container {
 	display: none;
 }
 
@@ -283,7 +273,6 @@ body {
 	line-height: 48px;
 	text-align: center;
 }
-
 
 .item_buy_txt3 {
 	width: 450px;
@@ -328,38 +317,125 @@ body {
 	z-index: 10;
 }
 
-.item_buy_cost_wrap{
-	display:flex;
-	justify-content:center;
+.item_buy_cost_wrap {
+	display: flex;
+	justify-content: center;
 }
 
-.item_buy_coin{
-	width:48px;
-	height:48px;
-	margin-right:20px;
-	position:relative;
-	top:-3px;
+.item_buy_coin {
+	width: 48px;
+	height: 48px;
+	margin-right: 20px;
+	position: relative;
+	top: -3px;
+}
+
+.item_buy_count_span {
+	display: inline-block;
+	font-size: 48px;
+	line-height: 0.9;
+	height: 48px;
+	vertical-align: top;
+}
+
+.item_buy_cost_span {
+	display: inline-block;
+	height: 48px;
+	font-size: 48px;
+	line-height: 0.6;
+	vertical-align: middle;
+}
+
+.item_buy_cost {
+	font-size: 48px;
+	height: 48px;
+}
+
+.item_container_box {
+	width: 700px;
+	height: 520px;
+	position: absolute;
+	top: 280px;
+	left: 610px;
+	z-index: 10;
+}
+
+.item_describe_image {
+	width: 115px;
+	height: 115px;
+	background: white;
+	position: absolute;
+	top: 364px;
+	left: 716px;
+	z-index: 15;
+}
+
+.item_describe_category {
+	width: 86px;
+	height: 20px;
+	font-size: 20px;
+	line-height: 20px;
+	text-align: center;
+	position: absolute;
+	top: 349px;
+	left: 925px;
+	z-index: 15;
+}
+
+.item_describe_coin2 {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 474px;
+	left: 889px;
+	z-index: 15;
+}
+
+.item_describe_name {
+	width: 160px;
+	height: 36px;
+	line-height: 36px;
+	text-align: left;
+	position: absolute;
+	top: 412px;
+	left: 891px;
+	z-index: 15;
+}
+
+.item_describe_cost {
+	width: 140px;
+	height: 36px;
+	line-height: 36px;
+	text-align: left;
+	position: absolute;
+	top: 484px;
+	left: 942px;
+	z-index: 15;
+}
+
+.item_describe_txt {
+	width: 555px;
+	height: 158px;
+	line-height: 36px;
+	text-align: justify;
+	position: absolute;
+	top: 552px;
+	left: 683px;
+	z-index: 15;
+}
+
+.item_describe_exit {
+	width: 85px;
+	height: 85px;
+	position: absolute;
+	top: 224px;
+	left: 1314px;
+	z-index: 20;
 }
 
 
-.item_buy_count_span{
-	display:inline-block;
-	font-size:48px;
-	line-height:0.9;
-	height:48px;
-	vertical-align:top;
-}
 
-.item_buy_cost_span{
-	display:inline-block;
-	height:48px;
-	font-size:48px;
-	line-height:0.6;
-	vertical-align:middle;
-}
 
-.item_buy_cost{
-	font-size:48px;
-	height:48px;
-}
+
+
 
