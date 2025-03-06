@@ -7,12 +7,13 @@
 <title>로그인</title>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <link type="text/css" rel="stylesheet" href="/css/memberstyles.css" >
+<link type="text/css" rel="stylesheet" href="/css/styles.css" >
 </head>
 <script>
-if("${chkLogin}"=="0"){
+if("${loginChk}"=="0"){
 	alert("아이디 또는 패스워드가 일치하지 않습니다. 다시 로그인해주세요.");
 }
-if("${session_id}"!= ""){
+if("${loginChk}"== "1"){
 	alert("로그인 성공");
 	location.href="/";
 }
@@ -23,7 +24,7 @@ if("${session_id}"!= ""){
 	<div class="login-container">
 		<div class="login-box">
 		<input type="text" name="id" id="id" class="idtext" placeholder="  ID" /><br/>
-		<input type="password" name="pw" id="pw" class="pwtext" placeholder="  PW" />
+		<input type="password" name="password" id="password" class="pwtext" placeholder="  PW" />
 		
 		<div class="login-join">
 			<a href="/member/join" class="link1">회원가입</a>

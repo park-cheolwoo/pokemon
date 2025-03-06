@@ -1,6 +1,8 @@
 package kr.co.pokemon.player.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +22,16 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public PlayerDTO findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		PlayerDTO playerDto = playerMapper.selectById(id);
+		map.put("playerDto", playerDto);
+		return playerDto;
 	}
 
 	@Override
-	public PlayerDTO createPlayer(PlayerDTO player) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean createPlayer(PlayerDTO player) {
+		int result = playerMapper.insertPlayer(player);
+        return result > 0;
 	}
 
 	@Override
@@ -43,15 +47,14 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public PlayerDTO login(PlayerDTO pdto) {
-		PlayerDTO playerDto = playerMapper.selectLogin(pdto);
-		return playerDto;
+	public PlayerDTO login(String id, String password) {
+		PlayerDTO playerdto = playerMapper.selectLogin(id,password);
+		return playerdto;
 	}
 
 	@Override
-	public PlayerDTO login(String id, String pw) {
-		PlayerDTO playerdto = playerMapper.selectLogin2(id,pw);
-		return null;
+	public boolean isIdAble(String id) {
+		PlayerDTO playerdto = playerMapper.chooseById(id);
+		return playerdto == null;
 	}
-
 }
