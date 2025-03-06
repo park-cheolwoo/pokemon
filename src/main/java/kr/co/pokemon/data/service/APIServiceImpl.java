@@ -1,31 +1,21 @@
 package kr.co.pokemon.data.service;
 
 import java.lang.reflect.ParameterizedType;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.annotation.PostConstruct;
 import kr.co.pokemon.data.dto.APIPageDTO;
 import kr.co.pokemon.data.dto.APIResponseDTO;
 
 @Service
 public class APIServiceImpl implements APIService {
-	
-	@Value("${poketmon.run-init-sql}")
-	private boolean isRunInitSql;
 	
 	@Value("${poketmon.api-base-url}")
 	private String apiBaseUrl;
@@ -34,41 +24,45 @@ public class APIServiceImpl implements APIService {
 	private ApplicationContext applicationContext;
 	
 	@Autowired
-	private DataSource dataSource;
+	private RestTemplate restTemplate;
 	
 	@Autowired
-	private RestTemplate restTemplate;
-
-	@Override
-	@PostConstruct
-	public void initTable() throws SQLException {
-		if (isRunInitSql) {
-			Connection conn = dataSource.getConnection();
-			ScriptUtils.executeSqlScript(conn, new ClassPathResource("sql/createTable.sql"));
-		}
-	}
+	private DataService dataService;
 	
+	@Override
 	public <D, S extends APIGetable<D>> APIResponseDTO setData(String uri, Class<S> serviceClass) {
-		APIPageDTO apiPageDTO = getDataDTOFromAPI(uri, APIPageDTO.class);
-		
-		if (apiPageDTO.getCount() > 20) {
-			apiPageDTO = getDataDTOFromAPI(String.format("%s?limit=%d", uri, apiPageDTO.getCount() + 1), APIPageDTO.class);
-		}
-
 		int dataCount = 0;
+		
 		try {
 			S service = applicationContext.getBean(serviceClass);
+			service.getDependencies().stream().forEach(dbTable -> {
+				dataService.getTableInfo(dbTable.getTableName()).ifPresentOrElse(
+					info -> {
+						if (info.getCount() == 0) throw new IllegalArgumentException(info.getName() + " 테이블 데이터가 필요합니다.");
+					},
+					() -> new IllegalArgumentException("필요한 의존 테이블이 존재하지 않습니다. : " + dbTable.getTableName()));
+			});
+			
+			APIPageDTO apiPageDTO = getDataDTOFromAPI(uri, APIPageDTO.class);
+			
+			if (apiPageDTO.getCount() > 20) {
+				apiPageDTO = getDataDTOFromAPI(String.format("%s?limit=%d", uri, apiPageDTO.getCount() + 1), APIPageDTO.class);
+			}
+
 			Class<D> dto = (Class<D>) ((ParameterizedType) serviceClass.getGenericInterfaces()[0])
 					.getActualTypeArguments()[0];
 
-			while (apiPageDTO.hasNextPage()) {
-				String pageUri = apiPageDTO.getCurrUrl().substring(apiBaseUrl.length());
-				dataCount += service.getDataFromAPI(getDataDTOFromAPI(pageUri, dto));
-				apiPageDTO.nextPage();
+			if (dataService.deleteAllData(service.getDBTableName())) {
+				while (apiPageDTO.hasNextPage()) {
+					String pageUri = apiPageDTO.getCurrUrl().substring(apiBaseUrl.length());
+					dataCount += service.getDataFromAPI(getDataDTOFromAPI(pageUri, dto));
+					apiPageDTO.nextPage();
+				}
+			} else {
+				throw new IllegalAccessError(service.getDBTableName() + " 테이블 데이터 삭제에 실패하였습니다.");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new APIResponseDTO("fail", dataCount);
+			return new APIResponseDTO("fail", dataCount, e.getMessage());
 		}
 		return new APIResponseDTO("success", dataCount);
 	}
@@ -85,13 +79,6 @@ public class APIServiceImpl implements APIService {
 
 	private String getDataFromAPI(String uri) {
 		return restTemplate.getForEntity(apiBaseUrl + uri, String.class).getBody();
-	}
-	
-	public static int getIdByUrl(String url) {
-		String[] separatedUrl = url.split("/");
-		String extractId = separatedUrl[separatedUrl.length - 1];
-
-		return Integer.parseInt(extractId);
 	}
 
 }
