@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EffectEntryDTO {
 	private String effect;
-	private LanguageDTO language;
+	private APIPageResultDTO language;
 	
 	@JsonProperty(value = "short_effect")
 	private String shortEffect;

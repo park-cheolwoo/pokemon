@@ -28,9 +28,9 @@
   
   <insert id="insert">
   	INSERT INTO habitat
-  		( id, original_name )
+  		( id, name, original_name )
   	VALUES
-  		( #{id}, #{originalName} )
+  		( #{id}, #{name}, #{originalName} )
   </insert>
 
 </mapper>

@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Background and Overlay */
+#back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+}
+
+#dark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Main Content Box */
+#chang {
+  padding: 0;
+  width: 1753px;
+  height: 897px;
+  margin: 60px 21px 123px 146px;
+}
+
+/* Header Section */
+#head_chang {
+  width: 100%;
+  height: 80px;
+  display: flex;
+}
+
+#head_chang a {
+  margin-left: auto;
+  width: 84px;
+  height: 80px;
+  cursor: pointer;
+}
+
+/* Fixed Positioning for OH and Questboard */
+#oh {
+  position: fixed;
+  bottom: 145px;
+  left: 123px;
+  width: 516px;
+  height: 712px;
+  display: inline;
+  margin: 101px 115px 0 0;
+}
+
+#questboard {
+  position: fixed;
+  bottom: 124px;
+  right: 150px;
+  width: 1049px;
+  height: 741px;
+  display: inline;
+}
+
+/* Button Style for Uplists */
+.uplist button {
+  width: 270px;
+  height: 100px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Uplist Positioning */
+#uplist1 {
+  position: fixed;
+  bottom: 744px;
+  right: 855px;
+  display: inline;
+}
+
+#uplist2 {
+  position: fixed;
+  bottom: 744px;
+  right: 560px;
+  display: inline;
+}
+
+#uplist3 {
+  position: fixed;
+  bottom: 744px;
+  right: 265px;
+  display: inline;
+}
+
+
+/* Quest List Containers */
+#questlist1, #questlist2, #questlist3 {
+  width: 830px;
+  height: 520px;
+  position: fixed;
+  bottom: 214px;
+  right: 275px;
+  display: inline;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+#questlist1::-webkit-scrollbar,
+#questlist2::-webkit-scrollbar,
+#questlist3::-webkit-scrollbar {
+  display: none;
+}
+
+/* Quest List Items */
+.qlist {
+  width: 732px;
+  height: 115px;
+  color: white;
+  font-size: 30px;
+  margin: 10px 0 20px 30px;
+  position: relative;
+}
+
+.qlist button {
+  width: 45px;
+  height: 48px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  bottom: 40px;
+  right: 43px;
+}
+.qlist .questdetail{
+  position: absolute;
+  left: 30px;
+  bottom: 40px;
+  font-size: 36px;
+}
+.qlist .compensationdetail1{
+  position: absolute;
+  left: 516px;
+  bottom: 20px;
+  font-size: 20px;
+}
+.qlist .compensationdetail2{
+  position: absolute;
+  left: 510px;
+  bottom: 20px;
+  font-size: 20px;
+}
+.qlist .compensationdetail3{
+  position: absolute;
+  left: 522px;
+  bottom: 20px;
+  font-size: 20px;
+}

@@ -1,0 +1,119 @@
+*{margin:0; padding:0;}
+#back { 
+  position: fixed;  
+  top: 0;           
+  left: 0;          
+  width: 1920px;     
+  height: 1080px;    
+}
+#dark { 
+  position: fixed;  
+  top: 0;           
+  left: 0;          
+  width: 1920px;     
+  height: 1080px;    
+  background-color: rgba(0, 0, 0, 0.45); 
+}
+.get_out{
+  position: fixed;  
+  top: 28px;           
+  left: 1785px;          
+  width: 80px;     
+  height: 84px; 
+}
+.dungeon{
+  position: fixed;  
+  top: 70px;           
+  left: 730px;          
+  width: 460px;     
+  height: 149px; 
+}
+.Habitat_Selection{
+  position: fixed;  
+  top: 320px;           
+  left: 150px;          
+  width: 350px;     
+  height: 540px; 
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; 
+  scrollbar-width: none;
+}
+.Habitat_Selection button{
+  margin-bottom: 90px;
+  width: 350px;     
+  height: 113px; 
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 34px;
+  padding-bottom: 10px;
+  color: white;
+}
+.Habitat_Selection button::-webkit-scrollbar {
+  display: none;
+}
+.playboard{
+  position: fixed;  
+  top: 304px;           
+  left: 588px;          
+  width: 1110px;     
+  height: 612px; 
+}
+.Difficulty_level{
+  position: fixed;  
+  top: 370px;           
+  left: 680px;          
+  width: 280px;     
+  height: 470px; 
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; 
+  scrollbar-width: none;
+}
+.Difficulty_level button{
+  margin-bottom: 4px;
+  width: 275px;     
+  height: 127px; 
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 40px;
+  color: white;
+}
+.sideboard{
+  position: fixed;  
+  top: 395px;           
+  left: 1050px;          
+  width: 495px;     
+  height: 430px; 
+}
+.sideboard button{
+  position: fixed;  
+  top: 750px;           
+  left: 1467px;  
+  width: 76px;     
+  height: 75px; 
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.subtitle{
+  position: fixed;  
+  top: 681px;           
+  left: 1060px;  
+  font-size: 40px;
+  color: white;
+  text-align: left;
+  width: 259px;
+}
+.explanation{
+  position: fixed;  
+  top: 687px;           
+  left: 1240px;  
+  font-size: 32px;
+  color: white;
+  text-align: right;
+  width: 280px;
+}

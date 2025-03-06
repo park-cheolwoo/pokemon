@@ -9,9 +9,11 @@ import kr.co.pokemon.data.dto.APIResponseDTO;
 import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.AttackService;
+import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.EggGroupService;
 import kr.co.pokemon.pokemon.service.EvolutionTriggerService;
 import kr.co.pokemon.pokemon.service.HabitatService;
+import kr.co.pokemon.pokemon.service.StatService;
 import kr.co.pokemon.pokemon.service.TypesRelationshipService;
 import kr.co.pokemon.pokemon.service.TypesService;
 
@@ -56,6 +58,16 @@ public class APIController {
 	@GetMapping(value = "/attack")
 	public APIResponseDTO getAttack() {
 		return apiService.setData("/move", AttackService.class);
+	}
+	
+	@GetMapping(value = "/stat")
+	public APIResponseDTO getStat() {
+		return apiService.setData("/stat", StatService.class);
+	}
+		
+	@GetMapping(value = "/characteristic")
+	public APIResponseDTO getCharacteristic() {
+		return apiService.setData("/characteristic", CharacteristicService.class);
 	}
 	
 }

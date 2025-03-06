@@ -7,10 +7,16 @@ import kr.co.pokemon.data.dto.TableInfoDTO;
 @Mapper
 public interface DataInfoMapper {
 
-	TableInfoDTO getInfoByTableName(String tableName);
-
-	int getCountByTableName(String tableName);
+	TableInfoDTO getTableInfoByName(String tableName);
 	
-	void deleteDataByTableName(String tableName);
+	int existSequenceByName(String sequenceName);
+
+	int getTableDataCountByName(String tableName);
+	
+	void dropTableByName(String tableName);
+	
+	void dropSequenceByName(String sequenceName);
+	
+	void deleteDataByName(String tableName);
 
 }

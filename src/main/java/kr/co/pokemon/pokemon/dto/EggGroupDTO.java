@@ -22,6 +22,8 @@ import lombok.Setter;
 public class EggGroupDTO extends EntityDTO implements NamesGroup {
 
 	private String name;
+	private String originalName;
+
 	private List<LanguageNameDTO> names;
 
 }

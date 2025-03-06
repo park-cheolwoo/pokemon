@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.pokemon.dao.EggGroupMapper;
 import kr.co.pokemon.pokemon.dto.EggGroupDTO;
 
 @Service
 public class EggGroupServiceImpl implements EggGroupService {
+	
+	private final DBTables dbTable = DBTables.EGG_GROUP;
 	
 	@Autowired
 	private EggGroupMapper eggGroupMapper;
@@ -27,17 +30,26 @@ public class EggGroupServiceImpl implements EggGroupService {
 
 	@Override
 	public int getDataFromAPI(EggGroupDTO dto) throws Exception {
-		try {
-			if (eggGroupMapper.existById(dto.getId()) == 0) {
-				dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-				eggGroupMapper.insert(dto);
+		dto.setOriginalName(dto.getName());
+		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+		eggGroupMapper.insert(dto);
 
-				return 1;
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
-		return 0;
+		return 1;
+	}
+
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(EggGroupDTO dto) {
+		eggGroupMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }
