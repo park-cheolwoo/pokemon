@@ -2,7 +2,7 @@
 <div id="content-container" class="mypage-content-container">
 	<div class="item-view-info-container">
 		<div class="item-img">
-			<img src="/static/images/monsterball.png" alt="몬스터볼 이미지">
+			<img src="/images/monsterball.png" alt="몬스터볼 이미지">
 		</div>
 		<div class="item-text-container">
 			<div class="item-text">
@@ -12,21 +12,18 @@
 		</div>
 	</div>
 	<div class="mypage-container">
-		<div class="mypage-banner-tab">
-			<div class="banner-item" data-tab="monsterball-item">
-				<span>몬스터볼</span>
-			</div>
-			<div class="banner-item" data-tab="revive-item">
-				<span>회복 아이템</span>
-			</div>
-			<div class="banner-item" data-tab="battle-item">
-				<span>배틀 아이템</span>
-			</div>
-		</div>
+		<ul class="mypage-banner-tab">
+			<li class="banner-item" data-tab="monsterball-item"><span>몬스터볼</span>
+			</li>
+			<li class="banner-item" data-tab="revive-item"><span>회복
+					아이템</span></li>
+			<li class="banner-item" data-tab="battle-item"><span>배틀
+					아이템</span></li>
+		</ul>
+
 		<!-- 탭 컨텐츠 영역 -->
 		<div class="item-info-text-container">
-			<div class="tab-content" id="monsterball-item-content"
-				style="display: none;">
+			<div class="tab-content" id="monsterball-item">
 				<table class="item-table">
 					<thead>
 						<tr>
@@ -35,13 +32,16 @@
 							<th>수량</th>
 						</tr>
 					</thead>
-					<tbody id="item-list-body">
-						<!-- 탭 클릭 시 내용이 동적으로 추가될 영역 -->
+					<tbody id="monsterball-item-list-body">
+						<tr>
+							<td>이미지</td>
+							<td>몬스터볼</td>
+							<td>1개</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class="tab-content" id="revive-item-content"
-				style="display: none;">
+			<div class="tab-content" id="revive-item">
 				<table class="item-table">
 					<thead>
 						<tr>
@@ -51,12 +51,15 @@
 						</tr>
 					</thead>
 					<tbody id="revive-item-list-body">
-						<!-- 회복 아이템 -->
+						<tr>
+							<td>이미지</td>
+							<td>회복 아이템</td>
+							<td>1개</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class="tab-content" id="battle-item-content"
-				style="display: none;">
+			<div class="tab-content" id="battle-item">
 				<table class="item-table">
 					<thead>
 						<tr>
@@ -66,10 +69,16 @@
 						</tr>
 					</thead>
 					<tbody id="battle-item-list-body">
-						<!-- 배틀 아이템 -->
+						<tr>
+							<td>이미지</td>
+							<td>배틀 아이템</td>
+							<td>1개</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+
+
 	</div>
 </div>
