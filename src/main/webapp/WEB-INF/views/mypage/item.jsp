@@ -13,12 +13,15 @@
 	</div>
 	<div class="mypage-container">
 		<ul class="mypage-banner-tab">
-			<li class="banner-item" data-tab="monsterball-item"><span>몬스터볼</span>
+			<li class="banner-item" data-tab="monsterball-item">
+				<span>몬스터볼</span>
 			</li>
-			<li class="banner-item" data-tab="revive-item"><span>회복
-					아이템</span></li>
-			<li class="banner-item" data-tab="battle-item"><span>배틀
-					아이템</span></li>
+			<li class="banner-item" data-tab="revive-item">
+				<span>회복아이템</span>
+			</li>
+			<li class="banner-item" data-tab="battle-item">
+				<span>배틀아이템</span>
+			</li>
 		</ul>
 
 		<!-- 탭 컨텐츠 영역 -->
@@ -78,6 +81,7 @@
 				</table>
 			</div>
 		</div>
+
 
 
 	</div>

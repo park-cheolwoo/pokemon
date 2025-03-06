@@ -17,16 +17,61 @@
 				유인하는 것이다.</div>
 		</div>
 		<div class="view-bar-container">
-			<div>
-				<span>자세히</span> <img src="/images/wood-bar.png" />
+			<div class="tab" data-target="detail">
+				<span>자세히</span>
 			</div>
-			<div>
-				<img src="/images/wood-bar.png" /> <span>내 포켓몬</span>
+			<div class="tab" data-target="my-pokemon">
+				<span>내 포켓몬</span>
 			</div>
 		</div>
 	</div>
 	<div class="mypage-container">
 		<div class="image-container">
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
+			<div>
+				<img src="/images/image 1.png" alt="이미지1">
+			</div>
 			<div>
 				<img src="/images/image 1.png" alt="이미지1">
 			</div>
