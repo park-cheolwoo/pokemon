@@ -6,6 +6,7 @@
     <title>Mypage</title>
     <link type="text/css" rel="stylesheet" href="/css/styles.css"> <!-- 공통 스타일 -->
     <link type="text/css" rel="stylesheet" href="/css/pokedex.css"> <!-- 도감 관련 스타일 -->
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
     <div class="mypage-background-container">
@@ -21,7 +22,7 @@
                     <span>원정대</span>
                 </div>
             </div>
-            <div class="closeBtn"></div>
+            <a href="/"><div class="closeBtn"></div></a>
         </div>
 
         <div id="content-container" class="mypage-content-container">
