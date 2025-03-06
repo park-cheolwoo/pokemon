@@ -16,5 +16,5 @@ import lombok.Setter;
 public class FlavorTextEntryDTO {
 	@JsonProperty(value = "flavor_text")
 	private String flavorText;
-	private LanguageDTO language;
+	private APIPageResultDTO language;
 }
