@@ -31,11 +31,18 @@
 
 
 
-/* hover 시 커지는 효과 */
-.mypage-banner .banner-item span:hover, #content-container > div.mypage-container > ul > li > span:hover {
-    font-size: 35px; /* 폰트 크기를 키워줍니다 */
+/* 기본 상태와 hover 상태에서의 애니메이션 */
+.mypage-banner .banner-item span, 
+#content-container > div.mypage-container > ul > li > span {
     transition: font-size 0.3s ease; /* 폰트 크기 변화 애니메이션 */
 }
+
+/* hover 시 커지는 효과 */
+.mypage-banner .banner-item span:hover, 
+#content-container > div.mypage-container > ul > li > span:hover {
+    font-size: 35px; /* 폰트 크기를 키워줍니다 */
+}
+
 
 
 
@@ -106,7 +113,7 @@
 
 }
 
-.closeBtn {
+body > div > div.mypage-banner-container > a{
     position: relative;
     margin: 0 0 0 0;
     background-image: url('/images/close.png');
