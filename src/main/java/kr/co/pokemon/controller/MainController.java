@@ -25,9 +25,14 @@ public class MainController {
 	public String dungeon() {
 		return "/play/dungeon";
 	}
-	
+
 	@GetMapping("/play/sdungeon")
 	public String sdungeon() {
 		return "/play/sdungeon";
+	}
+	
+	@GetMapping("/first/first")
+	public String first() {
+		return "/first/first";
 	}
 }

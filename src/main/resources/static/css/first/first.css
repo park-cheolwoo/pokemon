@@ -1,0 +1,206 @@
+* { margin: 0; padding: 0; }
+
+body {
+  background-color: rgba(0, 0, 0, 1); 
+  animation: fadeInBackground 1s ease-in-out forwards;
+}
+
+#full_background {
+  position: fixed;  
+  top: 0;           
+  left: 0;          
+  width: 1920px;     
+  height: 1080px;
+  overflow: hidden;
+  z-index: -10;
+}
+
+#full_background img {
+  opacity: 0;  
+  animation: fadeIn 1.5s ease-in-out forwards;  
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;  
+  }
+  100% {
+    opacity: 1;  
+  }
+}
+
+#chat {
+  position: fixed;
+  top: 110px;
+  left: 460px;
+  width: 1000px; 
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.45); 
+  opacity: 0;  
+  animation: chatAppear 0.8s 1.5s forwards; 
+  z-index: 1;
+}
+
+#chat #chatText {
+  font-size: 48px;
+  margin: 68px auto;
+  color: white;
+  text-align: center;
+  opacity: 1;
+  animation: chatAppear 0.5s forwards;
+}
+
+@keyframes chatAppear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes chatDisappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#enter {
+  position: fixed;
+  top: 261px;
+  left: 1385px;
+  width: 21px;
+  height: 50px;
+  font-size: 36px;
+  color: white;
+  opacity: 1;
+  animation: blink 0.8s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+#starting1,
+#starting2,
+#starting3 {
+  position: fixed;
+  opacity: 0; /* Initially hide the images */
+  transition: opacity 1s ease-in-out;
+}
+
+#starting1 {
+  top: 580px;
+  left: 260px;
+  width: 400px;
+  height: 400px;
+}
+
+#starting2 {
+  top: 580px;
+  left: 760px;
+  width: 400px;
+  height: 400px;
+}
+
+#starting3 {
+  top: 580px;
+  left: 1260px;
+  width: 400px;
+  height: 400px;
+}
+
+.nameboard {
+  position: fixed;  
+  top: 181px;           
+  left: 560px;          
+  width: 800px;     
+  height: 300px; 
+  z-index: 20; /* nameboard가 어두운 배경 위에 오도록 설정 */
+  animation: none; /* 애니메이션 제거 */
+  transition: none; /* transition 속성도 제거 */
+}
+
+/* deep_dark 애니메이션 설정 */
+#deep_dark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 10;
+  display: none; /* 기본적으로 보이지 않도록 설정 */
+  animation: fadeInDark 1s forwards; /* 어두운 배경의 등장 애니메이션 */
+}
+
+/* 어두운 배경이 서서히 나타나는 애니메이션 */
+@keyframes fadeInDark {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.chack_1,.chack_2 {
+  position: fixed;
+  top: 331px;
+  left: 805px;
+  width: 80px;
+  height: 85px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.chack_3{
+  position: fixed;
+  top: 331px;
+  left: 920px;
+  width: 80px;
+  height: 85px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.ax_1,.ax_2 {
+  position: fixed;
+  top: 331px;
+  left: 990px;
+  width: 80px;
+  height: 85px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+#chat_1,#chat_2{
+  position: fixed;
+  top: 248px;
+  left: 622px;
+  width: 682px;
+  height: 64px;
+  text-align: center;
+  font-size: 47px;
+  color: white;
+}
+#naming{
+  position: fixed;
+  top: 248px;
+  left: 622px;
+  width: 682px;
+  height: 64px;
+  text-align: center;
+  font-size: 47px;
+  color: white;
+  background: none;
+  border: none;
+}
