@@ -1,4 +1,32 @@
 $(function() {
+	
+	
+	function loginBtn(){
+		var id= $("#id").val();
+		var password = $("#password").val();
+		
+		$.ajax({
+			url:"/member/login",
+			type:'POST',
+			data:{
+				id:id,
+				password:password
+			},
+			success: function(response){
+				if(response.loginChk=="0"){
+					alert("아이디 또는 패스워드가 일치하지 않습니다.")
+				}else if(response.loginChk =="1"){
+					alert("로그인 성공");
+					location.href="/";
+				}
+			},
+			error:function(error){
+				alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.")
+			}
+		});
+	}
+	
+//회원가입창에서 로그인 화면으로 돌아가기
     function backBtn() {
         $.ajax({
             url: "/member/login",
@@ -11,7 +39,7 @@ $(function() {
             }
         });
     }
-
+//아이디 중복체크
     function check() {
         var id = document.getElementsByName("id")[0].value;
         $.ajax({
@@ -29,7 +57,7 @@ $(function() {
             }
         });
     }
-	
+//비밀번호 일치
 	function checkPasswords() {
 	        var password = document.getElementsByName("password")[0].value;
 	        var password2 = document.getElementsByName("password2")[0].value;
@@ -41,7 +69,7 @@ $(function() {
 	            document.getElementsByClassName("pwmatch")[0].style.color = "red";
 	        }
 	    }
-
+	$("#loginBtn").on('click',loginBtn)
     $('#backBtn').on('click', backBtn);
 	$('.duplication').on('click', check);
 	$('input[name="password"], input[name="password2"]').on('keyup', checkPasswords);

@@ -11,12 +11,6 @@ public class MainController {
 		return "index";
 	}
 	
-//	@GetMapping(value = "/")
-//	public String index(int pno, Model model) {
-//		PlayerDTO playerDto = new PlayerDTO(null, null, null, null, null, null, 0, 0, 0, 0, null, null);
-//		model.addAttribute("pdto",playerDto);
-//		return "index";
-//	}
 	@GetMapping(value = "/friend/flist")
 	public String flist() {
 		return "/friend/flist";

@@ -3,6 +3,7 @@ package kr.co.pokemon.player.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,15 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public boolean createPlayer(PlayerDTO player) {
-		int result = playerMapper.insertPlayer(player);
-        return result > 0;
+		if (player.getTag() == null || player.getTag().isEmpty()) {
+            player.setTag(generateRandomTag());  // 랜덤 태그 값 설정
+		}
+        playerMapper.insertPlayer(player);
+        return true;
 	}
+	private String generateRandomTag() {
+        return UUID.randomUUID().toString().substring(0, 10); 
+    }
 
 	@Override
 	public PlayerDTO updatePlayer(int id, PlayerDTO player) {

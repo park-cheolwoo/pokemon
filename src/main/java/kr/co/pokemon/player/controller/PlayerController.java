@@ -33,12 +33,29 @@ public class PlayerController {
         if (playerDto != null) {
             model.addAttribute("loginChk", "1");
             session.setAttribute("session_id", playerDto.getId());
+            session.setAttribute("session_nickname", playerDto.getNickname());
+            session.setAttribute("session_tag", playerDto.getTag());
+            session.setAttribute("session_lv", playerDto.getLv());
+            session.setAttribute("session_gameMoney", playerDto.getGameMoney());
+            session.setAttribute("session_realMoney", playerDto.getRealMoney());
             return "redirect:/?loginChk=1";
         } else {
             model.addAttribute("loginChk", "0");
             return "member/login";
         }
 	}
+	@GetMapping(value = "/profile")
+    public String profile(HttpSession session, Model model) {
+        PlayerDTO player = (PlayerDTO) session.getAttribute("player");
+        model.addAttribute("player", player);
+        model.addAttribute("session_id", session.getAttribute("session_id"));
+        model.addAttribute("session_nickname", session.getAttribute("session_nickname"));
+        model.addAttribute("session_tag", session.getAttribute("session_tag"));
+        model.addAttribute("session_lv", session.getAttribute("session_lv"));
+        model.addAttribute("session_gameMoney", session.getAttribute("session_gameMoney"));
+        model.addAttribute("session_realMoney", session.getAttribute("session_realMoney"));
+        return "/index";
+    }
 	
 	@GetMapping(value = "/join")
 	public String join() {
@@ -62,4 +79,6 @@ public class PlayerController {
 		boolean Able = playerService.isIdAble(id);
 		return Able ? "Able" : "unAble";
 	}
+	
+	
 }

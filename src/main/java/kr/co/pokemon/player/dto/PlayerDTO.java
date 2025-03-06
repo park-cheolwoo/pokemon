@@ -15,11 +15,11 @@ public class PlayerDTO {
 
 	private String id;
 	private String nickname;
-	private String tag="";
+	private String tag= "";
 	private String profile;
 	private String password;
 	private String description;
-	private int lv = 0;
+	private int lv = 1;
 	private int experience = 0;
 	private int gameMoney = 0;
 	private int realMoney = 0;

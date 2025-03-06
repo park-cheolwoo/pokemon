@@ -115,6 +115,7 @@ $(function() {
         });
     }
 
+		
     // 예제 버튼 클릭 시 함수 호출 (버튼 id를 사용하여 호출)
     $("#mypageBtn").click(function() { mypage(); });
     $("#storeBtn").click(function() { store(); });

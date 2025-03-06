@@ -13,14 +13,14 @@
 	<div class="flist-container">
 		<div class="flist-box">
 			<img src='/images/flist.png'>
-			<img src='/images/friend_list_green.png' class="imgflist1" id="btn1">
-			<img src='/images/friend_list.png' class="imgflist2">
+			<img src='/images/green-bar.png' class="imgflist1" id="btn1">
+			<img src='/images/yellow-bar.png' class="imgflist2">
 			<button id="toggleBtn1" class="flistbtn">친구 목록</button>
-			<img src='/images/friend_plus_green.png' class="imgfplus1 hidden" id="btn2">
-			<img src='/images/friend_plus.png' class="imgfplus2">
+			<img src='/images/green-bar.png' class="imgfplus1 hidden" id="btn2">
+			<img src='/images/yellow-bar.png' class="imgfplus2">
 			<button id="toggleBtn2" class="fplusbtn">친구 추가</button>
-			<img src='/images/friend_pls_green.png' class="imgfpls1 hidden" id="btn3">
-			<img src='/images/friend_pls.png' class="imgfpls2">
+			<img src='/images/green-bar.png' class="imgfpls1 hidden" id="btn3">
+			<img src='/images/yellow-bar.png' class="imgfpls2">
 			<button id="toggleBtn3" class="fplsbtn">친구 요청</button>
 			<!-- 친구 목록창 -->
 			<div id="content1">

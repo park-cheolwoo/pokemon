@@ -3,7 +3,7 @@
 	z-index:1;
     display: flex;
     height: 100vh;
-    background : url('/images/flistback.png') no-repeat center center/ cover;
+    background : url('/images/mypage_back.png') no-repeat center center/ cover;
 }
 .flist-box{
 	position: absolute;
@@ -33,32 +33,32 @@
 /*친구 목록 창*/
 .imgflist1{
 	position: absolute;
-	top: 0.2%;
+	top: 0%;
   	left: 6%;
   	z-index:5;
 }
 .imgflist2{
 	position: absolute;
-	top: 0.1%;
+	top: 0%;
   	left: 6%;
   	z-index:4;
 }
 .imgfplus1{
 	position: absolute;
-	top: 0.1%;
+	top: 0%;
   	left: 36%;
   	z-index:5;
 }
 .imgfplus2{
 	position: absolute;
 	top: 0%;
-  	left: 35%;
+  	left: 36%;
   	z-index:4;
 }
 .imgfpls1{
 	position: absolute;
-	top: 0.2%;
-  	left: 65.2%;
+	top: 0%;
+  	left: 65%;
   	z-index:5;
 }
 .imgfpls2{
