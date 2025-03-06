@@ -2,17 +2,19 @@ package kr.co.pokemon.pokemon.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import kr.co.pokemon.data.dto.EntityDTO;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SpritesDTO {
+public class SpritesDTO extends EntityDTO {
 
-	private int id;
 	private String backDefault;
 	private String backFemale;
 	private String backShiny;

@@ -5,18 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.pokemon.data.dto.PageDTO;
+import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.pokemon.dao.EvolutionTriggerMapper;
 import kr.co.pokemon.pokemon.dto.EvolutionTriggerDTO;
 
 @Service
 public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 
+	private final DBTables dbTable = DBTables.EVOLUTION_TRIGGER;
+	
 	@Autowired
 	private EvolutionTriggerMapper evolutionTriggerMapper;
 
 	@Override
-	public List<EvolutionTriggerDTO> getAll(PageDTO page) {
+	public List<EvolutionTriggerDTO> getAll(PageRequestDTO page) {
 		return evolutionTriggerMapper.selectAll(page);
 	}
 
@@ -26,10 +29,25 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 	}
 
 	@Override
-	public void getDataFromAPI(EvolutionTriggerDTO dto) throws Exception {
-		if (evolutionTriggerMapper.existById(dto.getId()) == 0) {
-			evolutionTriggerMapper.insert((EvolutionTriggerDTO) dto);
-		}
+	public int getDataFromAPI(EvolutionTriggerDTO dto) throws Exception {
+		evolutionTriggerMapper.insert((EvolutionTriggerDTO) dto);
+		
+		return 1;
+	}
+
+	@Override
+	public List<DBTables> getDependencies() {
+		return dbTable.getDependencies();
+	}
+
+	@Override
+	public void insert(EvolutionTriggerDTO dto) {
+		evolutionTriggerMapper.insert(dto);
+	}
+	
+	@Override
+	public String getDBTableName() {
+		return dbTable.getTableName();
 	}
 
 }

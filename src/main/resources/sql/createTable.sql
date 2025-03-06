@@ -18,6 +18,7 @@ CREATE TABLE ability (
 CREATE TABLE types (
 	id NUMBER(5) PRIMARY KEY,
 	name VARCHAR2(100) NOT NULL,
+	original_name VARCHAR2(100) NOT NULL,
 	image VARCHAR2(255) DEFAULT '/images/no-type.png' NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL
@@ -31,9 +32,16 @@ CREATE TABLE types_relationship (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 
-	CONSTRAINT fk_types_relationship_from FOREIGN KEY(from_id) REFERENCES types (id),
-	CONSTRAINT fk_types_relationship_to FOREIGN KEY(to_id) REFERENCES types (id)
+	CONSTRAINT fk_types_relationship_from FOREIGN KEY(from_id) REFERENCES types (id) ON DELETE CASCADE,
+	CONSTRAINT fk_types_relationship_to FOREIGN KEY(to_id) REFERENCES types (id) ON DELETE CASCADE
 );
+
+CREATE SEQUENCE types_relationship_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 999
+;
 
 CREATE TABLE attack (
 	id NUMBER(5) PRIMARY KEY,
@@ -46,12 +54,12 @@ CREATE TABLE attack (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_attack_types FOREIGN KEY(types_id) REFERENCES types (id)
+	CONSTRAINT fk_attack_types FOREIGN KEY(types_id) REFERENCES types (id) ON DELETE CASCADE
 );
 
 CREATE TABLE habitat (
 	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100),
+	name VARCHAR2(100) NOT NULL,
 	original_name VARCHAR2(100) NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL
@@ -67,18 +75,19 @@ CREATE TABLE egg_group (
 CREATE TABLE stat (
 	id NUMBER(5) PRIMARY KEY,
 	name VARCHAR2(100) NOT NULL,
+	original_name VARCHAR2(100) NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL
 );
 
 CREATE TABLE characteristic (
 	id NUMBER(5) PRIMARY KEY,
-	stat_id NUMBER(5) UNIQUE NOT NULL,
+	stat_id NUMBER(5) NOT NULL,
 	description CLOB NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_characteristic_stat FOREIGN KEY(stat_id) REFERENCES stat (id)
+	CONSTRAINT fk_characteristic_stat FOREIGN KEY(stat_id) REFERENCES stat (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon (
@@ -97,7 +106,7 @@ CREATE TABLE pokemon (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 
-	CONSTRAINT fk_pokemon_egg_group FOREIGN KEY(egg_group_id) REFERENCES egg_group (id)
+	CONSTRAINT fk_pokemon_egg_group FOREIGN KEY(egg_group_id) REFERENCES egg_group (id) ON DELETE CASCADE
 );
 
 CREATE TABLE sprites (
@@ -113,7 +122,7 @@ CREATE TABLE sprites (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_sprites_pokemon FOREIGN KEY(id) REFERENCES pokemon (id)
+	CONSTRAINT fk_sprites_pokemon FOREIGN KEY(id) REFERENCES pokemon (id) ON DELETE CASCADE
 );
 
 CREATE TABLE evolution (
@@ -126,7 +135,7 @@ CREATE TABLE evolution (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_evolution_baby_pokemon FOREIGN KEY(baby_id) REFERENCES pokemon (id),
+	CONSTRAINT fk_evolution_baby_pokemon FOREIGN KEY(baby_id) REFERENCES pokemon (id) ON DELETE CASCADE,
 	CONSTRAINT fk_evolution_child_pokemon FOREIGN KEY(child_id) REFERENCES pokemon (id),
 	CONSTRAINT fk_evolution_adult_pokemon FOREIGN KEY(adult_id) REFERENCES pokemon (id),
 	CONSTRAINT fk_evolution_child_trigger FOREIGN KEY(child_trigger_id) REFERENCES evolution_trigger (id),
@@ -142,7 +151,7 @@ CREATE TABLE growth (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 
-	CONSTRAINT fk_growth_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id)
+	CONSTRAINT fk_growth_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE
 );
 
 CREATE TABLE total_experience (
@@ -153,7 +162,7 @@ CREATE TABLE total_experience (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_total_experience_growth FOREIGN KEY(growth_id) REFERENCES growth (id)
+	CONSTRAINT fk_total_experience_growth FOREIGN KEY(growth_id) REFERENCES growth (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon_ability (
@@ -164,8 +173,8 @@ CREATE TABLE pokemon_ability (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_pokemon_ability_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_pokemon_ability_ability FOREIGN KEY(ability_id) REFERENCES ability (id)
+	CONSTRAINT fk_pokemon_ability_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_pokemon_ability_ability FOREIGN KEY(ability_id) REFERENCES ability (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon_attack (
@@ -177,8 +186,8 @@ CREATE TABLE pokemon_attack (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_pokemon_attack_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_pokemon_attack_attack FOREIGN KEY(attack_id) REFERENCES attack (id)
+	CONSTRAINT fk_pokemon_attack_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_pokemon_attack_attack FOREIGN KEY(attack_id) REFERENCES attack (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon_types (
@@ -189,8 +198,8 @@ CREATE TABLE pokemon_types (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_pokemon_types_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_pokemon_types_types FOREIGN KEY(types_id) REFERENCES types (id)	
+	CONSTRAINT fk_pokemon_types_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_pokemon_types_types FOREIGN KEY(types_id) REFERENCES types (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon_habitat (
@@ -200,8 +209,8 @@ CREATE TABLE pokemon_habitat (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_pokemon_habitat_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_pokemon_habitat_habitat FOREIGN KEY(habitat_id) REFERENCES habitat (id)
+	CONSTRAINT fk_pokemon_habitat_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_pokemon_habitat_habitat FOREIGN KEY(habitat_id) REFERENCES habitat (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon_base_stat (
@@ -212,8 +221,8 @@ CREATE TABLE pokemon_base_stat (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 
-	CONSTRAINT fk_pokemon_stat_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_pokemon_stat_stat FOREIGN KEY(stat_id) REFERENCES stat (id)
+	CONSTRAINT fk_pokemon_stat_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_pokemon_stat_stat FOREIGN KEY(stat_id) REFERENCES stat (id) ON DELETE CASCADE
 );
 
 CREATE TABLE player (
@@ -245,9 +254,9 @@ CREATE TABLE player_pokemon (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_player_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id),
-	CONSTRAINT fk_player_pokemon_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_player_pokemon_characteristic FOREIGN KEY(characteristic_id) REFERENCES characteristic (id)
+	CONSTRAINT fk_player_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
+	CONSTRAINT fk_player_pokemon_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_player_pokemon_characteristic FOREIGN KEY(characteristic_id) REFERENCES characteristic (id) ON DELETE CASCADE
 );
 
 CREATE TABLE friend (
@@ -258,8 +267,8 @@ CREATE TABLE friend (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_friend_player_from FOREIGN KEY(player_from) REFERENCES player (id),
-	CONSTRAINT fk_friend_player_to FOREIGN KEY(player_to) REFERENCES player (id)
+	CONSTRAINT fk_friend_player_from FOREIGN KEY(player_from) REFERENCES player (id) ON DELETE CASCADE,
+	CONSTRAINT fk_friend_player_to FOREIGN KEY(player_to) REFERENCES player (id) ON DELETE CASCADE
 );
 
 CREATE TABLE item_category (
@@ -283,7 +292,7 @@ CREATE TABLE item (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_item_category FOREIGN KEY(category_id) REFERENCES item_category (id)
+	CONSTRAINT fk_item_category FOREIGN KEY(category_id) REFERENCES item_category (id) ON DELETE CASCADE
 );
 
 CREATE TABLE player_item (
@@ -294,8 +303,8 @@ CREATE TABLE player_item (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_player_item_player FOREIGN KEY(player_id) REFERENCES player (id),
-	CONSTRAINT fk_player_item_item FOREIGN KEY(item_id) REFERENCES item (id)
+	CONSTRAINT fk_player_item_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
+	CONSTRAINT fk_player_item_item FOREIGN KEY(item_id) REFERENCES item (id) ON DELETE CASCADE
 );
 
 CREATE TABLE game_stage (
@@ -305,7 +314,7 @@ CREATE TABLE game_stage (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 
-	CONSTRAINT fk_stage_habitat FOREIGN KEY(habitat_id) REFERENCES habitat (id)
+	CONSTRAINT fk_stage_habitat FOREIGN KEY(habitat_id) REFERENCES habitat (id) ON DELETE CASCADE
 );
 
 CREATE TABLE ingame (
@@ -315,7 +324,7 @@ CREATE TABLE ingame (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_ingame_stage FOREIGN KEY(stage_id) REFERENCES game_stage (id)
+	CONSTRAINT fk_ingame_stage FOREIGN KEY(stage_id) REFERENCES game_stage (id) ON DELETE CASCADE
 );
 
 CREATE TABLE ingame_pokemon (
@@ -327,8 +336,8 @@ CREATE TABLE ingame_pokemon (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_ingame_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id),
-	CONSTRAINT fk_ingame_pokemon_pokemon FOREIGN KEY(pokemon_id) REFERENCES player_pokemon (id)
+	CONSTRAINT fk_ingame_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
+	CONSTRAINT fk_ingame_pokemon_pokemon FOREIGN KEY(pokemon_id) REFERENCES player_pokemon (id) ON DELETE CASCADE
 );
 
 CREATE TABLE ingame_enemy (
@@ -340,8 +349,8 @@ CREATE TABLE ingame_enemy (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_ingame_enemy_player FOREIGN KEY(player_id) REFERENCES player (id),
-	CONSTRAINT fk_ingame_enemy_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id)
+	CONSTRAINT fk_ingame_enemy_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
+	CONSTRAINT fk_ingame_enemy_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE
 );
 
 COMMIT;

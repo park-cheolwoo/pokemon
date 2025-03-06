@@ -19,6 +19,7 @@ BEGIN
   SELECT COUNT(*) INTO is_exist FROM user_tables WHERE table_name = UPPER('types_relationship');
 	IF is_exist > 0 THEN
 		EXECUTE IMMEDIATE 'DROP TABLE types_relationship CASCADE CONSTRAINTS';
+		EXECUTE IMMEDIATE 'DROP SEQUENCE types_relationship_SEQ';
 	END IF;
 
   SELECT COUNT(*) INTO is_exist FROM user_tables WHERE table_name = UPPER('attack');

@@ -7,18 +7,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.pokemon.data.dto.PageDTO;
+import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.data.dto.TableInfoDTO;
 import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dto.AbilityDTO;
+import kr.co.pokemon.pokemon.dto.AttackDTO;
+import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
 import kr.co.pokemon.pokemon.dto.EggGroupDTO;
 import kr.co.pokemon.pokemon.dto.EvolutionTriggerDTO;
 import kr.co.pokemon.pokemon.dto.HabitatDTO;
+import kr.co.pokemon.pokemon.dto.StatDTO;
+import kr.co.pokemon.pokemon.dto.TypesDTO;
+import kr.co.pokemon.pokemon.dto.TypesRelationshipDTO;
 import kr.co.pokemon.pokemon.service.AbilityService;
+import kr.co.pokemon.pokemon.service.AttackService;
+import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.EggGroupService;
 import kr.co.pokemon.pokemon.service.EvolutionTriggerService;
 import kr.co.pokemon.pokemon.service.HabitatService;
+import kr.co.pokemon.pokemon.service.StatService;
+import kr.co.pokemon.pokemon.service.TypesRelationshipService;
+import kr.co.pokemon.pokemon.service.TypesService;
 
 @RestController
 @RequestMapping(value = "/data")
@@ -26,10 +38,25 @@ public class DataController {
 
 	@Autowired
 	private DataService dataService;
-
+	
+	@Autowired
+	private TypesRelationshipService typesRelationshipService;
+	
+	@GetMapping(value = "/info")
+	public List<TableInfoDTO> getAllTableInfo() {
+		return dataService.getAllTableInfo();
+	}
+	
+	@GetMapping(value = "/info/{tableName}")
+	public ResponseEntity<TableInfoDTO> getTableInfo(@PathVariable String tableName) {
+		tableName = tableName.replaceAll("-", "_");
+		return dataService.getTableInfo(tableName)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
 	
 	@GetMapping(value = "/evolution/trigger")
-	public List<EvolutionTriggerDTO> getEvolutionTrigger(PageDTO page) {
+	public List<EvolutionTriggerDTO> getEvolutionTrigger(PageRequestDTO page) {
 		if (page.getPage() < 0) page.setPage(0);
 		if (page.getSize() <= 0) page.setSize(10);
 		return dataService.getAll(page, EvolutionTriggerService.class);
@@ -43,7 +70,7 @@ public class DataController {
 	}
 	
 	@GetMapping(value = "/egg-group")
-	public List<EggGroupDTO> getEggGroup(PageDTO page) {
+	public List<EggGroupDTO> getEggGroup(PageRequestDTO page) {
 		if (page.getPage() < 0) page.setPage(0);
 		if (page.getSize() <= 0) page.setSize(10);
 		return dataService.getAll(page, EggGroupService.class);
@@ -57,7 +84,7 @@ public class DataController {
 	}
 	
 	@GetMapping(value = "/habitat")
-	public List<HabitatDTO> getHabitat(PageDTO page) {
+	public List<HabitatDTO> getHabitat(PageRequestDTO page) {
 		if (page.getPage() < 0) page.setPage(0);
 		if (page.getSize() <= 0) page.setSize(10);
 		return dataService.getAll(page, HabitatService.class);
@@ -71,7 +98,7 @@ public class DataController {
 	}
 	
 	@GetMapping(value = "/ability")
-	public List<AbilityDTO> getAbility(PageDTO page) {
+	public List<AbilityDTO> getAbility(PageRequestDTO page) {
 		if (page.getPage() < 0) page.setPage(0);
 		if (page.getSize() <= 0) page.setSize(10);
 		return dataService.getAll(page, AbilityService.class);
@@ -80,6 +107,74 @@ public class DataController {
 	@GetMapping(value = "/ability/{id}")
 	public ResponseEntity<AbilityDTO> getAbility(@PathVariable int id) {
 		return dataService.getById(id, AbilityService.class)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping(value = "/type")
+	public List<TypesDTO> getTypes(PageRequestDTO page) {
+		if (page.getPage() < 0) page.setPage(0);
+		if (page.getSize() <= 0) page.setSize(10);
+		return dataService.getAll(page, TypesService.class);
+	}
+	
+	@GetMapping(value = "/type/{id}")
+	public ResponseEntity<TypesDTO> getTypes(@PathVariable int id) {
+		return dataService.getById(id, TypesService.class)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping(value = "/type/relationship")
+	public List<TypesRelationshipDTO> getTypesRelationship(PageRequestDTO page) {
+		if (page.getPage() < 0) page.setPage(0);
+		if (page.getSize() <= 0) page.setSize(10);
+		return dataService.getAll(page, TypesRelationshipService.class);
+	}
+	
+	@GetMapping(value = "/type/relationship/{id}")
+	public List<TypesRelationshipDTO> getTypesRelationship(@PathVariable int id, @RequestParam(name = "name", defaultValue = "false") boolean isName) {
+		return typesRelationshipService.getByTypeId(id, isName);
+	}
+	
+	@GetMapping(value = "/attack")
+	public List<AttackDTO> getAttack(PageRequestDTO page) {
+		if (page.getPage() < 0) page.setPage(0);
+		if (page.getSize() <= 0) page.setSize(10);
+		return dataService.getAll(page, AttackService.class);
+	}
+
+	@GetMapping(value = "/attack/{id}")
+	public ResponseEntity<AttackDTO> getAttack(@PathVariable int id) {
+		return dataService.getById(id, AttackService.class)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping(value = "/stat")
+	public List<StatDTO> getStat(PageRequestDTO page) {
+		if (page.getPage() < 0) page.setPage(0);
+		if (page.getSize() <= 0) page.setSize(10);
+		return dataService.getAll(page, StatService.class);
+	}
+	
+	@GetMapping(value = "/stat/{id}")
+	public ResponseEntity<StatDTO> getStat(@PathVariable int id) {
+		return dataService.getById(id, StatService.class)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping(value = "/characteristic")
+	public List<CharacteristicDTO> getCharacteristic(PageRequestDTO page) {
+		if (page.getPage() < 0) page.setPage(0);
+		if (page.getSize() <= 0) page.setSize(10);
+		return dataService.getAll(page, CharacteristicService.class);
+	}
+	
+	@GetMapping(value = "/characteristic/{id}")
+	public ResponseEntity<CharacteristicDTO> getCharacteristic(@PathVariable int id) {
+		return dataService.getById(id, CharacteristicService.class)
 				.map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}

@@ -1,11 +1,7 @@
 package kr.co.pokemon.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import kr.co.pokemon.player.dto.PlayerDTO;
-import kr.co.pokemon.player.service.PlayerService;
 
 @Controller
 public class MainController {
@@ -14,6 +10,7 @@ public class MainController {
 	public String index() {
 		return "index";
 	}
+	
 //	@GetMapping(value = "/")
 //	public String index(int pno, Model model) {
 //		PlayerDTO playerDto = new PlayerDTO(null, null, null, null, null, null, 0, 0, 0, 0, null, null);
@@ -24,6 +21,25 @@ public class MainController {
 	public String flist() {
 		return "/friend/flist";
 	}
+
 	
+	@GetMapping("/play/plist")
+	public String plist() {
+		return "/play/plist";
+	}	
 	
+	@GetMapping("/play/quest")
+	public String quest() {
+		return "/play/quest";
+	}
+	
+	@GetMapping("/play/dungeon")
+	public String dungeon() {
+		return "/play/dungeon";
+	}
+	
+	@GetMapping("/play/sdungeon")
+	public String sdungeon() {
+		return "/play/sdungeon";
+	}
 }
