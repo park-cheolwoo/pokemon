@@ -18,6 +18,7 @@ CREATE TABLE ability (
 CREATE TABLE types (
 	id NUMBER(5) PRIMARY KEY,
 	name VARCHAR2(100) NOT NULL,
+	original_name VARCHAR2(100) NOT NULL,
 	image VARCHAR2(255) DEFAULT '/images/no-type.png' NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL
@@ -34,6 +35,13 @@ CREATE TABLE types_relationship (
 	CONSTRAINT fk_types_relationship_from FOREIGN KEY(from_id) REFERENCES types (id),
 	CONSTRAINT fk_types_relationship_to FOREIGN KEY(to_id) REFERENCES types (id)
 );
+
+CREATE SEQUENCE types_relationship_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 999
+;
 
 CREATE TABLE attack (
 	id NUMBER(5) PRIMARY KEY,

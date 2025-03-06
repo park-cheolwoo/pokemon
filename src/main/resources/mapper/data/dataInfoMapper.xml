@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.data.dao.DataInfoMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.data.dto.TableInfoDTO" autoMapping="true">
+    <result column="CREATED" property="createdAt" />
+    <result column="LAST_DDL_TIME" property="updatedAt" />
+  </resultMap>
+
+  <select id="getInfoByTableName" resultMap="dataResultMap">
+	SELECT
+		UPPER(#{tableName}) AS "name", 0 AS "COUNT", CREATED, LAST_DDL_TIME
+	FROM
+		ALL_OBJECTS
+	WHERE
+		OBJECT_TYPE = 'TABLE' AND OBJECT_NAME = UPPER(#{tableName})
+  </select>
+  
+  <select id="getCountByTableName" resultType="int">
+  	SELECT COUNT(*) FROM ${tableName}
+  </select>
+  
+  <delete id="deleteDataByTableName">
+  	TRUNCATE TABLE ${tableName};
+  </delete>
+
+</mapper>

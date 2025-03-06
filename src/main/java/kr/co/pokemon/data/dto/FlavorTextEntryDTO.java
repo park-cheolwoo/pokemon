@@ -1,9 +1,8 @@
-package kr.co.pokemon.pokemon.dto;
+package kr.co.pokemon.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import kr.co.pokemon.data.dto.EntityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class HabitatDTO extends EntityDTO {
-
-	private String name;
-	private String originalName;
-
+public class FlavorTextEntryDTO {
+	@JsonProperty(value = "flavor_text")
+	private String flavorText;
+	private LanguageDTO language;
 }
