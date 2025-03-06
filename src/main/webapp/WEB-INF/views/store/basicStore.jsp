@@ -37,63 +37,88 @@
     
     <!-- 반복  -->
      <tr class="item_row">
-      <td><img src="/store/images/몬스터볼.png" id="1" class="item_list_img selected"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
+      <td><img src="/store/images/몬스터볼.png" id="1" class="item_list_img selected"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
       <td>
      </tr>
     <!-- 반복  -->
-   
-   	<tr class="item_row">
-      <td><img src="/store/images/몬스터볼.png" id="1" class="item_list_img selected"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td>
-     </tr><tr class="item_row">
-      <td><img src="/store/images/몬스터볼.png" id="1" class="item_list_img selected"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td>
-     </tr><tr class="item_row">
-      <td><img src="/store/images/몬스터볼.png" id="1" class="item_list_img selected"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td>
-     </tr><tr class="item_row">
-      <td><img src="/store/images/몬스터볼.png" id="1" class="item_list_img selected"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td>
-     </tr><tr class="item_row">
-      <td><img src="/store/images/몬스터볼.png" id="1" class="item_list_img selected"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
-      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></a></td>
+    <tr class="item_row">
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
       <td>
      </tr>
+    <tr class="item_row">
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td>
+     </tr>
+    <tr class="item_row">
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td>
+     </tr>
+    <tr class="item_row">
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td>
+     </tr>
+    <tr class="item_row">
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td>
+     </tr>
+    <tr class="item_row">
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td>
+     </tr>
+    <tr class="item_row">
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td><img src="/store/images/몬스터볼.png" class="item_list_img"></td>
+      <td>
+     </tr>
+   
+   	
    
    
    
@@ -107,16 +132,39 @@
 	    <img src="/store/images/구매개수.png" class="item_container_box">
 	    <h4 class="item_total_cost text">0</h4>
 	    <h4 class="item_cost_warning text">코인이 부족합니다!</h4>
-	    <img src="/store/images/하_no.png" class="item_lower lower_yes">
+	    <img src="/store/images/하_yes.png" class="item_lower lower_yes">
 	    <h4 class="item_total_count text">0</h4>
 	    <img src="/store/images/상_yes.png" class="item_upper upper_yes">
-	    <img src="/store/images/예_yes.png" class="item_buy_yes buy_toggle">
+	    <img src="/store/images/예_yes.png" class="item_buy_yes buy_ok">
 	    <img src="/store/images/닫기.png" class="item_buy_no">
 	 </div>
 
+	<div class="item_confirm_container">
+	    <img src="/store/images/blur.png" class="blur" />
+	    <img src="/store/images/구매확인.png" class="item_container_box">
+	    <div class="item_buy_wrap">
+		    <h4 class="item_buy_name text">아이템 이름</h4>
+			<br/>
+		    <h4 class="item_buy_count text">
+		    	<span class="item_buy_count_span text">1</span>
+		    	개를
+		    </h4>
+			<br/>
+			<div class="item_buy_cost_wrap">
+		    <img src="/store/images/동전.png" class="item_buy_coin" />
+		    <h4 class="item_buy_cost text">
+		    	<span class="item_buy_cost_span text">2000</span>
+		    	에
+		    </h4>
+			</div>
+		    <br/>
+		    <h4 class="item_buy_txt3 text">구매하시겠습니까?</h4>
+		</div>
+	    <img src="/store/images/예_yes.png" class="item_confirm_yes">
+	    <img src="/store/images/닫기.png" class="item_confirm_no">
+  	</div>
 
-
-
+	
 
 
 <script>
@@ -153,6 +201,7 @@
 		
 		$(document).on("click",".item_list_img",function(){
 			//let id = ${temp.id};
+			$(".item_table").find(".item_list_img").removeClass("selected");
 			let img = $(this).attr("src");
 			$(this).toggleClass("selected");
 		$(".item_describe_img").attr("src",img);
@@ -168,7 +217,8 @@
 		
 		
 		$(document).on("click",".item_buy",function(){
-			$(".item_total_count").text("0");
+			$(".item_total_count").text("1");
+			$(".item_total_cost").text("20");
 			$(".item_buy_container").css("display","block");
 		});
 		
@@ -187,8 +237,12 @@
 		
 			if ($(".item_total_count").text() == "0") {
 			    $(".item_cost_warning").css("display", "inline");
+			    $(".item_buy_yes").attr("src","/store/images/예_no.png");
+			    $(".item_buy_yes").removeClass("buy_ok");
 			} else {
 			    $(".item_cost_warning").css("display", "none");
+			    $(".item_buy_yes").attr("src","/store/images/예_yes.png");
+			    $(".item_buy_yes").addClass("buy_ok");
 			}
 		});
 			
@@ -205,15 +259,34 @@
 			}
 			if ($(".item_total_count").text() == "0") {
 			    $(".item_cost_warning").css("display", "inline");
+			    $(".item_buy_yes").attr("src","/store/images/예_no.png");
+			    $(".item_buy_yes").removeClass("buy_ok");
 			} else {
 			    $(".item_cost_warning").css("display", "none");
+			    $(".item_buy_yes").attr("src","/store/images/예_yes.png");
+			    $(".item_buy_yes").addClass("buy_ok");
 			}
 		});
 		
+		$(document).on("click",".buy_ok",function(){
+			let name = $(".item_name").text();
+			let count = Number($(".item_total_count").text());
+			let cost = Number($(".item_total_cost").text());
+			$(".item_buy_container").css("display","none");
+			$(".item_buy_name").text(name);
+			$(".item_buy_count").text(count + " 개를");
+			$(".item_buy_cost").text(cost + " 에");
+			$(".item_confirm_container").css("display","block");
+		})
 		
-
+		$(document).on("click",".item_confirm_no",function(){
+			$(".item_confirm_container").css("display","none");
+		})
+		
 			
-		
+		$(document).on("click",".item_describe_btn",function(){
+			
+		})
 		// 구매 모달창 //
 
 	});
