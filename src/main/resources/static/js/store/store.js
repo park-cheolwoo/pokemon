@@ -42,7 +42,7 @@ $(function () {
        // 왼쪽 아이템 설명창 //		
 
        $(document).on("click", ".item_dscrb_btn", function () {
-         $(".item_describe_container").css("display", "block");
+         $(".item_describe_container").toggle();
        })
        
        // 왼쪽 아이템 설명창 //
@@ -51,12 +51,12 @@ $(function () {
        $(document).on("click", ".item_buy_btn", function () {
          $(".item_total_count").val("1");
          $(".item_total_cost").text("20");
-         $(".item_buy_container").css("display", "block");
+         $(".item_buy_container").toggle();
        });
 
 
        $(document).on("click", ".item_buy_no", function () {
-         $(".item_buy_container").css("display", "none");
+         $(".item_buy_container").toggle();
        });
 
 
@@ -92,10 +92,10 @@ $(function () {
            $(".item_lower").removeClass("lower_yes");
            $(".item_buy_yes").attr("src", "/images/store/gray-check.png");
            $(".item_buy_yes").removeClass("buy_ok");
-           $(".item_cost_warning").css("display", "inline");
+           $(".item_cost_warning").toggle();
            return false;
          } else {
-           $(".item_cost_warning").css("display", "none");
+           $(".item_cost_warning").toggle();
            $(".item_upper").attr("src", "/images/store/yellow-up.png");
            $(".item_upper").addClass("upper_yes");
            $(".item_lower").attr("src", "/images/store/yellow-down.png");
@@ -109,26 +109,26 @@ $(function () {
            let name = $(".item_dscrb_name").text();
            let count = Number($(".item_total_count").val());
            let cost = Number($(".item_total_cost").text());
-           $(".item_buy_container").css("display", "none");
+           $(".item_buy_container").toggle();
            $(".item_confirm_name").text(name);
            $(".item_confirm_count").text(count + " 개를");
            $(".item_confirm_cost").text(cost + " 에");
-           $(".item_confirm_container").css("display", "block");
+           $(".item_confirm_container").toggle();
          });
 
          $(document).on("click", ".item_confirm_no", function () {
-           $(".item_confirm_container").css("display", "none");
+           $(".item_confirm_container").toggle();
          });
          
          $(document).on("click", ".item_describe_exit", function () {
-           $(".item_describe_container").css("display", "none");
+           $(".item_describe_container").toggle();
          });
          // 구매 모달창 //
          
          $(document).on("click", ".item_next_page", function () {
-           $(".item_main_container").css("display", "none");
+           $(".item_main_container").toggle();
            $("body").css("background", 'url("/store/images/아이템 뽑기.png") no-repeat center center / cover');
-           $(".draw_main_container").css("display", "block");
+           $(".draw_main_container").toggle();
          });
          
          
