@@ -13,6 +13,7 @@ $(function() {
 				password:password
 			},
 			success: function(response){
+				console.log("Response:",response);
 				if(response.loginChk=="0"){
 					alert("아이디 또는 패스워드가 일치하지 않습니다.")
 				}else if(response.loginChk =="1"){
@@ -69,7 +70,7 @@ $(function() {
 	            document.getElementsByClassName("pwmatch")[0].style.color = "red";
 	        }
 	    }
-	$("#loginBtn").on('click',loginBtn)
+	$("#loginBtn").on('click',loginBtn);
     $('#backBtn').on('click', backBtn);
 	$('.duplication').on('click', check);
 	$('input[name="password"], input[name="password2"]').on('keyup', checkPasswords);

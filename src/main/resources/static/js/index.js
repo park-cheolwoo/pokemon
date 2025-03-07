@@ -15,10 +15,10 @@ $(function() {
 
     function store() {
         $.ajax({
-            url: "/store/store",
+            url: "/store/basicStore",
             type: 'GET',
             success: function(response) {
-                location.href = "/store/store";
+                location.href = "/store/basicStore";
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);

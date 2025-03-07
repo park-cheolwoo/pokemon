@@ -43,66 +43,6 @@
     </div>
         
     <script src="/js/index.js"></script>
-    <script>
-        const usedIds = new Set(); // 중복된 ID를 추적하기 위한 Set
-
-        function getPokemon() {
-          let randomId;
-
-          // 중복되지 않는 randomId를 찾을 때까지 반복
-          do {
-            randomId = Math.floor(Math.random() * 1000) + 1; // 1부터 1000까지의 랜덤 ID
-          } while (usedIds.has(randomId));  // 이미 사용된 ID이면 다시 생성
-
-          // 새로운 ID를 사용된 ID 목록에 추가
-          usedIds.add(randomId);
-
-          return fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
-            .then(response => response.json())
-            .then(data => {
-              return fetch(`https://pokeapi.co/api/v2/pokemon-species/${randomId}`)
-                .then(speciesResponse => speciesResponse.json())
-                .then(speciesData => {
-                  const koreanName = speciesData.names.find(nameObj => nameObj.language.name === 'ko');
-                  return {
-                    imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomId}.png`,
-                    name: koreanName ? koreanName.name : 'No Korean Name'
-                  };
-                });
-            })
-            .catch(error => {
-              console.error('Error fetching Pokemon data:', error);
-              return {
-                imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png', // 오류 발생 시 기본 이미지 URL
-                name: 'Error'
-              };
-            });
-        }
-
-        // 포켓몬 이미지와 이름을 설정하는 함수
-        function setPokemonImageAndName(imageId, nameId) {
-          getPokemon().then(pokemon => {
-            const pokeimg = document.getElementById(imageId);
-            const pokemonName = document.getElementById(nameId);
-
-            if (pokeimg && pokemon.imageUrl) {
-              pokeimg.src = pokemon.imageUrl;
-            }
-            if (pokemonName) {
-              pokemonName.textContent = pokemon.name;
-            }
-          });
-        }
-
-        // 페이지 로드 시 초기화
-        document.addEventListener('DOMContentLoaded', () => {
-          setPokemonImageAndName('pokeimg1', 'pokeName1');
-          setPokemonImageAndName('pokeimg2', 'pokeName2');
-          setPokemonImageAndName('pokeimg3', 'pokeName3');
-          setPokemonImageAndName('pokeimg4', 'pokeName4');
-          setPokemonImageAndName('pokeimg5', 'pokeName5');
-          setPokemonImageAndName('pokeimg6', 'pokeName6');
-        });
-    </script>
+   
 </body>
 </html>

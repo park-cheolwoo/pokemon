@@ -3,9 +3,10 @@ package kr.co.pokemon.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Controller
 public class MainController {
-
+	
 	@GetMapping(value = "/")
 	public String index() {
 		return "index";
@@ -15,7 +16,6 @@ public class MainController {
 	public String flist() {
 		return "/friend/flist";
 	}
-
 	
 	@GetMapping("/play/plist")
 	public String plist() {
