@@ -29,20 +29,22 @@ public class AbilityServiceImpl implements AbilityService {
 	}
 
 	@Override
-	public int getDataFromAPI(AbilityDTO dto) throws Exception {
-		String languageName = "ko";
-		dto.getLanguagesName(languageName).ifPresent(name -> dto.setName(name));
-		dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
+	public int insertDataFromAPI(List<AbilityDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			String languageName = "ko";
+			dto.getLanguagesName(languageName).ifPresent(name -> dto.setName(name));
+			dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
 			dto.setDescription(effect),
 			() -> dto.setDescription("NO-TEXT")
-		);
-		dto.getLanguagesFlavorText(languageName).ifPresentOrElse(flavor ->
+					);
+			dto.getLanguagesFlavorText(languageName).ifPresentOrElse(flavor ->
 			dto.setFlavorText(flavor),
 			() -> dto.setFlavorText("NO-TEXT")
-		);
-		abilityMapper.insert(dto);
+					);			
+		});
+		abilityMapper.insertAll(list);
 
-		return 1;
+		return list.size();
 	}
 
 	@Override
@@ -56,8 +58,8 @@ public class AbilityServiceImpl implements AbilityService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

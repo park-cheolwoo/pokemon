@@ -29,12 +29,13 @@ public class EggGroupServiceImpl implements EggGroupService {
 	}
 
 	@Override
-	public int getDataFromAPI(EggGroupDTO dto) throws Exception {
-		dto.setOriginalName(dto.getName());
-		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-		eggGroupMapper.insert(dto);
-
-		return 1;
+	public int insertDataFromAPI(List<EggGroupDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			dto.setOriginalName(dto.getName());
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+		});
+		eggGroupMapper.insertAll(list);
+		return list.size();
 	}
 
 	@Override
@@ -48,8 +49,8 @@ public class EggGroupServiceImpl implements EggGroupService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

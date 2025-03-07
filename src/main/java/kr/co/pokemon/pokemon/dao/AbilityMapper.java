@@ -17,5 +17,7 @@ public interface AbilityMapper {
 	int existById(int id);
 
 	void insert(AbilityDTO ability);
+	
+	void insertAll(List<AbilityDTO> abilities);
 
 }

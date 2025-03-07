@@ -29,10 +29,10 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 	}
 
 	@Override
-	public int getDataFromAPI(EvolutionTriggerDTO dto) throws Exception {
-		evolutionTriggerMapper.insert((EvolutionTriggerDTO) dto);
-		
-		return 1;
+	public int insertDataFromAPI(List<EvolutionTriggerDTO> list) throws Exception {
+		evolutionTriggerMapper.insertAll(list);
+
+		return list.size();
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

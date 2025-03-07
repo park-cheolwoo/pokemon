@@ -19,6 +19,8 @@ public interface TypesRelationshipMapper {
 
 	TypesRelationshipDTO selectById(int id);
 
-	void insert(TypesRelationshipDTO typeRelationship);
+	void insert(TypesRelationshipDTO typesRelationship);
+	
+	void insertAll(List<TypesRelationshipDTO> typesRelationships);
 	
 }

@@ -38,4 +38,8 @@
   	DELETE FROM ${tableName}
   </delete>
 
+  <delete id="deleteDataByPage" parameterType="kr.co.pokemon.data.dto.DataDeleteDTO">
+  	DELETE FROM ${tableName} WHERE id BETWEEN #{start} AND #{end}
+  </delete>
+
 </mapper>

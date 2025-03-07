@@ -33,12 +33,15 @@ public class TypesServiceImpl implements TypesService {
 	}
 
 	@Override
-	public int getDataFromAPI(TypesDTO dto) throws Exception {
-		dto.setOriginalName(dto.getName());
-		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-		typesMapper.insert(dto);
-		
-		return 1;
+	public int insertDataFromAPI(List<TypesDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			dto.setOriginalName(dto.getName());
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+			
+		});
+		typesMapper.insertAll(list);
+
+		return list.size();
 	}
 
 	@Override
@@ -52,8 +55,8 @@ public class TypesServiceImpl implements TypesService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

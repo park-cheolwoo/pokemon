@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 import kr.co.pokemon.data.dao.DataInfoMapper;
+import kr.co.pokemon.data.dto.DataDeleteDTO;
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.dto.TableInfoDTO;
 import kr.co.pokemon.data.model.DBTables;
@@ -27,7 +28,7 @@ import kr.co.pokemon.data.model.DBTables;
 public class DataServiceImpl implements DataService {
 	
 	private final static List<String> DB_SEQUENCES = Collections.unmodifiableList(
-		Arrays.asList("types_relationship_seq")
+		Arrays.asList("types_relationship_seq", "total_experience_seq")
 	);
 	
 	@Value("${poketmon.run-init-sql}")
@@ -112,6 +113,17 @@ public class DataServiceImpl implements DataService {
 				e.getStackTrace();
 			}
 		});
+	}
+	
+	@Override
+	public boolean deleteAllData(String tableName, int start, int end) {
+		try {
+			dataInfoMapper.deleteDataByPage(new DataDeleteDTO(tableName, start, end));
+			return true;
+		} catch (Exception e) {
+			e.getStackTrace();
+			return false;
+		}
 	}
 	
 	@Override

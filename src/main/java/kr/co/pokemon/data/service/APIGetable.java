@@ -6,10 +6,10 @@ import kr.co.pokemon.data.model.DBTables;
 
 public interface APIGetable<D> extends Getable<D> {
 
-	int getDataFromAPI(D dto) throws Exception;
+	int insertDataFromAPI(List<D> list) throws Exception;
 	
 	List<DBTables> getDependencies();
 	
-	String getDBTableName();
+	DBTables getDBTable();
 
 }

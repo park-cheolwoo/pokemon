@@ -30,17 +30,19 @@ public class CharacteristicServiceImpl implements CharacteristicService {
 	}
 
 	@Override
-	public int getDataFromAPI(CharacteristicDTO dto) throws Exception {
-		int statId = APIService.getIdByUrl(dto.getHighestStat().getUrl());
-		dto.setStatId(statId);
-		
-		dto.getLanguagesDescription("ko").ifPresentOrElse(description ->
+	public int insertDataFromAPI(List<CharacteristicDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			int statId = APIService.getIdByUrl(dto.getHighestStat().getUrl());
+			dto.setStatId(statId);
+			
+			dto.getLanguagesDescription("ko").ifPresentOrElse(description ->
 			dto.setDescription(description),
 			() -> dto.setDescription("NO-TEXT")
-		);
-		characteristicMapper.insert(dto);
+					);			
+		});
+		characteristicMapper.insertAll(list);
 		
-		return 1;
+		return list.size();
 	}
 
 	@Override
@@ -54,8 +56,8 @@ public class CharacteristicServiceImpl implements CharacteristicService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

@@ -35,23 +35,26 @@ public class AttackServiceImpl implements AttackService {
 	}
 
 	@Override
-	public int getDataFromAPI(AttackDTO dto) throws Exception {
-		int typesId = APIService.getIdByUrl(dto.getType().getUrl());
-		dto.setTypesId(typesId);
-		
-		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-		dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
-			dto.setDescription(effect),
-			() -> dto.setDescription("NO-TEXT")
-		);
-		
-		dto.getLanguagesFlavorText("ko").ifPresentOrElse(flavor ->
-			dto.setFlavorText(flavor),
-			() -> dto.setFlavorText("NO-TEXT")
-		);
-		attackMapper.insert(dto);
+	public int insertDataFromAPI(List<AttackDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			int typesId = APIService.getIdByUrl(dto.getType().getUrl());
+			dto.setTypesId(typesId);
+			
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+			dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
+				dto.setDescription(effect),
+				() -> dto.setDescription("NO-TEXT")
+			);
+			
+			dto.getLanguagesFlavorText("ko").ifPresentOrElse(flavor ->
+				dto.setFlavorText(flavor),
+				() -> dto.setFlavorText("NO-TEXT")
+			);
+			
+		});
+		attackMapper.insertAll(list);
 
-		return 1;
+		return list.size();
 	}
 
 	@Override
@@ -65,8 +68,8 @@ public class AttackServiceImpl implements AttackService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

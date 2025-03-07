@@ -29,12 +29,14 @@ public class StatServiceImpl implements StatService {
 	}
 
 	@Override
-	public int getDataFromAPI(StatDTO dto) throws Exception {
-		dto.setOriginalName(dto.getName());
-		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-		statMapper.insert(dto);
+	public int insertDataFromAPI(List<StatDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			dto.setOriginalName(dto.getName());
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));			
+		});
+		statMapper.insertAll(list);
 
-		return 1;
+		return list.size();
 	}
 
 	@Override
@@ -48,8 +50,8 @@ public class StatServiceImpl implements StatService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

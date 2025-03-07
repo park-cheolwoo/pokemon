@@ -1,5 +1,6 @@
 package kr.co.pokemon.pokemon.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,41 +69,38 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 	}
 
 	@Override
-	public int getDataFromAPI(TypesRelationshipDTO dto) throws Exception {
-
+	public int insertDataFromAPI(List<TypesRelationshipDTO> list) throws Exception {
 		AtomicInteger count = new AtomicInteger(0);
+		List<TypesRelationshipDTO> relationships = new ArrayList<>();
 
-		DamageRelations dr = dto.getDamageRelations();
-		
-		dr.getDoubleDamageTo().stream()
-		.forEach(types -> {
-			int to_id = APIService.getIdByUrl(types.getUrl());
-			dto.setFromId(dto.getId());
-			dto.setToId(to_id);
-			dto.setEffect(2);
-			typesRelationshipMapper.insert(dto);
-			count.incrementAndGet();
+		list.stream().forEach(dto -> {
+			DamageRelations dr = dto.getDamageRelations();
+			
+			dr.getDoubleDamageTo().stream()
+			.forEach(types -> {
+				int toId = APIService.getIdByUrl(types.getUrl());
+				TypesRelationshipDTO relationship = new TypesRelationshipDTO(dto.getId(), toId, 2);
+				relationships.add(relationship);
+				count.incrementAndGet();
+			});
+			
+			dr.getHalfDamageTo().stream()
+			.forEach(types -> {
+				int toId = APIService.getIdByUrl(types.getUrl());
+				TypesRelationshipDTO relationship = new TypesRelationshipDTO(dto.getId(), toId, 1);
+				relationships.add(relationship);
+				count.incrementAndGet();
+			});
+			
+			dr.getNoDamageTo().stream()
+			.forEach(types -> {
+				int toId = APIService.getIdByUrl(types.getUrl());
+				TypesRelationshipDTO relationship = new TypesRelationshipDTO(dto.getId(), toId, 0);
+				relationships.add(relationship);
+				count.incrementAndGet();
+			});	
 		});
-		
-		dr.getHalfDamageTo().stream()
-		.forEach(types -> {
-			int to_id = APIService.getIdByUrl(types.getUrl());
-			dto.setFromId(dto.getId());
-			dto.setToId(to_id);
-			dto.setEffect(1);
-			typesRelationshipMapper.insert(dto);
-			count.incrementAndGet();
-		});
-		
-		dr.getNoDamageTo().stream()
-		.forEach(types -> {
-			int to_id = APIService.getIdByUrl(types.getUrl());
-			dto.setFromId(dto.getId());
-			dto.setToId(to_id);
-			dto.setEffect(0);
-			typesRelationshipMapper.insert(dto);
-			count.incrementAndGet();
-		});
+		typesRelationshipMapper.insertAll(relationships);
 
 		return count.get();
 	}
@@ -118,8 +116,8 @@ public class TypesRelationshipServiceImpl implements TypesRelationshipService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

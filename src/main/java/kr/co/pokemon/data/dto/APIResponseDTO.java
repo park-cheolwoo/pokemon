@@ -13,13 +13,18 @@ import lombok.Setter;
 public class APIResponseDTO {
 
 	private String status;
+	private String name;
 	private int count;
+	private int part;
+	private int totalPart;
 	private String comment;
-	
-	public APIResponseDTO(String status, int count) {
+
+	public APIResponseDTO(String status, String name, int count, int part, int totalPart) {
 		this.status = status;
+		this.name = name;
 		this.count = count;
-		this.comment = null;
+		this.part = part;
+		this.totalPart = totalPart;
 	}
 
 }

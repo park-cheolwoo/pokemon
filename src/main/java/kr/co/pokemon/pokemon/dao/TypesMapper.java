@@ -20,4 +20,6 @@ public interface TypesMapper {
 	
 	void insert(TypesDTO types);
 	
+	void insertAll(List<TypesDTO> typess);
+	
 }

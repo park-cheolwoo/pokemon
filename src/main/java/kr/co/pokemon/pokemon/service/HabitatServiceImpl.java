@@ -29,11 +29,13 @@ public class HabitatServiceImpl implements HabitatService {
 	}
 
 	@Override
-	public int getDataFromAPI(HabitatDTO dto) throws Exception {
-		dto.setOriginalName(dto.getName());
-		habitatMapper.insert(dto);
+	public int insertDataFromAPI(List<HabitatDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			dto.setOriginalName(dto.getName());			
+		});
+		habitatMapper.insertAll(list);
 		
-		return 1;
+		return list.size();
 	}
 
 	@Override
@@ -47,8 +49,8 @@ public class HabitatServiceImpl implements HabitatService {
 	}
 
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

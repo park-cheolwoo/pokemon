@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.pokemon.dao.PokemonMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.PokemonDTO" autoMapping="true">
+    <result column="gender_rate" property="genderRate" />
+    <result column="gender_diff" property="genderDiff" />
+    <result column="flavor_text" property="flavorText" />
+    <result column="evolution_id" property="evolutionId" />
+    <result column="eggGroup_id" property="eggGroupId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM pokemon OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM pokemon WHERE id = #{id}
+  </select>
+  
+  <select id="existById" resultType="int" parameterType="int">
+	SELECT CASE
+	    WHEN EXISTS (SELECT 1 FROM pokemon WHERE id = #{id}) THEN 1
+	    ELSE 0
+	END
+	FROM dual
+  </select>
+  
+  <insert id="insert">
+  	INSERT INTO pokemon
+  		( id, name, image, image3d, gender_rate, gender_diff, genus, height, weight, flavor_text, is_legendary, is_mythical )
+  	VALUES
+  		( #{id}, #{name}, #{image}, #{image3d}, #{genderRate}, #{genderDiff}, #{genus}, #{height}, #{weight}, #{flavorText, jdbcType=CLOB}, #{isLegendary}, #{isMythical} )
+  </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO pokemon ( id, name, image, image3d, gender_rate, gender_diff, genus, height, weight, flavor_text, is_legendary, is_mythical )
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.id}, #{item.name}, #{item.image}, #{item.image3d}, #{item.genderRate}, #{item.genderDiff}, #{item.genus}, #{item.height}, #{item.weight}, #{item.flavorText, jdbcType=CLOB}, #{item.isLegendary}, #{item.isMythical} FROM DUAL
+  	</foreach>
+  </insert>
+
+</mapper>

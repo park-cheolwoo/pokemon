@@ -35,5 +35,14 @@
   	VALUES
   		( types_relationship_seq.NEXTVAL, #{fromId}, #{toId}, #{effect} )
   </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO types_relationship ( id, from_id, to_id, effect )
+  	SELECT types_relationship_seq.NEXTVAL, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  			SELECT #{item.fromId} AS from_id, #{item.toId} AS to_id, #{item.effect} AS effect
+  			FROM dual
+  	</foreach>) a
+  </insert>
 
 </mapper>
