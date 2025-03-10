@@ -41,7 +41,7 @@ $(function () {
 
        // 왼쪽 아이템 설명창 //		
 
-       $(document).on("click", ".item_dscrb_btn", function () {
+       $(document).on("click", ".item_dscrb_btn, .item_describe_exit", function () {
          $(".item_describe_container").toggle();
        })
        
@@ -120,16 +120,14 @@ $(function () {
            $(".item_confirm_container").toggle();
          });
          
-         $(document).on("click", ".item_describe_exit", function () {
-           $(".item_describe_container").toggle();
-         });
-         // 구매 모달창 //
          
-         $(document).on("click", ".item_next_page", function () {
-           $(".item_main_container").toggle();
-           $("body").css("background", 'url("/store/images/아이템 뽑기.png") no-repeat center center / cover');
-           $(".draw_main_container").toggle();
+         $(document).on("click", ".item_next_page, .item_prev_page", function () {
+           $(".item_dscrb, .item_list, .item_lotto_container").toggle();
          });
          
+		 $(document).on("click",".lotto_info_btn, .lotto_info_exit_btn",function(){
+			$(".item_lotto_info_container").toggle();
+		 });
+
          
        });   

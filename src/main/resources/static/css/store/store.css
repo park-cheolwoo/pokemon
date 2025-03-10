@@ -21,6 +21,8 @@ body {
 	background: url("/images/store/store-img.png") no-repeat center center/cover;
 	/* absolute의 부모 설정 */
 	position: relative;
+	margin:0 !important;
+	padding:0 !important;
 }
 
 .text {
@@ -350,7 +352,9 @@ body {
 /* 상점 구매개수 모달 시작 */
 .item_buy_container,
 .item_confirm_container,
-.item_describe_container {
+.item_describe_container,
+.item_lotto_info_container,
+.item_lotto_container {
 	display: none;
 }
 
@@ -677,8 +681,262 @@ body {
 }
 
 
+.item_lotto1_frame, .item_lotto2_frame, .item_lotto3_frame{
+	width:509px;
+	height:845px;
+	
+	z-index:15;
+}
+
+.item_lotto1_img, .item_lotto2_img, .item_lotto3_img{
+	width:300px;
+	height:300px;
+	
+	z-index:20;
+}
+
+.item_lotto1_txt, .item_lotto2_txt, .item_lotto3_txt{
+	width:350px;
+	text-align:center;
+	z-index:20;
+}
+
+.item_lotto1_btn_box, .item_lotto2_btn_box, .item_lotto3_btn_box{
+	width:450px;
+	height:165px;
+	z-index:20;
+}
+
+.item_lotto2_btn_coin, .item_lotto3_btn_ruby{
+	width:60px;
+	height:60px;
+	z-index:25;
+}
+
+.item_lotto2_btn_txt, .item_lotto3_btn_txt{
+	width:92px;
+	text-align:center;
+	z-index:25;
+}
 
 
+.item_lotto1_frame{
+	position:absolute;
+	top:196px;
+	left:144px;
+}
 
+.item_lotto1_img{
+	position:absolute;
+	top:273px;
+	left:248px;
+}
+
+.item_lotto1_txt{
+	position:absolute;
+	top:586px;
+	left:223.5px;
+}
+
+.item_lotto1_btn_box{
+	position:absolute;
+	top:765px;
+	left:176px;
+}
+
+.item_lotto1_btn_txt{
+	width:310px;
+	position:absolute;
+	top:823px;
+	left:246px;
+	z-index:25;
+}
+
+
+.item_lotto2_frame{
+	position:absolute;
+	top:196px;
+	left:743px;
+}
+
+.item_lotto2_img{
+	position:absolute;
+	top:273px;
+	left:847px;
+}
+
+.item_lotto2_txt{
+	position:absolute;
+	top:586px;
+	left:822.5px;
+}
+
+.item_lotto2_btn_box{
+	position:absolute;
+	top:765px;
+	left:775px;
+}
+
+.item_lotto2_btn_coin{
+	position:absolute;
+	top:809px;
+	left:850px;
+}
+
+.item_lotto2_btn_txt{
+	position:absolute;
+	top:823px;
+	left:954px;
+}
+
+
+.item_lotto3_frame{
+	position:absolute;
+	top:196px;
+	left:1342px;
+}
+
+.item_lotto3_img{
+	position:absolute;
+	top:273px;
+	left:1446px;
+}
+
+.item_lotto3_txt{
+	position:absolute;
+	top:586px;
+	left:1422.5px;
+}
+
+.item_lotto3_btn_box{
+	position:absolute;
+	top:765px;
+	left:1374px;
+}
+
+.item_lotto3_btn_ruby{
+	position:absolute;
+	top:809px;
+	left:1449px;
+}
+
+.item_lotto3_btn_txt{
+	position:absolute;
+	top:823px;
+	left:1553px;
+
+}
+
+
+.item_prev_page{
+	width:100px;
+	height:114px;
+	position:absolute;
+	top:563px;
+	left:0;
+	z-index:15;
+}
+
+.lotto_info_btn{
+	width:80px;
+	height:80px;
+	position:absolute;
+	top:64px;
+	left:64px;
+	z-index:15;
+}
+
+.item_lotto_frame{
+	width:1000px;
+	height:750px;
+
+	position:absolute;
+	top:165px;
+	left:460px;
+	z-index:35;
+}
+
+.normal_btn_box, .equip_btn_box, .pre_btn_box{
+	width:270px;
+	height:100px;
+	z-index:40;
+}
+
+.normal_btn_txt, .equip_btn_txt, .pre_btn_txt{
+	width:185px;
+	font-size:25px;
+	text-align:center;
+	z-index:45;
+}
+
+.normal_btn_box{
+	position:absolute;
+	top:160px;
+	left:532px;
+}
+
+.normal_btn_txt{
+	position:absolute;
+	top:189px;
+	left:577px;
+}
+
+.equip_btn_box{
+	position:absolute;
+	top:160px;
+	left:825px;
+}
+
+.equip_btn_txt{
+	position:absolute;
+	top:189px;
+	left:870px;
+}
+
+.pre_btn_box{
+	position:absolute;
+	top:160px;
+	left:1120px;
+}
+
+.pre_btn_txt{
+	position:absolute;
+	top:189px;
+	left:1165px;
+}
+
+.lotto_info_title{
+	width:600px;
+	height:48px;
+	font-size:48px;
+	line-height:48px;
+	
+	position:absolute;
+	top:300px;
+	left:660px;
+	z-index:40;
+}
+
+.lotto_info_txt{
+	width:800px;
+	height:400px;
+	
+	position:absolute;
+	top:400px;
+	left:570px;
+	
+	z-index:40;
+}
+
+.lotto_info_exit_btn{
+	width:85px;
+	height:85px;
+	
+	position:absolute;
+	top:100px;
+	left:1470px;
+	
+	z-index:40;
+}
 
 

@@ -1,0 +1,740 @@
+@import url('/css/stlyes.css');
+
+* {
+	font-weight: 400;
+	/* 드래그 제한 */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	box-sizing: border-box;
+}
+
+/* 글자 마진 제거 */
+h4, span {
+	margin: 0;
+}
+
+body {
+	/* frame 너비/높이 고정 */
+	width: 1920px;
+	height: 1080px;
+	background: url("/images/store/store-img.png") no-repeat center center/cover;
+	/* absolute의 부모 설정 */
+	position: relative;
+}
+
+.text {
+	display: inline-block;
+	font-size: 36px;
+	font-weight: normal;
+	line-height: 36px;
+	height: 36px;
+	color: white;
+}
+
+.pros_gear {
+	width: 512px;
+	height: 512px;
+	position: absolute;
+	top: 284px;
+	left: 92px;
+	z-index: 1;
+}
+
+.pros_user_btn_box_on {
+	width: 350px;
+	height: 156px;
+	position: absolute;
+	top: 225px;
+	left: 481px;
+	z-index: 15;
+}
+
+.pros_user_btn_box_off{
+	width:350px;
+	height:156px;
+	position:absolute;
+	top:225px;
+	left:454px;
+	z-index:5;
+}
+
+.pros_user_btn_text_on {
+	width: 167px;
+	height: 36px;
+	color: black;
+	font-weight: 700;
+	text-align: center;
+	position: absolute;
+	top: 281px;
+	left: 572px;
+	z-index: 20;
+}
+
+.pros_user_btn_text_off{
+	width:167px;
+	height:36px;
+	position:absolute;
+	top:281px;
+	left:550px;
+	z-index:10;
+}
+
+
+.pros_data_btn_box_on{
+	width:350px;
+	height:156px;
+	position:absolute;
+	top:399px;
+	left:481px;
+	z-index:15;
+}
+
+
+.pros_data_btn_box_off {
+	width: 350px;
+	height: 156px;
+	position: absolute;
+	top: 399px;
+	left: 454px;
+	z-index: 5;
+}
+
+.pros_data_btn_text_on{
+	width:193px;
+	height:36px;
+	font-weight:700;
+	color:black;
+	position:absolute;
+	top:455px;
+	left:557px;
+	z-index:20;
+}
+
+
+
+.pros_data_btn_text_off {
+	width: 193px;
+	height: 36px;
+	font-weight: 700;
+	text-align: center;
+	position: absolute;
+	top: 455px;
+	left: 532px;
+	z-index: 10;
+}
+
+
+.pros_container_frame {
+	width: 1147px;
+	height: 841px;
+	position: absolute;
+	top: 138px;
+	left: 692px;
+	z-index: 10;
+}
+
+.pros_user_list_container {
+	width: 1147px;
+	height: 841px;
+	z-index: 15;
+}
+
+.pros_search_wrap {
+	width: 730px;
+	height: 120px;
+}
+
+.pros_search_bar {
+	width: 601px;
+	height: 120px;
+	position: absolute;
+	top: 284px;
+	left: 901px;
+	z-index: 15;
+}
+
+.pros_keyword {
+	width: 550px;
+	height: 30px;
+	font-size: 30px;
+	line-height: 30px;
+	text-align: left;
+	padding-left: 5px;
+	color: #CCE8E5;
+	border: none;
+	outline: none;
+	background: transparent;
+	position: absolute;
+	top: 324px;
+	left: 934px;
+	z-index: 20;
+}
+
+.pros_search_btn {
+	width: 115px;
+	height: 120px;
+	background: url("../.../images/pros/search.png") no-repeat center center/cover;
+	border: none;
+	outline: none;
+	position: absolute;
+	top: 283px;
+	left: 1515px;
+	z-index: 20;
+}
+
+.pros_reload_btn {
+	width: 110px;
+	height: 110px;
+	position: absolute;
+	top: 235px;
+	left: 1648px;
+	z-index: 20;
+}
+
+.pros_dropbar_btn {
+	width: 110px;
+	height: 110px;
+	position: absolute;
+	top: 360px;
+	left: 1648px;
+	z-index: 20;
+}
+
+.pros_pokemon_select_box, .pros_item_select_box,
+	.pros_dungeon_select_box {
+	display:none;
+	width: 200px;
+	height: 74px;
+	z-index: 30;
+}
+
+.pros_pokemon_select_box {
+	position: absolute;
+	top: 470px;
+	left: 1557px;
+}
+
+.pros_item_select_box {
+	position: absolute;
+	top: 544px;
+	left: 1557px;
+}
+
+.pros_dungeon_select_box {
+	position: absolute;
+	top: 618px;
+	left: 1557px;
+}
+
+.pros_pokemon_select_text, .pros_item_select_text,
+	.pros_dungeon_select_text {
+	display:none;
+	width: 90px;
+	height: 29px;
+	font-size: 30px;
+	line-height: 30px;
+	text-align: center;
+	z-index: 35;
+}
+
+.pros_pokemon_select_text {
+	position: absolute;
+	top: 488px;
+	left: 1612px;
+}
+
+.pros_item_select_text {
+	position: absolute;
+	top: 562px;
+	left: 1612px;
+}
+
+.pros_dungeon_select_text {
+	position: absolute;
+	top: 636px;
+	left: 1612px;
+}
+
+.pros_list_wrap {
+	width: 830px;
+	max-height: 330px;
+	overflow-y: auto;
+	position: absolute;
+	top: 502px;
+	left: 830px;
+}
+
+.pros_list_wrap::-webkit-scrollbar {
+	display: none;
+}
+
+.pros_rows, .pros_rows>td {
+	height: 105px;
+}
+
+.pros_profile_frame, .pros_profile_frame_img {
+	width: 96px;
+	height: 100px;
+	margin-right: 13px;
+	position: relative;
+	z-index: 25;
+}
+
+.pros_profile_img {
+	width: 55px;
+	height: 55px;
+	background-color: white;
+	border-radius: 10px;
+	position: absolute;
+	top: 19px;
+	left: 23px;
+	z-index: 30;
+}
+
+.pros_profile_wrap {
+	position: relative;
+}
+
+.pros_profile_bar {
+	width: 600px;
+	height: 105px;
+	margin-right: 13px;
+	position: relative;
+	z-index: 25;
+}
+
+.pros_profile {
+	font-size: 30px;
+	color: #CCE8E5;
+	line-height: 30px;
+	text-align: left;
+	position: absolute;
+	top: 35px;
+	left: 33px;
+	z-index: 30;
+}
+
+.pros_profile_info {
+	font-size: 30px;
+	color: #CCE8E5;
+	line-height: 30px;
+	text-align: right;
+	position: absolute;
+	top: 35px;
+	left: 485px;
+}
+
+.pros_more_btn {
+	width: 105px;
+	height: 105px;
+	position: relative;
+	z-index: 25;
+}
+
+.pros_profile_view_container {
+	width: 1147px;
+	height: 841px;
+	z-index: 15;
+}
+
+.updateFrm{
+	display:none;
+	width: 1147px;
+	height: 841px;
+	z-index: 10;
+}
+
+.pros_update_btn{
+	width:110px;
+	height:110px;
+	position:absolute;
+	top:235px;
+	left:1532px;
+	z-index:20;
+}
+
+
+.pros_profile_frame_img2 {
+	width: 200px;
+	height: 200px;
+	position: absolute;
+	top: 237px;
+	left: 830px;
+	z-index: 15;
+}
+
+.pros_profile_img2 {
+	width: 115px;
+	height: 115px;
+	background: white;
+	border-radius: 5px;
+	position: absolute;
+	top: 271px;
+	left: 878px;
+	z-index: 20;
+}
+
+.pros_profile_name1,.pros_get_name_input {
+	width: 300px;
+	height: 50px;
+	font-size: 50px;
+	line-height: 50px;
+	position: absolute;
+	top: 289px;
+	left: 1067px;
+	z-index: 20;
+}
+
+.pros_profile_name2,.pros_get_lv_input {
+	width:300px;
+	height: 50px;
+	font-size: 50px;
+	line-height: 50px;
+	position: absolute;
+	top: 360px;
+	left: 1067px;
+	z-index: 20;
+}
+
+.pros_exe_frame {
+	width: 550px;
+	height: 80px;
+	position: absolute;
+	top: 471px;
+	left: 830px;
+	z-index: 15;
+}
+
+.pros_exe_bar {
+	width: 350px;
+	/*0% : 0px;  / 100% : 518px; */
+	height: 35px;
+	position: absolute;
+	top: 487px;
+	left: 848px;
+	z-index: 20;
+}
+
+.pros_exe_txt {
+	height: 24px;
+	font-size: 24px;
+	line-height: 24px;
+	text-align: left;
+	position: absolute;
+	top: 490px;
+	left: 868px;
+	z-index: 25;
+}
+
+.pros_update {
+	height: 36px;
+	font-size: 36px;
+	line-height: 36px;
+	text-align: left;
+	position: absolute;
+	top: 578px;
+	left: 830px;
+	z-index: 20;
+}
+
+.pros_create {
+	height: 36px;
+	font-size: 36px;
+	line-height: 36px;
+	text-align: left;
+	position: absolute;
+	top: 629px;
+	left: 830px;
+	z-index: 15;
+}
+
+.pros_coin {
+	width: 50px;
+	height: 55px;
+	position: absolute;
+	top: 568px;
+	left: 1265px;
+	z-index: 15;
+}
+
+.pros_get_coin,.pros_get_coin_input {
+	width:150px;
+	height: 36px;
+	font-size: 36px;
+	line-height: 36px;
+	text-align: left;
+	position: absolute;
+	top: 575px;
+	left: 1331px;
+	z-index: 20;
+}
+
+.pros_ruby {
+	width: 50px;
+	height: 55px;
+	position: absolute;
+	top: 640px;
+	left: 1265px;
+	z-index: 15;
+}
+
+.pros_get_ruby,.pros_get_ruby_input {
+	width:150px;
+	height: 36px;
+	font-size: 36px;
+	line-height: 36px;
+	text-align: left;
+	position: absolute;
+	top: 645px;
+	left: 1331px;
+	z-index: 20;
+}
+
+.pros_intro,.pros_intro_input {
+	width: 600px;
+	height: 140px;
+	max-height: 140px;
+	overflow-y: scroll;
+	font-size: 36px;
+	line-height: 36px;
+	text-align: left;
+	position: absolute;
+	top: 711px;
+	left: 830px;
+	z-index: 20;
+}
+
+.pros_active_txt{
+	width:150px;
+	height:50px;
+	font-size:50px;
+	line-height:50px;
+	text-align:center;
+	
+	position:absolute;
+	top:512px;
+	left:1557px;
+	
+	z-index:15;
+}
+
+.pros_active_frame{
+	width:100px;
+	height:100px;
+	
+	position:absolute;
+	top:578px;
+	left:1585px;
+	
+	z-index:15;
+}
+
+.pros_active_on, .pros_active_off{
+	width:50px;
+	height:50px;
+	
+	position:absolute;
+	top:600px;
+	left:1611px;
+	
+	z-index:20;
+}
+
+.pros_active_off{
+	display:none;
+}
+
+
+
+.pros_intro::-webkit-scrollbar {
+	display: none;
+}
+
+
+.pros_update_confirm_btn{
+	width:100px;
+	height:100px;
+	position:absolute;
+	top:760px;
+	left:1530px;
+	z-index:20;
+}
+
+.pros_update_exit{
+	width:100px;
+	height:100px;
+	position:absolute;
+	top:760px;
+	left:1650px;
+	z-index:20;
+}
+
+
+
+.pros_home_btn {
+	width: 110px;
+	height: 110px;
+	position: absolute;
+	top: 953px;
+	left: 22px;
+	z-index: 15;
+}
+
+.pros_pokemon_type1 {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 289px;
+	left: 1400px;
+	z-index: 20;
+}
+
+.pros_pokemon_type2 {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 289px;
+	left: 1465px;
+	z-index: 20;
+}
+
+.pros_pokemon_img1, .pros_pokemon_img2, .pros_pokemon_img3 {
+	width: 80px;
+	height: 80px;
+	z-index: 20;
+}
+
+.pros_wood_right1, .pros_wood_right2 {
+	width: 35px;
+	height: 40px;
+	z-index: 20;
+}
+
+.pros_pokemon_img1 {
+	position: absolute;
+	top: 471px;
+	left: 830px;
+}
+
+.pros_wood_right1 {
+	position: absolute;
+	top: 489px;
+	left: 935px;
+}
+
+.pros_pokemon_img2 {
+	position: absolute;
+	top: 471px;
+	left: 995px;
+}
+
+.pros_wood_right2 {
+	position: absolute;
+	top: 489px;
+	left: 1100px;
+}
+
+.pros_pokemon_img3 {
+	position: absolute;
+	top: 471px;
+	left: 1160px;
+}
+
+.pros_pokeapi_logo{
+	width:410px;
+	height:165px;
+	position:absolute;
+	top:275px;
+	left:827px;
+	z-index:15;
+}
+
+.pros_pokeapi_right{
+	width:55px;
+	height:65px;
+	position:absolute;
+	top:311px;
+	left:1357px;
+	z-index:15;
+}
+
+.pros_pokeapi_frame{
+	width:170px;
+	height:170px;
+
+	position:absolute;
+	top:256px;
+	left:1533px;
+
+	z-index:15;
+}
+
+.pros_pokeapi_on,.pros_pokeapi_off{
+	width:90px;
+	height:90px;
+
+	position:absolute;
+	top:289px;
+	left:1576px;
+
+	z-index:20;
+}
+
+.pros_pokeapi_off{
+	display:none;
+}
+
+.pros_pokemon_btn_box, .pros_item_btn_box, .pros_dungeon_btn_box {
+	width: 300px;
+	height: 110px;
+	z-index: 15;
+}
+
+.pros_pokemon_btn_box {
+	position: absolute;
+	top: 559px;
+	left: 882px;
+}
+.pros_item_btn_box{
+	position:absolute;
+	top:559px;
+	left:1321px;
+}
+
+.pros_dungeon_btn_box {
+	position: absolute;
+	top: 741px;
+	left: 881px;
+}	
+
+.pros_pokemon_btn_txt, .pros_item_btn_txt, .pros_dungeon_btn_txt{
+	width:108px;
+	text-align:center;
+	z-index:20;
+}
+
+.pros_pokemon_btn_txt{
+	position:absolute;
+	top:590px;
+	left:971px;
+}
+
+.pros_item_btn_txt{
+	position:absolute;
+	top:592px;
+	left:1412px;
+}
+.pros_dungeon_btn_txt{
+	position:absolute;
+	top:774px;
+	left:972px;
+}
+
+
+
+
+
+
+
