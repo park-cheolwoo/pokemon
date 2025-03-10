@@ -14,6 +14,19 @@
     <result column="updated_at" property="updatedAt" />
   </resultMap>
 
+  <resultMap id="dataSpritesResultMap" type="kr.co.pokemon.pokemon.dto.PokemonDTO$PokemonSprites" autoMapping="true">
+    <result column="back_default" property="backDefault" />
+    <result column="back_female" property="backFemale" />
+    <result column="back_shiny" property="backShiny" />
+    <result column="back_shiny_female" property="backShinyFemale" />
+    <result column="front_default" property="frontDefault" />
+    <result column="front_female" property="frontFemale" />
+    <result column="front_shiny" property="frontShiny" />
+    <result column="front_shiny_female" property="frontShinyFemale" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
     SELECT * FROM pokemon OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
@@ -41,6 +54,24 @@
   	INSERT INTO pokemon ( id, name, image, image3d, gender_rate, gender_diff, genus, height, weight, flavor_text, is_legendary, is_mythical )
   	<foreach collection="list" item="item" separator="UNION ALL">
   		SELECT #{item.id}, #{item.name}, #{item.image}, #{item.image3d}, #{item.genderRate}, #{item.genderDiff}, #{item.genus}, #{item.height}, #{item.weight}, #{item.flavorText, jdbcType=CLOB}, #{item.isLegendary}, #{item.isMythical} FROM DUAL
+  	</foreach>
+  </insert>
+  
+  <select id="selectSpritesById" resultMap="dataSpritesResultMap" parameterType="int">
+    SELECT * FROM sprites WHERE id = #{id}
+  </select>
+  
+  <insert id="insertSprites">
+  	INSERT INTO sprites
+  		( id, back_default, back_female, back_shiny, back_shiny_female, front_default, front_female, front_shiny, front_shiny_female )
+  	VALUES
+  		( #{id}, #{backDefault}, #{backFemale}, #{backShiny}, #{backShinyFemale}, #{frontDefault}, #{frontFemale}, #{frontShiny}, #{frontShinyFemale} )
+  </insert>
+  
+  <insert id="insertAllSprites" parameterType="java.util.List">
+  	INSERT INTO sprites ( id, back_default, back_female, back_shiny, back_shiny_female, front_default, front_female, front_shiny, front_shiny_female )
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.id}, #{item.backDefault}, #{item.backFemale}, #{item.backShiny}, #{item.backShinyFemale}, #{item.frontDefault}, #{item.frontFemale}, #{item.frontShiny}, #{item.frontShinyFemale} FROM DUAL
   	</foreach>
   </insert>
 

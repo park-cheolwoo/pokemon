@@ -15,9 +15,9 @@ import kr.co.pokemon.pokemon.service.EggGroupService;
 import kr.co.pokemon.pokemon.service.EvolutionTriggerService;
 import kr.co.pokemon.pokemon.service.GrowthService;
 import kr.co.pokemon.pokemon.service.HabitatService;
+import kr.co.pokemon.pokemon.service.PokemonMoveService;
 import kr.co.pokemon.pokemon.service.PokemonService;
 import kr.co.pokemon.pokemon.service.StatService;
-import kr.co.pokemon.pokemon.service.TypesRelationshipService;
 import kr.co.pokemon.pokemon.service.TypesService;
 
 @RestController
@@ -52,11 +52,6 @@ public class APIController {
 	public APIResponseDTO getType(@PathVariable int part) {
 		return apiService.setData(TypesService.class, part);
 	}
-	
-	@GetMapping(value = "/type/relationship/{part}")
-	public APIResponseDTO getTypeRelationship(@PathVariable int part) {
-		return apiService.setData(TypesRelationshipService.class, part);
-	}
 
 	@GetMapping(value = "/attack/{part}")
 	public APIResponseDTO getAttack(@PathVariable int part) {
@@ -81,6 +76,11 @@ public class APIController {
 	@GetMapping(value = "/pokemon/{part}")
 	public APIResponseDTO getPokemon(@PathVariable int part) {
 		return apiService.setData(PokemonService.class, part);
+	}
+
+	@GetMapping(value = "/pokemon/attack/{part}")
+	public APIResponseDTO getPokemonAttack(@PathVariable int part) {
+		return apiService.setData(PokemonMoveService.class, part);
 	}
 	
 }

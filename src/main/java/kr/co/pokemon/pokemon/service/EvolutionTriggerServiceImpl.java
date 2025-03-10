@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
+import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dao.EvolutionTriggerMapper;
 import kr.co.pokemon.pokemon.dto.EvolutionTriggerDTO;
 
@@ -14,6 +15,9 @@ import kr.co.pokemon.pokemon.dto.EvolutionTriggerDTO;
 public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 
 	private final DBTables dbTable = DBTables.EVOLUTION_TRIGGER;
+	
+	@Autowired
+	private DataService dataService;
 	
 	@Autowired
 	private EvolutionTriggerMapper evolutionTriggerMapper;
@@ -30,7 +34,12 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 
 	@Override
 	public int insertDataFromAPI(List<EvolutionTriggerDTO> list) throws Exception {
-		evolutionTriggerMapper.insertAll(list);
+		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+			evolutionTriggerMapper.insertAll(list);
+			
+		} else {
+			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
+		}
 
 		return list.size();
 	}

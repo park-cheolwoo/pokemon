@@ -9,25 +9,31 @@ import java.util.stream.Collectors;
 
 public enum DBTables {
 	STAT("stat", "/stat"),
-    GROWTH("growth", "/growth-rate"),
+	CHARACTERISTIC("characteristic", "/characteristic", List.of(DBTables.STAT)),
+
+	GROWTH("growth", "/growth-rate"),
     TOTAL_EXPERIENCE("total_experience", null, List.of(DBTables.GROWTH)),
+
 	EVOLUTION_TRIGGER("evolution_trigger", "/evolution-trigger"),
+
 	POKEMON("pokemon", "/pokemon", List.of(DBTables.STAT)),
 	SPRITES("sprites", null, List.of(DBTables.POKEMON)),
-    ABILITY("ability", "/ability", List.of(DBTables.POKEMON)),
+
+	ABILITY("ability", "/ability", List.of(DBTables.POKEMON)),
     TYPES("types", "/type", List.of(DBTables.POKEMON)),
     TYPES_RELATIONSHIP("types_relationship", "/type", List.of(DBTables.TYPES)),
     ATTACK("attack", "/move", List.of(DBTables.TYPES, DBTables.POKEMON)),
     HABITAT("habitat", "/pokemon-habitat", List.of(DBTables.POKEMON)),
     EGG_GROUP("egg_group", "/egg-group", List.of(DBTables.POKEMON)),
-    CHARACTERISTIC("characteristic", "/characteristic", List.of(DBTables.STAT)),
     EGG_GROUP_POKEMON("egg_group_pokemon", null,List.of(DBTables.EGG_GROUP, DBTables.POKEMON)),
     EVOLUTION("evolution", "/evolution", List.of(DBTables.EVOLUTION_TRIGGER, DBTables.POKEMON)),
+
     POKEMON_ABILITY("pokemon_ability", null, List.of(DBTables.ABILITY, DBTables.POKEMON)),
-    POKEMON_ATTACK("pokemon_attack", null, List.of(DBTables.ATTACK, DBTables.POKEMON)),
+    POKEMON_ATTACK("pokemon_attack", "/pokemon", List.of(DBTables.ATTACK, DBTables.POKEMON)),
     POKEMON_TYPES("pokemon_types", null, List.of(DBTables.TYPES, DBTables.POKEMON)),
     POKEMON_HABITAT("pokemon_habitat", null, List.of(DBTables.HABITAT, DBTables.POKEMON)),
     POKEMON_BASE_STAT("pokemon_base_stat", null, List.of(DBTables.STAT, DBTables.POKEMON)),
+
     ITEM_CATEGORY("item_category", "/item-category"),
     ITEM("item", "/item", List.of(DBTables.ITEM_CATEGORY)),
 

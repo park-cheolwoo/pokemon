@@ -7,14 +7,17 @@ import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
+import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dao.GrowthMapper;
 import kr.co.pokemon.pokemon.dto.GrowthDTO;
-import kr.co.pokemon.pokemon.dto.GrowthDTO.TotalExperience;
 
 @Service
 public class GrowthServiceImpl implements GrowthService {
 	
 	private DBTables dbTable = DBTables.GROWTH;
+	
+	@Autowired
+	private DataService dataService;
 	
 	@Autowired
 	private GrowthMapper growthMapper;
@@ -52,11 +55,20 @@ public class GrowthServiceImpl implements GrowthService {
 	}
 
 	public void insert(List<GrowthDTO> list) {
-		growthMapper.insertAll(list);
-
-		list.stream().forEach(dto -> {
-			growthMapper.insertAllLevel(dto.getLevels());
-		});
+		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+			growthMapper.insertAll(list);
+			if (dataService.deleteAllData(DBTables.TOTAL_EXPERIENCE.getTableName())) {
+				list.stream().forEach(dto -> {
+					growthMapper.insertAllLevel(dto.getLevels());
+				});
+				
+			} else {
+				throw new IllegalArgumentException(DBTables.TOTAL_EXPERIENCE.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
+			}
+			
+		} else {
+			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
+		}
 	}
 
 	@Override

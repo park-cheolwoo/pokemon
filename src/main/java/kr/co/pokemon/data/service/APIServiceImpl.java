@@ -65,12 +65,7 @@ public class APIServiceImpl implements APIService {
 				System.out.println("URL: " + pageUri + " ( " + (apiPageDTO.getCurrPage() + 1) + " / " + apiPageDTO.getCount() + " )");
 				apiPageDTO.nextPage();
 			}
-
-			if (dataService.deleteAllData(serviceDBTable.getTableName(), (part - 1) * PART_COUNT, (part - 1) * PART_COUNT + apiPageDTO.getCount())) {
-				dataCount = service.insertDataFromAPI(list);
-			} else {
-				throw new IllegalAccessError(serviceDBTable.getTableName() + " 테이블 데이터 삭제에 실패하였습니다.");
-			}
+			dataCount = service.insertDataFromAPI(list);
 		} catch (Exception e) {
 			return new APIResponseDTO("fail", serviceDBTable.getTableName(), dataCount, part, (apiPageDTO.getTotalCount() / PART_COUNT) + 1, e.getMessage());
 		}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
+import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dao.CharacteristicMapper;
 import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
 
@@ -15,6 +16,9 @@ import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
 public class CharacteristicServiceImpl implements CharacteristicService {
 
 	private final DBTables dbTable = DBTables.CHARACTERISTIC;
+	
+	@Autowired
+	private DataService dataService;
 	
 	@Autowired
 	private CharacteristicMapper characteristicMapper;
@@ -40,7 +44,12 @@ public class CharacteristicServiceImpl implements CharacteristicService {
 			() -> dto.setDescription("NO-TEXT")
 					);			
 		});
-		characteristicMapper.insertAll(list);
+		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+			characteristicMapper.insertAll(list);
+			
+		} else {
+			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
+		}
 		
 		return list.size();
 	}

@@ -23,7 +23,7 @@ public interface DataService {
 	
 	public void dropAllTable();
 	
-	public boolean deleteAllData(String tableName, int start, int end);
+	public boolean deleteAllData(String tableName, List<Integer> ids);
 
 	public boolean deleteAllData(String tableName);
 

@@ -2,6 +2,7 @@ package kr.co.pokemon.pokemon.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,8 +40,6 @@ public class PokemonDTO extends EntityDTO {
 	private PokemonSprites sprites;
 	
 	private List<Stats> stats;
-	
-	private List<Types> types;
 
 	@Getter
 	@Setter
@@ -49,15 +48,26 @@ public class PokemonDTO extends EntityDTO {
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public static class PokemonSprites {
+		
+		@JsonIgnore
+		private int id;
 
-		private String back_default;
-		private String back_female;
-		private String back_shiny;
-		private String back_shiny_female;
-		private String front_default;
-		private String front_female;
-		private String front_shiny;
-		private String front_shiny_female;
+		@JsonProperty(value = "back_default")
+		private String backDefault;
+		@JsonProperty(value = "back_female")
+		private String backFemale;
+		@JsonProperty(value = "back_shiny")
+		private String backShiny;
+		@JsonProperty(value = "back_shiny_female")
+		private String backShinyFemale;
+		@JsonProperty(value = "front_default")
+		private String frontDefault;
+		@JsonProperty(value = "front_female")
+		private String frontFemale;
+		@JsonProperty(value = "front_shiny")
+		private String frontShiny;
+		@JsonProperty(value = "front_shiny_female")
+		private String frontShinyFemale;
 
 		private Other other;
 		
@@ -89,17 +99,6 @@ public class PokemonDTO extends EntityDTO {
 		private int effort;
 		private APIPageResultDTO stat;
 
-	}
-	
-	@Getter
-	@Setter
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Types {
-		
-		private int slot;
-		private APIPageResultDTO type;
-		
 	}
 
 }

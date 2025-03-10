@@ -41,5 +41,7 @@ public class AbilityDTO extends EntityDTO implements EffectGroup, FlavorTextGrou
 	
 	@JsonProperty(value = "flavor_text_entries")
 	private List<FlavorTextEntryDTO> flavorTextEntries;
+	
+	private List<PokemonsDTO> pokemon;
 
 }

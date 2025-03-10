@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
+import kr.co.pokemon.pokemon.dto.PokemonDTO.PokemonSprites;
 
 @Mapper
 public interface PokemonMapper {
@@ -19,5 +20,11 @@ public interface PokemonMapper {
 	void insert(PokemonDTO pokemon);
 	
 	void insertAll(List<PokemonDTO> pokemons);
+	
+	PokemonSprites selectSpritesById(int id);
+	
+	void insertSprites(PokemonSprites sprites);
+	
+	void insertAllSprites(List<PokemonSprites> spritess);
 	
 }

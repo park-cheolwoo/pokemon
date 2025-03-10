@@ -1,5 +1,7 @@
 package kr.co.pokemon.data.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,6 +10,5 @@ import lombok.Getter;
 public class DataDeleteDTO {
 
 	private String tableName;
-	private int start;
-	private int end;
+	private List<Integer> ids;
 }
