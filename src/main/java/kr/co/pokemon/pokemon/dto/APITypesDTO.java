@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import kr.co.pokemon.data.dto.APIPageResultDTO;
 import kr.co.pokemon.data.dto.EntityDTO;
+import kr.co.pokemon.data.dto.LanguageNameDTO;
+import kr.co.pokemon.data.dto.NamesGroup;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,14 +21,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TypesRelationshipDTO extends EntityDTO {
+public class APITypesDTO extends EntityDTO implements NamesGroup {
 
-	private int fromId;
-	private TypesSummary fromSummary;
-	private int toId;
-	private TypesSummary toSummary;
-	private int effect;
+	private String name;
+	private String originalName;
+	private String image;
 	
+	private List<LanguageNameDTO> names;
+
 	@JsonProperty(value = "damage_relations")
 	private DamageRelations damageRelations;
 	
@@ -56,16 +58,5 @@ public class TypesRelationshipDTO extends EntityDTO {
 		private List<APIPageResultDTO> noDamageTo;
 
 	}
-	
-	@Getter
-	@Setter
-	@AllArgsConstructor
-	public static class TypesSummary {
 
-		private int id;
-		private String name;
-		private String image;
-
-	}
-	
 }

@@ -16,6 +16,8 @@ public interface CharacteristicMapper {
 	
 	int existById(int id);
 
-	void insert(CharacteristicDTO charracteristic);
+	void insert(CharacteristicDTO characteristic);
+	
+	void insertAll(List<CharacteristicDTO> characteristics);
 
 }

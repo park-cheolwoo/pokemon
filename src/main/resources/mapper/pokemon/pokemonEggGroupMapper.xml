@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.pokemon.dao.relationship.PokemonEggGroupMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.relationship.PokemonEggGroupDTO" autoMapping="true">
+    <result column="pokemon_id" property="pokemonId" />
+    <result column="egg_group_id" property="eggGroupId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM egg_group_pokemon OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM egg_group_pokemon WHERE id = #{id}
+  </select>
+
+  <select id="selectByPokemonId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM egg_group_pokemon WHERE pokemon_id = #{pokemonId}
+  </select>
+
+  <insert id="insert">
+  	INSERT INTO egg_group_pokemon
+  		( id, pokemon_id, egg_group_id )
+  	VALUES
+  		( egg_group_pokemon_seq.NEXTVAL, #{pokemonId}, #{eggGroupId} )
+  </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO egg_group_pokemon ( id, pokemon_id, egg_group_id )
+  	SELECT egg_group_pokemon_seq.NEXTVAL, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  			SELECT #{item.pokemonId} AS pokemon_id, #{item.eggGroupId} AS egg_group_id
+  			FROM dual
+  	</foreach>) a
+  </insert>
+
+</mapper>

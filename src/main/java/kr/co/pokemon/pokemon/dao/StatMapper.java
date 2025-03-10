@@ -17,5 +17,7 @@ public interface StatMapper {
 	int existById(int id);
 
 	void insert(StatDTO stat);
+	
+	void insertAll(List<StatDTO> stats);
 
 }

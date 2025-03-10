@@ -19,5 +19,7 @@ public interface AttackMapper {
 	int existById(int id);
 	
 	void insert(AttackDTO attack);
+	
+	void insertAll(List<AttackDTO> attacks);
 
 }
