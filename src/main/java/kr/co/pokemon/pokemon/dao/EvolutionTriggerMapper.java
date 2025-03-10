@@ -17,5 +17,7 @@ public interface EvolutionTriggerMapper {
 	int existById(int id);
 	
 	void insert(EvolutionTriggerDTO evolutionTrigger);
+	
+	void insertAll(List<EvolutionTriggerDTO> evolutionTriggers);
 
 }

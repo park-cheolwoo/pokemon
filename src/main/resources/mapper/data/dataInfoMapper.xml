@@ -38,4 +38,11 @@
   	DELETE FROM ${tableName}
   </delete>
 
+  <delete id="deleteDataByPage" parameterType="kr.co.pokemon.data.dto.DataDeleteDTO">
+  	DELETE FROM ${tableName} WHERE id IN
+  	<foreach collection="ids" item="id" open="(" separator="," close=")">
+  	  #{id}
+  	</foreach>
+  </delete>
+
 </mapper>

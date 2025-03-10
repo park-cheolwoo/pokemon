@@ -33,4 +33,11 @@
   		( #{id}, #{name}, #{originalName} )
   </insert>
 
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO habitat ( id, name, original_name )
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.id}, #{item.name}, #{item.originalName} FROM DUAL
+  	</foreach>
+  </insert>
+
 </mapper>

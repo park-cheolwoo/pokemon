@@ -1,77 +1,3 @@
-CREATE TABLE evolution_trigger (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL
-);
-
-CREATE TABLE ability (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	description CLOB DEFAULT 'NO_TEXT' NOT NULL,
-	flavor_text CLOB DEFAULT 'NO_TEXT' NOT NULL,
-	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL
-);
-
-CREATE TABLE types (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	original_name VARCHAR2(100) NOT NULL,
-	image VARCHAR2(255) DEFAULT '/images/no-type.png' NOT NULL,
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL
-);
-
-CREATE TABLE types_relationship (
-	id NUMBER(5) PRIMARY KEY,
-	from_id NUMBER(5) NOT NULL,
-	to_id NUMBER(5) NOT NULL,
-	effect NUMBER(2) DEFAULT 0 NOT NULL CHECK(effect BETWEEN -1 AND 2),
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL,
-
-	CONSTRAINT fk_types_relationship_from FOREIGN KEY(from_id) REFERENCES types (id) ON DELETE CASCADE,
-	CONSTRAINT fk_types_relationship_to FOREIGN KEY(to_id) REFERENCES types (id) ON DELETE CASCADE
-);
-
-CREATE SEQUENCE types_relationship_seq
-	START WITH 1
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 999
-;
-
-CREATE TABLE attack (
-	id NUMBER(5) PRIMARY KEY,
-	types_id NUMBER(5) NOT NULL,
-	name VARCHAR2(100) NOT NULL,
-	description CLOB NOT NULL,
-	flavor_text CLOB NOT NULL,
-	damage NUMBER(5) DEFAULT 0 NOT NULL,
-	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL,
-	
-	CONSTRAINT fk_attack_types FOREIGN KEY(types_id) REFERENCES types (id) ON DELETE CASCADE
-);
-
-CREATE TABLE habitat (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	original_name VARCHAR2(100) NOT NULL,
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL
-);
-
-CREATE TABLE egg_group (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL
-);
-
 CREATE TABLE stat (
 	id NUMBER(5) PRIMARY KEY,
 	name VARCHAR2(100) NOT NULL,
@@ -80,14 +6,29 @@ CREATE TABLE stat (
 	created_at DATE DEFAULT SYSDATE NOT NULL
 );
 
-CREATE TABLE characteristic (
+CREATE TABLE evolution_trigger (
 	id NUMBER(5) PRIMARY KEY,
-	stat_id NUMBER(5) NOT NULL,
-	description CLOB NOT NULL,
+	name VARCHAR2(100) NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE growth (
+	id NUMBER(5) PRIMARY KEY,
+	name VARCHAR2(30) NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE total_experience (
+	id NUMBER(5) PRIMARY KEY,
+	growth_id NUMBER(5) NOT NULL,
+	lv NUMBER(5) NOT NULL,
+	experience NUMBER(10) NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_characteristic_stat FOREIGN KEY(stat_id) REFERENCES stat (id) ON DELETE CASCADE
+	CONSTRAINT fk_total_experience_growth FOREIGN KEY(growth_id) REFERENCES growth (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon (
@@ -101,12 +42,12 @@ CREATE TABLE pokemon (
 	height NUMBER(10) NOT NULL,
 	weight NUMBER(10) NOT NULL,
 	flavor_text CLOB NOT NULL,
-	evolution_id NUMBER(5) NOT NULL,
-	egg_group_id NUMBER(5) NOT NULL,
+	is_legendary NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_legendary BETWEEN 0 AND 1),
+	is_mythical NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_mythical BETWEEN 0 AND 1),
+	growth_id NUMBER(5),
+	evolution_id NUMBER(5),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL,
-
-	CONSTRAINT fk_pokemon_egg_group FOREIGN KEY(egg_group_id) REFERENCES egg_group (id) ON DELETE CASCADE
+	created_at DATE DEFAULT SYSDATE NOT NULL
 );
 
 CREATE TABLE sprites (
@@ -144,25 +85,83 @@ CREATE TABLE evolution (
 
 ALTER TABLE pokemon ADD CONSTRAINT fk_pokemon_evolution FOREIGN KEY(evolution_id) REFERENCES evolution (id);
 
-CREATE TABLE growth (
+CREATE TABLE ability (
 	id NUMBER(5) PRIMARY KEY,
-	pokemon_id NUMBER(10) NOT NULL,
-	speed VARCHAR2(30) NOT NULL,
+	name VARCHAR2(100) NOT NULL,
+	description CLOB DEFAULT 'NO_TEXT' NOT NULL,
+	flavor_text CLOB DEFAULT 'NO_TEXT' NOT NULL,
+	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE types (
+	id NUMBER(5) PRIMARY KEY,
+	name VARCHAR2(100) NOT NULL,
+	original_name VARCHAR2(100) NOT NULL,
+	image VARCHAR2(255) DEFAULT '/images/no-type.png' NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE types_relationship (
+	id NUMBER(5) PRIMARY KEY,
+	from_id NUMBER(5) NOT NULL,
+	to_id NUMBER(5) NOT NULL,
+	effect NUMBER(2) DEFAULT 0 NOT NULL CHECK(effect BETWEEN -1 AND 2),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 
-	CONSTRAINT fk_growth_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE
+	CONSTRAINT fk_types_relationship_from FOREIGN KEY(from_id) REFERENCES types (id) ON DELETE CASCADE,
+	CONSTRAINT fk_types_relationship_to FOREIGN KEY(to_id) REFERENCES types (id) ON DELETE CASCADE
 );
 
-CREATE TABLE total_experience (
+CREATE TABLE attack (
 	id NUMBER(5) PRIMARY KEY,
-	growth_id NUMBER(5) NOT NULL,
-	lv NUMBER(5) NOT NULL,
-	experience NUMBER(5) NOT NULL,
+	types_id NUMBER(5) NOT NULL,
+	name VARCHAR2(100) NOT NULL,
+	description CLOB NOT NULL,
+	flavor_text CLOB NOT NULL,
+	damage NUMBER(5) DEFAULT 0 NOT NULL,
+	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_total_experience_growth FOREIGN KEY(growth_id) REFERENCES growth (id) ON DELETE CASCADE
+	CONSTRAINT fk_attack_types FOREIGN KEY(types_id) REFERENCES types (id) ON DELETE CASCADE
+);
+
+CREATE TABLE habitat (
+	id NUMBER(5) PRIMARY KEY,
+	name VARCHAR2(100) NOT NULL,
+	original_name VARCHAR2(100) NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE egg_group (
+	id NUMBER(5) PRIMARY KEY,
+	name VARCHAR2(100) NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE characteristic (
+	id NUMBER(5) PRIMARY KEY,
+	stat_id NUMBER(5) NOT NULL,
+	description CLOB NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL,
+	
+	CONSTRAINT fk_characteristic_stat FOREIGN KEY(stat_id) REFERENCES stat (id) ON DELETE CASCADE
+);
+
+CREATE TABLE egg_group_pokemon (
+	id NUMBER(5) PRIMARY KEY,
+	pokemon_id NUMBER(10) NOT NULL,
+	egg_group_id NUMBER(5) NOT NULL,
+	
+	CONSTRAINT fk_egg_group_pokemon_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_egg_group_pokemon_egg_group FOREIGN KEY(egg_group_id) REFERENCES egg_group (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon_ability (
@@ -181,7 +180,6 @@ CREATE TABLE pokemon_attack (
 	id NUMBER(20) PRIMARY KEY,
 	pokemon_id NUMBER(10) NOT NULL,
 	attack_id NUMBER(5) NOT NULL,
-	slot NUMBER(3) DEFAULT 0 NOT NULL,
 	lv NUMBER(5) DEFAULT 0 NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
@@ -223,6 +221,30 @@ CREATE TABLE pokemon_base_stat (
 
 	CONSTRAINT fk_pokemon_stat_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
 	CONSTRAINT fk_pokemon_stat_stat FOREIGN KEY(stat_id) REFERENCES stat (id) ON DELETE CASCADE
+);
+
+CREATE TABLE item_category (
+	id NUMBER(5) PRIMARY KEY,
+	name VARCHAR2(100) NOT NULL,
+	image VARCHAR2(255) DEFAULT '/images/no-item-category.png' NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE item (
+	id NUMBER(5) PRIMARY KEY,
+	name VARCHAR2(100) NOT NULL,
+	image VARCHAR2(255) DEFAULT '/images/no-item.png' NOT NULL,
+	category_id NUMBER(5) NOT NULL,
+	cost NUMBER(10) DEFAULT 0 NOT NULL,
+	real_cost NUMBER(10) DEFAULT 0 NOT NULL,
+	description CLOB NOT NULL,
+	store_type NUMBER(2) DEFAULT 0 NOT NULL CHECK(store_type BETWEEN 0 AND 3),
+	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL,
+	
+	CONSTRAINT fk_item_category FOREIGN KEY(category_id) REFERENCES item_category (id) ON DELETE CASCADE
 );
 
 CREATE TABLE player (
@@ -269,30 +291,6 @@ CREATE TABLE friend (
 	
 	CONSTRAINT fk_friend_player_from FOREIGN KEY(player_from) REFERENCES player (id) ON DELETE CASCADE,
 	CONSTRAINT fk_friend_player_to FOREIGN KEY(player_to) REFERENCES player (id) ON DELETE CASCADE
-);
-
-CREATE TABLE item_category (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	image VARCHAR2(255) DEFAULT '/images/no-item-category.png' NOT NULL,
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL
-);
-
-CREATE TABLE item (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	image VARCHAR2(255) DEFAULT '/images/no-item.png' NOT NULL,
-	category_id NUMBER(5) NOT NULL,
-	cost NUMBER(10) DEFAULT 0 NOT NULL,
-	real_cost NUMBER(10) DEFAULT 0 NOT NULL,
-	description CLOB NOT NULL,
-	store_type NUMBER(2) DEFAULT 0 NOT NULL CHECK(store_type BETWEEN 0 AND 3),
-	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL,
-	
-	CONSTRAINT fk_item_category FOREIGN KEY(category_id) REFERENCES item_category (id) ON DELETE CASCADE
 );
 
 CREATE TABLE player_item (
@@ -352,5 +350,61 @@ CREATE TABLE ingame_enemy (
 	CONSTRAINT fk_ingame_enemy_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
 	CONSTRAINT fk_ingame_enemy_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE
 );
+
+CREATE SEQUENCE types_relationship_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 999
+;
+
+CREATE SEQUENCE total_experience_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 999
+;
+
+CREATE SEQUENCE pokemon_ability_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE pokemon_types_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE pokemon_attack_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE pokemon_base_stat_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE pokemon_habitat_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9999
+;
+
+CREATE SEQUENCE egg_group_pokemon_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9999
+;
 
 COMMIT;
