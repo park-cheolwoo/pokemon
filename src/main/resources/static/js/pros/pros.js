@@ -33,25 +33,26 @@ $(function() {
 
 
 	$(document).on("click", ".pros_search_btn", function() {
-		const rows = $(".pros_rows");
-		const keyword = $(".pros_keyword").text();
-		rows.each(function() {
-		    const profileText = $(this).find(".pros_profile").text().toLowerCase(); 
-		    const searchKeyword = keyword.toLowerCase().trim();
-		    $(this).css("display", profileText.includes(searchKeyword) ? "block" : "none");
-		});
+				const data = $(".pros_list2");
+				const keyword = $(".pros_keyword").val().trim();
+				data.find(".pros_list_name").each(function() {
+				           const profileText = $(this).text().toLowerCase();
+						   console.log(profileText);
+						   console.log(keyword);
+						   console.log(profileText + " = "+keyword);
+				           profileText.includes(keyword) ? $(this).closest(".pros_items").css("display", "block") 
+						   : $(this).closest(".pros_items").css("display", "none");
+				           });
+				alert('검색 완료');
+    });
 
-		alert('검색 완료');
-	});
+	
+	
 
 	$(document).on("keypress",".pros_keyword",function(event){
 		if(event.keyCode == 13){$(".pros_search_btn").click();}
 	})
 	
-		
-	$(document).on("click",".pros_more_btn",function(){
-		location.href="/member/admin2";
-	})
 	
 	$(document).on("click",".pros_home_btn",function(){
 		location.href="/member/admin";
@@ -126,7 +127,28 @@ $(function() {
 	    }
 	});
 
+	$(document).on("click",".pros_list_img",function(){
+		location.href="/member/admin2";
+	})
 	
 	
+	/* 임시저장 */
+	/*
+	
+	$(document).on("click", ".pros_search_btn", function() {
+			const rows = $(".pros_rows");
+			const keyword = $(".pros_keyword").text();
+			rows.each(function() {
+			    const profileText = $(this).find(".pros_profile").text().toLowerCase(); 
+			    const searchKeyword = keyword.toLowerCase().trim();
+			    $(this).css("display", profileText.includes(searchKeyword) ? "block" : "none");
+			});
 
-})
+			alert('검색 완료');
+		});	
+	
+	$(document).on("click",".pros_more_btn",function(){
+			location.href="/member/admin2";
+		})
+	*/
+});

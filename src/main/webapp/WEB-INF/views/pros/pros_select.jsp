@@ -27,9 +27,9 @@
   <img src="/images/container.png" class="pros_container_frame">
 
     <div class="pros_search_wrap">
-      <img src="/images/pros/wood-bar2.png" class="pros_search_bar">
+      <img src="/images/pros/wood-bar2.png" class="pros_search_bar" />
       <input type="text" name="keyword" class="pros_keyword" placeholder="검색" maxlength="15"
-      onkeypress="if( event.keyCode == 13 ){.pros_search_btn.click();}"/>
+      onkeypress="if( event.keyCode == 13 ){.pros_search_btn.click();}" />
       <img src="/images/pros/search.png" class="pros_search_btn" />
       <img src="/images/pros/retry.png" class="pros_reload_btn" />
       <img src="/images/pros/list.png" class="pros_dropbar_btn" />
@@ -42,11 +42,113 @@
     </div>
 
     <div class="pros_list_wrap">
-   	  <h4 style="display:none">pokemon</h4>
-      <table class="pros_list">
+   	  <h4 class="pros_list_category" style="display:none">pokemon</h4>
+   	  <div class="pros_list2">
+   	  	<!-- 반복 -->
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<!-- 반복 -->
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div><div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">해바라기씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
+   	  	<div class="pros_items"><img src="/images/pros/pokemon.png" class="pros_list_img"><h4 class="pros_list_name">이상해씨</h4></div>
 
-        <!-- 반복 -->
-        
+   	  </div>
+   	  
+      
+		
+		
+		
+
+        <!-- 임시저장 -->
+        <!-- 
+        <table class="pros_list">
         <tr class="pros_rows">
           <td>
             <div class="pros_profile_frame">
@@ -64,161 +166,9 @@
           <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
         </tr>
         
-        <!-- 반복 -->
-
-        <tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">해바라기씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr><tr class="pros_rows">
-          <td>
-            <div class="pros_profile_frame">
-              <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
-              <img src="/images/pros/pokemon.png" class="pros_profile_img">
-            </div>
-          </td>
-          <td class="pros_profile_wrap">
-            <div>
-              <img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
-              <h4 class="pros_profile">이상해씨</h4>
-              <h4 class="pros_profile_info">활성화</h4>
-            </div>
-          </td>
-          <td><img src="/images/pros/more.png" class="pros_more_btn"></td>
-        </tr>
-
       </table>
+        <!-- 임시저장 -->
+
     </div>
   </div>
 
