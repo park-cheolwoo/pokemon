@@ -18,7 +18,7 @@ $(function() {
 					alert("아이디 또는 패스워드가 일치하지 않습니다.")
 				}else if(response.loginChk =="1"){
 					alert("로그인 성공");
-					location.href="/";
+					location.href="/index";
 				}
 			},
 			error:function(error){

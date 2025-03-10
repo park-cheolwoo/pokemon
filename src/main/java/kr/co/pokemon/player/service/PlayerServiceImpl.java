@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.player.dao.PlayerMapper;
+import kr.co.pokemon.player.dto.FriendDTO;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 @Service
@@ -37,8 +38,9 @@ public class PlayerServiceImpl implements PlayerService {
         playerMapper.insertPlayer(player);
         return true;
 	}
+	
 	private String generateRandomTag() {
-        return UUID.randomUUID().toString().substring(0, 10); 
+        return "#"+UUID.randomUUID().toString().substring(0, 9); 
     }
 
 	@Override
@@ -64,4 +66,36 @@ public class PlayerServiceImpl implements PlayerService {
 		PlayerDTO playerdto = playerMapper.chooseById(id);
 		return playerdto == null;
 	}
+
+	@Override
+	public PlayerDTO getRandomPlayer() {
+		PlayerDTO randomPlayer = playerMapper.getRandomPlayer();
+		return playerMapper.getRandomPlayer();
+	}
+
+	@Override
+	public List<FriendDTO> getFriendList(String playerId) {
+		return playerMapper.getFriendList(playerId);
+	}
+
+	@Override
+	public boolean sendFriendRequest(String fromId, String toId) {
+		FriendDTO existingRequest = playerMapper.checkFriendRequest(fromId, toId);
+		if(existingRequest != null) {
+		return false;
+	}
+		return playerMapper.insertFriendRequest(fromId, toId)>0;
+	}
+
+	@Override
+	public boolean acceptFriendRequest(String requestId) {
+		return playerMapper.updateFriendStatus(requestId) >0;
+	}
+
+//	@Override
+//	public int countPlayerPokemons(String playerId) {
+//		return playerMapper.countPlayerPokemons(playerId);
+//	}
+	
+	
 }

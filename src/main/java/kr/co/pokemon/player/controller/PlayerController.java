@@ -38,7 +38,12 @@ public class PlayerController {
             session.setAttribute("session_lv", playerDto.getLv());
             session.setAttribute("session_gameMoney", playerDto.getGameMoney());
             session.setAttribute("session_realMoney", playerDto.getRealMoney());
-            return "redirect:/?loginChk=1";
+            
+//            int pokemonCount = playerService.countPlayerPokemons(playerDto.getId());
+//            if (pokemonCount == 0) {
+//                return "redirect:/first";
+//            }
+            return "redirect:/";
         } else {
             model.addAttribute("loginChk", "0");
             return "member/login";

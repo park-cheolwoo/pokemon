@@ -4,7 +4,7 @@
 	z-index:1;
     display: flex;
     height: 100vh;
-    background : url('/images/poketmon_main.png') no-repeat center center/ cover;
+    background : url('/images/index/poketmon_main.png') no-repeat center center/ cover;
 }
 .wood1{
 	position: absolute;
@@ -60,37 +60,19 @@
   	top: 5%;
   	left: 91%;
 }
-.poketmon1{
+#pokemon-container {
+	display: flex;
+    flex-wrap: nowrap;
 	position: absolute;
-	width:40%;
-  	bottom: 22%;
-  	left: 3%;
+	border: none;
+	bottom:25%;
+	width:100%;
+	height:25%;
 }
-.poketmon2{
-	position: absolute;
-  	bottom: 22%;
-  	left: 19%;
+#pokemon-container img{
+	width:100%;
 }
-.poketmon3{
-	position: absolute;
-  	bottom: 22%;
-  	left: 35%;
-}
-.poketmon4{
-	position: absolute;
-  	bottom: 22%;
-  	left: 51%;
-}
-.poketmon5{
-	position: absolute;
-  	bottom: 22%;
-  	left: 67%;
-}
-.poketmon6{
-	position: absolute;
-  	bottom: 22%;
-  	left: 83%;
-}
+
 .wood4{
 	position: absolute;
   	bottom: 5%;
@@ -146,7 +128,7 @@
 /* 로그인배경 설정 */
 .login-container {
 	position:relative;
-	background:url("../images/background.png") no-repeat center top /cover; 
+	background:url("../images/index/background.png") no-repeat center top /cover; 
     display: flex;
     height: 100vh;
 }
@@ -242,7 +224,7 @@
 /*회원가입창 배경 */
 .join-container {
 	position:relative;
-	background:url("../images/background.png") no-repeat center top /cover; 
+	background:url("../images/index/background.png") no-repeat center top /cover; 
 	margin : 0 auto;
     display: flex;
     height: 100vh;

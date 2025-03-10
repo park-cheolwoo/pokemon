@@ -46,25 +46,25 @@
 .imgfplus1{
 	position: absolute;
 	top: 0%;
-  	left: 36%;
+  	left: 35%;
   	z-index:5;
 }
 .imgfplus2{
 	position: absolute;
 	top: 0%;
-  	left: 36%;
+  	left: 35%;
   	z-index:4;
 }
 .imgfpls1{
 	position: absolute;
 	top: 0%;
-  	left: 65%;
+  	left: 64%;
   	z-index:5;
 }
 .imgfpls2{
 	position: absolute;
 	top: 0%;
-  	left: 65%;
+  	left: 64%;
   	z-index:4;
 }
 .flistbtn{
@@ -234,7 +234,7 @@
 .myprofilecode{
 	position: absolute;
 	top: 19%;
-	left:30%;
+	left:28%;
 	font-size:36px;
 	color:white;
 	word-spacing: 20px;
