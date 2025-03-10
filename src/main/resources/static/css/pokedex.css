@@ -620,7 +620,28 @@ div.myPokemon-info-text-container {
 
 .item-table {
     width: 100%;
+    table-layout: fixed; /* 테이블 레이아웃을 고정합니다 */
     border-collapse: collapse;
+}
+
+
+.item-table th:first-child,
+.item-table td:first-child {
+  width: 100px; /* 첫 번째 열(이미지) 너비 */
+}
+
+.item-table th:nth-child(2),
+.item-table td:nth-child(2) {
+  width: 200px; /* 두 번째 열(이름) 너비 */
+}
+
+.item-table th:last-child,
+.item-table td:last-child {
+  width: 100px; /* 세 번째 열(수량) 너비 */
+}
+
+.item-table td {
+    height: 100px;
 }
 
 .item-table th,
@@ -630,14 +651,6 @@ div.myPokemon-info-text-container {
     /* 수평 정렬 */
     vertical-align: middle;
     /* 수직 정렬 */
-}
-
-.item-table th {
-    width: 50px;/* 제목 너비 */
-}
-
-.item-table td {
-    height: 100px;
 }
 
 /* .item-info-text-container의 스크롤바 스타일 */
