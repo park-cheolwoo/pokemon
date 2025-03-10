@@ -13,6 +13,7 @@ import kr.co.pokemon.data.dto.EffectGroup;
 import kr.co.pokemon.data.dto.FlavorTextEntryDTO;
 import kr.co.pokemon.data.dto.ItemSpriteDTO;
 import kr.co.pokemon.data.dto.LanguageNameDTO;
+import kr.co.pokemon.data.dto.TimeDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +28,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ItemDTO implements EffectGroup {
+public class ItemDTO extends TimeDTO implements EffectGroup {
 	
 	private int id;
 	private String name;

@@ -35,6 +35,6 @@
     VALUES
         ( #{id}, #{name}, #{image}, #{categoryId}, #{description}, #{cost}, #{realCost})
   </insert>
-  
+
 
 </mapper>
