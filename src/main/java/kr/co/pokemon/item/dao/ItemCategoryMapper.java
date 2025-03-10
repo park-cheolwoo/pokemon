@@ -18,5 +18,6 @@ public interface ItemCategoryMapper{
 
 	int existById(int id);
 	
+	void insertAll(List<ItemCategoryDTO> itemCategories);
 	
 }
