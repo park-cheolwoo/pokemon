@@ -1,4 +1,4 @@
-package kr.co.pokemon.player.controller;
+package kr.co.pokemon.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,5 +30,15 @@ public class MypageController {
     @GetMapping("/expedition")
     public String expedition() {
         return "/mypage/expedition";  // expedition.jsp 반환
+    }
+
+    @GetMapping("/pokedexView")
+    public String pokedexView() {
+    	return "/mypage/pokedexView";  // pokedexView.jsp 반환
+    }
+
+    @GetMapping("/myPokemon")
+    public String myPokemon() {
+    	return "/mypage/myPokemon";  // pokedexView.jsp 반환
     }
 }

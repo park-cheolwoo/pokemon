@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.pokemon.data.dto.APIResponseDTO;
 import kr.co.pokemon.data.service.APIService;
+import kr.co.pokemon.item.dto.ItemCategoryDTO;
+import kr.co.pokemon.item.service.ItemCategoryService;
 import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.AttackService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
@@ -81,6 +83,11 @@ public class APIController {
 	@GetMapping(value = "/pokemon/attack/{part}")
 	public APIResponseDTO getPokemonAttack(@PathVariable int part) {
 		return apiService.setData(PokemonMoveService.class, part);
+	}
+
+	@GetMapping(value = "/item-category")
+	public APIResponseDTO getItemCategory() {
+		return apiService.setData("/item-category", ItemCategoryService.class);
 	}
 	
 }

@@ -22,7 +22,7 @@
                     <span>원정대</span>
                 </div>
             </div>
-            <div class="closeBtn"></div>
+            <a href="/"><div class="closeBtn"></div></a>
         </div>
 
         <div id="content-container" class="mypage-content-container">

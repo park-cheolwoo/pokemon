@@ -31,11 +31,18 @@
 
 
 
-/* hover 시 커지는 효과 */
-.mypage-banner .banner-item span:hover, #content-container > div.mypage-container > ul > li > span:hover {
-    font-size: 35px; /* 폰트 크기를 키워줍니다 */
+/* 기본 상태와 hover 상태에서의 애니메이션 */
+.mypage-banner .banner-item span, 
+#content-container > div.mypage-container > ul > li > span {
     transition: font-size 0.3s ease; /* 폰트 크기 변화 애니메이션 */
 }
+
+/* hover 시 커지는 효과 */
+.mypage-banner .banner-item span:hover, 
+#content-container > div.mypage-container > ul > li > span:hover {
+    font-size: 35px; /* 폰트 크기를 키워줍니다 */
+}
+
 
 
 
@@ -106,7 +113,7 @@
 
 }
 
-.closeBtn {
+body > div > div.mypage-banner-container > a{
     position: relative;
     margin: 0 0 0 0;
     background-image: url('/images/close.png');
@@ -265,6 +272,7 @@
     position: relative;
     align-items: center;
     background-image: url('/images/wood-bar.png');
+    cursor: pointer;
     /* 텍스트와 이미지를 수직으로 가운데 정렬 */
 }
 
@@ -281,6 +289,7 @@
     /* 텍스트 색상 (배경과 대비되게 설정) */
     font-size: 16px;
     /* 텍스트 크기 조정 */
+    
 }
 
 
@@ -383,7 +392,85 @@
 
 
 
+/* ---------------------------- pokedexView css --------------------------- */
 
+div.pokedexView-info-text-container {
+	width: 800px;
+	height: 450px;
+	padding: 10px;
+	position: relative;
+	top: 5%;
+	left: 11%;
+	font-size: 32px;
+	color: white;
+}
+
+.pokedexView-table {
+    width: 800px;
+    border-collapse: collapse;
+    color: white;
+    font-size: 28px;
+}
+
+.pokedexView-table th,
+.pokedexView-table td {
+    padding: 8px;
+    text-align: left;  /* 수평 정렬 */
+    vertical-align: middle;  /* 수직 정렬 */
+}
+
+.pokedexView-table td:first-child {
+    width: 250px; /* 제목 열의 너비를 줄임 */
+    text-align: center;
+}
+
+.pokedexView-table td {
+    height: 70px;  /* 셀 높이 */
+}
+
+
+
+/* ---------------------------- pokedexView css --------------------------- */
+
+
+
+
+/* ---------------------------- myPokemon css ------------------------------ */
+div.myPokemon-info-text-container {
+	width: 800px;
+	height: 450px;
+	padding: 10px;
+	position: relative;
+	top: 5%;
+	left: 11%;
+	font-size: 32px;
+	color: white;
+}
+
+.myPokemon-table {
+    width: 800px;
+    border-collapse: collapse;
+    color: white;
+    font-size: 28px;
+}
+
+.myPokemon-table th,
+.myPokemon-table td {
+    padding: 8px;
+    text-align: left;  /* 수평 정렬 */
+    vertical-align: middle;  /* 수직 정렬 */
+}
+
+.myPokemon-table td:first-child {
+    width: 250px; /* 제목 열의 너비를 줄임 */
+    text-align: center;
+}
+
+.myPokemon-table td {
+    height: 70px;  /* 셀 높이 */
+}
+
+/* ---------------------------- myPokemon css ------------------------------ */
 
 
 
@@ -531,9 +618,6 @@
 
 /* 아이템 리스트 테이블 */
 
-
-
-
 .item-table {
     width: 100%;
     border-collapse: collapse;
@@ -588,6 +672,17 @@
     align-items: center;
     margin-top: 42px;
 }
+
+.tab-content.active {
+    display: block; /* active 클래스가 있을 때만 보이도록 설정 */
+}
+
+.tab-content {
+    display: none; /* 기본적으로 모든 테이블 숨기기 */
+}
+
+
+
 
 
 /* 포켓몬 리스트 테이블 */
