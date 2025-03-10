@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.pokemon.data.dto.APIResponseDTO;
 import kr.co.pokemon.data.service.APIService;
-import kr.co.pokemon.item.dto.ItemCategoryDTO;
 import kr.co.pokemon.item.service.ItemCategoryService;
+import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.AttackService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
@@ -70,6 +70,11 @@ public class APIController {
 	@GetMapping(value = "/characteristic")
 	public APIResponseDTO getCharacteristic() {
 		return apiService.setData("/characteristic", CharacteristicService.class);
+	}
+
+	@GetMapping(value = "/item")
+	public APIResponseDTO getItem() {
+		return apiService.setData("/item", ItemService.class);
 	}
 
 	@GetMapping(value = "/item-category")

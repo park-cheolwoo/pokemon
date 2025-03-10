@@ -14,7 +14,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FlavorTextEntryDTO {
-	@JsonProperty(value = "flavor_text")
+	@JsonProperty(value = "text")
 	private String flavorText;
 	private APIPageResultDTO language;
+	
+	@Override
+	public String toString() {
+		return String.format("FlavorText(language=%s, text='%s')", 
+			language != null ? language.getName() : "null",
+			flavorText);
+	}
 }

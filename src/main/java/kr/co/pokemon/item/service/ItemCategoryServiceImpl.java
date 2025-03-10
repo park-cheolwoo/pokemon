@@ -21,7 +21,6 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
 	@Override
 	public int getDataFromAPI(ItemCategoryDTO dto) throws Exception {
 		itemCategoryMapper.insert((ItemCategoryDTO) dto);
-		
 		return 1;
 	}
 
