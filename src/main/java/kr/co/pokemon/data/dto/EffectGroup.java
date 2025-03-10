@@ -10,7 +10,7 @@ public interface EffectGroup {
 	default Optional<String> getLanguagesEffect(String languageName) {
 		return getEffectEntries().stream()
 				.filter(effect -> effect.getLanguage().getName().equals(languageName))
-				.findFirst().map(effectEntry -> effectEntry.getEffect() + "(" + effectEntry.getShortEffect() + ")");
+				.findFirst()
+				.map(EffectEntryDTO::getEffect);
 	}
-
 }

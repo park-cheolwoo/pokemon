@@ -620,7 +620,28 @@ div.myPokemon-info-text-container {
 
 .item-table {
     width: 100%;
+    table-layout: fixed; /* 테이블 레이아웃을 고정합니다 */
     border-collapse: collapse;
+}
+
+
+.item-table th:first-child,
+.item-table td:first-child {
+  width: 100px; /* 첫 번째 열(이미지) 너비 */
+}
+
+.item-table th:nth-child(2),
+.item-table td:nth-child(2) {
+  width: 200px; /* 두 번째 열(이름) 너비 */
+}
+
+.item-table th:last-child,
+.item-table td:last-child {
+  width: 100px; /* 세 번째 열(수량) 너비 */
+}
+
+.item-table td {
+    height: 100px;
 }
 
 .item-table th,
@@ -630,14 +651,6 @@ div.myPokemon-info-text-container {
     /* 수평 정렬 */
     vertical-align: middle;
     /* 수직 정렬 */
-}
-
-.item-table th {
-    width: 50px;/* 제목 너비 */
-}
-
-.item-table td {
-    height: 100px;
 }
 
 /* .item-info-text-container의 스크롤바 스타일 */
@@ -718,11 +731,11 @@ div.myPokemon-info-text-container {
     width: 350px;
     max-width: 800px;
     margin-top: 10px;
+    
 }
 
 .expedition-item {
     background-color: rgba(0, 0, 0, 0.5);  /* 반투명 검은색 배경 */
-    border: 1px solid #ddd;
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -735,9 +748,14 @@ div.myPokemon-info-text-container {
 }
 
 .expedition-img {
-    background-color: #ccc;
     width: 150px;  /* 이미지 크기 150px */
     height: 150px;  /* 이미지 크기 150px */
+    border-radius: 8px;
+    margin: 0 auto;  /* 이미지를 가운데로 정렬 */
+}
+
+.expedition-img img {
+    width: 100%;
     border-radius: 8px;
     margin: 0 auto;  /* 이미지를 가운데로 정렬 */
 }
@@ -746,9 +764,8 @@ div.myPokemon-info-text-container {
     font-size: 14px;
     color: #fff;  /* 설명란 텍스트는 흰색 */
     background-color: rgba(0, 0, 0, 0.7);  /* 설명란 배경을 진한 검은색 */
-    padding: 5px;
     border-radius: 4px;
-    height: 40px;  /* 설명란 크기 지정 */
+    height: 14px;  /* 설명란 크기 지정 */
     display: flex;
     justify-content: center;
     align-items: center;
