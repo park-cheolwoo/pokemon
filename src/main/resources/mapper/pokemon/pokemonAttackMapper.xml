@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.pokemon.dao.relationship.PokemonAttackMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.relationship.PokemonAttackDTO" autoMapping="true">
+    <result column="pokemon_id" property="pokemonId" />
+    <result column="attack_id" property="attackId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM pokemon_attack OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM pokemon_attack WHERE id = #{id}
+  </select>
+
+  <select id="selectByPokemonId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM pokemon_attack WHERE pokemon_id = #{pokemonId}
+  </select>
+
+  <select id="selectByAttackId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM pokemon_attack WHERE attack_id = #{attackId}
+  </select>
+  
+  <select id="existById" resultType="int" parameterType="int">
+	SELECT CASE
+	    WHEN EXISTS (SELECT 1 FROM pokemon_attack WHERE id = #{id}) THEN 1
+	    ELSE 0
+	END
+	FROM dual
+  </select>
+  
+  <insert id="insert">
+  	INSERT INTO pokemon_attack
+  		( id, pokemon_id, attack_id, lv )
+  	VALUES
+  		( pokemon_attack_seq.NEXTVAL, #{pokemonId}, #{attackId}, #{level} )
+  </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO pokemon_attack ( id, pokemon_id, attack_id, lv )
+  	SELECT pokemon_attack_seq.NEXTVAL, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  			SELECT #{item.pokemonId} AS pokemon_id, #{item.attackId} AS attack_id, #{item.level} AS lv
+  			FROM dual
+  	</foreach>) a
+  </insert>
+
+</mapper>

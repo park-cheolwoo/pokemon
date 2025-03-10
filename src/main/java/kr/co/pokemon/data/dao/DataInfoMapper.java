@@ -2,6 +2,7 @@ package kr.co.pokemon.data.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.pokemon.data.dto.DataDeleteDTO;
 import kr.co.pokemon.data.dto.TableInfoDTO;
 
 @Mapper
@@ -18,5 +19,7 @@ public interface DataInfoMapper {
 	void dropSequenceByName(String sequenceName);
 	
 	void deleteDataByName(String tableName);
+
+	void deleteDataByPage(DataDeleteDTO table);
 
 }

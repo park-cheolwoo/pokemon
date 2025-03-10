@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.pokemon.dao.relationship.PokemonStatMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.relationship.PokemonStatDTO" autoMapping="true">
+    <result column="pokemon_id" property="pokemonId" />
+    <result column="stat_id" property="statId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM pokemon_base_stat OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM pokemon_base_stat WHERE id = #{id}
+  </select>
+
+  <select id="selectByPokemonId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM pokemon_base_stat WHERE pokemon_id = #{pokemonId}
+  </select>
+
+  <insert id="insert">
+  	INSERT INTO pokemon_base_stat
+  		( id, pokemon_id, stat_id, value )
+  	VALUES
+  		( pokemon_attack_seq.NEXTVAL, #{pokemonId}, #{statId}, #{value} )
+  </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO pokemon_base_stat ( id, pokemon_id, stat_id, value )
+  	SELECT pokemon_base_stat_seq.NEXTVAL, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  			SELECT #{item.pokemonId} AS pokemon_id, #{item.statId} AS stat_id, #{item.value} AS value
+  			FROM dual
+  	</foreach>) a
+  </insert>
+
+</mapper>
