@@ -32,5 +32,12 @@
   	VALUES
   		( #{id}, #{name}, #{description, jdbcType=CLOB}, #{flavorText, jdbcType=CLOB} )
   </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO ability ( id, name, description, flavor_text )
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.id}, #{item.name}, #{item.description, jdbcType=CLOB}, #{item.flavorText, jdbcType=CLOB} FROM DUAL
+  	</foreach>
+  </insert>
 
 </mapper>

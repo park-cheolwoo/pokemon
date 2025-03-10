@@ -4,7 +4,11 @@ import kr.co.pokemon.data.dto.APIResponseDTO;
 
 public interface APIService {
 	
-	public <D, S extends APIGetable<D>> APIResponseDTO setData(String uri, Class<S> service);
+	<D, S extends APIGetable<D>> APIResponseDTO setData(Class<S> service, int part);
+
+	<D, S extends APIGetable<D>> APIResponseDTO setData(Class<S> service);
+
+	<T> T getDataDTOFromAPI(String uri, Class<T> dto);
 	
 	public static int getIdByUrl(String url) {
 		String[] separatedUrl = url.split("/");

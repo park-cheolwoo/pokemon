@@ -17,5 +17,7 @@ public interface HabitatMapper {
 	int existById(int id);
 	
 	void insert(HabitatDTO habitat);
+	
+	void insertAll(List<HabitatDTO> habitats);
 
 }

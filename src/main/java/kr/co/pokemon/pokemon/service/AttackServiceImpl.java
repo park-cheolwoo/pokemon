@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
+import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dao.AttackMapper;
 import kr.co.pokemon.pokemon.dto.AttackDTO;
 
@@ -15,6 +16,9 @@ import kr.co.pokemon.pokemon.dto.AttackDTO;
 public class AttackServiceImpl implements AttackService {
 	
 	private final DBTables dbTable = DBTables.ATTACK;
+	
+	@Autowired
+	private DataService dataService;
 
 	@Autowired
 	AttackMapper attackMapper;
@@ -35,23 +39,31 @@ public class AttackServiceImpl implements AttackService {
 	}
 
 	@Override
-	public int getDataFromAPI(AttackDTO dto) throws Exception {
-		int typesId = APIService.getIdByUrl(dto.getType().getUrl());
-		dto.setTypesId(typesId);
-		
-		dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-		dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
-			dto.setDescription(effect),
-			() -> dto.setDescription("NO-TEXT")
-		);
-		
-		dto.getLanguagesFlavorText("ko").ifPresentOrElse(flavor ->
-			dto.setFlavorText(flavor),
-			() -> dto.setFlavorText("NO-TEXT")
-		);
-		attackMapper.insert(dto);
+	public int insertDataFromAPI(List<AttackDTO> list) throws Exception {
+		list.stream().forEach(dto -> {
+			int typesId = APIService.getIdByUrl(dto.getType().getUrl());
+			dto.setTypesId(typesId);
+			
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+			dto.getLanguagesEffect("en").ifPresentOrElse(effect ->
+				dto.setDescription(effect),
+				() -> dto.setDescription("NO-TEXT")
+			);
+			
+			dto.getLanguagesFlavorText("ko").ifPresentOrElse(flavor ->
+				dto.setFlavorText(flavor),
+				() -> dto.setFlavorText("NO-TEXT")
+			);
+			
+		});
+		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+			attackMapper.insertAll(list);
+			
+		} else {
+			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
+		}
 
-		return 1;
+		return list.size();
 	}
 
 	@Override
@@ -65,8 +77,8 @@ public class AttackServiceImpl implements AttackService {
 	}
 	
 	@Override
-	public String getDBTableName() {
-		return dbTable.getTableName();
+	public DBTables getDBTable() {
+		return dbTable;
 	}
 
 }

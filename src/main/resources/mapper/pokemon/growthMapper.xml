@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.pokemon.dao.GrowthMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.GrowthDTO" autoMapping="true">
+	<result column="name" property="name" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+    
+	<collection property="levels" ofType="kr.co.pokemon.pokemon.dto.GrowthDTO$TotalExperience" autoMapping="true">
+		<id column="e_id" property="id" />
+		<result column="growth_id" property="growthId" />
+		<result column="e_created_at" property="createdAt" />
+		<result column="e_updated_at" property="updatedAt" />
+	</collection>
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+	SELECT
+		g.*, t.id AS "E_ID", t.growth_id, t.lv AS "LEVEL", t.experience, t.updated_at AS "E_UPDATED_AT", t.created_at AS "E_CREATED_AT"
+	FROM growth g LEFT JOIN total_experience t
+	ON g.id = t.growth_id
+	OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+	SELECT
+		g.*, t.id AS "E_ID", t.growth_id, t.lv AS "LEVEL", t.experience, t.updated_at AS "E_UPDATED_AT", t.created_at AS "E_CREATED_AT"
+	FROM growth g LEFT JOIN total_experience t
+	ON g.id = t.growth_id WHERE g.id = #{id}
+  </select>
+  
+  <select id="existById" resultType="int" parameterType="int">
+	SELECT CASE
+	    WHEN EXISTS (SELECT 1 FROM growth WHERE id = #{id}) THEN 1
+	    ELSE 0
+	END
+	FROM dual
+  </select>
+  
+  <insert id="insert">
+  	INSERT INTO growth
+  		( id, name )
+  	VALUES
+  		( #{id}, #{name} )
+  </insert>
+  
+  <insert id="insertLevel">
+  	INSERT INTO total_experience
+  		( id, lv, growth_id, experience )
+  	VALUES
+  		( total_experience_seq.nextval, #{level}, #{growthId}, #{experience} )
+  </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO growth ( id, name )
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.id}, #{item.name} FROM DUAL
+  	</foreach>
+  </insert>
+
+  <insert id="insertAllLevel" parameterType="java.util.List">
+  	INSERT INTO total_experience ( id, growth_id, lv, experience )
+  	SELECT total_experience_seq.nextval, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.growthId} AS growth_id, #{item.level} AS lv, #{item.experience} AS experience
+  		FROM dual
+  	</foreach>) a
+  </insert>
+
+</mapper>

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
-import kr.co.pokemon.pokemon.dto.TypesRelationshipDTO;
+import kr.co.pokemon.pokemon.dto.relationship.TypesRelationshipDTO;
 
 @Mapper
 public interface TypesRelationshipMapper {
@@ -19,6 +19,8 @@ public interface TypesRelationshipMapper {
 
 	TypesRelationshipDTO selectById(int id);
 
-	void insert(TypesRelationshipDTO typeRelationship);
+	void insert(TypesRelationshipDTO typesRelationship);
+	
+	void insertAll(List<TypesRelationshipDTO> typesRelationships);
 	
 }
