@@ -17,4 +17,6 @@ public interface EggGroupMapper {
 
 	void insert(EggGroupDTO eggGroup);
 
+	void insertAll(List<EggGroupDTO> eggGroups);
+
 }

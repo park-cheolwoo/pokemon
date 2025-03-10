@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.pokemon.data.dto.APIResponseDTO;
 import kr.co.pokemon.data.service.APIService;
-import kr.co.pokemon.item.dto.ItemCategoryDTO;
 import kr.co.pokemon.item.service.ItemCategoryService;
+import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.AttackService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
@@ -16,7 +16,6 @@ import kr.co.pokemon.pokemon.service.EggGroupService;
 import kr.co.pokemon.pokemon.service.EvolutionTriggerService;
 import kr.co.pokemon.pokemon.service.HabitatService;
 import kr.co.pokemon.pokemon.service.StatService;
-import kr.co.pokemon.pokemon.service.TypesRelationshipService;
 import kr.co.pokemon.pokemon.service.TypesService;
 
 @RestController
@@ -29,52 +28,52 @@ public class APIController {
 	
 	@GetMapping(value = "/evolution/trigger")
 	public APIResponseDTO getEvolutionTrigger() {
-		return apiService.setData("/evolution-trigger", EvolutionTriggerService.class);
+		return apiService.setData(EvolutionTriggerService.class);
 	}
 
 	@GetMapping(value = "/egg-group")
 	public APIResponseDTO getEggGroup() {
-		return apiService.setData("/egg-group", EggGroupService.class);
+		return apiService.setData(EggGroupService.class);
 	}
 	
 	@GetMapping(value = "/habitat")
 	public APIResponseDTO getHabitat() {
-		return apiService.setData("/pokemon-habitat", HabitatService.class);
+		return apiService.setData(HabitatService.class);
 	}
 	
 	@GetMapping(value = "/ability")
 	public APIResponseDTO getAbility() {
-		return apiService.setData("/ability", AbilityService.class);
+		return apiService.setData(AbilityService.class);
 	}
 	
 	@GetMapping(value = "/type")
 	public APIResponseDTO getType() {
-		return apiService.setData("/type", TypesService.class);
+		return apiService.setData(TypesService.class);
 	}
 	
-	@GetMapping(value = "/type/relationship")
-	public APIResponseDTO getTypeRelationship() {
-		return apiService.setData("/type", TypesRelationshipService.class);
-	}
-
 	@GetMapping(value = "/attack")
 	public APIResponseDTO getAttack() {
-		return apiService.setData("/move", AttackService.class);
+		return apiService.setData(AttackService.class);
 	}
 	
 	@GetMapping(value = "/stat")
 	public APIResponseDTO getStat() {
-		return apiService.setData("/stat", StatService.class);
+		return apiService.setData(StatService.class);
 	}
 		
 	@GetMapping(value = "/characteristic")
 	public APIResponseDTO getCharacteristic() {
-		return apiService.setData("/characteristic", CharacteristicService.class);
+		return apiService.setData(CharacteristicService.class);
+	}
+
+	@GetMapping(value = "/item")
+	public APIResponseDTO getItem() {
+		return apiService.setData(ItemService.class);
 	}
 
 	@GetMapping(value = "/item-category")
 	public APIResponseDTO getItemCategory() {
-		return apiService.setData("/item-category", ItemCategoryService.class);
+		return apiService.setData(ItemCategoryService.class);
 	}
 	
 }
