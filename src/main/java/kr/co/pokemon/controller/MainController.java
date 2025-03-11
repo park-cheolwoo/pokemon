@@ -46,5 +46,10 @@ public class MainController {
 	@GetMapping("/first/first")
 	public String first() {
 		return "/first/first";
+	}	
+	
+	@GetMapping("/play/battle")
+	public String battle() {
+		return "/play/battle";
 	}
 }
