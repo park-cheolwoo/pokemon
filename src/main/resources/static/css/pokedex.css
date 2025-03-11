@@ -514,7 +514,7 @@ div.myPokemon-info-text-container {
     overflow-y: scroll;
 }
 
-#content-container > div.item-view-info-container > div.item-img {
+#content-container > div.item-view-info-container > div.mypage-item-img {
     width: 575px;
     height: 250px;
     display: flex;
@@ -523,12 +523,12 @@ div.myPokemon-info-text-container {
     margin-top: 80px;  
 }
 
-#content-container > div.item-view-info-container > div.item-img > img {
+#content-container > div.item-view-info-container > div.mypage-item-img > img {
     width: 250px;
     height: 250px;
 }
 
-#content-container > div.item-view-info-container > div.item-text-container {
+#content-container > div.item-view-info-container > div.mypage-item-text-container {
     width: 575px;
     height: 250px;
     display: flex;
@@ -537,7 +537,7 @@ div.myPokemon-info-text-container {
     margin-top: 40px;
     
 }
-#content-container > div.item-view-info-container > div.item-text-container > div {
+#content-container > div.item-view-info-container > div.mypage-item-text-container > div {
     width: 400px;
     height: 300px;
     display: flex;
@@ -550,7 +550,7 @@ div.myPokemon-info-text-container {
     
 }
 
-#content-container > div.item-view-info-container > div.item-text-container > div > div.item-name {
+#content-container > div.item-view-info-container > div.mypage-item-text-container > div > div.mypage-item-name {
     font-size: 32px;
     margin-top: 20px;
     width: 350px;
@@ -558,7 +558,7 @@ div.myPokemon-info-text-container {
     word-wrap: break-word;  /* 또는 overflow-wrap: break-word; */
 }
 
-#content-container > div.item-view-info-container > div.item-text-container > div > div.item-info {
+#content-container > div.item-view-info-container > div.mypage-item-text-container > div > div.mypage-item-info {
     font-size: 20px;
     margin-top: 20px;
     width: 350px;
@@ -627,21 +627,21 @@ div.myPokemon-info-text-container {
 
 .item-table th:first-child,
 .item-table td:first-child {
-  width: 100px; /* 첫 번째 열(이미지) 너비 */
+  width: 50px; /* 첫 번째 열(이미지) 너비 */
 }
 
 .item-table th:nth-child(2),
 .item-table td:nth-child(2) {
-  width: 200px; /* 두 번째 열(이름) 너비 */
+  width: 100px; /* 두 번째 열(이름) 너비 */
 }
 
 .item-table th:last-child,
 .item-table td:last-child {
-  width: 100px; /* 세 번째 열(수량) 너비 */
+  width: 50px; /* 세 번째 열(수량) 너비 */
 }
 
-.item-table td {
-    height: 100px;
+.item-table tr {
+    height: 50px;
 }
 
 .item-table th,

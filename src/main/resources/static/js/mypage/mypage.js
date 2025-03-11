@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 기본적으로 "도감" 탭에 active 클래스 추가
     const defaultTab = document.querySelector('.banner-item[data-tab="pokedex"]');
     defaultTab.classList.add('active');
-    
+
     // 기본적으로 "도감" 탭 내용 로드
     loadPage('/mypage/pokedex');  // 절대 경로로 수정
 
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 contentContainer.innerHTML = xhr.responseText;
-                
+
                 // 페이지 로드 후, 아이템 탭 안의 세부 탭 기능을 추가하기 위해
                 if (page === '/mypage/item') {
                     initializeItemTabs();  // 아이템 탭 세부 탭 초기화
@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 탭 클릭 시 active 클래스를 해당 탭에만 적용
                 tabs.forEach(tab => tab.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const tabId = this.getAttribute('data-tab');
-                
+
                 // URL을 변경
                 updateURL(tabId);  // URL 업데이트 함수 호출
-                
+
                 // 현재 탭에 해당하는 jsp 파일을 동적으로 로드
                 switch (tabId) {
                     case 'pokedex':
@@ -96,9 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 카테고리 ID 매핑 (탭 ID -> 카테고리 ID)
         const categoryMapping = {
-            'monsterball-item': 1,  // 몬스터볼 카테고리 ID
-            'battle-item': 2,       // 배틀아이템 카테고리 ID
-            'training-item': 3      // 육성아이템 카테고리 ID
+            'monsterball-item': [33, 34],  // 몬스터볼 카테고리 ID
+            'battle-item': [1, 11, 27, 28, 29, 30],  // 배틀아이템 카테고리 ID
+            'training-item': [10, 26, 37]  // 육성아이템 카테고리 ID
         };
 
         // 기본적으로 "몬스터볼" 아이템 테이블을 로드
@@ -111,12 +111,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 클릭된 탭에 active 클래스 추가
                 itemTabs.forEach(itemTab => itemTab.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const itemTabId = this.getAttribute('data-tab');
-                
+
                 // 해당 아이템 테이블을 동적으로 로드
                 loadItemContent(itemTabId);  // 탭 ID로 호출
-                
+
                 // 해당 카테고리의 아이템 목록 로드
                 const categoryId = categoryMapping[itemTabId];
                 if (categoryId) {
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 아이템 탭 세부 항목의 테이블을 로드하는 함수
     function loadItemContent(tabId) {
-        const contentTabs = document.querySelectorAll('.tab-content'); 
+        const contentTabs = document.querySelectorAll('.tab-content');
         contentTabs.forEach(contentTab => contentTab.style.display = 'none');  // 모든 테이블 숨기기
 
         const activeTab = document.querySelector(`#${tabId}`);
@@ -136,65 +136,42 @@ document.addEventListener('DOMContentLoaded', function () {
             activeTab.style.display = 'block';
         }
     }
-    
+
     // 카테고리별 아이템을 가져와 테이블에 표시하는 함수
-    function loadItemsByCategory(categoryId, tableBodyId) {
+    function loadItemsByCategory(categoryIds, tableBodyId) {
         const tableBody = document.getElementById(tableBodyId);
         if (!tableBody) return;
-        
+    
         // 테이블 내용 초기화
         tableBody.innerHTML = '<tr><td colspan="3">로딩 중...</td></tr>';
-        
-        // API 호출하여 아이템 목록 가져오기
-        fetch(`/api/items/category/${categoryId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('아이템을 불러오는데 실패했습니다.');
-                }
-                return response.json();
-            })
-            .then(items => {
-                if (items && items.length > 0) {
-                    // 테이블 내용 초기화
-                    tableBody.innerHTML = '';
-                    
-                    // 아이템 목록 표시
-                    items.forEach(item => {
-                        const row = document.createElement('tr');
-                        
-                        // 이미지 셀
-                        const imgCell = document.createElement('td');
-                        const img = document.createElement('img');
-                        img.src = item.image || '/images/unknown-item.png';
-                        img.alt = item.name;
-                        img.style.width = '50px';
-                        img.style.height = '50px';
-                        imgCell.appendChild(img);
-                        
-                        // 이름 셀
-                        const nameCell = document.createElement('td');
-                        nameCell.textContent = item.name;
-                        
-                        // 수량 셀 (임시로 1개로 설정)
-                        const quantityCell = document.createElement('td');
-                        quantityCell.textContent = '1개';
-                        
-                        // 행에 셀 추가
-                        row.appendChild(imgCell);
-                        row.appendChild(nameCell);
-                        row.appendChild(quantityCell);
-                        
-                        // 테이블에 행 추가
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    tableBody.innerHTML = '<tr><td colspan="3">아이템이 없습니다.</td></tr>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                tableBody.innerHTML = `<tr><td colspan="3">오류가 발생했습니다: ${error.message}</td></tr>`;
-            });
+    
+        // 각 카테고리 ID에 대해 API 호출
+        categoryIds.forEach(categoryId => {
+            fetch(`/api/items/category/${categoryId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('아이템을 불러오는데 실패했습니다.');
+                    }
+                    return response.json();
+                })
+                .then(items => {
+                    if (items && items.length > 0) {
+                        // 아이템 목록 표시
+                        items.forEach(item => {
+                            const row = document.createElement('tr');
+                            // 이미지, 이름, 수량 셀 추가
+                            // ...
+                            tableBody.appendChild(row);
+                        });
+                    } else {
+                        tableBody.innerHTML = '<tr><td colspan="3">아이템이 없습니다.</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    tableBody.innerHTML = `<tr><td colspan="3">오류가 발생했습니다: ${error.message}</td></tr>`;
+                });
+        });
     }
 
     // pokedexView에서 탭을 초기화하는 함수
@@ -215,9 +192,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 클릭된 탭에 active 클래스 추가
                 viewTabs.forEach(tab => tab.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const tabId = this.getAttribute('data-tab');
-                
+
                 // 해당 탭의 내용을 동적으로 로드
                 loadPokedexViewContent(tabId);  // 탭 ID로 호출
             });
@@ -226,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // pokedexView의 탭 콘텐츠를 로드하는 함수
     function loadPokedexViewContent(tabId) {
-        const contentTabs = document.querySelectorAll('.tab-content'); 
+        const contentTabs = document.querySelectorAll('.tab-content');
         contentTabs.forEach(contentTab => contentTab.style.display = 'none');  // 모든 테이블 숨기기
 
         const activeTab = document.querySelector(`#${tabId}`);
@@ -238,15 +215,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // 도감 내 '자세히'와 '내 포켓몬' 버튼 클릭 시 이벤트 처리
     function initializePokedexButtons() {
         const viewBarContainer = document.querySelector('.view-bar-container');
-        
+
         // '자세히' 버튼 클릭 시
         const detailButton = viewBarContainer.querySelector('div:nth-child(1)');
         detailButton.addEventListener('click', function () {
             // URL을 '/mypage/pokedexView'로 변경
             history.pushState(null, '', '/mypage/pokedexView');
-            
+
             // '자세히' 클릭 시 'pokedexView.jsp' 로드
-            loadPage('/mypage/pokedexView');  
+            loadPage('/mypage/pokedexView');
         });
 
         // '내 포켓몬' 버튼 클릭 시
@@ -254,9 +231,9 @@ document.addEventListener('DOMContentLoaded', function () {
         myPokemonButton.addEventListener('click', function () {
             // URL을 '/mypage/myPokemon'으로 변경
             history.pushState(null, '', '/mypage/myPokemon');
-            
+
             // '내 포켓몬' 클릭 시 'myPokemon.jsp' 로드
-            loadPage('/mypage/myPokemon');  
+            loadPage('/mypage/myPokemon');
         });
     }
 
@@ -278,9 +255,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 클릭된 탭에 active 클래스 추가
                 myPokemonTabs.forEach(tab => tab.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const tabId = this.getAttribute('data-tab');
-                
+
                 // 해당 탭의 내용을 동적으로 로드
                 loadMyPokemonContent(tabId);  // 탭 ID로 호출
             });
@@ -289,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // myPokemon의 탭 콘텐츠를 로드하는 함수
     function loadMyPokemonContent(tabId) {
-        const contentTabs = document.querySelectorAll('.tab-content'); 
+        const contentTabs = document.querySelectorAll('.tab-content');
         contentTabs.forEach(contentTab => contentTab.style.display = 'none');  // 모든 테이블 숨기기
 
         const activeTab = document.querySelector(`#${tabId}`);
@@ -325,14 +302,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // history.pushState는 새 URL을 브라우저 주소 표시줄에 추가하고 페이지를 새로고침하지 않습니다
         history.pushState(null, '', url);
     }
-	
-	function NotReload(){
-	    if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
-	        event.keyCode = 0;
-	        event.cancelBubble = true;
-	        event.returnValue = false;
-	    } 
-	}
-	document.onkeydown = NotReload;
-	
+
+    function NotReload() {
+        if ((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116)) {
+            event.keyCode = 0;
+            event.cancelBubble = true;
+            event.returnValue = false;
+        }
+    }
+    document.onkeydown = NotReload;
+
 });
