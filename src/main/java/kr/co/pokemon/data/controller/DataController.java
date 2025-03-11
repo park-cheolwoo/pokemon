@@ -18,6 +18,7 @@ import kr.co.pokemon.pokemon.dto.AbilityDTO;
 import kr.co.pokemon.pokemon.dto.AttackDTO;
 import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
 import kr.co.pokemon.pokemon.dto.EggGroupDTO;
+import kr.co.pokemon.pokemon.dto.EvolutionDTO;
 import kr.co.pokemon.pokemon.dto.EvolutionTriggerDTO;
 import kr.co.pokemon.pokemon.dto.GrowthDTO;
 import kr.co.pokemon.pokemon.dto.HabitatDTO;
@@ -28,6 +29,7 @@ import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.AttackService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.EggGroupService;
+import kr.co.pokemon.pokemon.service.EvolutionService;
 import kr.co.pokemon.pokemon.service.EvolutionTriggerService;
 import kr.co.pokemon.pokemon.service.GrowthService;
 import kr.co.pokemon.pokemon.service.HabitatService;
@@ -205,6 +207,20 @@ public class DataController {
 	@GetMapping(value = "/growth/{id}")
 	public ResponseEntity<GrowthDTO> getGrowth(@PathVariable int id) {
 		return dataService.getById(id, GrowthService.class)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping(value = "/evolution")
+	public List<EvolutionDTO> getEvolution(PageRequestDTO page) {
+		if (page.getPage() < 0) page.setPage(0);
+		if (page.getSize() <= 0) page.setSize(10);
+		return dataService.getAll(page, EvolutionService.class);
+	}
+	
+	@GetMapping(value = "/evolution/{id}")
+	public ResponseEntity<EvolutionDTO> getEvolution(@PathVariable int id) {
+		return dataService.getById(id, EvolutionService.class)
 				.map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}

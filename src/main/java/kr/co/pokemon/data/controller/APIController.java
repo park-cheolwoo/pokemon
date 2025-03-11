@@ -13,6 +13,7 @@ import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.AttackService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.EggGroupService;
+import kr.co.pokemon.pokemon.service.EvolutionService;
 import kr.co.pokemon.pokemon.service.EvolutionTriggerService;
 import kr.co.pokemon.pokemon.service.GrowthService;
 import kr.co.pokemon.pokemon.service.HabitatService;
@@ -87,6 +88,11 @@ public class APIController {
 	@GetMapping(value = "/item/category/{part}")
 	public APIResponseDTO getItemCategory(@PathVariable int part) {
 		return apiService.setData(ItemCategoryService.class, part);
+	}
+	
+	@GetMapping(value = "/evolution/{part}")
+	public APIResponseDTO getEvolution(@PathVariable int part) {
+		return apiService.setData(EvolutionService.class, part);
 	}
 	
 }
