@@ -12,7 +12,7 @@
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
-    SELECT * FROM pokemon_habitat OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+    SELECT * FROM pokemon_habitat ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
 
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
