@@ -5,6 +5,11 @@
 <mapper namespace="kr.co.pokemon.item.dao.ItemMapper">
 
   <resultMap id="dataResultMap" type="kr.co.pokemon.item.dto.ItemDTO" autoMapping="true">
+    <result column="category_id" property="categoryId" />
+    <result column="real_cost" property="realCost" />
+    <result column="flavor_text" property="flavorText" />
+    <result column="store_type" property="storeType" />
+    <result column="is_active" property="isActive" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
@@ -31,10 +36,16 @@
   
   <insert id="insert">
    INSERT INTO item
-        ( id, name, image, category_id, description, cost, real_cost)
+        ( id, name, image, category_id, cost, value, description, flavor_text )
     VALUES
-        ( #{id}, #{name}, #{image}, #{categoryId}, #{description}, #{cost}, #{realCost})
+        ( #{id}, #{name}, #{image}, #{categoryId}, #{cost}, #{value, jdbcType=INTEGER}, #{description}, #{flavorText} )
   </insert>
-
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO item ( id, name, image, category_id, cost, value, description, flavor_text )
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.id}, #{item.name}, #{item.image}, #{item.categoryId}, #{item.cost}, #{item.value, jdbcType=INTEGER}, #{item.description, jdbcType=CLOB}, #{item.flavorText, jdbcType=CLOB} FROM DUAL
+  	</foreach>
+  </insert>
 
 </mapper>

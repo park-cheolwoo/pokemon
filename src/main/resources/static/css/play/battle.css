@@ -1,0 +1,534 @@
+*{margin:0; padding:0;}
+.background_scenery{
+  position: fixed;  
+  top: 0;           
+  left: 0;          
+  width: 1920px;     
+  height: 1080px;    
+  background-image: url(../../images/play/battle/battlebackground4.png);
+}
+.battle_chang1{
+  position: fixed;  
+  top: 80px;           
+  left: 100px;          
+  width: 1000px;     
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.45); 
+}
+.battle_chat1{
+  position: fixed;  
+  top: 120px;           
+  left: 160px;          
+  width: 870px;     
+  height: 90px;
+  font-size: 36px;
+  color: white;
+}
+.battle_lv_bot, .battle_lv_my{
+  width: 300px;     
+  height: 44px;
+  text-align: center;
+  color: white;
+  font-size: 36px;
+  font-weight:bold;
+  -webkit-text-stroke: 1.5px black;
+}
+.battle_lv_bot{
+  position: fixed;  
+  top: 141px;           
+  left: 1404px;          
+}
+.battle_lv_my{
+  position: fixed;  
+  top: 522px;           
+  left: 256px;   
+}
+.battle_name_bot, .battle_name_my{
+  width: 300px;     
+  height: 44px;
+  text-align: center;
+  color: white;
+  font-size: 36px;
+  font-weight:bold;
+  -webkit-text-stroke: 1.5px black;
+}
+.battle_name_bot{
+  position: fixed;  
+  top: 196px;           
+  left: 1404px;          
+}
+.battle_name_my{
+  position: fixed;  
+  top: 576px;           
+  left: 256px;   
+}
+.battle_health_bar1, .battle_health_bar2{
+  width: 300px;     
+  height: 30px;
+  border: 3px solid black;
+  border-radius: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* 임시로 넣는 hp 색상 */
+  background-color:#ddd;
+
+}
+.battle_health_bar1{
+  position: fixed;  
+  top: 250px;           
+  left: 1404px;          
+} 
+.battle_health_bar2{
+  position: fixed;  
+  top: 630px;           
+  left: 256px; 
+}
+.health_bar1, .health_bar2{
+  height: 100%;
+  transition: width 1s ease, background-color 0.5s ease;
+}
+.battle_bot_img{
+  position: fixed;  
+  top: 290px;           
+  left: 1419px;          
+  width: 270px;     
+  height: 294px;
+}
+.battle_my_img{
+  position: fixed;  
+  top: 670px;           
+  left: 216px;          
+  width: 380px;     
+  height: 365px;
+}
+.battle_bot_img img, .battle_my_img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.battle_fight, .battle_pokemon, .battle_item, .battle_run{
+  width: 450px;     
+  height: 70px;
+  background-color: rgba(0, 0, 0, 0.30);
+  border: none;
+  cursor: pointer;
+}
+.battle_fight{
+  position: fixed;  
+  top: 660px;           
+  left: 1270px; 
+}
+.battle_pokemon{
+  position: fixed;  
+  top: 750px;           
+  left: 1220px; 
+}
+.battle_item{
+  position: fixed;  
+  top: 840px;           
+  left: 1170px; 
+}
+.battle_run{
+  position: fixed;  
+  top: 930px;           
+  left: 1120px; 
+}
+.battle_fight div, .battle_pokemon div, .battle_item div, .battle_run div{
+  font-size: 36px;
+  color: white;
+  text-align: center;
+}
+
+
+
+/* 기술창, 전체 어두워지는창, 포켓몬창, 아이템창,사용(회복,볼,상태이상,배틀)창 */
+.battle_technology,.battle_dark,.battle_pokemon_chang,.battle_item_select,.battle_item_use
+,.battle_item_recovery,.battle_item_ball,.battle_item_situation,.battle_item_battle{
+  display: none;
+}
+
+
+
+.battle_technology_back{
+  position: fixed;  
+  top: 644px;           
+  left: 1775px; 
+  width: 50px;
+  height: 48px;
+  cursor: pointer;
+  background: url(../../images/play/battle/back.png);
+  border: none;
+}
+.battle_technology_1, .battle_technology_2, .battle_technology_3, .battle_technology_4{
+  width: 450px;
+  height: 85px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.battle_technology_1{
+  position: fixed;  
+  top: 630px;           
+  left: 1295px; 
+}
+.battle_technology_2{
+  position: fixed;  
+  top: 735px;           
+  left: 1245px; 
+}
+.battle_technology_3{
+  position: fixed;  
+  top: 840px;           
+  left: 1195px; 
+}
+.battle_technology_4{
+  position: fixed;  
+  top: 940px;           
+  left: 1145px; 
+}
+.battle_technology_name1, .battle_technology_name2, .battle_technology_name3, .battle_technology_name4{
+  font-size: 36px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.30);
+  text-align: left;
+  padding: 2px 0 2px 31px;
+}
+.battle_technology_PP1, .battle_technology_PP2, .battle_technology_PP3, .battle_technology_PP4{
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.50);
+  text-align: right;
+  padding:1px 16px 1px 0;
+}
+.battle_dark{
+  position: fixed;  
+  top: 0px;           
+  left: 0px; 
+  width: 1920px;
+  height: 1080px;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+.battle_function_chang{
+  position: fixed;  
+  top: 140px;           
+  left: 660px; 
+  width: 600px;
+  height: 800px;
+  border-radius: 40px;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+
+.battle_chang2{
+  position: fixed;  
+  top: 140px;           
+  left: 30px; 
+  width: 600px;
+  height: 190px;
+  border-radius: 40px;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+.battle_chat2{
+  position: fixed;  
+  top: 181px;           
+  left: 87px; 
+  width: 486px;
+  height: 65px;
+  font-size: 24px;
+  color: white;
+}
+
+
+.battle_chang2,.battle_chat2_select_pokemon,.battle_chat2_select_recovery{
+  display: none;
+
+  
+}
+.battle_chat2_select{
+  position: fixed;  
+  top: 281px;           
+  left: 226px; 
+  width: 210px;
+  height: 30px;
+  justify-content: space-between;
+  display: flex; 
+}
+.battle_chat2_select button{
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.battle_function_before{
+  position: fixed;  
+  top: 155px;           
+  left: 1185px; 
+  width: 54px;
+  height: 57px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.battle_function_before img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.battle_pokemon1,.battle_pokemon2,.battle_pokemon3,.battle_pokemon4,.battle_pokemon5,.battle_pokemon6{
+  width: 156px;
+  height: 239px;
+  text-align: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.battle_pokemon1{
+  position: fixed;  
+  top: 190px;           
+  left: 750px; 
+}
+.battle_pokemon2{
+  position: fixed;  
+  top: 190px;           
+  left: 1019px; 
+}
+.battle_pokemon3{
+  position: fixed;  
+  top: 429px;           
+  left: 750px; 
+}
+.battle_pokemon4{
+  position: fixed;  
+  top: 429px;           
+  left: 1019px; 
+}
+.battle_pokemon5{
+  position: fixed;  
+  top: 668px;           
+  left: 750px; 
+}
+.battle_pokemon6{
+  position: fixed;  
+  top: 668px;           
+  left: 1019px; 
+}
+.battle_pokemon1_img,.battle_pokemon2_img,.battle_pokemon3_img,.battle_pokemon4_img,.battle_pokemon5_img,.battle_pokemon6_img{
+width: 156px;
+height: 170px;
+}
+.battle_pokemon1_img img,.battle_pokemon2_img img,.battle_pokemon3_img img,.battle_pokemon4_img img,.battle_pokemon5_img img,.battle_pokemon6_img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.battle_pokemon1_information,.battle_pokemon2_information,.battle_pokemon3_information,.battle_pokemon4_information,.battle_pokemon5_information,.battle_pokemon6_information{
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+}
+.battle_pokemon1_health_bar,.battle_pokemon2_health_bar,.battle_pokemon3_health_bar,.battle_pokemon4_health_bar,.battle_pokemon5_health_bar,.battle_pokemon6_health_bar{
+  width: 156px;     
+  height: 16px;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 4px 0 4px 0;
+
+  /* 임시로 넣는 hp 색상 */
+  background-color:#ddd;
+
+}
+.battle_pokemon1_health,.battle_pokemon2_health,.battle_pokemon3_health,.battle_pokemon4_health,.battle_pokemon5_health,.battle_pokemon6_health{
+  height: 100%;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+.battle_recovery,.battle_ball,.battle_situation,.battle_battle{
+  background: url(../../images/play/battle/item_Board.png) no-repeat;;
+  width: 464px;
+  height: 150px;
+  border: none;
+  cursor: pointer;
+}
+.battle_recovery{
+  position: fixed;  
+  top: 240px;           
+  left: 728px; 
+}
+.battle_ball{
+  position: fixed;  
+  top: 410px;           
+  left: 728px; 
+}
+.battle_situation{
+  position: fixed;  
+  top: 580px;           
+  left: 728px; 
+}
+.battle_battle{
+  position: fixed;  
+  top: 750px;           
+  left: 728px; 
+}
+.battle_recovery_item,.battle_ball_item,.battle_situation_item,.battle_battle_item{
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  -webkit-text-stroke: 1.5px black;
+  text-align: center;
+}
+.battle_item_particular_Board{
+  position: fixed;  
+  top: 260px;           
+  left: 716px; 
+  width: 488px;
+  height: 600px;
+  background: url(../../images/play/battle/item_particular_Board.png) repeat;
+}
+.battle_item_scroll{
+  position: fixed;  
+  top: 345px;           
+  left: 785px; 
+  width: 350px;
+  height: 430px;
+  overflow: hidden;
+  display: inline;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.battle_item_scroll::-webkit-scrollbar{
+  display: none;
+}
+.battle_item_use_button{
+  width: 340px;
+  height: 60px;
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.battle_item_use_img{
+  width: 60px;
+  height: 60px;
+}
+.battle_item_use_img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+} 
+.battle_item_use_text,.battle_item_use_quantity{
+  font-size: 28px;
+  color: white;
+}
+
+/* 애니메이션 기능 */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+body {
+  background-color: black;
+  animation: fadeInBackground 1s ease-in-out forwards;
+}
+
+.background_scenery, .battle_chang1, .battle_bot {
+  opacity: 0;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-name: fadeIn;
+  animation-delay: 1s;
+}
+
+.battle_chat1 {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.battle_my {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+  animation-delay: 4.5s;
+}
+.battle_action{
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+  animation-delay: 6.5s;
+}
+@keyframes moveLeft {
+  0% {
+    transform: translateX(0);
+  }
+  80% {
+    transform: translateX(-100px); 
+  }
+  100% {
+    transform: translateX(0); 
+  }
+}
+@keyframes moveRight {
+  0% {
+    transform: translateX(0);
+  }
+  80% {
+    transform: translateX(100px); 
+  }
+  100% {
+    transform: translateX(0); 
+  }
+}
+.battle_my_img {
+  animation: none;
+  transition: transform 0.5s ease;
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.battle_bot_img {
+  animation: none;
+  transition: transform 0.5s ease;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 1s forwards; /* 2초 동안 사라짐 */
+}
+/* 어두운 배경을 위한 스타일 */
+.dark-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1); /* 초기 어두운 색 */
+  display: none; /* 초기에는 숨겨둠 */
+  z-index: 9999; /* 화면 위에 표시되도록 설정 */
+  animation: fadeIn 2s ease-in-out forwards; /* fadeIn 애니메이션 추가 */
+}
+

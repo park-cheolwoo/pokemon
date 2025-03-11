@@ -1,6 +1,7 @@
 package kr.co.pokemon.item.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,61 +36,33 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public int insertDataFromAPI(List<ItemDTO> list) throws Exception {
-		int successCount = 0;
+		list.stream().forEach(dto -> {
+			int categoryId = APIService.getIdByUrl(dto.getCategory().getUrl());
+
+			dto.setCategoryId(categoryId);
+			
+			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
+			Optional.ofNullable(dto.getSprite().getDefaultSprite()).ifPresentOrElse(sprite -> dto.setImage(sprite), () -> dto.setImage("/images/no-item.png"));
+
+			dto.getLanguagesEffect("en").ifPresentOrElse(description ->
+				dto.setDescription(description),
+				() -> dto.setDescription("NO-TEXT")
+			);
+
+			dto.getLanguagesText("ko").ifPresentOrElse(flavor ->
+				dto.setFlavorText(flavor),
+				() -> dto.setFlavorText("설명이 없습니다.")
+			);
+
+		});
 		
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
-			for (ItemDTO dto : list) {
-				try {
-					// 한국어 이름이 없으면 건너뛰기
-					if (!dto.getLanguagesName("ko").isPresent()) {
-						System.out.println("아이템 [" + dto.getId() + "] 한국어 이름 없음");
-						continue;
-					}
-					
-					// 한국어 설명이 없으면 건너뛰기
-					if (!dto.getLanguagesDescription("ko").isPresent()) {
-						System.out.println("아이템 [" + dto.getId() + "] 한국어 설명 없음");
-						continue;
-					}
-					
-					if (dto.getCategory() == null || dto.getCategory().getUrl() == null) {
-						System.out.println("아이템 [" + dto.getId() + "] 아이템 타입 또는 URL이 없음");
-						continue;
-					}
-					
-					int categoryId = APIService.getIdByUrl(dto.getCategory().getUrl());
-					dto.setCategoryId(categoryId);
-					
-					// 한국어 이름 설정
-					dto.setName(dto.getLanguagesName("ko").get());
-					
-					// 한국어 설명 설정
-					dto.setDescription(dto.getLanguagesDescription("ko").get());
-					
-					// 이미지 URL 설정
-					String imageUrl = "";
-					if (dto.getSprite() != null && dto.getSprite().getDefaultSprite() != null && !dto.getSprite().getDefaultSprite().isEmpty()) {
-						imageUrl = dto.getSprite().getDefaultSprite();
-					} else {
-						// 이미지가 없는 경우 기본 이미지 URL 설정
-						imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/unknown.png";
-					}
-					
-					// null이 아닌 값으로 확실하게 설정
-					dto.setImage(imageUrl);
-					
-					itemMapper.insert(dto);
-					System.out.println("아이템 [" + dto.getId() + "] " + dto.getName() + " 저장 성공");
-					successCount++;
-				} catch (Exception e) {
-					System.out.println("아이템 [" + dto.getId() + "] 처리 중 오류: " + e.getMessage());
-					e.printStackTrace();
-				}
-			}
-			return successCount;
-		} else {
+			itemMapper.insertAll(list);
+		}else {
 			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
 		}
+		
+		return list.size();
 	}
 
 	@Override
