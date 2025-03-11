@@ -16,11 +16,11 @@
 			<li class="banner-item" data-tab="monsterball-item">
 				<span>몬스터볼</span>
 			</li>
-			<li class="banner-item" data-tab="revive-item">
-				<span>회복아이템</span>
-			</li>
 			<li class="banner-item" data-tab="battle-item">
 				<span>배틀아이템</span>
+			</li>
+			<li class="banner-item" data-tab="training-item">
+				<span>육성아이템</span>
 			</li>
 		</ul>
 
@@ -44,24 +44,6 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="tab-content" id="revive-item">
-				<table class="item-table">
-					<thead>
-						<tr>
-							<th>이미지</th>
-							<th>이름</th>
-							<th>수량</th>
-						</tr>
-					</thead>
-					<tbody id="revive-item-list-body">
-						<tr>
-							<td>이미지</td>
-							<td>회복 아이템</td>
-							<td>1개</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 			<div class="tab-content" id="battle-item">
 				<table class="item-table">
 					<thead>
@@ -75,6 +57,24 @@
 						<tr>
 							<td>이미지</td>
 							<td>배틀 아이템</td>
+							<td>1개</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="tab-content" id="training-item">
+				<table class="item-table">
+					<thead>
+						<tr>
+							<th>이미지</th>
+							<th>이름</th>
+							<th>수량</th>
+						</tr>
+					</thead>
+					<tbody id="training-item-list-body">
+						<tr>
+							<td>이미지</td>
+							<td>육성 아이템</td>
 							<td>1개</td>
 						</tr>
 					</tbody>

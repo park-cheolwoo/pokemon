@@ -94,8 +94,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const defaultItemTab = document.querySelector('.mypage-banner-tab .banner-item[data-tab="monsterball-item"]');
         defaultItemTab.classList.add('active');
 
+        // 카테고리 ID 매핑 (탭 ID -> 카테고리 ID)
+        const categoryMapping = {
+            'monsterball-item': 1,  // 몬스터볼 카테고리 ID
+            'battle-item': 2,       // 배틀아이템 카테고리 ID
+            'training-item': 3      // 육성아이템 카테고리 ID
+        };
+
         // 기본적으로 "몬스터볼" 아이템 테이블을 로드
         loadItemContent('monsterball-item');  // 탭 ID로 호출
+        loadItemsByCategory(categoryMapping['monsterball-item'], 'monsterball-item-list-body');
 
         // 세부 아이템 탭 클릭 시 해당 내용 로드
         itemTabs.forEach(itemTab => {
@@ -108,6 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 // 해당 아이템 테이블을 동적으로 로드
                 loadItemContent(itemTabId);  // 탭 ID로 호출
+                
+                // 해당 카테고리의 아이템 목록 로드
+                const categoryId = categoryMapping[itemTabId];
+                if (categoryId) {
+                    loadItemsByCategory(categoryId, itemTabId + '-list-body');
+                }
             });
         });
     }
@@ -121,6 +135,66 @@ document.addEventListener('DOMContentLoaded', function () {
         if (activeTab) {
             activeTab.style.display = 'block';
         }
+    }
+    
+    // 카테고리별 아이템을 가져와 테이블에 표시하는 함수
+    function loadItemsByCategory(categoryId, tableBodyId) {
+        const tableBody = document.getElementById(tableBodyId);
+        if (!tableBody) return;
+        
+        // 테이블 내용 초기화
+        tableBody.innerHTML = '<tr><td colspan="3">로딩 중...</td></tr>';
+        
+        // API 호출하여 아이템 목록 가져오기
+        fetch(`/api/items/category/${categoryId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('아이템을 불러오는데 실패했습니다.');
+                }
+                return response.json();
+            })
+            .then(items => {
+                if (items && items.length > 0) {
+                    // 테이블 내용 초기화
+                    tableBody.innerHTML = '';
+                    
+                    // 아이템 목록 표시
+                    items.forEach(item => {
+                        const row = document.createElement('tr');
+                        
+                        // 이미지 셀
+                        const imgCell = document.createElement('td');
+                        const img = document.createElement('img');
+                        img.src = item.image || '/images/unknown-item.png';
+                        img.alt = item.name;
+                        img.style.width = '50px';
+                        img.style.height = '50px';
+                        imgCell.appendChild(img);
+                        
+                        // 이름 셀
+                        const nameCell = document.createElement('td');
+                        nameCell.textContent = item.name;
+                        
+                        // 수량 셀 (임시로 1개로 설정)
+                        const quantityCell = document.createElement('td');
+                        quantityCell.textContent = '1개';
+                        
+                        // 행에 셀 추가
+                        row.appendChild(imgCell);
+                        row.appendChild(nameCell);
+                        row.appendChild(quantityCell);
+                        
+                        // 테이블에 행 추가
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="3">아이템이 없습니다.</td></tr>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                tableBody.innerHTML = `<tr><td colspan="3">오류가 발생했습니다: ${error.message}</td></tr>`;
+            });
     }
 
     // pokedexView에서 탭을 초기화하는 함수
