@@ -13,9 +13,7 @@ import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.dto.TableInfoDTO;
 import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.item.dto.ItemCategoryDTO;
-import kr.co.pokemon.item.dto.ItemDTO;
 import kr.co.pokemon.item.service.ItemCategoryService;
-import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.pokemon.dto.AbilityDTO;
 import kr.co.pokemon.pokemon.dto.AttackDTO;
 import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
@@ -171,28 +169,14 @@ public class DataController {
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
-	@GetMapping(value = "/item")
-	public List<ItemDTO> getItem(PageRequestDTO page) {
-		if (page.getPage() < 0) page.setPage(0);
-		if (page.getSize() <= 0) page.setSize(10);
-		return dataService.getAll(page, ItemService.class);
-	}
-	
-	@GetMapping(value = "/item/{id}")
-	public ResponseEntity<ItemDTO> getItem(@PathVariable int id) {
-		return dataService.getById(id, ItemService.class)
-				.map(ResponseEntity::ok)
-				.orElseGet(() -> ResponseEntity.notFound().build());
-	}
-
-	@GetMapping(value = "/item-category")
+	@GetMapping(value = "/item/category")
 	public List<ItemCategoryDTO> getItemCategory(PageRequestDTO page) {
 		if (page.getPage() < 0) page.setPage(0);
 		if (page.getSize() <= 0) page.setSize(10);
 		return dataService.getAll(page, ItemCategoryService.class);
 	}
 	
-	@GetMapping(value = "/item-category/{id}")
+	@GetMapping(value = "/item/category/{id}")
 	public ResponseEntity<ItemCategoryDTO> getItemCategory(@PathVariable int id) {
 		return dataService.getById(id, ItemCategoryService.class)
 				.map(ResponseEntity::ok)
