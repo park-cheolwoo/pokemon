@@ -122,6 +122,7 @@ body {
 }
 
 .pokecoins {
+	cursor:pointer;
 	width: 92px;
 	height: 82px;
 	position: absolute;
@@ -130,6 +131,7 @@ body {
 }
 
 .exit {
+	cursor:pointer;
 	width: 84px;
 	height: 84px;
 	position: absolute;
@@ -206,6 +208,7 @@ body {
 }
 
 .item_dscrb_btn_box {
+	cursor:pointer;
 	width: 128px;
 	height: 47px;
 	position: absolute;
@@ -215,6 +218,7 @@ body {
 }
 
 .item_dscrb_btn_title{
+	cursor:pointer;
 	width:48px;
 	height:24px;
 	line-height:24px;
@@ -229,6 +233,7 @@ body {
 
 
 .item_buy_btn_box {
+	cursor:pointer;
 	width: 324px;
 	height: 119px;
 	position: absolute;
@@ -239,6 +244,7 @@ body {
 }
 
 .item_buy_btn_text{
+	cursor:pointer;
 	width:72px;
 	height:36px;
 	
@@ -251,20 +257,23 @@ body {
 }
 
 
-.item_category_healing_box, .item_category_battle_box, .item_category_monsterball_box {
+.item_category_grow_box, .item_category_battle_box, .item_category_monsterball_box {
+	cursor:pointer;
 	width: 324px;
 	height: 119px;
-
 	z-index:10;
+	
 }
 
-.item_category_healing_text,.item_category_battle_text,.item_category_monsterball_text{
-	width:180px;
+.item_category_grow_text,.item_category_battle_text,.item_category_monsterball_text{
+	cursor:pointer;
+	width:195px;
 	height:36px;
-	z-index:15;
+	text-align:center;
+	z-index:15;	
 }
 
-.item_category_healing_box {
+.item_category_monsterball_box {
 	position: absolute;
 	top: 195px;
 	left: 725px;
@@ -276,13 +285,13 @@ body {
 	left: 1095px;
 }
 
-.item_category_monsterball_box{
+.item_category_grow_box{
 	position:absolute;
 	top:195px;
 	left:1464px;
 }
 
-.item_category_healing_text{
+.item_category_monsterball_text{
 	position:absolute;
 	top:234px;
 	left:796.5px;
@@ -291,14 +300,22 @@ body {
 .item_category_battle_text{
 	position:absolute;
 	top:234px;
-	left:1166.5px;
+	left:1161px;
 }
 
-.item_category_monsterball_text{
+.item_category_grow_text{
 	position:absolute;
 	top:234px;
-	left:1554.5px;
+	left:1532px;
 }
+
+
+.cat_on{
+	font-size:39px;
+	line-height:39px;
+	top:228px;
+}
+
 
 .item_table_frame{
 	width:1147px;
@@ -310,37 +327,46 @@ body {
 	z-index:5;
 }
 
-.item_table_wrap {
-	height: 590px;
+.item_table {
+	display:grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-auto-rows: 100px;
+	gap: 12px;
 	max-height: 590px;
 	overflow-y: auto;
 	position: absolute;
 	top: 350px;
-	left: 871px;
+	left: 815px;
 	z-index:10;
 }
 
-.item_table_wrap::-webkit-scrollbar {
+.item_table::-webkit-scrollbar {
 	display: none;
 }
 
-.item_row {
-	width: 790px;
-}
 
 .item_list_img {
+	cursor:pointer;
 	width: 100px;
 	height: 100px;
-	margin-right: 12px;
-	margin-bottom: 12px;
+	object-fit:cover;
 }
+
+.item_list_img:hover{
+	border: 1px solid #efefef;
+	border-radius:5px;
+}
+
 
 .selected {
 	border: 1px solid #E4A750;
 	border-radius: 5px;
 }
 
+.item_list_name, .item_list_cat{display:none;}
+
 .item_next_page {
+	cursor:pointer;
 	width: 100px;
 	height: 114px;
 	position: absolute;
@@ -391,6 +417,8 @@ body {
 
 }
 
+
+
 .item_buy_coin{
 	width:50px;
 	height:50px;
@@ -428,6 +456,7 @@ body {
 }
 
 .item_lower {
+	cursor:pointer;
 	position: absolute;
 	top: 532px;
 	left: 804px;
@@ -464,6 +493,7 @@ body {
 
 
 .item_upper {
+	cursor:pointer;
 	position: absolute;
 	top: 532px;
 	left: 1031px;
@@ -471,6 +501,7 @@ body {
 }
 
 .item_buy_yes {
+	cursor:pointer;
 	width: 89px;
 	height: 93px;
 	position: absolute;
@@ -480,6 +511,7 @@ body {
 }
 
 .item_buy_no {
+	cursor:pointer;
 	width: 89px;
 	height: 93px;
 	position: absolute;
@@ -529,6 +561,7 @@ body {
 }
 
 .item_confirm_yes {
+	cursor:pointer;
 	width: 89px;
 	height: 93px;
 	position: absolute;
@@ -538,6 +571,7 @@ body {
 }
 
 .item_confirm_no {
+	cursor:pointer;
 	width: 89px;
 	height: 93px;
 	position: absolute;
@@ -672,6 +706,7 @@ body {
 }
 
 .item_describe_exit {
+	cursor:pointer;
 	width: 85px;
 	height: 85px;
 	position: absolute;
@@ -702,18 +737,21 @@ body {
 }
 
 .item_lotto1_btn_box, .item_lotto2_btn_box, .item_lotto3_btn_box{
+	cursor:pointer;
 	width:450px;
 	height:165px;
 	z-index:20;
 }
 
 .item_lotto2_btn_coin, .item_lotto3_btn_ruby{
+	cursor:pointer;
 	width:60px;
 	height:60px;
 	z-index:25;
 }
 
 .item_lotto2_btn_txt, .item_lotto3_btn_txt{
+	cursor:pointer;
 	width:92px;
 	text-align:center;
 	z-index:25;
@@ -745,6 +783,7 @@ body {
 }
 
 .item_lotto1_btn_txt{
+	cursor:pointer;
 	width:310px;
 	position:absolute;
 	top:823px;
@@ -829,6 +868,7 @@ body {
 
 
 .item_prev_page{
+	cursor:pointer;
 	width:100px;
 	height:114px;
 	position:absolute;
@@ -838,6 +878,7 @@ body {
 }
 
 .lotto_info_btn{
+	cursor:pointer;
 	width:80px;
 	height:80px;
 	position:absolute;
@@ -929,6 +970,7 @@ body {
 }
 
 .lotto_info_exit_btn{
+	cursor:pointer;
 	width:85px;
 	height:85px;
 	

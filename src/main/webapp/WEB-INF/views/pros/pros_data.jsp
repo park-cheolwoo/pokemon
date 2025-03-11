@@ -30,12 +30,12 @@
   <img src="/images/store/green-check.png" class="pros_pokeapi_on" />
   <img src="/images/close.png" class="pros_pokeapi_off" />
 
-  <img src="/images/pros/green-right-bar.png" class="pros_pokemon_btn_box pokemon_on" />
-  <h4 class="pros_pokemon_btn_txt text pokemon_on">포켓몬</h4>
-  <img src="/images/pros/gray-right-bar.png" class="pros_item_btn_box" />
-  <h4 class="pros_item_btn_txt text">아이템</h4>
-  <img src="/images/pros/gray-right-bar.png" class="pros_dungeon_btn_box" />
-  <h4 class="pros_dungeon_btn_txt text">던전</h4>
+  <img src="/images/pros/green-right-bar.png" class="pros_pokemon_btn_box pros_pokemon_btn" />
+  <h4 class="pros_pokemon_btn_txt text pros_pokemon_btn">포켓몬</h4>
+  <img src="/images/pros/green-right-bar.png" class="pros_item_btn_box pros_item_btn" />
+  <h4 class="pros_item_btn_txt text pros_item_btn">아이템</h4>
+  <img src="/images/pros/green-right-bar.png" class="pros_dungeon_btn_box pros_dungeon_btn" />
+  <h4 class="pros_dungeon_btn_txt text pros_dungeon_btn">던전</h4>
   </div>
 	
   <img src="/images/pros/home.png" class="pros_home_btn">

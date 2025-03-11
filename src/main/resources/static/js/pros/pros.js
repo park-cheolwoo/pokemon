@@ -1,29 +1,12 @@
 $(function() {
 	$(document).on("click", ".pros_user_btn", function() {
-
-		$(".pros_user_btn_box_off").removeClass("pros_user_btn_box_off").addClass("pros_user_btn_box_on");
-		$(".pros_user_btn_text_off").removeClass("pros_user_btn_text_off").addClass("pros_user_btn_text_on");
-		$(".pros_user_btn").removeClass("pros_user_btn");
-		$(".pros_user_btn_box_on").attr("src", "/images/pros/yellow-ellipse-bar.png");
-
-		$(".pros_data_btn_box_on").removeClass("pros_data_btn_box_on").addClass("pros_data_btn_box_off");
-		$(".pros_data_btn_text_on").removeClass("pros_data_btn_text_on").addClass("pros_data_btn_text_off");
-		$(".pros_data_btn_box_off, .pros_data_btn_text_off").addClass("pros_data_btn");
-		$(".pros_data_btn_box_off").attr("src", "/images/pros/wood-ellipse-bar.png");
+		location.href="/admin";
 	});
 
 
 	$(document).on("click", ".pros_data_btn", function() {
-		$(".pros_data_btn_box_off").removeClass("pros_data_btn_box_off").addClass("pros_data_btn_box_on");
-		$(".pros_data_btn_text_off").removeClass("pros_data_btn_text_off").addClass("pros_data_btn_text_on");
-		$(".pros_data_btn").removeClass("pros_data_btn");
-		$(".pros_data_btn_box_on").attr("src", "/images/pros/yellow-ellipse-bar.png");
-
-		$(".pros_user_btn_box_on").removeClass("pros_user_btn_box_on").addClass("pros_user_btn_box_off");
-		$(".pros_user_btn_text_on").removeClass("pros_user_btn_text_on").addClass("pros_user_btn_text_off");
-		$(".pros_user_btn_box_off, .pros_user_btn_text_off").addClass("pros_user_btn");
-		$(".pros_user_btn_box_off").attr("src", "/images/pros/wood-ellipse-bar.png");
-	});
+		location.href="/admin/data";
+		});
 
 
 
@@ -120,16 +103,35 @@ $(function() {
 	
 	$(document).on("click", ".pros_reload_btn", function() {
 	    alert("새로고침이 완료되었습니다.");
-	    if ($(".pros_exe_bar").length > 0) {
-	        let ranNum = (Math.random())*100;
-	        $(".pros_exe_bar").css("width", (ranNum * 518 / 100 ).toFixed(2) + "px");
-	        $(".pros_exe_txt").text('exp ( ' + ranNum.toFixed(2) + ' / 100 )');
-	    }
 	});
 
+	
+	
 	$(document).on("click",".pros_list_img",function(){
-		location.href="/member/admin2";
-	})
+		location.href="/admin";
+	});
+	
+	$(document).on("click",".pros_pokemon_btn",function(){
+		location.href="/admin/pokemon";
+	});
+	
+	$(document).on("click",".pros_home_btn",function(){
+		location.href="/admin";
+	});
+	
+	$(".pros_list2").on('scroll', function () {
+		console.log("스크롤했음");
+	    const scrollPosition = $(this).scrollTop()+$(this).innerHeight();
+		const scrollHeight = $(this)[0].scrollHeight;
+		console.log("scrollPosition : "+scrollPosition);
+		console.log("scrollHeight : "+scrollHeight);
+
+	    if (scrollPosition >= scrollHeight) {
+	        console.log('끝 지점에 도착했습니다!');
+			const page = Number($(".pros_list_page").text())+96;
+			
+	    }
+	});
 	
 	
 	/* 임시저장 */

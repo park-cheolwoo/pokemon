@@ -1,20 +1,51 @@
 package kr.co.pokemon.pros.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.player.dto.PlayerDTO;
+import kr.co.pokemon.player.service.PlayerService;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
+import kr.co.pokemon.pokemon.service.PokemonService;
+import lombok.Builder.Default;
 
+
+@RequestMapping("/admin")
 @Controller
 public class ProsController {
+	
+	@Autowired PlayerService playerService;
+	@Autowired PokemonService pokemonService;
 
 	
-	@GetMapping("/member/admin")
-	public String admin() {
-		return "pros/pros_select";
+	@GetMapping(value = "")
+	public String admin() {	
+		return "pros/pros_player_list";
 	}
 	
-//	테스트용 임시 //
+	@GetMapping(value="/data")
+	public String adminData() {
+		return "pros/pros_data";
+	}
+	
+	@GetMapping(value = "/pokemon/{page}")
+	public String adminPokemon(PageRequestDTO pDTO, Model model) {
+		pDTO.setSize(96);
+		List<PokemonDTO> list = pokemonService.getAll(pDTO);
+		System.out.println("list : "+list);
+		System.out.println("list.size() : "+list.size());
+		model.addAttribute("list",list);
+		return "pros/pros_data_list";
+	}
+	
 	
 	@GetMapping("/member/admin2")
 	public String adminView() {
@@ -29,6 +60,11 @@ public class ProsController {
 	@GetMapping("/member/admin4")
 	public String adminView3() {
 		return "pros/pros_data";
+	}
+	
+	@GetMapping("/member/admin5")
+	public String adminView4() {
+		return "pros/pros_select1";
 	}
 	
 	

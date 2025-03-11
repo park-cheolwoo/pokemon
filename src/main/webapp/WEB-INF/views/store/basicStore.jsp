@@ -44,102 +44,63 @@
 
 
         <div class="item_list">
-          <img src="/images/yellow-bar.png" class="item_category_healing item_category_healing_box">
-          <h4 class="item_category_healing item_category_healing_text text">회복아이템</h4>
+          <div class="item_category_monsterball_wrap">
+          <img src="/images/yellow-bar.png" class="item_category_monsterball item_category_monsterball_box">
+          <h4 class="item_category_healing item_category_monsterball_text text">몬스터볼</h4>
+          </div>
+          <div class="item_category_battle_wrap">
           <img src="/images/yellow-bar.png" class="item_category_battle item_category_battle_box">
           <h4 class="item_category_battle item_category_battle_text text">배틀아이템</h4>
-          <img src="/images/green-bar.png" class="item_category_monsterball item_category_monsterball_box">
-          <h4 class="item_category_monsterball item_category_monsterball_text text cat_on">몬스터볼</h4>
+          </div>
+          <div class="item_category_grow_wrap">
+          <img src="/images/green-bar.png" class="item_category_grow item_category_grow_box">
+          <h4 class="item_category_monsterball item_category_grow_text text cat_on">육성아이템</h4>
+          </div>
         
 
           <img class="item_table_frame" src="/images/store/item-container3.png">
-          <div class="item_table_wrap">
-            <table class="item_table">
-
+            <div class="item_table">
               <!-- 반복  -->
-              <tr class="item_row">
-                <td><img src="/images/monsterball.png" id="1" class="item_list_img selected"></td>
-                <td><img src="/images/monsterball.png" class="item_list_img"></td>
-                <td><img src="/images/monsterball.png" class="item_list_img"></td>
-                <td><img src="/images/monsterball.png" class="item_list_img"></td>
-                <td><img src="/images/monsterball.png" class="item_list_img"></td>
-                <td><img src="/images/monsterball.png" class="item_list_img"></td>
-                <td><img src="/images/monsterball.png" class="item_list_img"></td>
-                <td>
-              </tr>
-              <!-- 반복  -->
-              <tr class="item_row">
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td>
-              </tr>
-              <tr class="item_row">
-                <td><img src="/images/superball.png" class="item_list_img"></td>
-                <td><img src="/images/superball.png" class="item_list_img"></td>
-                <td><img src="/images/superball.png" class="item_list_img"></td>
-                <td><img src="/images/superball.png" class="item_list_img"></td>
-                <td><img src="/images/superball.png" class="item_list_img"></td>
-                <td><img src="/images/superball.png" class="item_list_img"></td>
-                <td><img src="/images/superball.png" class="item_list_img"></td>
-                <td>
-              </tr>
-              <tr class="item_row">
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td>
-              </tr><tr class="item_row">
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td>
-              </tr><tr class="item_row">
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td>
-              </tr><tr class="item_row">
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td>
-              </tr><tr class="item_row">
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td><img src="/images/masterball.png" class="item_list_img"></td>
-                <td>
-              </tr>
-
-            </table>
-          </div>
-          <img src="/images/store/yellow-right.png" class="item_next_page">
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+			  <!-- 반복  -->
+			  	<div class="pros_items"><img src="${item.img }" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
+				<div class="pros_items"><img src="/images/pros/pokemon.png" class="item_list_img "><h4 class="item_list_name">마스터볼</h4><h4 class="item_list_cat">몬스터볼</h4></div>
         </div>
-  </div>
+  	<img src="/images/store/yellow-right.png" class="item_next_page">
+  	</div>
+ </div>
 
   <!-- 아이템 개수 모달  -->
   <div class="item_buy_container">
