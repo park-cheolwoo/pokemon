@@ -14,8 +14,10 @@ public interface ItemMapper {
 
 	ItemDTO selectById(int id);
 
-	void insert(ItemDTO dto);
-
 	List<ItemDTO> selectByCategoryId(int categoryId);
+	
+	void insert(ItemDTO dto);
+	
+	void insertAll(List<ItemDTO> dtos);
 
 }
