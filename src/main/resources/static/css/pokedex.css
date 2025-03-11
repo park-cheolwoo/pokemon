@@ -211,7 +211,6 @@ body > div > div.mypage-banner-container > a{
 }
 
 #content-container > div > div.poke-info-container > div.poke-img img {
-    width: 360px;
     height: 360px;
     object-fit: cover;
     /* 이미지 비율을 유지하며 크기 조정 */
@@ -651,6 +650,11 @@ div.myPokemon-info-text-container {
     /* 수평 정렬 */
     vertical-align: middle;
     /* 수직 정렬 */
+}
+
+.item-img img {
+    width: 50px;
+    height: 50px;
 }
 
 /* .item-info-text-container의 스크롤바 스타일 */

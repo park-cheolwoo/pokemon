@@ -36,11 +36,6 @@
 						</tr>
 					</thead>
 					<tbody id="monsterball-item-list-body">
-						<tr>
-							<td>이미지</td>
-							<td>몬스터볼</td>
-							<td>1개</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -54,11 +49,6 @@
 						</tr>
 					</thead>
 					<tbody id="battle-item-list-body">
-						<tr>
-							<td>이미지</td>
-							<td>배틀 아이템</td>
-							<td>1개</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -72,11 +62,6 @@
 						</tr>
 					</thead>
 					<tbody id="training-item-list-body">
-						<tr>
-							<td>이미지</td>
-							<td>육성 아이템</td>
-							<td>1개</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>

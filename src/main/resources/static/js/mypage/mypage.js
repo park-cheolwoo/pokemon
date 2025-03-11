@@ -1,281 +1,45 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // 상단 탭 요소들 (도감, 아이템, 원정대, 내 포켓몬)
-    const tabs = document.querySelectorAll('.banner-item');
-    const contentContainer = document.querySelector('#content-container');  // 콘텐츠 컨테이너
+$(document).ready(function () {
+    const tabs = $('.banner-item');
+    const contentContainer = $('#content-container');
 
     // 기본적으로 "도감" 탭에 active 클래스 추가
-    const defaultTab = document.querySelector('.banner-item[data-tab="pokedex"]');
-    defaultTab.classList.add('active');
+    const defaultTab = $('.banner-item[data-tab="pokedex"]');
+    defaultTab.addClass('active');
 
     // 기본적으로 "도감" 탭 내용 로드
-    loadPage('/mypage/pokedex');  // 절대 경로로 수정
+    loadPage('/mypage/pokedex');
 
     // 탭 클릭 시 해당하는 페이지 로드
     initializeTabs(tabs);
 
-    // 페이지를 로드하는 함수
+    
+
     function loadPage(page) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', page, true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                contentContainer.innerHTML = xhr.responseText;
-
-                // 페이지 로드 후, 아이템 탭 안의 세부 탭 기능을 추가하기 위해
+        $.ajax({
+            url: page,
+            method: 'GET',
+            success: function (response) {
+                contentContainer.html(response);
                 if (page === '/mypage/item') {
-                    initializeItemTabs();  // 아이템 탭 세부 탭 초기화
+                    initializeItemTabs();
                 }
-
-                // 도감 페이지 로드 후, '자세히'와 '내 포켓몬' 버튼의 클릭 이벤트 추가
                 if (page === '/mypage/pokedex') {
                     initializePokedexButtons();
+                    initializePokedexList(); 
                 }
-
-                // pokedexView 페이지 로드 후, 세부 탭 초기화
                 if (page === '/mypage/pokedexView') {
-                    initializePokedexViewTabs();  // pokedexView 탭 초기화
+                    initializePokedexViewTabs();
                 }
-
-                // myPokemon 페이지 로드 후, 세부 탭 초기화
                 if (page === '/mypage/myPokemon') {
-                    initializeMyPokemonTabs();  // myPokemon 탭 초기화
+                    initializeMyPokemonTabs();
                 }
-            } else if (xhr.readyState === 4) {
-                // 로드 실패 시 에러 메시지
-                contentContainer.innerHTML = "페이지를 로드하는데 실패했습니다.";
+            },
+            error: function () {
+                contentContainer.html("페이지를 로드하는데 실패했습니다.");
             }
-        };
-
-        xhr.send();
-    }
-
-    // 탭을 초기화하는 함수 (아이템, 도감, 원정대 등 모든 탭을 처리)
-    function initializeTabs(tabs) {
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function () {
-                // 탭 클릭 시 active 클래스를 해당 탭에만 적용
-                tabs.forEach(tab => tab.classList.remove('active'));
-                this.classList.add('active');
-
-                const tabId = this.getAttribute('data-tab');
-
-                // URL을 변경
-                updateURL(tabId);  // URL 업데이트 함수 호출
-
-                // 현재 탭에 해당하는 jsp 파일을 동적으로 로드
-                switch (tabId) {
-                    case 'pokedex':
-                        loadPage('/mypage/pokedex');  // 절대 경로로 수정
-                        break;
-                    case 'item':
-                        loadPage('/mypage/item');    // 절대 경로로 수정
-                        break;
-                    case 'expedition':
-                        loadPage('/mypage/expedition');  // 절대 경로로 수정
-                        break;
-                    case 'myPokemon':
-                        loadPage('/mypage/myPokemon');  // myPokemon 페이지 로드
-                        break;
-                    default:
-                        loadPage('/mypage/pokedex');  // 기본으로 'pokedex.jsp' 로드
-                        break;
-                }
-            });
         });
     }
 
-    // 아이템 탭 내의 세부 탭 초기화
-    function initializeItemTabs() {
-        const itemTabs = document.querySelectorAll('.mypage-banner-tab .banner-item');  // 아이템 세부 탭
-        const itemContentContainer = document.querySelector('#item-content-container');  // 아이템 탭 내의 콘텐츠 영역
-
-        // 기본적으로 "몬스터볼" 탭에 active 클래스 추가
-        const defaultItemTab = document.querySelector('.mypage-banner-tab .banner-item[data-tab="monsterball-item"]');
-        defaultItemTab.classList.add('active');
-
-        // 카테고리 ID 매핑 (탭 ID -> 카테고리 ID)
-        const categoryMapping = {
-            'monsterball-item': [33, 34],  // 몬스터볼 카테고리 ID
-            'battle-item': [1, 11, 27, 28, 29, 30],  // 배틀아이템 카테고리 ID
-            'training-item': [10, 26, 37]  // 육성아이템 카테고리 ID
-        };
-
-        // 기본적으로 "몬스터볼" 아이템 테이블을 로드
-        loadItemContent('monsterball-item');  // 탭 ID로 호출
-        loadItemsByCategory(categoryMapping['monsterball-item'], 'monsterball-item-list-body');
-
-        // 세부 아이템 탭 클릭 시 해당 내용 로드
-        itemTabs.forEach(itemTab => {
-            itemTab.addEventListener('click', function () {
-                // 클릭된 탭에 active 클래스 추가
-                itemTabs.forEach(itemTab => itemTab.classList.remove('active'));
-                this.classList.add('active');
-
-                const itemTabId = this.getAttribute('data-tab');
-
-                // 해당 아이템 테이블을 동적으로 로드
-                loadItemContent(itemTabId);  // 탭 ID로 호출
-
-                // 해당 카테고리의 아이템 목록 로드
-                const categoryId = categoryMapping[itemTabId];
-                if (categoryId) {
-                    loadItemsByCategory(categoryId, itemTabId + '-list-body');
-                }
-            });
-        });
-    }
-
-    // 아이템 탭 세부 항목의 테이블을 로드하는 함수
-    function loadItemContent(tabId) {
-        const contentTabs = document.querySelectorAll('.tab-content');
-        contentTabs.forEach(contentTab => contentTab.style.display = 'none');  // 모든 테이블 숨기기
-
-        const activeTab = document.querySelector(`#${tabId}`);
-        if (activeTab) {
-            activeTab.style.display = 'block';
-        }
-    }
-
-    // 카테고리별 아이템을 가져와 테이블에 표시하는 함수
-    function loadItemsByCategory(categoryIds, tableBodyId) {
-        const tableBody = document.getElementById(tableBodyId);
-        if (!tableBody) return;
-    
-        // 테이블 내용 초기화
-        tableBody.innerHTML = '<tr><td colspan="3">로딩 중...</td></tr>';
-    
-        // 각 카테고리 ID에 대해 API 호출
-        categoryIds.forEach(categoryId => {
-            fetch(`/api/items/category/${categoryId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('아이템을 불러오는데 실패했습니다.');
-                    }
-                    return response.json();
-                })
-                .then(items => {
-                    if (items && items.length > 0) {
-                        // 아이템 목록 표시
-                        items.forEach(item => {
-                            const row = document.createElement('tr');
-                            // 이미지, 이름, 수량 셀 추가
-                            // ...
-                            tableBody.appendChild(row);
-                        });
-                    } else {
-                        tableBody.innerHTML = '<tr><td colspan="3">아이템이 없습니다.</td></tr>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    tableBody.innerHTML = `<tr><td colspan="3">오류가 발생했습니다: ${error.message}</td></tr>`;
-                });
-        });
-    }
-
-    // pokedexView에서 탭을 초기화하는 함수
-    function initializePokedexViewTabs() {
-        const viewTabs = document.querySelectorAll('.mypage-banner-tab .banner-item');  // pokedexView 탭
-        const contentContainer = document.querySelector('.pokedexView-info-text-container');  // 탭 콘텐츠 영역
-
-        // 기본적으로 "기본 정보" 탭에 active 클래스 추가
-        const defaultViewTab = document.querySelector('.mypage-banner-tab .banner-item[data-tab="pokemon-info"]');
-        defaultViewTab.classList.add('active');
-
-        // 기본적으로 "기본 정보" 탭 내용 로드
-        loadPokedexViewContent('pokemon-info');  // 탭 ID로 호출
-
-        // 세부 탭 클릭 시 해당 내용 로드
-        viewTabs.forEach(tab => {
-            tab.addEventListener('click', function () {
-                // 클릭된 탭에 active 클래스 추가
-                viewTabs.forEach(tab => tab.classList.remove('active'));
-                this.classList.add('active');
-
-                const tabId = this.getAttribute('data-tab');
-
-                // 해당 탭의 내용을 동적으로 로드
-                loadPokedexViewContent(tabId);  // 탭 ID로 호출
-            });
-        });
-    }
-
-    // pokedexView의 탭 콘텐츠를 로드하는 함수
-    function loadPokedexViewContent(tabId) {
-        const contentTabs = document.querySelectorAll('.tab-content');
-        contentTabs.forEach(contentTab => contentTab.style.display = 'none');  // 모든 테이블 숨기기
-
-        const activeTab = document.querySelector(`#${tabId}`);
-        if (activeTab) {
-            activeTab.style.display = 'block';
-        }
-    }
-
-    // 도감 내 '자세히'와 '내 포켓몬' 버튼 클릭 시 이벤트 처리
-    function initializePokedexButtons() {
-        const viewBarContainer = document.querySelector('.view-bar-container');
-
-        // '자세히' 버튼 클릭 시
-        const detailButton = viewBarContainer.querySelector('div:nth-child(1)');
-        detailButton.addEventListener('click', function () {
-            // URL을 '/mypage/pokedexView'로 변경
-            history.pushState(null, '', '/mypage/pokedexView');
-
-            // '자세히' 클릭 시 'pokedexView.jsp' 로드
-            loadPage('/mypage/pokedexView');
-        });
-
-        // '내 포켓몬' 버튼 클릭 시
-        const myPokemonButton = viewBarContainer.querySelector('div:nth-child(2)');
-        myPokemonButton.addEventListener('click', function () {
-            // URL을 '/mypage/myPokemon'으로 변경
-            history.pushState(null, '', '/mypage/myPokemon');
-
-            // '내 포켓몬' 클릭 시 'myPokemon.jsp' 로드
-            loadPage('/mypage/myPokemon');
-        });
-    }
-
-    // myPokemon 탭을 초기화하는 함수
-    function initializeMyPokemonTabs() {
-        const myPokemonTabs = document.querySelectorAll('.mypage-banner-tab .banner-item');  // myPokemon 탭
-        const contentContainer = document.querySelector('.myPokemon-info-text-container');  // 탭 콘텐츠 영역
-
-        // 기본적으로 "내 포켓몬" 탭에 active 클래스 추가
-        const defaultMyPokemonTab = document.querySelector('.mypage-banner-tab .banner-item[data-tab="myPokemon-pokemon-info"]');
-        defaultMyPokemonTab.classList.add('active');
-
-        // 기본적으로 "내 포켓몬 목록" 탭 내용 로드
-        loadMyPokemonContent('myPokemon-pokemon-info');  // 탭 ID로 호출
-
-        // 세부 탭 클릭 시 해당 내용 로드
-        myPokemonTabs.forEach(tab => {
-            tab.addEventListener('click', function () {
-                // 클릭된 탭에 active 클래스 추가
-                myPokemonTabs.forEach(tab => tab.classList.remove('active'));
-                this.classList.add('active');
-
-                const tabId = this.getAttribute('data-tab');
-
-                // 해당 탭의 내용을 동적으로 로드
-                loadMyPokemonContent(tabId);  // 탭 ID로 호출
-            });
-        });
-    }
-
-    // myPokemon의 탭 콘텐츠를 로드하는 함수
-    function loadMyPokemonContent(tabId) {
-        const contentTabs = document.querySelectorAll('.tab-content');
-        contentTabs.forEach(contentTab => contentTab.style.display = 'none');  // 모든 테이블 숨기기
-
-        const activeTab = document.querySelector(`#${tabId}`);
-        if (activeTab) {
-            activeTab.style.display = 'block';
-        }
-    }
-
-    // URL을 변경하는 함수
     function updateURL(tabId) {
         let url = '/mypage/';
         switch (tabId) {
@@ -298,18 +62,331 @@ document.addEventListener('DOMContentLoaded', function () {
                 url += 'pokedex';
                 break;
         }
-
-        // history.pushState는 새 URL을 브라우저 주소 표시줄에 추가하고 페이지를 새로고침하지 않습니다
         history.pushState(null, '', url);
     }
 
-    function NotReload() {
+    function initializeTabs(tabs) {
+        tabs.on('click', function () {
+            tabs.removeClass('active');
+            $(this).addClass('active');
+
+            const tabId = $(this).data('tab');
+            updateURL(tabId); // URL 업데이트 함수 호출
+
+            switch (tabId) {
+                case 'pokedex':
+                    loadPage('/mypage/pokedex');
+                    break;
+                case 'item':
+                    loadPage('/mypage/item');
+                    break;
+                case 'expedition':
+                    loadPage('/mypage/expedition');
+                    break;
+                case 'myPokemon':
+                    loadPage('/mypage/myPokemon');
+                    break;
+                default:
+                    loadPage('/mypage/pokedex');
+                    break;
+            }
+        });
+    }
+
+    function initializeItemTabs() {
+        const itemTabs = $('.mypage-banner-tab .banner-item');
+
+        const defaultItemTab = $('.mypage-banner-tab .banner-item[data-tab="monsterball-item"]');
+        defaultItemTab.addClass('active');
+
+        const categoryMapping = {
+            'monsterball-item': [33, 34],
+            'battle-item': [1, 11, 27, 28, 29, 30],
+            'training-item': [10, 26, 37]
+        };
+
+        loadItemContent('monsterball-item');
+        loadItemsByCategory(categoryMapping['monsterball-item'], 'monsterball-item-list-body');
+
+        itemTabs.on('click', function () {
+            itemTabs.removeClass('active');
+            $(this).addClass('active');
+
+            const itemTabId = $(this).data('tab');
+            loadItemContent(itemTabId);
+
+            const categoryId = categoryMapping[itemTabId];
+            if (categoryId) {
+                loadItemsByCategory(categoryId, itemTabId + '-list-body');
+            }
+        });
+    }
+
+    function loadItemContent(tabId) {
+        $('.tab-content').hide();
+        $('#' + tabId).show();
+    }
+
+    function loadItemsByCategory(categoryIds, tableBodyId) {
+        const tableBody = $('#' + tableBodyId);
+        if (!tableBody.length) return;
+    
+        tableBody.html('<tr><td colspan="3">로딩 중...</td></tr>');
+    
+        categoryIds.forEach(categoryId => {
+            $.get(`/api/items/category/${categoryId}`)
+                .done(function (items) {
+                    if (items && items.length > 0) {
+                        // 첫 번째 아이템이 로드되면 테이블 내용을 비웁니다
+                        if (tableBody.find('tr').length === 1 && tableBody.find('tr td').text() === '로딩 중...') {
+                            tableBody.empty();
+                        }
+                        
+                        items.forEach(item => {
+                            const row = $('<tr></tr>');
+                            row.data('item-id', item.id); // 아이템 ID 저장
+                            
+                            // 이미지 셀 추가
+                            const imgCell = $('<td class="item-img"></td>');
+                            // 이미지 경로는 item.image를 사용하고, 없을 경우 기본 이미지 사용
+                            const imgSrc = item.image || `/images/items/default.png`;
+                            const img = $('<img>').attr('src', imgSrc)
+                                                .attr('alt', item.name)
+                                                .attr('width', '50')
+                                                .attr('height', '50')
+                                                .attr('onerror', "this.src='/images/items/default.png'");
+                            imgCell.append(img);
+                            
+                            // 이름 셀 추가
+                            const nameCell = $('<td class="item-name"></td>').text(item.name);
+                            
+                            // 수량 셀 추가
+                            const quantityCell = $('<td class="item-quantity"></td>').text(item.quantity || '1개');
+                            
+                            // 셀들을 행에 추가
+                            row.append(imgCell, nameCell, quantityCell);
+                            
+                            // 아이템 클릭 이벤트 추가
+                            row.on('click', function() {
+                                showItemDetails(item);
+                            });
+                            
+                            // 행을 테이블에 추가
+                            tableBody.append(row);
+                        });
+                    } else {
+                        if (tableBody.find('tr').length === 1 && tableBody.find('tr td').text() === '로딩 중...') {
+                            tableBody.html('<tr><td colspan="3">아이템이 없습니다.</td></tr>');
+                        }
+                    }
+                })
+                .fail(function (error) {
+                    console.error('Error:', error);
+                    tableBody.html(`<tr><td colspan="3">오류가 발생했습니다: ${error.message}</td></tr>`);
+                });
+        });
+    }
+
+    // 아이템 상세 정보 표시 함수
+    function showItemDetails(item) {
+        // 이미지 업데이트
+        $('.mypage-item-img img')
+            .attr('src', item.image || '/images/items/default.png')
+            .attr('alt', item.name)
+            .attr('onerror', "this.src='/images/items/default.png'");
+
+        // 이름 업데이트
+        $('.mypage-item-name').text(item.name);
+
+        // 설명 업데이트
+        $('.mypage-item-info').text(item.description || '설명이 없습니다.');
+    }
+
+    function initializePokedexViewTabs() {
+        const viewTabs = $('.mypage-banner-tab .banner-item');
+
+        const defaultViewTab = $('.mypage-banner-tab .banner-item[data-tab="pokemon-info"]');
+        defaultViewTab.addClass('active');
+
+        loadPokedexViewContent('pokemon-info');
+
+        viewTabs.on('click', function () {
+            viewTabs.removeClass('active');
+            $(this).addClass('active');
+
+            const tabId = $(this).data('tab');
+            loadPokedexViewContent(tabId);
+        });
+    }
+
+    function initializePokedexButtons() {
+        const viewBarContainer = $('.view-bar-container');
+
+        // '자세히' 버튼 클릭 시
+        const detailButton = viewBarContainer.find('div:nth-child(1)');
+        detailButton.on('click', function () {
+            history.pushState(null, '', '/mypage/pokedexView');
+            loadPage('/mypage/pokedexView');
+        });
+
+        // '내 포켓몬' 버튼 클릭 시
+        const myPokemonButton = viewBarContainer.find('div:nth-child(2)');
+        myPokemonButton.on('click', function () {
+            history.pushState(null, '', '/mypage/myPokemon');
+            loadPage('/mypage/myPokemon');
+        });
+    }
+
+    function NotReload(event) {
         if ((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116)) {
-            event.keyCode = 0;
-            event.cancelBubble = true;
-            event.returnValue = false;
+            event.preventDefault();
         }
     }
-    document.onkeydown = NotReload;
 
+    function loadPokedexViewContent(tabId) {
+        const contentTabs = $('.tab-content'); // 모든 탭 콘텐츠 선택
+        contentTabs.hide();  // 모든 탭 콘텐츠 숨기기
+
+        const activeTab = $('#' + tabId); // 활성화할 탭 선택
+        if (activeTab.length) {
+            activeTab.show();  // 해당 탭의 콘텐츠 표시
+        }
+    }
+
+    function initializePokedexList() {
+        const imageContainer = $('.image-container');
+        if (!imageContainer.length) return;
+
+        // 로딩 메시지 표시
+        imageContainer.html('<div class="loading">포켓몬 데이터를 불러오는 중...</div>');
+
+        // 포켓몬 데이터 가져오기 - 페이지 크기를 1000으로 설정하여 모든 포켓몬을 가져옴
+        $.get('/data/pokemon?page=0&size=1000')
+            .done(function (pokemonList) {
+                if (pokemonList && pokemonList.length > 0) {
+                    imageContainer.empty(); // 기존 내용 비우기
+
+                    // ID 순으로 정렬
+                    pokemonList.sort((a, b) => a.id - b.id);
+
+                    // 각 포켓몬에 대한 이미지 요소 생성
+                    pokemonList.forEach(pokemon => {
+                        const pokemonDiv = $('<div class="pokemon-item"></div>');
+                        const img = $('<img>')
+                            .attr('src', pokemon.image || `/images/pokemon/${pokemon.id}.png`)
+                            .attr('alt', pokemon.name)
+                            .attr('data-id', pokemon.id)
+                            .attr('onerror', "this.src='/images/pokemon/default.png'");
+                        
+                        // 이미지 클릭 시 포켓몬 상세 정보 표시
+                        img.on('click', function() {
+                            showPokemonDetails(pokemon.id);
+                        });
+
+                        pokemonDiv.append(img);
+                        imageContainer.append(pokemonDiv);
+                    });
+                } else {
+                    imageContainer.html('<div class="no-data">포켓몬 데이터가 없습니다.</div>');
+                }
+            })
+            .fail(function (error) {
+                console.error('Error loading pokemon list:', error);
+                imageContainer.html('<div class="error">포켓몬 데이터를 불러오는데 실패했습니다.</div>');
+            });
+    }
+
+    function showPokemonDetails(pokemonId) {
+        // 포켓몬 상세 정보 가져오기
+        $.get(`/data/pokemon/${pokemonId}`)
+            .done(function (pokemon) {
+                // 포켓몬 정보 표시
+                const pokeImg = $('.poke-img img');
+                const pokeName = $('.poke-infoview-container h4');
+                const pokeInfo = $('.poke-infoview-container div:nth-child(2)');
+                const pokeDesc = $('.poke-infoview-container div:nth-child(3)');
+
+                // 이미지 업데이트
+                pokeImg.attr('src', pokemon.image || `/images/pokemon/${pokemon.id}.png`)
+                      .attr('alt', pokemon.name)
+                      .attr('onerror', "this.src='/images/pokemon/default.png'");
+
+                // 이름 업데이트
+                pokeName.text(pokemon.name);
+
+                // 정보 업데이트 (속성, 키, 무게, genus)
+                let infoHtml = '';
+                // genus 정보 추가
+                if (pokemon.genus) {
+                    infoHtml += `<div>분류: ${pokemon.genus}</div>`;
+                }
+                if (pokemon.types && pokemon.types.length > 0) {
+                    const typeNames = pokemon.types.map(type => type.name).join(', ');
+                    infoHtml += `<div>속성: ${typeNames}</div>`;
+                }
+                if (pokemon.height) {
+                    infoHtml += `<div>키: ${pokemon.height / 10}m</div>`;
+                }
+                if (pokemon.weight) {
+                    infoHtml += `<div>무게: ${pokemon.weight / 10}kg</div>`;
+                }
+                pokeInfo.html(infoHtml);
+
+                // 설명 업데이트
+                if (pokemon.description) {
+                    pokeDesc.text(pokemon.description);
+                } else {
+                    pokeDesc.text('설명이 없습니다.');
+                }
+            })
+            .fail(function (error) {
+                console.error('Error loading pokemon details:', error);
+            });
+    }
+
+    function initializePokedexViewTabs() {
+        const viewTabs = $('.mypage-banner-tab .banner-item');
+
+        const defaultViewTab = $('.mypage-banner-tab .banner-item[data-tab="pokemon-info"]');
+        defaultViewTab.addClass('active');
+
+        loadPokedexViewContent('pokemon-info');
+
+        viewTabs.on('click', function () {
+            viewTabs.removeClass('active');
+            $(this).addClass('active');
+
+            const tabId = $(this).data('tab');
+            loadPokedexViewContent(tabId);
+        });
+    }
+
+    function initializeMyPokemonTabs() {
+        const myPokemonTabs = $('.mypage-banner-tab .banner-item');
+
+        const defaultMyPokemonTab = $('.mypage-banner-tab .banner-item[data-tab="myPokemon-pokemon-info"]');
+        defaultMyPokemonTab.addClass('active');
+
+        loadMyPokemonContent('myPokemon-pokemon-info');
+
+        myPokemonTabs.on('click', function () {
+            myPokemonTabs.removeClass('active');
+            $(this).addClass('active');
+
+            const tabId = $(this).data('tab');
+            loadMyPokemonContent(tabId);
+        });
+    }
+
+    function loadMyPokemonContent(tabId) {
+        const contentTabs = $('.tab-content'); // 모든 탭 콘텐츠 선택
+        contentTabs.hide();  // 모든 탭 콘텐츠 숨기기
+
+        const activeTab = $('#' + tabId); // 활성화할 탭 선택
+        if (activeTab.length) {
+            activeTab.show();  // 해당 탭의 콘텐츠 표시
+        }
+    }
+
+    document.onkeydown = NotReload;
 });
