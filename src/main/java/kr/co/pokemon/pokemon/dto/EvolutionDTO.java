@@ -21,14 +21,20 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EvolutionDTO extends EntityDTO {
 
-	private int baby_id;
-	private int child_trigger_id;
-	private EvolutionTriggerDTO child_trigger;
-	private int child_id;
-	private int adult_trigger_id;
-	private EvolutionTriggerDTO adult_trigger;
-	private int adult_id;
-	
+	private Integer evolutionId;
+	private Integer prevId;
+	private Integer currId;
+	private Integer nextId;
+
+	public EvolutionDTO(Integer evolutionId, Integer prevId, Integer currId, Integer nextId) {
+		this.evolutionId = evolutionId;
+		this.prevId = prevId;
+		this.currId = currId;
+		this.nextId = nextId;
+	}
+
+	private EvolutionChain chain;
+
 	@Getter
 	@Setter
 	@NoArgsConstructor
@@ -40,8 +46,8 @@ public class EvolutionDTO extends EntityDTO {
 		@JsonProperty(value = "evolution_details")
 		private List<EvolutionDetail> evolutionDetails;
 		
-		@JsonProperty(value = "evolution_to")
-		private List<EvolutionChain> evolutionTo;
+		@JsonProperty(value = "evolves_to")
+		private List<EvolutionChain> evolvesTo;
 		
 		@JsonProperty(value = "is_baby")
 		private boolean isBaby;
@@ -55,6 +61,11 @@ public class EvolutionDTO extends EntityDTO {
 		@JsonIgnoreProperties(ignoreUnknown = true)
 		public static class EvolutionDetail {
 			
+			@JsonProperty(value = "min_level")
+			private int minLevel;
+			
+			private APIPageResultDTO item;
+
 			private APIPageResultDTO trigger;
 
 		}
