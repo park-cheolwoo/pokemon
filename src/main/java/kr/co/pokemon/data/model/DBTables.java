@@ -14,8 +14,6 @@ public enum DBTables {
 	GROWTH("growth", "/growth-rate"),
     TOTAL_EXPERIENCE("total_experience", null, List.of(DBTables.GROWTH)),
 
-	EVOLUTION_TRIGGER("evolution_trigger", "/evolution-trigger"),
-
 	POKEMON("pokemon", "/pokemon", List.of(DBTables.STAT)),
 	SPRITES("sprites", null, List.of(DBTables.POKEMON)),
 
@@ -24,9 +22,13 @@ public enum DBTables {
     TYPES_RELATIONSHIP("types_relationship", "/type", List.of(DBTables.TYPES)),
     ATTACK("attack", "/move", List.of(DBTables.TYPES, DBTables.POKEMON)),
     HABITAT("habitat", "/pokemon-habitat", List.of(DBTables.POKEMON)),
+
     EGG_GROUP("egg_group", "/egg-group", List.of(DBTables.POKEMON)),
     EGG_GROUP_POKEMON("egg_group_pokemon", null,List.of(DBTables.EGG_GROUP, DBTables.POKEMON)),
-    EVOLUTION("evolution", "/evolution", List.of(DBTables.EVOLUTION_TRIGGER, DBTables.POKEMON)),
+    
+	EVOLUTION_TRIGGER("evolution_trigger", "/evolution-trigger"),
+    EVOLUTION("evolution", "/evolution-chain", List.of(DBTables.EVOLUTION_TRIGGER, DBTables.POKEMON)),
+    EVOLUTION_DETAIL("evolution_detail", null, List.of(DBTables.EVOLUTION_TRIGGER, DBTables.EVOLUTION)),
 
     POKEMON_ABILITY("pokemon_ability", null, List.of(DBTables.ABILITY, DBTables.POKEMON)),
     POKEMON_ATTACK("pokemon_attack", "/pokemon", List.of(DBTables.ATTACK, DBTables.POKEMON)),
