@@ -35,6 +35,10 @@
     SELECT * FROM pokemon WHERE id = #{id}
   </select>
   
+  <select id="selectByName" resultMap="dataResultMap" parameterType="String">
+    SELECT * FROM pokemon WHERE name like '%' || #{keyword} || '%'
+  </select>
+  
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
 	    WHEN EXISTS (SELECT 1 FROM pokemon WHERE id = #{id}) THEN 1

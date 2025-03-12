@@ -30,8 +30,7 @@
 
     <div class="pros_search_wrap">
       <img src="/images/pros/wood-bar2.png" class="pros_search_bar" />
-      <input type="text" name="keyword" class="pros_keyword" placeholder="검색" maxlength="15"
-      onkeypress="if( event.keyCode == 13 ){.pros_search_btn.click();}" />
+      <input type="text" name="keyword" class="pros_keyword" placeholder="검색" maxlength="15" />
       <img src="/images/pros/search.png" class="pros_search_btn" />
       <img src="/images/pros/retry.png" class="pros_reload_btn" />
       <img src="/images/pros/list.png" class="pros_dropbar_btn" />
@@ -46,15 +45,62 @@
     <div class="pros_list_wrap">
    	  <h4 class="pros_list_category" style="display:none">pokemon</h4>
    	  <h4 class="pros_list_page" style="display:none">1</h4>
+   	  <h4 class="pros_search_flag" style="display:none">0</h4>
    	  <div class="pros_list2">
    	  	<!-- 반복 -->
    	  	<c:forEach items="${list}" var="list"> 
-   	  		<div class="pros_items"><img src="${list.getImage()}" class="pros_list_img"><h4 class="pros_list_name">${list.getName() }</h4></div>
+   	  		 <div class="pros_items" data-name="${list.getName()}"><img src="${list.getImage()}" class="pros_list_img"></div>
    	  	</c:forEach>
    	  	<!-- 반복 -->
    	  </div>
-   	  
-      
+   	 </div>
+   	 
+   	 
+   <!--  상세보기 모달 -->	 
+  <div class="pros_profile_view_container">
+  <div class="pros_blur"></div> 	  
+  <img src="/images/container.png" class="pros_container_frame2">
+  <img src="/images/store/item-frame.png" class="pros_profile_frame_img2" />
+  <img src="/images/pros/avarter.png" class="pros_profile_img2">
+  <h4 class="pros_profile_name1 text">일레도리자드</h4>
+  <img src="/images/pros/type-grass.png" class="pros_pokemon_type1">
+  <img src="/images/pros/type-poison.png" class="pros_pokemon_type2">
+  <h4 class="pros_profile_name2 text">씨앗포켓몬</h4>
+  
+  <h4 class="pros_update text">수정일 : 2025/02/25</h4>
+  <h4 class="pros_create text">등록일 : 2025/02/25</h4>
+
+  <!-- 내용 부분 -->
+  <img src="/images/pros/pokemon.png" class="pros_pokemon_img1">
+  <img src="/images/pros/wood-right.png" class="pros_wood_right1">
+  <img src="/images/pros/pokemon.png" class="pros_pokemon_img2">
+  <img src="/images/pros/wood-right.png" class="pros_wood_right2">
+  <img src="/images/pros/pokemon.png" class="pros_pokemon_img3">
+
+	<h4 class="pros_active_txt text">활성화</h4>
+    <img src="/images/store/item-frame.png" class="pros_active_frame">
+    <h4 class="pros_active_first" style="display:none">on</h4>
+    <img src="/images/store/green-check.png" class="pros_active_on" />
+    <img src="/images/close.png" class="pros_active_off" /> 
+
+
+
+  	<h4 class="pros_intro text">자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.</h4>
+
+	<form name="updateFrm" method="post" class="updateFrm">
+	<input type="hidden" name="get_category" class="get_category" value="pokemon" />
+	<input type="hidden" name="get_active" class="pros_active" value="on" />
+	<input type="text" name="get_name" class="pros_get_name_input" maxlength="9" />
+	<textarea class="pros_intro_input"></textarea>
+	<img src="/images/store/green-check.png" class="pros_update_confirm_btn">
+  	<img src="/images/close.png" class="pros_update_exit">
+	</form>
+	
+	<img src="/images/close.png" class="pros_profile_view_exit">
+  </div>
+  <!-- 모달 끝 -->
+
+  <img src="/images/pros/home.png" class="pros_home_btn">
 		
 		
 		

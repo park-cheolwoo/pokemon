@@ -15,6 +15,8 @@ public interface PokemonMapper {
 	
 	PokemonDTO selectById(int id);
 	
+	List<PokemonDTO> selectByName(String name);
+	
 	int existById(int id);
 	
 	void insert(PokemonDTO pokemon);
