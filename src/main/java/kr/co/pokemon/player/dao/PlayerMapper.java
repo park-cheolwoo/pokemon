@@ -26,15 +26,8 @@ public interface PlayerMapper {
 	
 	PlayerDTO chooseById(String id);
 	
-	PlayerDTO getRandomPlayer();
+	PlayerDTO findByTag(String tag);
 	
-	List<FriendDTO> getFriendList(String playerId);
-	
-	FriendDTO checkFriendRequest(String fromId, String toId);
-	
-	int insertFriendRequest(String fromId, String toId);
-	
-	int updateFriendStatus(String requestId);
 	
 //	int countPlayerPokemons(String playerId);
 	

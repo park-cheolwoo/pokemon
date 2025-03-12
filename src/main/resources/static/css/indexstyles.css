@@ -1,0 +1,132 @@
+/* 전체 컨테이너 */
+.main-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    background: url('/images/index/poketmon_main.png') no-repeat center center / cover;
+}
+
+/* 플레이어 정보 */
+.player-container {
+    position: absolute;
+    top: 5%;
+    left: 3%; 
+    text-align: left;
+}
+
+.player-bg {
+    width: 100%;
+}
+
+.player-info {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    transform: translateY(-50%);
+    font-size: 250%;
+    font-weight:bold;
+    word-spacing: 100px;
+    text-shadow: -1.5px -1.5px 0 #fff, 1.5px -1.5px 0 #fff, -1.5px 1.5px 0 #fff, 1.5px 1.5px 0 #fff;
+}
+
+.resources-container {
+    position: absolute;
+    top: 5%; 
+    right: 5%; 
+    display: flex;
+    flex-direction: row; 
+    gap: 20px; 
+}
+
+.resource-group {
+    position: relative;
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+}
+
+.wood-bg {
+    width: 100%; 
+    height: auto; 
+    position: relative;
+    z-index: 0; 
+}
+
+.resource-icon {
+    width: 30%; 
+    z-index: 1
+}
+
+.resource-info {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(0%, -50%);
+    font-size: 200%; 
+    font-weight: bold; 
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    z-index: 1;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 90%; 
+}
+
+/* 버튼 그룹 */
+.buttons-container {
+    position: absolute;
+    bottom: 5%; /* 화면 하단에 정렬 */
+    display: flex;
+    justify-content: space-around; /* 버튼 간 간격 균등 배치 */
+    width: 100%;
+}
+
+.button-group {
+    position: relative;
+    width: 17%; 
+    text-align: center;
+}
+
+.button-bg {
+    width: 100%; 
+}
+
+.menu-btn {
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:100%;
+    height:90%;
+    font-size:200%;
+    font-weight:bold;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 942px) {
+    .player-info {
+        font-size: 200%; 
+    }
+
+    .resource-info {
+        font-size: 16px;
+    }
+
+    .menu-btn {
+        font-size: 14px; 
+    }
+
+    .button-group {
+        width: 120px;
+    }
+
+    .resource-icon {
+        width: 30px; 
+    }
+}

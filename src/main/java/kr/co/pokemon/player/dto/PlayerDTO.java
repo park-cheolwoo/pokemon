@@ -15,8 +15,8 @@ public class PlayerDTO {
 
 	private String id;
 	private String nickname;
-	private String tag= "";
-	private String profile;
+	private String tag="";
+	private String profile = "/images/no-profile.png";
 	private String password;
 	private String description;
 	private int lv = 1;
@@ -27,4 +27,6 @@ public class PlayerDTO {
 	private Timestamp updatedAt;
 	private Timestamp createdAt;
 	
+	// 추가 임시 필드
+    private transient String temporaryField;
 }

@@ -52,6 +52,7 @@ $(function() {
 			}
 		});
 	}
+	
 
 	function social() {
 		$.ajax({
@@ -64,6 +65,52 @@ $(function() {
 				console.error('Error:', error);
 			}
 		});
+		//친구 요청 데이터
+		fetchpending();
+	}
+	
+	// 친구 요청 데이터를 가져오는 함수
+	function fetchpending() {
+	    console.log("AJAX 요청 시작"); // 테스트용 로그
+	    $.ajax({
+	        url: "/friend/pending",
+	        type: 'GET',
+	        success: function(pendingRequests) {
+	            console.log("Pending Requests:", pendingRequests);
+	            renderpending(pendingRequests);
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("AJAX 요청 실패:", error);
+	        }
+	    });
+	}
+
+	// 요청 데이터를 요청 창에 렌더링하는 함수
+	function renderpending(pendingRequests) {
+		const requestList = $("#friend-requests");
+		requestList.empty();
+
+		if (pendingRequests && pendingRequests.length > 0) {
+			pendingRequests.forEach(request => {
+				const level = request.lv || "알 수 없음"; // lv 필드
+				const nickname = request.nickname || "알 수 없음"; // nickname 필드
+
+				const listItem = `
+	                <li class="request-item">
+	                    <div class="request-details">
+	                        <p>From: Lv.${level} ${nickname}</p>
+	                    </div>
+	                    <div class="request-actions">
+	                        <button class="accept-request" data-id="${request.id}">수락</button>
+	                        <button class="decline-request" data-id="${request.id}">거절</button>
+	                    </div>
+	                </li>`;
+				requestList.append(listItem);
+				console.log("Rendered items:", requestList.html());
+			});
+		} else {
+			requestList.append('<li>받은 친구 요청이 없습니다.</li>');
+		}
 	}
 
 	// 콘텐츠 및 버튼 토글 관련 함수
@@ -76,11 +123,11 @@ $(function() {
 		content2.addClass("hiddenbox");
 		content3.addClass("hiddenbox");
 
-		if (number === 1) {
+		if (number == 1) {
 			content1.removeClass("hiddenbox");
-		} else if (number === 2) {
+		} else if (number == 2) {
 			content2.removeClass("hiddenbox");
-		} else if (number === 3) {
+		} else if (number == 3) {
 			content3.removeClass("hiddenbox");
 		}
 	}
@@ -94,11 +141,11 @@ $(function() {
 		btn2.addClass("hidden");
 		btn3.addClass("hidden");
 
-		if (number === 1) {
+		if (number == 1) {
 			btn1.removeClass("hidden");
-		} else if (number === 2) {
+		} else if (number == 2) {
 			btn2.removeClass("hidden");
-		} else if (number === 3) {
+		} else if (number == 3) {
 			btn3.removeClass("hidden");
 		}
 	}
@@ -116,57 +163,8 @@ $(function() {
 		});
 	}
 
-	function fetchRandomPokemons() {
-		$.ajax({
-			url: 'https://pokeapi.co/api/v2/pokemon?limit=1000',
-			type: 'GET',
-			success: function(response) {
-				const pokemonList = response.results;
-				const randomPokemons = [];
-				while (randomPokemons.length < 6) {
-					const randomIndex = Math.floor(Math.random() * pokemonList.length);
-					const randomPokemon = pokemonList[randomIndex];
-					if (!randomPokemons.includes(randomPokemon)) {
-						randomPokemons.push(randomPokemon);
-					}
-				}
-				randomPokemons.forEach(pokemon => {
-					fetchPokemonData(pokemon.url); // 랜덤으로 선택된 포켓몬의 데이터 가져오기
-				});
-			},
-			error: function(error) {
-				console.error('Error fetching Pokemon list:', error);
-			}
-		});
-	}
 
-	// 선택된 포켓몬의 데이터를 가져오는 함수
-	function fetchPokemonData(url) {
-		$.ajax({
-			url: url, 
-			type: 'GET',
-			success: function(response) {
-				displayPokemonImage(response);
-			},
-			error: function(error) {
-				console.error('Error fetching Pokemon data:', error);
-			}
-		});
-	}
 
-	// 포켓몬 이미지를 화면에 표시하는 함수
-	function displayPokemonImage(pokemon) {
-		const container = $('#pokemon-container');
-
-		const card = $('<div class="pokemon-card"></div>');
-		card.append(`<img src="${pokemon.sprites.other['home'].front_default}" alt="${pokemon.name} Home Image">`);
-		container.append(card);
-	}
-
-	fetchRandomPokemons();
-	
-	
-	
 	$("#mypageBtn").click(function() { mypage(); });
 	$("#storeBtn").click(function() { store(); });
 	$("#playBtn").click(function() { play(); });

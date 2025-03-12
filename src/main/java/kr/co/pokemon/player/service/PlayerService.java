@@ -12,8 +12,6 @@ public interface PlayerService {
 	
 	PlayerDTO findById(int id);
 
-	boolean createPlayer(PlayerDTO player);	
-
 	PlayerDTO updatePlayer(int id, PlayerDTO player);
 	
 	void deletePlayer(int id);
@@ -22,14 +20,7 @@ public interface PlayerService {
 
 	boolean isIdAble(String id);
 
-	PlayerDTO getRandomPlayer();
-
-	List<FriendDTO> getFriendList(String playerId);
-
-	boolean sendFriendRequest(String fromId, String toId);
-
-	boolean acceptFriendRequest(String requestId);
-
+	boolean insertPlayer(PlayerDTO playerDto);
 
 
 //	int countPlayerPokemons(String playerId);
