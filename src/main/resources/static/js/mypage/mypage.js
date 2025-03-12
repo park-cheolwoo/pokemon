@@ -12,8 +12,6 @@ $(document).ready(function () {
     // 탭 클릭 시 해당하는 페이지 로드
     initializeTabs(tabs);
 
-    
-
     function loadPage(page) {
         $.ajax({
             url: page,
@@ -25,7 +23,7 @@ $(document).ready(function () {
                 }
                 if (page === '/mypage/pokedex') {
                     initializePokedexButtons();
-                    initializePokedexList(); 
+                    initializePokedexList();
                 }
                 if (page === '/mypage/pokedexView') {
                     initializePokedexViewTabs();
@@ -130,9 +128,9 @@ $(document).ready(function () {
     function loadItemsByCategory(categoryIds, tableBodyId) {
         const tableBody = $('#' + tableBodyId);
         if (!tableBody.length) return;
-    
+
         tableBody.html('<tr><td colspan="3">로딩 중...</td></tr>');
-    
+
         categoryIds.forEach(categoryId => {
             $.get(`/api/items/category/${categoryId}`)
                 .done(function (items) {
@@ -141,36 +139,36 @@ $(document).ready(function () {
                         if (tableBody.find('tr').length === 1 && tableBody.find('tr td').text() === '로딩 중...') {
                             tableBody.empty();
                         }
-                        
+
                         items.forEach(item => {
                             const row = $('<tr></tr>');
                             row.data('item-id', item.id); // 아이템 ID 저장
-                            
+
                             // 이미지 셀 추가
                             const imgCell = $('<td class="item-img"></td>');
                             // 이미지 경로는 item.image를 사용하고, 없을 경우 기본 이미지 사용
-                            const imgSrc = item.image || `/images/items/default.png`;
+                            const imgSrc = item.image || `/images/close.png`;
                             const img = $('<img>').attr('src', imgSrc)
-                                                .attr('alt', item.name)
-                                                .attr('width', '50')
-                                                .attr('height', '50')
-                                                .attr('onerror', "this.src='/images/items/default.png'");
+                                .attr('alt', item.name)
+                                .attr('width', '50')
+                                .attr('height', '50')
+                                .attr('onerror', "this.src='/images/close.png'");
                             imgCell.append(img);
-                            
+
                             // 이름 셀 추가
                             const nameCell = $('<td class="item-name"></td>').text(item.name);
-                            
+
                             // 수량 셀 추가
                             const quantityCell = $('<td class="item-quantity"></td>').text(item.quantity || '1개');
-                            
+
                             // 셀들을 행에 추가
                             row.append(imgCell, nameCell, quantityCell);
-                            
+
                             // 아이템 클릭 이벤트 추가
-                            row.on('click', function() {
+                            row.on('click', function () {
                                 showItemDetails(item);
                             });
-                            
+
                             // 행을 테이블에 추가
                             tableBody.append(row);
                         });
@@ -191,15 +189,15 @@ $(document).ready(function () {
     function showItemDetails(item) {
         // 이미지 업데이트
         $('.mypage-item-img img')
-            .attr('src', item.image || '/images/items/default.png')
+            .attr('src', item.image || '/images/close.png')
             .attr('alt', item.name)
-            .attr('onerror', "this.src='/images/items/default.png'");
+            .attr('onerror', "this.src='/images/close.png'");
 
         // 이름 업데이트
         $('.mypage-item-name').text(item.name);
 
         // 설명 업데이트
-        $('.mypage-item-info').text(item.description || '설명이 없습니다.');
+        $('.mypage-item-info').text(item.flavorText || '설명이 없습니다.');
     }
 
     function initializePokedexViewTabs() {
@@ -257,43 +255,130 @@ $(document).ready(function () {
         const imageContainer = $('.image-container');
         if (!imageContainer.length) return;
 
+        // 상태 변수 추가
+        let currentPage = 0;
+        const pageSize = 50; // 한 번에 로드할 포켓몬 수
+        let isLoading = false;
+        let hasMoreData = true;
+        // 이미 로드된 포켓몬 ID를 추적하는 Set 추가
+        const loadedPokemonIds = new Set();
+
         // 로딩 메시지 표시
         imageContainer.html('<div class="loading">포켓몬 데이터를 불러오는 중...</div>');
 
-        // 포켓몬 데이터 가져오기 - 페이지 크기를 1000으로 설정하여 모든 포켓몬을 가져옴
-        $.get('/data/pokemon?page=0&size=1000')
-            .done(function (pokemonList) {
-                if (pokemonList && pokemonList.length > 0) {
-                    imageContainer.empty(); // 기존 내용 비우기
+        // 초기 데이터 로드
+        loadPokemonData();
 
-                    // ID 순으로 정렬
-                    pokemonList.sort((a, b) => a.id - b.id);
+        // 스크롤 이벤트 리스너 추가
+        let scrollTimeout;
+        let lastScrollTop = 0;
 
-                    // 각 포켓몬에 대한 이미지 요소 생성
-                    pokemonList.forEach(pokemon => {
-                        const pokemonDiv = $('<div class="pokemon-item"></div>');
-                        const img = $('<img>')
-                            .attr('src', pokemon.image || `/images/pokemon/${pokemon.id}.png`)
-                            .attr('alt', pokemon.name)
-                            .attr('data-id', pokemon.id)
-                            .attr('onerror', "this.src='/images/pokemon/default.png'");
-                        
-                        // 이미지 클릭 시 포켓몬 상세 정보 표시
-                        img.on('click', function() {
-                            showPokemonDetails(pokemon.id);
+        $(window).scroll(function () {
+            // 현재 스크롤 위치
+            const currentScrollTop = $(window).scrollTop();
+
+            // 스크롤 방향이 아래쪽인 경우에만 처리 (위로 스크롤할 때는 무시)
+            if (currentScrollTop > lastScrollTop) {
+                // 페이지 하단에 도달했는지 확인 (임계값 설정)
+                if (currentScrollTop + $(window).height() >= $(document).height() - 800) {
+                    // 디바운싱: 스크롤 이벤트가 연속으로 발생할 때 마지막 이벤트만 처리
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(function () {
+                        console.log("하단 도달 감지됨! 스크롤 위치:", currentScrollTop);
+                        if (!isLoading && hasMoreData) {
+                            console.log("추가 데이터 로드 시작, 현재 페이지:", currentPage);
+                            loadPokemonData();
+                        }
+                    }, 300); // 300ms 지연
+                }
+            }
+
+            // 현재 스크롤 위치 저장
+            lastScrollTop = currentScrollTop;
+        });
+
+        // 포켓몬 데이터 로드 함수
+        function loadPokemonData() {
+            isLoading = true;
+            console.log(`데이터 로드 시작: 페이지 ${currentPage}, 크기 ${pageSize}`);
+
+            // 로딩 인디케이터 추가
+            if (currentPage > 0) {
+                imageContainer.append('<div class="loading-more">추가 데이터 로드 중...</div>');
+            }
+
+            // 포켓몬 데이터 가져오기
+            console.log(`API 호출: /data/pokemon?page=${currentPage}&size=${pageSize}`);
+            $.get(`/data/pokemon?page=${currentPage}&size=${pageSize}`)
+            
+                .done(function (pokemonList) {
+                    console.log(`페이지 ${currentPage} 응답 받음, 데이터 개수:`, pokemonList ? pokemonList.length : 0);
+                    // 로딩 인디케이터 제거
+                    $('.loading, .loading-more').remove();
+
+                    if (currentPage === 0) {
+                        imageContainer.empty(); // 첫 페이지일 경우 컨테이너 비우기
+                    }
+
+                    if (pokemonList && pokemonList.length > 0) {
+                        // ID 순으로 정렬
+                        pokemonList.sort((a, b) => a.id - b.id);
+
+                        // 각 포켓몬에 대한 이미지 요소 생성
+                        pokemonList.forEach(pokemon => {
+                            // 이미 로드된 포켓몬은 건너뜀
+                            if (loadedPokemonIds.has(pokemon.id)) {
+                                console.log(`포켓몬 ID ${pokemon.id}는 이미 로드됨, 건너뜀`);
+                                return;
+                            }
+
+                            // 로드된 ID 목록에 추가
+                            loadedPokemonIds.add(pokemon.id);
+
+                            const pokemonDiv = $('<div class="pokemon-item"></div>');
+                            const img = $('<img>')
+                                .attr('src', pokemon.image || `/images/pokemon/${pokemon.id}.png`)
+                                .attr('alt', pokemon.name)
+                                .attr('data-id', pokemon.id)
+                                .attr('onerror', "this.src='/images/close.png'");
+
+                            // 이미지 클릭 시 포켓몬 상세 정보 표시
+                            img.on('click', function () {
+                                showPokemonDetails(pokemon.id);
+                            });
+
+                            pokemonDiv.append(img);
+                            imageContainer.append(pokemonDiv);
                         });
 
-                        pokemonDiv.append(img);
-                        imageContainer.append(pokemonDiv);
-                    });
-                } else {
-                    imageContainer.html('<div class="no-data">포켓몬 데이터가 없습니다.</div>');
-                }
-            })
-            .fail(function (error) {
-                console.error('Error loading pokemon list:', error);
-                imageContainer.html('<div class="error">포켓몬 데이터를 불러오는데 실패했습니다.</div>');
-            });
+                        // 다음 페이지 준비
+                        currentPage++;
+
+                        // 더 이상 데이터가 없는 경우
+                        if (pokemonList.length < pageSize) {
+                            hasMoreData = false;
+                        }
+                    } else {
+                        // 데이터가 없는 경우
+                        hasMoreData = false;
+                        if (currentPage === 0) {
+                            imageContainer.html('<div class="no-data">포켓몬 데이터가 없습니다.</div>');
+                        }
+                    }
+
+                    isLoading = false;
+                })
+                .fail(function (error) {
+                    console.error('포켓몬 데이터 로드 실패:', error);
+                    $('.loading, .loading-more').remove();
+                    if (currentPage === 0) {
+                        imageContainer.html('<div class="error">데이터를 불러오는데 실패했습니다.</div>');
+                    } else {
+                        imageContainer.append('<div class="error">추가 데이터를 불러오는데 실패했습니다.</div>');
+                    }
+                    isLoading = false;
+                });
+        }
     }
 
     function showPokemonDetails(pokemonId) {
@@ -308,8 +393,8 @@ $(document).ready(function () {
 
                 // 이미지 업데이트
                 pokeImg.attr('src', pokemon.image || `/images/pokemon/${pokemon.id}.png`)
-                      .attr('alt', pokemon.name)
-                      .attr('onerror', "this.src='/images/pokemon/default.png'");
+                    .attr('alt', pokemon.name)
+                    .attr('onerror', "this.src='/images/close.png'");
 
                 // 이름 업데이트
                 pokeName.text(pokemon.name);
@@ -333,8 +418,8 @@ $(document).ready(function () {
                 pokeInfo.html(infoHtml);
 
                 // 설명 업데이트
-                if (pokemon.description) {
-                    pokeDesc.text(pokemon.description);
+                if (pokemon.flavorText) {
+                    pokeDesc.text(pokemon.flavorText);
                 } else {
                     pokeDesc.text('설명이 없습니다.');
                 }
