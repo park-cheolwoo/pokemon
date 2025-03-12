@@ -14,6 +14,8 @@ public interface StatMapper {
 	
 	StatDTO selectById(int id);
 	
+	List<Integer> selectByIds(List<Integer> ids);
+	
 	int existById(int id);
 
 	void insert(StatDTO stat);

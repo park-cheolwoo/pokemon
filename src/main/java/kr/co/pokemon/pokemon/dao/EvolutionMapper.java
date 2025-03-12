@@ -14,6 +14,8 @@ public interface EvolutionMapper {
 	List<EvolutionDTO> selectAll(PageRequestDTO page);
 	
 	EvolutionDTO selectById(int id);
+	
+	List<Integer> selectByIds(List<Integer> ids);
 
 	EvolutionDTO selectByCurrId(int currId);
 

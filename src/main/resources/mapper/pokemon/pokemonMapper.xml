@@ -35,6 +35,13 @@
     SELECT * FROM pokemon WHERE id = #{id}
   </select>
   
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM pokemon WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
+  </select>
+  
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
 	    WHEN EXISTS (SELECT 1 FROM pokemon WHERE id = #{id}) THEN 1
@@ -53,7 +60,7 @@
   <insert id="insertAll" parameterType="java.util.List">
   	INSERT INTO pokemon ( id, name, image, image3d, gender_rate, gender_diff, genus, height, weight, flavor_text, is_legendary, is_mythical )
   	<foreach collection="list" item="item" separator="UNION ALL">
-  		SELECT #{item.id}, #{item.name}, #{item.image}, #{item.image3d}, #{item.genderRate}, #{item.genderDiff}, #{item.genus}, #{item.height}, #{item.weight}, #{item.flavorText, jdbcType=CLOB}, #{item.isLegendary}, #{item.isMythical} FROM DUAL
+  		SELECT #{item.id}, #{item.name}, #{item.image, jdbcType=VARCHAR}, #{item.image3d, jdbcType=VARCHAR}, #{item.genderRate}, #{item.genderDiff}, #{item.genus}, #{item.height}, #{item.weight}, #{item.flavorText, jdbcType=CLOB}, #{item.isLegendary}, #{item.isMythical} FROM DUAL
   	</foreach>
   </insert>
   
@@ -65,13 +72,13 @@
   	INSERT INTO sprites
   		( id, back_default, back_female, back_shiny, back_shiny_female, front_default, front_female, front_shiny, front_shiny_female )
   	VALUES
-  		( #{id}, #{backDefault}, #{backFemale}, #{backShiny}, #{backShinyFemale}, #{frontDefault}, #{frontFemale}, #{frontShiny}, #{frontShinyFemale} )
+  		( #{id}, #{backDefault, jdbcType=VARCHAR}, #{backFemale, jdbcType=VARCHAR}, #{backShiny, jdbcType=VARCHAR}, #{backShinyFemale, jdbcType=VARCHAR}, #{frontDefault, jdbcType=VARCHAR}, #{frontFemale, jdbcType=VARCHAR}, #{frontShiny, jdbcType=VARCHAR}, #{frontShinyFemale, jdbcType=VARCHAR} )
   </insert>
   
   <insert id="insertAllSprites" parameterType="java.util.List">
   	INSERT INTO sprites ( id, back_default, back_female, back_shiny, back_shiny_female, front_default, front_female, front_shiny, front_shiny_female )
   	<foreach collection="list" item="item" separator="UNION ALL">
-  		SELECT #{item.id}, #{item.backDefault}, #{item.backFemale}, #{item.backShiny}, #{item.backShinyFemale}, #{item.frontDefault}, #{item.frontFemale}, #{item.frontShiny}, #{item.frontShinyFemale} FROM DUAL
+  		SELECT #{item.id}, #{item.backDefault, jdbcType=VARCHAR}, #{item.backFemale, jdbcType=VARCHAR}, #{item.backShiny, jdbcType=VARCHAR}, #{item.backShinyFemale, jdbcType=VARCHAR}, #{item.frontDefault, jdbcType=VARCHAR}, #{item.frontFemale, jdbcType=VARCHAR}, #{item.frontShiny, jdbcType=VARCHAR}, #{item.frontShinyFemale, jdbcType=VARCHAR} FROM DUAL
   	</foreach>
   </insert>
 

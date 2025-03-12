@@ -13,6 +13,8 @@ public interface EvolutionTriggerMapper {
 	List<EvolutionTriggerDTO> selectAll(PageRequestDTO page);
 	
 	EvolutionTriggerDTO selectById(int id);
+	
+	List<Integer> selectByIds(List<Integer> ids);
 
 	int existById(int id);
 	

@@ -24,6 +24,9 @@ public class EggGroupServiceImpl implements EggGroupService {
 	private DataService dataService;
 	
 	@Autowired
+	private PokemonService pokemonService;
+	
+	@Autowired
 	private EggGroupMapper eggGroupMapper;
 	
 	@Autowired
@@ -38,6 +41,11 @@ public class EggGroupServiceImpl implements EggGroupService {
 	public EggGroupDTO getById(int id) {
 		return eggGroupMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return eggGroupMapper.selectByIds(ids);
+	}
 
 	@Override
 	public int insertDataFromAPI(List<EggGroupDTO> list) throws Exception {
@@ -48,14 +56,18 @@ public class EggGroupServiceImpl implements EggGroupService {
 			
 			dto.getPokemonSpecies().stream().forEach(poke -> {
 				int pokemonId = APIService.getIdByUrl(poke.getUrl());
-				pokemonEggGroups.add(new PokemonEggGroupDTO(pokemonId, dto.getId()));
+				
+				if (pokemonService.existById(pokemonId)) {
+					pokemonEggGroups.add(new PokemonEggGroupDTO(pokemonId, dto.getId()));
+					
+				}
 			});
 		});
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
 			eggGroupMapper.insertAll(list);
 			if (dataService.deleteAllData(DBTables.EGG_GROUP_POKEMON.getTableName())) {
 				pokemonEggGroupMapper.insertAll(pokemonEggGroups);
-				
+
 			} else {
 				throw new IllegalArgumentException(DBTables.EGG_GROUP_POKEMON.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
 			}

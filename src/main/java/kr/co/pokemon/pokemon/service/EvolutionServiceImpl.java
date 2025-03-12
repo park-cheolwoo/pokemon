@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
-import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dao.EvolutionMapper;
 import kr.co.pokemon.pokemon.dto.EvolutionDTO;
 import kr.co.pokemon.pokemon.dto.EvolutionDTO.EvolutionChain;
@@ -22,7 +21,10 @@ public class EvolutionServiceImpl implements EvolutionService {
 	private DBTables dbTable = DBTables.EVOLUTION;
 	
 	@Autowired
-	private DataService dataService;
+	private PokemonService pokemonService;
+	
+	@Autowired
+	private EvolutionTriggerService evolutionTriggerService;
 	
 	@Autowired
 	private EvolutionMapper evolutionMapper;
@@ -34,11 +36,6 @@ public class EvolutionServiceImpl implements EvolutionService {
 			count.addAndGet(nextToChain(dto, dto.getChain(), null));
 		});
 		
-		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
-		} else {
-			throw new IllegalArgumentException(DBTables.EGG_GROUP_POKEMON.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
-		}
-		
 		return count.get();
 	}
 
@@ -48,34 +45,40 @@ public class EvolutionServiceImpl implements EvolutionService {
 		if (chain != null) {
 			int currId = APIService.getIdByUrl(chain.getSpecies().getUrl());
 			
-			Optional.ofNullable(chain.getEvolvesTo())
+			if (pokemonService.existById(currId)) {
+				Optional.ofNullable(chain.getEvolvesTo())
 				.filter(evolvesTo -> !evolvesTo.isEmpty())
 				.ifPresentOrElse(
-					hasChain -> hasChain.stream().forEach(c -> {
-						int nextId = APIService.getIdByUrl(c.getSpecies().getUrl());
-
-						evolutionMapper.deleteByCurrId(currId);
-						evolutionMapper.insert(new EvolutionDTO(dto.getId(), prevId, currId, nextId));
-						count.incrementAndGet();
-						count.addAndGet(nextToChain(dto, c, currId));
-					}),
-					() -> {
-						if (prevId != null) {
+						hasChain -> hasChain.stream().forEach(c -> {
+							Integer nextId = APIService.getIdByUrl(c.getSpecies().getUrl());
+							
+							if (!pokemonService.existById(nextId)) nextId = null;
+							
 							evolutionMapper.deleteByCurrId(currId);
-							evolutionMapper.insert(new EvolutionDTO(dto.getId(), prevId, currId, null));							
+							evolutionMapper.insert(new EvolutionDTO(dto.getId(), prevId, currId, nextId));
+							count.incrementAndGet();
+							count.addAndGet(nextToChain(dto, c, currId));
+						}),
+						() -> {
+							if (prevId != null) {
+								evolutionMapper.deleteByCurrId(currId);
+								evolutionMapper.insert(new EvolutionDTO(dto.getId(), prevId, currId, null));							
+							}
 						}
-					}
-			);
+						);
+				
+				chain.getEvolutionDetails().stream().forEach(detail -> {
+					int itemId = Optional.ofNullable(detail.getItem()).map(item -> APIService.getIdByUrl(item.getUrl())).orElse(0);
+					int minLevel = Optional.ofNullable(detail.getMinLevel()).orElse(0);
+					int triggerId = APIService.getIdByUrl(detail.getTrigger().getUrl());
+					
+					if (evolutionTriggerService.existById(triggerId)) {
+						evolutionMapper.deleteDetailByCurrId(currId);
+						evolutionMapper.insertDetail(new EvolutionDetail(triggerId, dto.getId(), currId, minLevel, itemId));
 
-			chain.getEvolutionDetails().stream().forEach(detail -> {
-				int itemId = Optional.ofNullable(detail.getItem()).map(item -> APIService.getIdByUrl(item.getUrl())).orElse(0);
-				int minLevel = Optional.ofNullable(detail.getMinLevel()).orElse(0);
-				int triggerId = APIService.getIdByUrl(detail.getTrigger().getUrl());
-
-				evolutionMapper.deleteDetailByCurrId(currId);
-				evolutionMapper.insertDetail(new EvolutionDetail(triggerId, dto.getId(), currId, minLevel, itemId));
-			});
-			
+					}					
+				});
+			}
 		}
 		return count.get();
 	}
@@ -98,6 +101,11 @@ public class EvolutionServiceImpl implements EvolutionService {
 	@Override
 	public EvolutionDTO getById(int id) {
 		return evolutionMapper.selectById(id);
+	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return evolutionMapper.selectByIds(ids);
 	}
 
 	@Override

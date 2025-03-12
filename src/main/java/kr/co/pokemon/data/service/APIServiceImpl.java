@@ -43,12 +43,9 @@ public class APIServiceImpl implements APIService {
 		
 		try {
 			service.getDependencies().stream().forEach(dbTable -> {
-				dataService.getTableInfo(dbTable.getTableName()).ifPresentOrElse(
-					info -> {
-						APIPageDTO pageDTO = getDataDTOFromAPI(dbTable.getUri(), APIPageDTO.class);
-						if (info.getCount() < pageDTO.getTotalCount()) throw new IllegalArgumentException(info.getName() + " 테이블 데이터가 부족합니다.");
-					},
-					() -> new IllegalArgumentException("필요한 의존 테이블이 존재하지 않습니다. : " + dbTable.getTableName()));
+				dataService.getTableInfo(dbTable.getTableName()).orElseThrow(
+					() -> new IllegalArgumentException("필요한 의존 테이블이 존재하지 않습니다. : " + dbTable.getTableName())
+				);
 			});
 
 			Class<D> dto = (Class<D>) ((ParameterizedType) serviceClass.getGenericInterfaces()[0])

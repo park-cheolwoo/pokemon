@@ -25,6 +25,9 @@ public class TypesServiceImpl implements TypesService {
 	
 	@Autowired
 	private DataService dataService;
+	
+	@Autowired
+	private PokemonService pokemonService;
 
 	@Autowired
 	private TypesMapper typesMapper;
@@ -43,6 +46,11 @@ public class TypesServiceImpl implements TypesService {
 	@Override
 	public TypesDTO getById(int id) {
 		return typesMapper.selectById(id);
+	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return typesMapper.selectByIds(ids);
 	}
 
 	public TypesDTO getByName(String originalName) {
@@ -83,8 +91,12 @@ public class TypesServiceImpl implements TypesService {
 			
 			dto.getPokemon().stream().forEach(poke -> {
 				int pokemonId = APIService.getIdByUrl(poke.getPokemon().getUrl());
-				PokemonTypesDTO pokemonRelationship = new PokemonTypesDTO(pokemonId, dto.getId(), poke.getSlot());
-				pokemonRelationships.add(pokemonRelationship);
+				
+				if (pokemonService.existById(pokemonId)) {
+					PokemonTypesDTO pokemonRelationship = new PokemonTypesDTO(pokemonId, dto.getId(), poke.getSlot());
+					pokemonRelationships.add(pokemonRelationship);
+					
+				}
 			});
 		});
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
@@ -98,7 +110,10 @@ public class TypesServiceImpl implements TypesService {
 			}
 			
 			if (dataService.deleteAllData(DBTables.POKEMON_TYPES.getTableName())) {
-				pokemonTypesMapper.insertAll(pokemonRelationships);
+				if (pokemonRelationships.size() > 0) {
+					pokemonTypesMapper.insertAll(pokemonRelationships);
+					
+				}
 
 			} else {
 				throw new IllegalArgumentException(DBTables.POKEMON_TYPES.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
