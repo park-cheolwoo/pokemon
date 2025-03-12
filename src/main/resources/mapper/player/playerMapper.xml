@@ -4,6 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.pokemon.player.dao.PlayerMapper">
 
+<resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
+    <result column="game_money" property="gameMoney" />
+    <result column="real_money" property="realMoney" />
+    <result column="updated_at" property="updatedAt" />
+    <result column="created_at" property="createdAt" />
+</resultMap>
+
+<select id="selectAll" resultMap="dataResultMap">
   <resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
   	<result column="game_money" property="gameMoney" />
   	<result column="real_money" property="realMoney" />
@@ -13,12 +21,56 @@
 
   <select id="selectAll" resultMap="dataResultMap">
     select * from player
+</select>
+<select id="selectById" resultMap="dataResultMap">
   </select>
   <select id="selectById" resultMap="dataResultMap">
     select * from player where id = #{id}
   </select>
   <select id="chooseById" resultMap="dataResultMap">
     select * from player where id = #{id}
+</select>
+
+<insert id="insertPlayer" parameterType="kr.co.pokemon.player.dto.PlayerDTO">
+    INSERT INTO player (id, nickname, password, tag, lv, game_money, real_money)
+    VALUES (
+        #{id, jdbcType=VARCHAR},
+        #{nickname, jdbcType=VARCHAR},
+        #{password, jdbcType=VARCHAR},
+        #{tag, jdbcType=VARCHAR},
+        #{lv, jdbcType=INTEGER},
+        #{gameMoney, jdbcType=INTEGER},
+        #{realMoney, jdbcType=INTEGER}
+    )
+</insert>
+
+
+<update id="updatePlayer">
+    update player
+    set nickname = #{nickname},
+        tag = #{tag},
+        profile = #{profile},
+        password = #{password},
+        description = #{description}
+    where id = #{id}
+</update>
+
+<update id="updatePlayerBySystem">
+    update player
+    set lv = #{lv},
+        experience = #{experience},
+        game_money = #{gameMoney},
+        real_money = #{realMoney}
+    where id = #{id}
+</update>
+
+<delete id="deletePlayer">
+    delete from player where id = #{id}
+</delete>
+
+<select id="selectLogin" resultMap="dataResultMap">
+    select * from player where id = #{id} and password = #{password}
+</select>
   </select>
   
   <insert id="insertPlayer">
@@ -55,5 +107,18 @@
  <select id="selectLogin" parameterType="java.util.Map" resultMap="dataResultMap">
         select * from player where id = #{id} and password = #{password}
     </select>
+
+<select id="chooseById" resultMap="dataResultMap">
+    select * from player where id = #{id}
+</select>
+
+<select id="findByTag" parameterType="String" resultMap="dataResultMap">
+        select * from player where tag = #{tag}
+    </select>
+<!--  
+<select id="countPlayerPokemons" resultType="int" parameterType="String">
+        select count(*) from player_pokemon where player_id = #{playerId}
+    </select>
+-->
 
 </mapper>

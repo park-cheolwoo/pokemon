@@ -15,4 +15,8 @@ public interface PokemonService extends APIGetable<PokemonDTO> {
 	
 	PokemonSprites getSpritesById(int id);
 
+	List<PokemonDTO> getByName(String keyword);
+
+
+
 }
