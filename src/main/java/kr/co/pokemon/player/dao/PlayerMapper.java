@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import kr.co.pokemon.player.dto.FriendDTO;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 @Mapper
@@ -22,6 +23,12 @@ public interface PlayerMapper {
 	PlayerDTO selectLogin(String id,String password);
 	
 	int insertPlayer(PlayerDTO player);
+	
 	PlayerDTO chooseById(String id);
+	
+	PlayerDTO findByTag(String tag);
+	
+	
+//	int countPlayerPokemons(String playerId);
 	
 }

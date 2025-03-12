@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.player.dao.FriendMapper">
+
+	<resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.FriendDTO">
+		<id column="id" property="id" />
+		<result column="is_accept" property="isAccept" />
+		<result column="updated_at" property="updatedAt" />
+		<result column="created_at" property="createdAt" />
+
+		<association property="playerFrom"
+			javaType="kr.co.pokemon.player.dto.PlayerDTO">
+			<result column="player_from" property="id" />
+			<result column="player_nickname" property="nickname" />
+			<result column="player_lv" property="lv" />
+			<result column="player_tag" property="tag" />
+		</association>
+
+		<association property="playerTo"
+			javaType="kr.co.pokemon.player.dto.PlayerDTO">
+			<result column="player_to" property="id" />
+			<result column="friend_nickname" property="nickname" />
+			<result column="friend_lv" property="lv" />
+			<result column="friend_tag" property="tag" />
+		</association>
+	</resultMap>
+
+	<select id="getFriendList" parameterType="string"
+		resultMap="dataResultMap">
+		select f.id, f.player_from, f.player_to, f.is_accept,
+		f.updated_at, f.created_at,
+		p1.nickname as player_nickname, p1.lv as
+		player_lv, p1.tag as player_tag,
+		p2.nickname as friend_nickname, p2.lv
+		as friend_lv, p2.tag as friend_tag
+		from friend f
+		join player p1 ON
+		f.player_from = p1.id
+		join player p2 ON f.player_to = p2.id
+		where
+		f.player_to = #{playerId, jdbcType=VARCHAR} and f.is_accept = 1
+	</select>
+
+	<insert id="insertFriend" parameterType="map">
+		insert into friend (id, player_from, player_to, is_accept, created_at,
+		updated_at)
+		values (#{id}, #{playerFrom}, #{playerTo}, 0, sysdate, sysdate)
+	</insert>
+
+
+	<update id="updateFriendAccept">
+		update friend set is_accept = true,
+		updated_at = sysdate
+		where player_from = #{playerFromId} and player_to = #{playerToId}
+	</update>
+
+	<select id="selectFriend"
+		resultType="kr.co.pokemon.player.dto.FriendDTO">
+		select * from friend
+		where player_from = #{playerFromId}
+		and
+		player_to = #{playerToId}
+	</select>
+	
+	<select id="getPending" parameterType="String" resultMap="dataResultMap">
+		select * from friend where player_to = #{playerTo} AND is_accept = 0
+	</select>
+
+</mapper>

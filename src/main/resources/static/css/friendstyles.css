@@ -3,7 +3,7 @@
 	z-index:1;
     display: flex;
     height: 100vh;
-    background : url('/images/flistback.png') no-repeat center center/ cover;
+    background : url('/images/mypage_back.png') no-repeat center center/ cover;
 }
 .flist-box{
 	position: absolute;
@@ -33,20 +33,20 @@
 /*친구 목록 창*/
 .imgflist1{
 	position: absolute;
-	top: 0.2%;
+	top: 0%;
   	left: 6%;
   	z-index:5;
 }
 .imgflist2{
 	position: absolute;
-	top: 0.1%;
+	top: 0%;
   	left: 6%;
   	z-index:4;
 }
 .imgfplus1{
 	position: absolute;
-	top: 0.1%;
-  	left: 36%;
+	top: 0%;
+  	left: 35%;
   	z-index:5;
 }
 .imgfplus2{
@@ -57,14 +57,14 @@
 }
 .imgfpls1{
 	position: absolute;
-	top: 0.2%;
-  	left: 65.2%;
+	top: 0%;
+  	left: 64%;
   	z-index:5;
 }
 .imgfpls2{
 	position: absolute;
 	top: 0%;
-  	left: 65%;
+  	left: 64%;
   	z-index:4;
 }
 .flistbtn{
@@ -234,7 +234,7 @@
 .myprofilecode{
 	position: absolute;
 	top: 19%;
-	left:30%;
+	left:28%;
 	font-size:36px;
 	color:white;
 	word-spacing: 20px;
@@ -255,7 +255,7 @@
 	position: absolute;
 	top: 58%;
 	left:27%;
-	font-size:36px;
+	font-size:34px;
 	color:white;
 	background:none;
 	border:none;
@@ -286,74 +286,11 @@
   	width:87%;
   	height:80%;
 }
-.msball4{
-	position: absolute;
-	top: 7.5%;
-  	left: 10.4%;
+.request-details{
+	background: url('/images/index/wood_panner.png') no-repeat center center;
 }
-.wdpanner4{
-	position: absolute;
-	top: 7.7%;
-  	left: 27.5%;
-}
-.fname4{
-	position: absolute;
-	top: 13.5%;
-  	left: 33.5%;
-  	font-size:36px;
-	color:white;
-	word-spacing: 70px;
-}
-.wdtrade4{
-	position: absolute;
-	top: 11.5%;
-  	left: 73.5%;
-}
-.tradebtn4{
-	position: absolute;
-	top: 12.5%;
-  	left: 76%;
-  	font-size:24px;
-	color:white;
-  	width:15.5%;
-  	height:7%;
-  	border:none;
-  	background:none;
-}
-.msball5{
-	position: absolute;
-	top: 38.6%;
-  	left: 10.4%;
-}
-.wdpanner5{
-	position: absolute;
-	top: 38.5%;
-  	left: 27.5%;
-}
-.fname5{
-	position: absolute;
-	top: 45%;
-  	left: 33.5%;
-  	font-size:36px;
-	color:white;
-	word-spacing: 70px;
-}
-.wdtrade5{
-	position: absolute;
-	top: 42.5%;
-  	left: 73.5%;
-}
-.tradebtn5{
-	position: absolute;
-	top: 44%;
-  	left: 76%;
-  	font-size:24px;
-	color:white;
-  	width:15.5%;
-  	height:7%;
-  	border:none;
-  	background:none;
-}
+
+/*숨기기용*/
 .hiddenbox{
 	display:none;
 }

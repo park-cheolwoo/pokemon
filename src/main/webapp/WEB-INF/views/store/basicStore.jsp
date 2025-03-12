@@ -208,7 +208,7 @@
 	  <img src="/images/닫기.png" class="exit">
 	
 	  <div class="lotto_button_wrap">
-
+	
 
 	  </div>
 	</div> -->
