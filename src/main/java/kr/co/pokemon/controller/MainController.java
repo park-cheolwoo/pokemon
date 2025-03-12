@@ -17,5 +17,36 @@ public class MainController {
 //		model.addAttribute("pdto",playerDto);
 //		return "index";
 //	}
+	@GetMapping(value = "/friend/flist")
+	public String flist() {
+		return "/friend/flist";
+	}
 
+	
+	@GetMapping("/play/plist")
+	public String plist() {
+		return "/play/plist";
+	}	
+	
+	@GetMapping("/play/quest")
+	public String quest() {
+		return "/play/quest";
+	}
+	
+	@GetMapping("/play/dungeon")
+	public String dungeon() {
+		return "/play/dungeon";
+	}
+
+	@GetMapping("/play/sdungeon")
+	public String sdungeon() {
+		return "/play/sdungeon";
+	}
+
+	
+	@GetMapping("/play/battle")
+	public String battle() {
+		return "/play/battle";
+	}
+	
 }
