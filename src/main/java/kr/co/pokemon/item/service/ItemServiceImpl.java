@@ -23,6 +23,9 @@ public class ItemServiceImpl implements ItemService {
 	
 	@Autowired
 	private DataService dataService;
+	
+	@Autowired
+	private ItemCategoryService itemCategoryService;
 
 	@Override
 	public List<ItemDTO> getAll(PageRequestDTO page) {
@@ -33,36 +36,45 @@ public class ItemServiceImpl implements ItemService {
 	public ItemDTO getById(int id) {
 		return itemMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return itemMapper.selectByIds(ids);
+	}
 
 	@Override
 	public int insertDataFromAPI(List<ItemDTO> list) throws Exception {
-		list.stream().forEach(dto -> {
+		List<ItemDTO> filtered = list.stream().filter(dto -> {
 			int categoryId = APIService.getIdByUrl(dto.getCategory().getUrl());
-
 			dto.setCategoryId(categoryId);
 			
 			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
 			Optional.ofNullable(dto.getSprite().getDefaultSprite()).ifPresentOrElse(sprite -> dto.setImage(sprite), () -> dto.setImage("/images/no-item.png"));
-
+			
 			dto.getLanguagesEffect("en").ifPresentOrElse(description ->
-				dto.setDescription(description),
-				() -> dto.setDescription("NO-TEXT")
-			);
-
+			dto.setDescription(description),
+			() -> dto.setDescription("NO-TEXT")
+					);
+			
 			dto.getLanguagesText("ko").ifPresentOrElse(flavor ->
-				dto.setFlavorText(flavor),
-				() -> dto.setFlavorText("설명이 없습니다.")
-			);
-
-		});
+			dto.setFlavorText(flavor),
+			() -> dto.setFlavorText("설명이 없습니다.")
+					);
+			return itemCategoryService.existById(categoryId);
+		}).toList();
 		
-		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
-			itemMapper.insertAll(list);
-		}else {
-			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
+		System.out.println(filtered.size());
+		
+		if (filtered.size() > 0) {
+			if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+				itemMapper.insertAll(filtered);				
+			
+			} else {
+				throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
+			}
 		}
-		
-		return list.size();
+
+		return filtered.size();
 	}
 
 	@Override

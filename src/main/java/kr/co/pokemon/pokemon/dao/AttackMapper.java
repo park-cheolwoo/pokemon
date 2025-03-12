@@ -16,6 +16,8 @@ public interface AttackMapper {
 
 	AttackDTO selectById(int id);
 	
+	List<Integer> selectByIds(List<Integer> ids);
+	
 	int existById(int id);
 	
 	void insert(AttackDTO attack);

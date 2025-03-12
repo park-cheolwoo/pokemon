@@ -14,6 +14,8 @@ public interface TypesMapper {
 	
 	TypesDTO selectById(int id);
 	
+	List<Integer> selectByIds(List<Integer> ids);
+	
 	TypesDTO selectByName(String originalName);
 	
 	int existById(int id);

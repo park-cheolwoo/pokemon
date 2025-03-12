@@ -8,5 +8,7 @@ import kr.co.pokemon.pokemon.dto.AttackDTO;
 public interface AttackService extends APIGetable<AttackDTO> {
 
 	List<AttackDTO> getByTypeId(int typesId);
+	
+	boolean existById(int id);
 
 }

@@ -13,6 +13,8 @@ public interface ItemMapper {
 	List<ItemDTO> selectAll(PageRequestDTO page);
 
 	ItemDTO selectById(int id);
+	
+	List<Integer> selectByIds(List<Integer> ids);
 
 	List<ItemDTO> selectByCategoryId(int categoryId);
 	
