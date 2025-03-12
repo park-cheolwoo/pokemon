@@ -12,4 +12,8 @@ public interface PokemonService extends APIGetable<PokemonDTO> {
 	
 	boolean existById(int id);
 
+	List<PokemonDTO> getByName(String keyword);
+
+
+
 }

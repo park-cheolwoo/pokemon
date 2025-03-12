@@ -9,16 +9,6 @@
 <link type="text/css" rel="stylesheet" href="/css/memberstyles.css" >
 <link type="text/css" rel="stylesheet" href="/css/styles.css" >
 </head>
-<script>
-if("${loginChk}"=="0"){
-	alert("아이디 또는 패스워드가 일치하지 않습니다. 다시 로그인해주세요.");
-}
-if("${loginChk}"== "1"){
-	alert("로그인 성공");
-	location.href="/";
-}
-
-</script>
 <body>
 	<form action="/member/login" name="loginFrm" method="post">
 	<div class="login-container">
@@ -34,8 +24,8 @@ if("${loginChk}"== "1"){
 		
 		<button type="submit" id="loginBtn">로그인</button>
 		</div>
-			<img src="/images/kakao_login.png" class="kakao">
-			<img src="/images/naver_login.png" class="naver">
+			<img src="/images/index/kakao_login.png" class="kakao">
+			<img src="/images/index/naver_login.png" class="naver">
 	</div>
 	</form>
 	<script src="/js/member/member.js"></script>
