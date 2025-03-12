@@ -160,6 +160,7 @@
   </div>
 
   <!-- 뽑기 페이지 전환 -->
+
 	  <div class="item_lotto_container">
 	  	<img src="/images/pros/more.png" class="lotto_info_btn">
 	  

@@ -2,6 +2,8 @@ package kr.co.pokemon.player.service;
 
 import java.util.List;
 
+import kr.co.pokemon.player.dto.FriendDTO;
+//import kr.co.pokemon.player.controller.Player;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 public interface PlayerService {
@@ -10,8 +12,6 @@ public interface PlayerService {
 	
 	PlayerDTO findById(int id);
 
-	boolean createPlayer(PlayerDTO player);	
-
 	PlayerDTO updatePlayer(int id, PlayerDTO player);
 	
 	void deletePlayer(int id);
@@ -19,6 +19,10 @@ public interface PlayerService {
 	PlayerDTO login(String id, String password);
 
 	boolean isIdAble(String id);
-	
+
+	boolean insertPlayer(PlayerDTO playerDto);
+
+
+//	int countPlayerPokemons(String playerId);
 
 }
