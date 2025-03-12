@@ -23,8 +23,6 @@
     <result column="front_female" property="frontFemale" />
     <result column="front_shiny" property="frontShiny" />
     <result column="front_shiny_female" property="frontShinyFemale" />
-    <result column="created_at" property="createdAt" />
-    <result column="updated_at" property="updatedAt" />
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">

@@ -13,6 +13,7 @@ import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dao.HabitatMapper;
 import kr.co.pokemon.pokemon.dao.relationship.PokemonHabitatMapper;
 import kr.co.pokemon.pokemon.dto.HabitatDTO;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.dto.relationship.PokemonHabitatDTO;
 
 @Service
@@ -92,6 +93,16 @@ public class HabitatServiceImpl implements HabitatService {
 	@Override
 	public DBTables getDBTable() {
 		return dbTable;
+	}
+	
+	@Override
+	public List<HabitatDTO> getHabitatByPokemonId(int pokemonId) {
+		return pokemonHabitatMapper.selectHabitatByPokemonId(pokemonId);
+	}
+
+	@Override
+	public List<PokemonDTO> getPokemonByHabitatId(int habitatId) {
+		return pokemonHabitatMapper.selectPokemonByHabitatId(habitatId);
 	}
 
 }

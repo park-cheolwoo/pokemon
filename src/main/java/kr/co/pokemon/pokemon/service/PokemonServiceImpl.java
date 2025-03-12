@@ -154,5 +154,10 @@ public class PokemonServiceImpl implements PokemonService {
 	public boolean existById(int id) {
 		return pokemonMapper.existById(id) != 0;
 	}
+	
+	@Override
+	public PokemonSprites getSpritesById(int id) {
+		return pokemonMapper.selectSpritesById(id);
+	}
 
 }
