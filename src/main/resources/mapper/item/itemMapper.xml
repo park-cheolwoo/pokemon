@@ -21,6 +21,13 @@
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM item WHERE id = #{id}
   </select>
+  
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM item WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
+  </select>
 
   <select id="selectByCategoryId" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM item WHERE id = #{category_id}

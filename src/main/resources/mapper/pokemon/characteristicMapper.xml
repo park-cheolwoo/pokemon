@@ -18,6 +18,17 @@
     SELECT * FROM characteristic WHERE id = #{id}
   </select>
   
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM characteristic WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
+  </select>
+
+  <select id="selectByStatId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM characteristic WHERE stat_id = #{statId}
+  </select>
+  
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
 	    WHEN EXISTS (SELECT 1 FROM characteristic WHERE id = #{id}) THEN 1

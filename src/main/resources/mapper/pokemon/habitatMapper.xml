@@ -18,6 +18,13 @@
     SELECT * FROM habitat WHERE id = #{id}
   </select>
   
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM habitat WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
+  </select>
+  
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
 	    WHEN EXISTS (SELECT 1 FROM habitat WHERE id = #{id}) THEN 1

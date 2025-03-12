@@ -17,6 +17,13 @@
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM types WHERE id = #{id}
   </select>
+  
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM types WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
+  </select>
 
   <select id="selectByOriginalName" resultMap="dataResultMap" parameterType="String">
     SELECT * FROM types WHERE original_name = #{originalName}

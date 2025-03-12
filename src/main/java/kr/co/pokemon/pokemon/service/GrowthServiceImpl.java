@@ -53,6 +53,11 @@ public class GrowthServiceImpl implements GrowthService {
 	public GrowthDTO getById(int id) {
 		return growthMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return growthMapper.selectByIds(ids);
+	}
 
 	public void insert(List<GrowthDTO> list) {
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {

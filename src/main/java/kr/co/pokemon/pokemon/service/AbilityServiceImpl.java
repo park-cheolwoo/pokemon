@@ -24,6 +24,9 @@ public class AbilityServiceImpl implements AbilityService {
 	private DataService dataService;
 	
 	@Autowired
+	private PokemonService pokemonService;
+	
+	@Autowired
 	private AbilityMapper abilityMapper;
 	
 	@Autowired
@@ -37,6 +40,11 @@ public class AbilityServiceImpl implements AbilityService {
 	@Override
 	public AbilityDTO getById(int id) {
 		return abilityMapper.selectById(id);
+	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return abilityMapper.selectByIds(ids);
 	}
 
 	@Override
@@ -57,15 +65,18 @@ public class AbilityServiceImpl implements AbilityService {
 			
 			dto.getPokemon().stream().forEach(poke -> {
 				int pokemonId = APIService.getIdByUrl(poke.getPokemon().getUrl());
-				PokemonAbilityDTO relationship = new PokemonAbilityDTO(pokemonId, dto.getId(), poke.getSlot());
-				relationships.add(relationship);
+				
+				if (pokemonService.existById(pokemonId)) {
+					PokemonAbilityDTO relationship = new PokemonAbilityDTO(pokemonId, dto.getId(), poke.getSlot());
+					relationships.add(relationship);
+					
+				}
 			});
 		});
 		
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
 			abilityMapper.insertAll(list);
 			pokemonAbilityMapper.insertAll(relationships);
-			
 		} else {
 			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
 		}

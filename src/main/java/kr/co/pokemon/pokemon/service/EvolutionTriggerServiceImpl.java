@@ -31,7 +31,17 @@ public class EvolutionTriggerServiceImpl implements EvolutionTriggerService {
 	public EvolutionTriggerDTO getById(int id) {
 		return evolutionTriggerMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return evolutionTriggerMapper.selectByIds(ids);
+	}
 
+	@Override
+	public boolean existById(int id) {
+		return evolutionTriggerMapper.existById(id) != 0;
+	}
+	
 	@Override
 	public int insertDataFromAPI(List<EvolutionTriggerDTO> list) throws Exception {
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {

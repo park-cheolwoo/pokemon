@@ -32,6 +32,11 @@ public class CharacteristicServiceImpl implements CharacteristicService {
 	public CharacteristicDTO getById(int id) {
 		return characteristicMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return characteristicMapper.selectByIds(ids);
+	}
 
 	@Override
 	public int insertDataFromAPI(List<CharacteristicDTO> list) throws Exception {
@@ -69,4 +74,9 @@ public class CharacteristicServiceImpl implements CharacteristicService {
 		return dbTable;
 	}
 
+	@Override
+	public List<CharacteristicDTO> getCharacteristicsByStatId(int statId) {
+		return characteristicMapper.selectByStatId(statId);
+	}
+	
 }

@@ -5,23 +5,25 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
-import kr.co.pokemon.pokemon.dto.relationship.PokemonAttackDTO;
+import kr.co.pokemon.pokemon.dto.relationship.PokemonMoveDTO;
 
 @Mapper
 public interface PokemonAttackMapper {
 	
-	List<PokemonAttackDTO> selectAll(PageRequestDTO page);
+	List<PokemonMoveDTO> selectAll(PageRequestDTO page);
 	
-	PokemonAttackDTO selectById(int id);
+	PokemonMoveDTO selectById(int id);
 	
-	List<PokemonAttackDTO> selectByPokemonId(int pokemonId);
+	List<Integer> selectByIds(List<Integer> ids);
 	
-	List<PokemonAttackDTO> selectByAttackId(int AttackId);
+	List<PokemonMoveDTO> selectByPokemonId(int pokemonId);
+	
+	List<PokemonMoveDTO> selectByAttackId(int AttackId);
 	
 	int existById(int id);
 	
-	void insert(PokemonAttackDTO pokemonAttack);
+	void insert(PokemonMoveDTO pokemonAttack);
 	
-	void insertAll(List<PokemonAttackDTO> pokemonAttacks);
+	void insertAll(List<PokemonMoveDTO> pokemonAttacks);
 
 }
