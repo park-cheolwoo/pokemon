@@ -121,4 +121,8 @@ public class PokemonServiceImpl implements PokemonService {
 		pokemonMapper.insert(dto);
 	}
 
+	@Override
+	public List<PokemonDTO> getPokemonListWithOwnership(Long playerId) {
+		return pokemonMapper.selectAllWithOwnership(playerId, new PageRequestDTO());
+	}
 }

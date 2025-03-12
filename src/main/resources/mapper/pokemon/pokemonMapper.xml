@@ -74,5 +74,18 @@
   		SELECT #{item.id}, #{item.backDefault}, #{item.backFemale}, #{item.backShiny}, #{item.backShinyFemale}, #{item.frontDefault}, #{item.frontFemale}, #{item.frontShiny}, #{item.frontShinyFemale} FROM DUAL
   	</foreach>
   </insert>
+  
+  <select id="selectAllWithOwnership" resultMap="dataResultMap">
+    SELECT 
+      p.*,
+      CASE WHEN pp.pokemon_id IS NOT NULL THEN 1 ELSE 0 END AS is_owned
+    FROM 
+      pokemon p
+    LEFT JOIN 
+      player_pokemon pp ON p.id = pp.pokemon_id AND pp.player_id = #{playerId}
+    <if test="page != null">
+      OFFSET ((#{page.page} - 1) * #{page.size}) ROWS FETCH NEXT #{page.size} ROWS ONLY
+    </if>
+  </select>
 
 </mapper>
