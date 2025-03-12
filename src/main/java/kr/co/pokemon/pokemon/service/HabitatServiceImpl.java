@@ -24,6 +24,9 @@ public class HabitatServiceImpl implements HabitatService {
 	private DataService dataService;
 	
 	@Autowired
+	private PokemonService pokemonService;
+	
+	@Autowired
 	private HabitatMapper habitatMapper;
 	
 	@Autowired
@@ -38,6 +41,11 @@ public class HabitatServiceImpl implements HabitatService {
 	public HabitatDTO getById(int id) {
 		return habitatMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return habitatMapper.selectByIds(ids);
+	}
 
 	@Override
 	public int insertDataFromAPI(List<HabitatDTO> list) throws Exception {
@@ -48,12 +56,16 @@ public class HabitatServiceImpl implements HabitatService {
 
 			dto.getPokemonSpecies().stream().forEach(poke -> {
 				int pokemonId = APIService.getIdByUrl(poke.getUrl());
-				pokemonHabitats.add(new PokemonHabitatDTO(pokemonId, dto.getId()));
+				
+				if (pokemonService.existById(pokemonId)) {
+					pokemonHabitats.add(new PokemonHabitatDTO(pokemonId, dto.getId()));
+					
+				}
 			});
 		});
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
 			habitatMapper.insertAll(list);
-			if (dataService.deleteAllData(DBTables.POKEMON_HABITAT.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+			if (dataService.deleteAllData(DBTables.POKEMON_HABITAT.getTableName())) {
 				pokemonHabitatMapper.insertAll(pokemonHabitats);
 
 			} else {

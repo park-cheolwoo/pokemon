@@ -10,7 +10,6 @@ import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.pokemon.dao.relationship.PokemonAttackMapper;
-import kr.co.pokemon.pokemon.dto.relationship.PokemonAttackDTO;
 import kr.co.pokemon.pokemon.dto.relationship.PokemonMoveDTO;
 
 @Service
@@ -19,28 +18,41 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 	private DBTables dbTable = DBTables.POKEMON_ATTACK;
 	
 	@Autowired
+	private PokemonService pokemonService;
+	
+	@Autowired
+	private AttackService attackService;
+	
+	@Autowired
 	private PokemonAttackMapper pokemonAttackMapper;
 
 	@Override
 	public int insertDataFromAPI(List<PokemonMoveDTO> list) throws Exception {
-		List<PokemonAttackDTO> pokemonAttackDTOs = new ArrayList<>();
 		
+		List<PokemonMoveDTO> pokemonMoves = new ArrayList<>();
+
 		list.stream().forEach(pokemon -> {
-			pokemon.getMoves().stream().forEach(move -> {
-				int attackId = APIService.getIdByUrl(move.getMove().getUrl());
-				PokemonAttackDTO pokemonAttackDTO = new PokemonAttackDTO(pokemon.getId(), attackId, move.getLearnedLevel("level-up"));
-				pokemonAttackDTOs.add(pokemonAttackDTO);
-			});
+			if (pokemonService.existById(pokemon.getId())) {
+				pokemon.getMoves().stream().forEach(move -> {
+					int attackId = APIService.getIdByUrl(move.getMove().getUrl());
+					
+					if (attackService.existById(attackId)) {
+						pokemonMoves.add(new PokemonMoveDTO(pokemon.getId(), attackId, move.getLearnedLevel("level-up")));
+						
+					}
+				});
+				
+			}
 		});
 
 		int count = 0;
 		int size = 1000;
-		while (pokemonAttackDTOs.size() > count * size) {
-			pokemonAttackMapper.insertAll(pokemonAttackDTOs.stream().skip(count * size).limit(size).toList());
+		while (pokemonMoves.size() > count * size) {
+			pokemonAttackMapper.insertAll(pokemonMoves.stream().skip(count * size).limit(size).toList());
 			count++;
 		}
-		
-		return pokemonAttackDTOs.size();
+
+		return pokemonMoves.size();
 	}
 
 	@Override
@@ -55,17 +67,22 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 
 	@Override
 	public List<PokemonMoveDTO> getAll(PageRequestDTO page) {
-		return null;
+		return pokemonAttackMapper.selectAll(page);
 	}
 
 	@Override
 	public PokemonMoveDTO getById(int id) {
-		return null;
+		return pokemonAttackMapper.selectById(id);
+	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return pokemonAttackMapper.selectByIds(ids);
 	}
 
 	@Override
 	public void insert(PokemonMoveDTO dto) {
-		
+		pokemonAttackMapper.insert(dto);
 	}
 
 }

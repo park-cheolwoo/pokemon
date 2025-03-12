@@ -31,6 +31,16 @@ public class StatServiceImpl implements StatService {
 	public StatDTO getById(int id) {
 		return statMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return statMapper.selectByIds(ids);
+	}
+	
+	@Override
+	public boolean existById(int id) {
+		return statMapper.existById(id) != 0;
+	}
 
 	@Override
 	public int insertDataFromAPI(List<StatDTO> list) throws Exception {

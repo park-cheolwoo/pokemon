@@ -11,6 +11,8 @@ public interface Getable<D> {
 	
 	D getById(int id);
 	
+	List<Integer> getByIds(List<Integer> ids);
+	
 	void insert(D dto);
 	
 
