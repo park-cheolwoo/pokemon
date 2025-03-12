@@ -34,6 +34,10 @@
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM pokemon WHERE id = #{id}
   </select>
+  
+  <select id="selectByName" resultMap="dataResultMap" parameterType="String">
+  	 SELECT * FROM pokemon WHERE name like '%' || #{name} || '%'
+  </select> 
     
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
