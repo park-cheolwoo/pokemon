@@ -14,6 +14,8 @@ public interface HabitatMapper {
 	
 	HabitatDTO selectById(int id);
 	
+	List<Integer> selectByIds(List<Integer> ids);
+	
 	int existById(int id);
 	
 	void insert(HabitatDTO habitat);

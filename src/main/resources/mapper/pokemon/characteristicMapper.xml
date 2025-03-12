@@ -11,11 +11,22 @@
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
-    SELECT * FROM characteristic OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+    SELECT * FROM characteristic ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
 
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM characteristic WHERE id = #{id}
+  </select>
+  
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM characteristic WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
+  </select>
+
+  <select id="selectByStatId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM characteristic WHERE stat_id = #{statId}
   </select>
   
   <select id="existById" resultType="int" parameterType="int">

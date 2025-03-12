@@ -37,6 +37,16 @@ public class AttackServiceImpl implements AttackService {
 	public AttackDTO getById(int id) {
 		return attackMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return attackMapper.selectByIds(ids);
+	}
+	
+	@Override
+	public boolean existById(int id) {
+		return attackMapper.existById(id) != 0;
+	}
 
 	@Override
 	public int insertDataFromAPI(List<AttackDTO> list) throws Exception {

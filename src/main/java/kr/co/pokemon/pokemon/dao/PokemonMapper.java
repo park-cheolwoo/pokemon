@@ -15,6 +15,8 @@ public interface PokemonMapper {
 	List<PokemonDTO> selectAll(PageRequestDTO page);
 	
 	PokemonDTO selectById(int id);
+
+	List<Integer> selectByIds(List<Integer> ids);
 	
 	int existById(int id);
 	

@@ -51,6 +51,16 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
 	public ItemCategoryDTO getById(int id) {
 		return itemCategoryMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return itemCategoryMapper.selectByIds(ids);
+	}
+	
+	@Override
+	public boolean existById(int id) {
+		return itemCategoryMapper.existById(id) != 0;
+	}
 
 	@Override
 	public void insert(ItemCategoryDTO dto) {

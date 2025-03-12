@@ -45,13 +45,13 @@ CREATE TABLE pokemon (
 
 CREATE TABLE sprites (
 	id NUMBER(10) PRIMARY KEY,
-	back_default VARCHAR2(255) NOT NULL,
+	back_default VARCHAR2(255),
 	back_female VARCHAR2(255),
-	back_shiny VARCHAR2(255) NOT NULL,
+	back_shiny VARCHAR2(255),
 	back_shiny_female VARCHAR2(255),
-	front_default VARCHAR2(255) NOT NULL,
+	front_default VARCHAR2(255),
 	front_female VARCHAR2(255),
-	front_shiny VARCHAR2(255) NOT NULL,
+	front_shiny VARCHAR2(255),
 	front_shiny_female VARCHAR2(255),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,

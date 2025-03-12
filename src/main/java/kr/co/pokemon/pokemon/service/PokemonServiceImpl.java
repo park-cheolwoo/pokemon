@@ -30,6 +30,9 @@ public class PokemonServiceImpl implements PokemonService {
 	private APIService apiService;
 	
 	@Autowired
+	private StatService statService;
+	
+	@Autowired
 	private PokemonMapper pokemonMapper;
 	
 	@Autowired
@@ -57,15 +60,8 @@ public class PokemonServiceImpl implements PokemonService {
 			PokemonSprites sprites = dto.getSprites();
 			
 			sprites.setId(dto.getId());
-			if (sprites.getBackDefault() == null) sprites.setBackDefault("/images/no-sprite.png");
-			if (sprites.getBackFemale() == null) sprites.setBackFemale("/images/no-sprite.png");
-			if (sprites.getBackShiny() == null) sprites.setBackShiny("/images/no-sprite.png");
-			if (sprites.getBackShinyFemale() == null) sprites.setBackShinyFemale("/images/no-sprite.png");
-			if (sprites.getFrontDefault() == null) sprites.setFrontDefault("/images/no-sprite.png");
-			if (sprites.getFrontFemale() == null) sprites.setFrontFemale("/images/no-sprite.png");
-			if (sprites.getFrontShiny() == null) sprites.setFrontShiny("/images/no-sprite.png");
-			if (sprites.getFrontShinyFemale() == null) sprites.setFrontShinyFemale("/images/no-sprite.png");
-			
+			spriteSetting(sprites);
+
 			pokemonSpecDTO.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
 			pokemonSpecDTO.getLanguagesGenus("ko").ifPresent(genus -> dto.setGenus(genus));
 			pokemonSpecDTO.getLanguagesFlavorText("ko").ifPresentOrElse(
@@ -75,16 +71,23 @@ public class PokemonServiceImpl implements PokemonService {
 			
 			dto.getStats().stream().forEach(stat -> {
 				int statId = APIService.getIdByUrl(stat.getStat().getUrl());
-				pokemonStats.add(new PokemonStatDTO(dto.getId(), statId, stat.getBaseStat()));
+				
+				if (statService.existById(statId)) {
+					pokemonStats.add(new PokemonStatDTO(dto.getId(), statId, stat.getBaseStat()));
+					
+				}
 			});
-
-			System.out.println("포켓몬 데이터 " + dto.getName() + " 준비");
 		});
+
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
 			pokemonMapper.insertAll(list);
 			if (dataService.deleteAllData(DBTables.SPRITES.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
 				pokemonMapper.insertAllSprites(list.stream().map(dto -> dto.getSprites()).toList());
-				pokemonStatMapper.insertAll(pokemonStats);
+				
+				if (pokemonStats.size() > 0) {
+					pokemonStatMapper.insertAll(pokemonStats);
+					
+				}
 				
 			} else {
 				throw new IllegalArgumentException(DBTables.SPRITES.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
@@ -95,6 +98,22 @@ public class PokemonServiceImpl implements PokemonService {
 		}
 
 		return list.size();
+	}
+	
+	private void spriteSetting(PokemonSprites pokemonSprites) {
+		final String noImage = "/images/no-sprite.png";
+		PokemonSprites showDown = pokemonSprites.getOther().getShowdown();
+		
+		pokemonSprites.setBackDefault(showDown.getBackDefault() != null ? showDown.getBackDefault() : noImage);
+		pokemonSprites.setBackFemale(showDown.getBackFemale() != null ? showDown.getBackFemale() : noImage);
+		pokemonSprites.setBackShiny(showDown.getBackShiny() != null ? showDown.getBackShiny() : noImage);
+		pokemonSprites.setBackShinyFemale(showDown.getBackShinyFemale() != null ? showDown.getBackShinyFemale() : noImage);
+		
+		pokemonSprites.setFrontDefault(showDown.getFrontDefault() != null ? showDown.getFrontDefault() : noImage);
+		pokemonSprites.setFrontFemale(showDown.getFrontFemale() != null ? showDown.getFrontFemale() : noImage);
+		pokemonSprites.setFrontShiny(showDown.getFrontShiny() != null ? showDown.getFrontShiny() : noImage);
+		pokemonSprites.setFrontShinyFemale(showDown.getFrontShinyFemale() != null ? showDown.getFrontShinyFemale() : noImage);
+		
 	}
 
 	@Override
@@ -115,10 +134,25 @@ public class PokemonServiceImpl implements PokemonService {
 	public PokemonDTO getById(int id) {
 		return pokemonMapper.selectById(id);
 	}
+	
+	@Override
+	public List<Integer> getByIds(List<Integer> ids) {
+		return pokemonMapper.selectByIds(ids);
+	}
 
 	@Override
 	public void insert(PokemonDTO dto) {
 		pokemonMapper.insert(dto);
+	}
+	
+	@Override
+	public List<PokemonStatDTO> getStatsByPokemonId(int id) {
+		return pokemonStatMapper.selectByPokemonId(id);
+	}
+	
+	@Override
+	public boolean existById(int id) {
+		return pokemonMapper.existById(id) != 0;
 	}
 
 	@Override

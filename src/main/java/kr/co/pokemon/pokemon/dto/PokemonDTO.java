@@ -86,6 +86,9 @@ public class PokemonDTO extends EntityDTO {
 		
 		@JsonProperty(value = "official-artwork")
 		private PokemonSprites officialArtwork;
+		
+		private PokemonSprites showdown;
+
 	}
 
 	@Getter
