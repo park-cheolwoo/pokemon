@@ -264,7 +264,7 @@ CREATE TABLE player (
     profile VARCHAR2(255) DEFAULT '/images/no-profile.png' NOT NULL,
     password VARCHAR2(255) NOT NULL,
     description CLOB,
-    lv NUMBER(5) DEFAULT 0 NOT NULL,
+    lv NUMBER(5) DEFAULT 1 NOT NULL,
     experience NUMBER(5) DEFAULT 0 NOT NULL,
     game_money NUMBER(20) DEFAULT 0 NOT NULL,
     real_money NUMBER(20) DEFAULT 0 NOT NULL,

@@ -12,6 +12,10 @@ public interface PokemonService extends APIGetable<PokemonDTO> {
 	
 	boolean existById(int id);
 
+	List<PokemonDTO> getByName(String keyword);
+
+
+
     
     /**
      * 포켓몬 리스트를 소유 여부와 함께 가져옵니다.

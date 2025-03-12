@@ -18,6 +18,8 @@ public interface PokemonMapper {
 
 	List<Integer> selectByIds(List<Integer> ids);
 	
+	List<PokemonDTO> selectByName(String name);
+	
 	int existById(int id);
 	
 	void insert(PokemonDTO pokemon);
