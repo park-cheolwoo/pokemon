@@ -9,6 +9,8 @@ public interface Getable<D> {
 	List<D> getAll(PageRequestDTO page);
 	D getById(int id);
 	
+	List<Integer> getByIds(List<Integer> ids);
+	
 	void insert(D dto);
 
 }

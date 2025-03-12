@@ -11,11 +11,18 @@
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
-    SELECT * FROM habitat OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+    SELECT * FROM habitat ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
 
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM habitat WHERE id = #{id}
+  </select>
+  
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM habitat WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
   </select>
   
   <select id="existById" resultType="int" parameterType="int">

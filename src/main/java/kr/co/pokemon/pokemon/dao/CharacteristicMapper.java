@@ -14,6 +14,10 @@ public interface CharacteristicMapper {
 	
 	CharacteristicDTO selectById(int id);
 	
+	List<CharacteristicDTO> selectByStatId(int statId);
+	
+	List<Integer> selectByIds(List<Integer> ids);
+	
 	int existById(int id);
 
 	void insert(CharacteristicDTO characteristic);

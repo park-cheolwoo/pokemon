@@ -10,11 +10,18 @@
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
-    SELECT * FROM stat OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+    SELECT * FROM stat ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
 
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM stat WHERE id = #{id}
+  </select>
+  
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM stat WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
   </select>
   
   <select id="existById" resultType="int" parameterType="int">

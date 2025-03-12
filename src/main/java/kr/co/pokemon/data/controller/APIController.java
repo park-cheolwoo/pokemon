@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.pokemon.data.dto.APIResponseDTO;
 import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.item.service.ItemCategoryService;
+import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.AttackService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.EggGroupService;
+import kr.co.pokemon.pokemon.service.EvolutionService;
 import kr.co.pokemon.pokemon.service.EvolutionTriggerService;
 import kr.co.pokemon.pokemon.service.GrowthService;
 import kr.co.pokemon.pokemon.service.HabitatService;
@@ -84,9 +86,19 @@ public class APIController {
 		return apiService.setData(PokemonMoveService.class, part);
 	}
 
+	@GetMapping(value = "/item/{part}")
+	public APIResponseDTO getItem(@PathVariable int part) {
+		return apiService.setData(ItemService.class, part);
+	}
+	
 	@GetMapping(value = "/item/category/{part}")
 	public APIResponseDTO getItemCategory(@PathVariable int part) {
 		return apiService.setData(ItemCategoryService.class, part);
+	}
+	
+	@GetMapping(value = "/evolution/{part}")
+	public APIResponseDTO getEvolution(@PathVariable int part) {
+		return apiService.setData(EvolutionService.class, part);
 	}
 	
 }

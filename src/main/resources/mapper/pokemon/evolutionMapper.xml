@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.pokemon.dao.EvolutionMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.pokemon.dto.EvolutionDTO" autoMapping="true">
+    <result column="evolution_id" property="evolutionId" />
+    <result column="prev_id" property="prevId" />
+    <result column="curr_id" property="currId" />
+    <result column="next_id" property="nextId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <resultMap id="dataDetailResultMap" type="kr.co.pokemon.pokemon.dto.relationship.EvolutionDetail" autoMapping="true">
+    <result column="trigger_id" property="triggerId" />
+    <result column="evolution_id" property="evolutionId" />
+    <result column="curr_id" property="currId" />
+    <result column="min_lv" property="minLevel" />
+    <result column="use_item" property="useItem" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM evolution ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM evolution WHERE id = #{id}
+  </select>
+  
+  <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
+    SELECT id FROM evolution WHERE
+	<foreach collection="list" item="id" separator="OR">
+		id = #{id}
+	</foreach>
+  </select>
+
+  <select id="selectByCurrId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM evolution WHERE curr_id = #{currId}
+  </select>
+  
+  <select id="existById" resultType="int" parameterType="int">
+	SELECT CASE
+	    WHEN EXISTS (SELECT 1 FROM evolution WHERE id = #{id}) THEN 1
+	    ELSE 0
+	END
+	FROM dual
+  </select>
+  
+  <insert id="insert">
+  	INSERT INTO evolution
+  		( id, evolution_id, prev_id, curr_id, next_id )
+  	VALUES
+  		( evolution_seq.nextval, #{evolutionId, jdbcType=INTEGER}, #{prevId, jdbcType=INTEGER}, #{currId, jdbcType=INTEGER}, #{nextId, jdbcType=INTEGER} )
+  </insert>
+
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO evolution ( id, evolution_id, prev_id, curr_id, next_id )
+  	SELECT evolution_seq.NEXTVAL, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  			SELECT #{item.prevId, #{evolutionId, jdbcType=INTEGER} AS evolution_id, jdbcType=INTEGER} AS prev_id, #{item.currId, jdbcType=INTEGER} AS curr_id, #{item.nextId, jdbcType=INTEGER} AS next_id
+  			FROM dual
+  	</foreach>) a
+  </insert>
+  
+  <delete id="deleteByCurrId" parameterType="int">
+  	DELETE FROM evolution WHERE curr_id = #{currId}
+  </delete>
+
+  <select id="selectDetailById" resultMap="dataDetailResultMap" parameterType="int">
+    SELECT * FROM evolution_detail WHERE id = #{id}
+  </select>
+
+  <select id="selectDetailsByEvolutionId" resultMap="dataDetailResultMap" parameterType="int">
+    SELECT * FROM evolution_detail WHERE evolution_id = #{evolutionId}
+  </select>
+
+  <select id="selectDetailsByCurrId" resultMap="dataDetailResultMap" parameterType="int">
+    SELECT * FROM evolution_detail WHERE curr_id = #{currId}
+  </select>
+  
+  <insert id="insertDetail">
+  	INSERT INTO evolution_detail
+  		( id, trigger_id, evolution_id, curr_id, min_lv, use_item )
+  	VALUES
+  		( evolution_detail_seq.nextval, #{triggerId}, #{evolutionId}, #{currId}, #{minLevel}, #{useItem} )
+  </insert>
+  
+  <insert id="insertAllDetail" parameterType="java.util.List">
+  	INSERT INTO evolution_detail ( id, trigger_id, evolution_id, curr_id, min_lv, use_item )
+  	SELECT evolution_detail_seq.NEXTVAL, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  			SELECT #{item.evolutionId} AS evolution_id, #{item.currId} AS curr_id, #{item.minLevel} AS min_lv, #{item.useItem} AS use_item
+  			FROM dual
+  	</foreach>) a
+  </insert>
+
+  <delete id="deleteDetailByCurrId" parameterType="int">
+  	DELETE FROM evolution_detail WHERE curr_id = #{currId}
+  </delete>
+
+</mapper>

@@ -19,6 +19,16 @@ import lombok.Setter;
 public class PokemonMoveDTO {
 
 	private int id;
+	
+	private int pokemonId;
+	private int attackId;
+	private int level;
+	
+	public PokemonMoveDTO(int pokemonId, int attackId, int level) {
+		this.pokemonId = pokemonId;
+		this.attackId = attackId;
+		this.level = level;
+	}
 
 	private List<Move> moves;
 	

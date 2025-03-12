@@ -12,4 +12,10 @@ public interface FlavorTextGroup {
 				.filter(flavor -> flavor.getLanguage().getName().equals(languageName))
 				.findFirst().map(FlavorTextEntryDTO::getFlavorText);
 	}
+	
+	default Optional<String> getLanguagesText(String languageName) {
+		return getFlavorTextEntries().stream()
+				.filter(flavor -> flavor.getLanguage().getName().equals(languageName))
+				.findFirst().map(FlavorTextEntryDTO::getText);
+	}
 }

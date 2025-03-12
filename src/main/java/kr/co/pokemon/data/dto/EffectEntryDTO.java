@@ -17,4 +17,12 @@ public class EffectEntryDTO {
 	
 	@JsonProperty(value = "short_effect")
 	private String shortEffect;
+	
+	@Override
+	public String toString() {
+		return String.format("EffectEntry(language=%s, effect='%s', shortEffect='%s')", 
+			language != null ? language.getName() : "null",
+			effect,
+			shortEffect);
+	}
 }

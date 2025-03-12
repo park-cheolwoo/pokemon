@@ -6,13 +6,6 @@ CREATE TABLE stat (
 	created_at DATE DEFAULT SYSDATE NOT NULL
 );
 
-CREATE TABLE evolution_trigger (
-	id NUMBER(5) PRIMARY KEY,
-	name VARCHAR2(100) NOT NULL,
-	updated_at DATE DEFAULT SYSDATE NOT NULL,
-	created_at DATE DEFAULT SYSDATE NOT NULL
-);
-
 CREATE TABLE growth (
 	id NUMBER(5) PRIMARY KEY,
 	name VARCHAR2(30) NOT NULL,
@@ -52,13 +45,13 @@ CREATE TABLE pokemon (
 
 CREATE TABLE sprites (
 	id NUMBER(10) PRIMARY KEY,
-	back_default VARCHAR2(255) NOT NULL,
+	back_default VARCHAR2(255),
 	back_female VARCHAR2(255),
-	back_shiny VARCHAR2(255) NOT NULL,
+	back_shiny VARCHAR2(255),
 	back_shiny_female VARCHAR2(255),
-	front_default VARCHAR2(255) NOT NULL,
+	front_default VARCHAR2(255),
 	front_female VARCHAR2(255),
-	front_shiny VARCHAR2(255) NOT NULL,
+	front_shiny VARCHAR2(255),
 	front_shiny_female VARCHAR2(255),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
@@ -66,21 +59,36 @@ CREATE TABLE sprites (
 	CONSTRAINT fk_sprites_pokemon FOREIGN KEY(id) REFERENCES pokemon (id) ON DELETE CASCADE
 );
 
+CREATE TABLE evolution_trigger (
+	id NUMBER(5) PRIMARY KEY,
+	name VARCHAR2(100) NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL
+);
+
 CREATE TABLE evolution (
 	id NUMBER(5) PRIMARY KEY,
-	baby_id NUMBER(10) NOT NULL,
-	child_trigger_id NUMBER(5) NOT NULL,
-	child_id NUMBER(10) NULL,
-	adult_trigger_id NUMBER(5) NOT NULL,
-	adult_id NUMBER(10) NULL,
+	evolution_id NUMBER(10) NOT NULL,
+	prev_id NUMBER(10),
+	curr_id NUMBER(10) UNIQUE NOT NULL,
+	next_id NUMBER(10),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
+
+	CONSTRAINT fk_evolution_prev_pokemon FOREIGN KEY(prev_id) REFERENCES pokemon (id),
+	CONSTRAINT fk_evolution_curr_pokemon FOREIGN KEY(curr_id) REFERENCES pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_evolution_next_pokemon FOREIGN KEY(next_id) REFERENCES pokemon (id)
+);
+
+CREATE TABLE evolution_detail (
+	id NUMBER(10) PRIMARY KEY,
+	trigger_id NUMBER(5) NOT NULL,
+	evolution_id NUMBER(10) NOT NULL,
+	curr_id NUMBER(10) NOT NULL,
+	min_lv NUMBER(5),
+	use_item NUMBER(5),
 	
-	CONSTRAINT fk_evolution_baby_pokemon FOREIGN KEY(baby_id) REFERENCES pokemon (id) ON DELETE CASCADE,
-	CONSTRAINT fk_evolution_child_pokemon FOREIGN KEY(child_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_evolution_adult_pokemon FOREIGN KEY(adult_id) REFERENCES pokemon (id),
-	CONSTRAINT fk_evolution_child_trigger FOREIGN KEY(child_trigger_id) REFERENCES evolution_trigger (id),
-	CONSTRAINT fk_evolution_adult_trigger FOREIGN KEY(adult_trigger_id) REFERENCES evolution_trigger (id)
+	CONSTRAINT fk_evolution_detail_curr_id FOREIGN KEY(curr_id) REFERENCES evolution (curr_id) ON DELETE CASCADE
 );
 
 ALTER TABLE pokemon ADD CONSTRAINT fk_pokemon_evolution FOREIGN KEY(evolution_id) REFERENCES evolution (id);
@@ -238,7 +246,9 @@ CREATE TABLE item (
 	category_id NUMBER(5) NOT NULL,
 	cost NUMBER(10) DEFAULT 0 NOT NULL,
 	real_cost NUMBER(10) DEFAULT 0 NOT NULL,
+	value NUMBER(10),
 	description CLOB NOT NULL,
+	flavor_text CLOB NOT NULL,
 	store_type NUMBER(2) DEFAULT 0 NOT NULL CHECK(store_type BETWEEN 0 AND 3),
 	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
@@ -401,6 +411,20 @@ CREATE SEQUENCE pokemon_habitat_seq
 ;
 
 CREATE SEQUENCE egg_group_pokemon_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9999
+;
+
+CREATE SEQUENCE evolution_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9999
+;
+
+CREATE SEQUENCE evolution_detail_seq
 	START WITH 1
 	INCREMENT BY 1
 	MINVALUE 1
