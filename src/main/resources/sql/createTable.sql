@@ -269,6 +269,7 @@ CREATE TABLE player (
     experience NUMBER(5) DEFAULT 0 NOT NULL,
     game_money NUMBER(20) DEFAULT 0 NOT NULL,
     real_money NUMBER(20) DEFAULT 0 NOT NULL,
+    is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
     
