@@ -36,9 +36,7 @@ public class ProsRestController {
 		return pokemonService.getAll(pDTO);
 	}
 	
-	
-	
-	
+
 	@ResponseBody
 	@PostMapping(value = "/pokemon/search/{keyword}")
 	public List<PokemonDTO> searchPokemon(String keyword){
@@ -53,9 +51,15 @@ public class ProsRestController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "/player/view/{keyword}")
-	public PlayerDTO findPlayer(String keyword, String tag){
-		return playerService.getByNicknameAndTag(keyword,tag);
+	@PostMapping(value = "/player/view/{id}")
+	public PlayerDTO findPlayer(String id){
+		return playerService.getById(id);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/pokemon/view/{id}")
+	public PokemonDTO findPokemon(int id){
+		return pokemonService.getById(id);
 	}
 
 	

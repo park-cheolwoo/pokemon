@@ -7,6 +7,7 @@
 <resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
 	<result column="id" property="id" />
 	<result column="nickname" property="nickname" />
+	<result column="lv" property="lv" />
     <result column="game_money" property="gameMoney" />
     <result column="real_money" property="realMoney" />
     <result column="is_active" property="isActive" />
@@ -19,6 +20,10 @@
 </select>
 
 <select id="selectById" resultMap="dataResultMap">
+    select * from player where id = #{id}
+</select>
+
+<select id="getById" resultMap="dataResultMap">
     select * from player where id = #{id}
 </select>
 

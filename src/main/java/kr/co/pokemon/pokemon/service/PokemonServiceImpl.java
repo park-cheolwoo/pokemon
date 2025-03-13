@@ -136,7 +136,7 @@ public class PokemonServiceImpl implements PokemonService {
 	public PokemonDTO getById(int id) {
 		return pokemonMapper.selectById(id);
 	}
-	
+		
 	@Override
 	public List<Integer> getByIds(List<Integer> ids) {
 		return pokemonMapper.selectByIds(ids);

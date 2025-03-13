@@ -16,6 +16,8 @@ public interface PlayerMapper {
 	
 	PlayerDTO selectById(int id);
 	
+	PlayerDTO getById(String id);
+	
 	void updatePlayer(PlayerDTO player);
 	
 	void updatePlayerBySystem(PlayerDTO player);

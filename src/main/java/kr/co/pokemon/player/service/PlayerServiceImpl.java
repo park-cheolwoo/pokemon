@@ -34,6 +34,11 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+	public PlayerDTO getById(String id) {
+		return playerMapper.getById(id);
+	}
+    
+    @Override
     public PlayerDTO updatePlayer(int id, PlayerDTO player) {
         throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
     }
@@ -68,10 +73,8 @@ public class PlayerServiceImpl implements PlayerService {
 		return playerMapper.getByNickname(keyword);
 	}
 
-	@Override
-	public PlayerDTO getByNicknameAndTag(String keyword, String tag) {
-		return playerMapper.getByNicknameAndTag(keyword,tag);
-	}
+	
+
 
 }
 

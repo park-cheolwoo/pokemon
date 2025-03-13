@@ -12,6 +12,8 @@ public interface PlayerService {
 	List<PlayerDTO> getAll(PageRequestDTO pDTO);
 	
 	PlayerDTO findById(int id);
+	
+	PlayerDTO getById(String id);
 
 	PlayerDTO updatePlayer(int id, PlayerDTO player);
 	
@@ -24,9 +26,6 @@ public interface PlayerService {
 	boolean insertPlayer(PlayerDTO playerDto);
 
 	List<PlayerDTO> getByNickname(String keyword);
-
-	PlayerDTO getByNicknameAndTag(String keyword, String tag);
-
 
 //	int countPlayerPokemons(String playerId);
 
