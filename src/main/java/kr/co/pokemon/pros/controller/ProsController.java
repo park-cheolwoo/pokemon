@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.PokemonService;
@@ -30,34 +33,18 @@ public class ProsController {
 		return "pros/pros_data";
 	}
 
-	@GetMapping(value = "/pokemon/{page}")
-	public String adminPokemon(PageRequestDTO pDTO, Model model) {
-		pDTO.setSize(96);
-		List<PokemonDTO> list = pokemonService.getAll(pDTO);
-		System.out.println("list : " + list);
-		System.out.println("list.size() : " + list.size());
-		model.addAttribute("list", list);
+	@GetMapping(value = "/pokemon")
+	public String adminPokemon(@RequestParam(defaultValue = "1") int page, Model model) {
+		List<PokemonDTO> list = pokemonService.getAll(new PageRequestDTO(96,page));
 		return "pros/pros_data_list";
 	}
-
-	@GetMapping("/member/admin2")
-	public String adminView() {
-		return "pros/pros_member_view";
+	
+	@GetMapping(value = "/player")
+	public String adminPlayer(@RequestParam(defaultValue = "1") int page, Model model) {
+		List<PlayerDTO> list = playerService.getAll(new PageRequestDTO(96,page));
+		model.addAttribute("list", list);
+		return "pros/pros_player_list";
 	}
 
-	@GetMapping("/member/admin3")
-	public String adminView2() {
-		return "pros/pros_pokemon_view";
-	}
-
-	@GetMapping("/member/admin4")
-	public String adminView3() {
-		return "pros/pros_data";
-	}
-
-	@GetMapping("/member/admin5")
-	public String adminView4() {
-		return "pros/pros_select1";
-	}
 
 }
