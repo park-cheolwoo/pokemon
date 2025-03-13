@@ -86,8 +86,6 @@ $(function() {
 	
 	
 	// 경계선 //
-	
-	
 	$(document).on("click",".pros_pokemon_btn",function(){
 		location.href="/admin/pokemon";
 	});
@@ -95,6 +93,8 @@ $(function() {
 	$(document).on("click",".pros_home_btn",function(){
 		location.href="/admin";
 	});
+	
+	
 	
 	// scroll 이벤트시 정보가 하단에 추가되는 함수
 	$(".pros_list2").on('scroll', function () {
@@ -116,9 +116,8 @@ $(function() {
 					console.log(data[0].name);
 					let hdata = ``;
 				    for (let i = 0; i < data.length; i++) {
-				        hdata += `<div class="pros_items">
+				        hdata += `<div class="pros_items" data-name="${data[i].name}">
 				                    <img src="${data[i].image}" class="pros_list_img">
-				                    <h4 class="pros_list_name">${data[i].name}</h4>
 				                  </div>`;
 				    }
 					$(".pros_list2").append(hdata);
@@ -130,6 +129,8 @@ $(function() {
 			
 	    }
 	});
+	
+	
 	
 	// 검색시 검색결과가 나오는 함수
 	$(document).on("click", ".pros_search_btn", function() {
@@ -146,9 +147,8 @@ $(function() {
 							$(".pros_list2").children().hide();
 							let hdata = ``;
 						    for (let i = 0; i < data.length; i++) {
-						        hdata += `<div class="pros_search">
+						        hdata += `<div class="pros_search" data-name="${data[i].name}">
 						                    <img src="${data[i].image}" class="pros_list_img">
-						                    <h4 class="pros_list_name">${data[i].name}</h4>
 						                  </div>`;
 						    }
 							$(".pros_list2").append(hdata);
@@ -185,7 +185,7 @@ $(function() {
 				data:{"keyword":pokemon},
 				dataType:"json",
 				success:function(data){
-					alert("성공");
+					//alert("성공");
 					console.log(data);
 					$(".pros_profile_name1").text(data[0].name);
 					$(".pros_profile_name2").text(data[0].genus);
@@ -198,20 +198,7 @@ $(function() {
 				error:function(){
 					alert("실패");
 				}
-			})
-			$.ajax({
-				url:"/admin/pokemon/evolution/"+pokemon,
-				type:"POST",
-				data:{"keyword":pokemon},
-				dataType:"json",
-				success:function(){
-					alert("성공")
-				},
-				error:function(){
-					alert("실패");
-				}
-			})
-			
+			});
 			
 			
 			
