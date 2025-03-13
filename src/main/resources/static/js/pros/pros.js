@@ -1,9 +1,7 @@
 $(function() {
 	//전역변수 선언
 	const category = $(".pros_list_category").text();
-	const page = Number($(".pros_list_page").text()) + 1;
 	const input = $(".pros_keyword").val();
-	const keyword = input.trim();
 	const flag = $(".pros_search_flag").text();
 	
 	$(document).on("click", ".pros_player_btn", function() {
@@ -25,6 +23,10 @@ $(function() {
 	$(document).on("click", ".pros_pokemon_btn", function() {
 		location.href = "/admin/pokemon";
 	});
+	
+	$(document).on("click", ".pros_item_btn", function() {
+		location.href = "/admin/item";
+	});
 
 	// 데이터 종류에 따라 버튼 색상 변경 함수
 	switch(category){
@@ -44,22 +46,26 @@ $(function() {
 	$(".pros_list, .pros_list2").on('scroll', function() {
 		const scrollPosition = $(this).scrollTop() + $(this).innerHeight();
 		const scrollHeight = $(this)[0].scrollHeight;
+		const page = Number($(".pros_list_page").text())+1;
 		if (scrollPosition >= scrollHeight) {
 			console.log('끝 지점에 도착했습니다!');	
-			$(".pros_list_page").text(page);
+			console.log("url : "+"/admin/" + category + "/" + page);
 			$.ajax({
 				url: "/admin/" + category + "/" + page,
 				type: "POST",
+				data : {"page":page},
 				dataType: "json",
 				success: function(data) {
 					console.log(data);
 					let hdata = ``;
 					if(data != null){
+					$(".pros_list_page").text(page);
+					console.log(category);
 					switch(category){
 					case "player":
 						for (let i = 0; i < data.length; i++) {
 							let statusText = data[i].isActive == 0 ? '활성화' : '비활성화';
-							hdata += `<div class="pros_search pros_items" data-id="${data[i].id}">
+							hdata += `<div class="pros_search pros_items" data-id="${data[i].id}" data-nickname="${data[i].nickname}">
 									   <div class="pros_profile_frame">
 								       <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
 									   <img src="/images/pros/avarter.png" class="pros_profile_img">
@@ -76,12 +82,11 @@ $(function() {
 					break;
 					default:
 						for (let i = 0; i < data.length; i++) {
-						hdata += `<div class="pros_items" data-id="${data[i].id}">
+						hdata += `<div class="pros_items" data-id="${data[i].id}" data-name="${data[i].name}">
 				                    <img src="${data[i].image}" class="pros_list_img">
 				                  </div>`;						
-						$(".pros_list2").append(hdata);
 					}
-					
+					$(".pros_list2").append(hdata);
 				}
 				}
 				},
@@ -110,7 +115,7 @@ $(function() {
 					$(".pros_list").scrollTop(0);
 					for (let i = 0; i < data.length; i++) {
 						let statusText = data[i].isActive == 0 ? '활성화' : '비활성화';
-						hdata += `<div class="pros_search pros_items" data-id=${data[i].id}>
+						hdata += `<div class="pros_search pros_items" data-id=${data[i].id} data-nickame="${data[i].nickname}">
 								   <div class="pros_profile_frame">
 							       <img src="/images/store/item-frame.png" class="pros_profile_frame_img">
 								   <img src="/images/pros/avarter.png" class="pros_profile_img">
@@ -128,7 +133,7 @@ $(function() {
 				default:
 					$(".pros_list2").scrollTop(0);
 					for (let i = 0; i < data.length; i++) {
-					hdata += `<div class="pros_items" data-id="${data[i].id}">
+					hdata += `<div class="pros_items" data-id="${data[i].id}" data-name="${data[i].name}">
 			                  <img src="${data[i].image}" class="pros_list_img">
 			                  </div>`;						
 					}
@@ -143,6 +148,7 @@ $(function() {
 	
 	// 검색시 검색결과가 나오는 함수
 	$(document).on("click", ".pros_search_btn", function() {
+		const keyword = input.trim();
 		console.log("/admin/" + category + "/search/" + keyword);
 		$.ajax({
 			url: "/admin/" + category + "/search/" + keyword,
@@ -158,7 +164,7 @@ $(function() {
 					$(".pros_list").children().hide();
 					for (let i = 0; i < data.length; i++) {
 						let statusText = data[i].isActive == 0 ? '활성화' : '비활성화';
-						hdata += `<div class="pros_search pros_items" data-id=${data[i].id}>
+						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}" data-nickname="${data[i].nickname}">
 						        	<div class="pros_profile_frame">
 						        		<img src="/images/store/item-frame.png" class="pros_profile_frame_img">
 						         	    <img src="/images/pros/avarter.png" class="pros_profile_img">
@@ -175,10 +181,10 @@ $(function() {
 					}
 					$(".pros_list").append(hdata);
 					break;
-				case "pokemon":
+				default:
 					$(".pros_list2").children().hide();
 					for (let i = 0; i < data.length; i++) {
-						hdata += `<div class="pros_search" data-id="${data[i].id}">
+						hdata += `<div class="pros_search" data-id="${data[i].id}" data-name="${data[i].name}">
 				                    <img src="${data[i].image}" class="pros_list_img">
 				                  </div>`;
 					}
@@ -210,7 +216,7 @@ $(function() {
 	$(document).on("click", ".pros_list_img", function() {
 		const id = $(this).parent().data("id");
 		$.ajax({
-			url: "/admin/pokemon/view/" + id,
+			url: "/admin/"+category+"/view/" + id,
 			type: "POST",
 			data: { "id": id },
 			dataType: "json",

@@ -30,7 +30,7 @@
     </div>
 
     <div class="pros_list_wrap">
-   	  <h4 class="pros_list_category" style="display: none">player</h4>
+   	  <h4 class="pros_list_category" style="display: none">${category }</h4>
 	  <h4 class="pros_list_page" style="display: none">1</h4>
 	  <h4 class="pros_search_flag" style="display: none">0</h4>
       <div class="pros_list">
