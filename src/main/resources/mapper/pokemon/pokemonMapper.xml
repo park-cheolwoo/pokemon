@@ -10,6 +10,7 @@
     <result column="flavor_text" property="flavorText" />
     <result column="evolution_id" property="evolutionId" />
     <result column="eggGroup_id" property="eggGroupId" />
+    <result column="is_active" property="isActive" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
@@ -33,8 +34,8 @@
     SELECT * FROM pokemon WHERE id = #{id}
   </select>
   
-  <select id="selectByName" resultMap="dataResultMap" parameterType="String">
-  	 SELECT * FROM pokemon WHERE name like '%' || #{name} || '%'
+  <select id="selectByName" resultMap="dataResultMap">
+   SELECT * FROM pokemon WHERE name like '%' || #{keyword} || '%' ORDER BY id
   </select> 
     
   <select id="existById" resultType="int" parameterType="int">
