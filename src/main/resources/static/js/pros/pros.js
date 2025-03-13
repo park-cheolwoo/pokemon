@@ -3,22 +3,17 @@ $(function() {
 		location.href = "/admin";
 	});
 
-
 	$(document).on("click", ".pros_data_btn", function() {
 		location.href = "/admin/data";
 	});
-
-
 
 	$(document).on("click", ".pros_dropbar_btn", function() {
 		$(".pros_pokemon_select_box, .pros_pokemon_select_text, .pros_item_select_box, .pros_item_select_text, .pros_dungeon_select_box, .pros_dungeon_select_text").toggle();
 	});
 
-
 	$(document).on("click", ".pros_home_btn", function() {
 		location.href = "/member/admin";
 	})
-
 
 	$(document).on("click", ".pros_update_flag", function() {
 		const category = $(".get_category").val();
@@ -73,7 +68,6 @@ $(function() {
 		$(".pros_active_on, .pros_active_off").toggle();
 	})
 
-
 	$(document).on("click", ".pros_update_confirm_btn", function() {
 		console.log($("pros_active").text())
 		alert("수정을 진행합니다.");
@@ -83,8 +77,6 @@ $(function() {
 		alert("새로고침이 완료되었습니다.");
 	});
 
-
-
 	// 경계선 //
 	$(document).on("click", ".pros_pokemon_btn", function() {
 		location.href = "/admin/pokemon";
@@ -93,8 +85,6 @@ $(function() {
 	$(document).on("click", ".pros_home_btn", function() {
 		location.href = "/admin";
 	});
-
-
 
 	// scroll 이벤트시 정보가 하단에 추가되는 함수
 	$(".pros_list2").on('scroll', function() {
@@ -130,8 +120,6 @@ $(function() {
 		}
 	});
 
-
-
 	// 검색시 검색결과가 나오는 함수
 	$(document).on("click", ".pros_search_btn", function() {
 		const keyword = $(".pros_keyword").val().trim();
@@ -160,11 +148,9 @@ $(function() {
 		})
 	});
 
-
 	$(document).on("keypress", ".pros_keyword", function(event) {
 		if (event.keyCode == 13) { $(".pros_search_btn").click(); }
 	});
-
 
 	$(document).on("input", ".pros_keyword", function() {
 		const flag = $(".pros_search_flag").text();
@@ -199,33 +185,11 @@ $(function() {
 				alert("실패");
 			}
 		});
-
-
-
 		$(".pros_profile_view_container").show();
-	})
+	});
 
 	$(document).on("click", ".pros_profile_view_exit", function() {
 		$(".pros_profile_view_container").hide();
-	})
+	});
 
-	/* 임시저장 */
-	/*
-	
-	$(document).on("click", ".pros_search_btn", function() {
-			const rows = $(".pros_rows");
-			const keyword = $(".pros_keyword").text();
-			rows.each(function() {
-				const profileText = $(this).find(".pros_profile").text().toLowerCase(); 
-				const searchKeyword = keyword.toLowerCase().trim();
-				$(this).css("display", profileText.includes(searchKeyword) ? "block" : "none");
-			});
-
-			alert('검색 완료');
-		});	
-	
-	$(document).on("click",".pros_more_btn",function(){
-			location.href="/member/admin2";
-		})
-	*/
 });

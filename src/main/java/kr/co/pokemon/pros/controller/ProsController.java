@@ -1,13 +1,11 @@
 package kr.co.pokemon.pros.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.player.service.PlayerService;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
@@ -61,7 +59,5 @@ public class ProsController {
 	public String adminView4() {
 		return "pros/pros_select1";
 	}
-
-//	테스트용 임시 //	
 
 }
