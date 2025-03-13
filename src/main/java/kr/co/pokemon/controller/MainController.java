@@ -26,7 +26,11 @@ public class MainController {
 //		}
 		return "index";
 	}
-	
+	@GetMapping("/logout")
+    public String logout(HttpSession session) {
+    	session.invalidate();
+    	return "redirect:/member/login";
+    }
 	
 	@GetMapping("/play/plist")
 	public String plist() {
