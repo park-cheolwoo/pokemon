@@ -15,8 +15,8 @@
 </head>
 <body>
   <img src="/images/pros/gear.png" class="pros_gear" />
-  <img src="/images/pros/yellow-ellipse-bar.png" class="pros_user_btn_box_on"/>
-  <h4 class="pros_user_btn_text_on text">유저 정보</h4>
+  <img src="/images/pros/yellow-ellipse-bar.png" class="pros_player_btn_box_on"/>
+  <h4 class="pros_player_btn_text_on text">유저 정보</h4>
   <img src="/images/pros/wood-ellipse-bar.png" class="pros_data_btn pros_data_btn_box_off" />
   <h4 class="pros_data_btn pros_data_btn_text_off text">데이터 정보</h4>
 
@@ -27,16 +27,12 @@
       <input type="text" name="keyword" class="pros_keyword" placeholder="검색" maxlength="15" />
       <img src="/images/pros/search.png" class="pros_search_btn" />
       <img src="/images/pros/retry.png" class="pros_reload_btn" />
-      <img src="/images/pros/list.png" class="pros_dropbar_btn" />
-      <img src="/images/yellow-bar.png" class="pros_pokemon_select_box" />
-      <h4 class="pros_pokemon_select_text text">포켓몬</h4>
-      <img src="/images/yellow-bar.png" class="pros_item_select_box" />
-      <h4 class="pros_item_select_text text">아이템</h4>
-      <img src="/images/yellow-bar.png" class="pros_dungeon_select_box" />
-      <h4 class="pros_dungeon_select_text text">던전</h4>
     </div>
 
     <div class="pros_list_wrap">
+   	  <h4 class="pros_list_category" style="display: none">player</h4>
+	  <h4 class="pros_list_page" style="display: none">1</h4>
+	  <h4 class="pros_search_flag" style="display: none">0</h4>
       <div class="pros_list">
         <!-- 반복 -->
         <c:forEach items="${list }" var="list">

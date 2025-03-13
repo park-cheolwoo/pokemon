@@ -42,7 +42,7 @@ body {
 	z-index: 1;
 }
 
-.pros_user_btn_box_on {
+.pros_player_btn_box_on {
 	cursor: pointer;
 	width: 350px;
 	height: 156px;
@@ -52,7 +52,7 @@ body {
 	z-index: 15;
 }
 
-.pros_user_btn_box_off {
+.pros_player_btn_box_off {
 	cursor: pointer;
 	width: 350px;
 	height: 156px;
@@ -62,7 +62,7 @@ body {
 	z-index: 5;
 }
 
-.pros_user_btn_text_on {
+.pros_player_btn_text_on {
 	cursor: pointer;
 	width: 167px;
 	height: 36px;
@@ -75,7 +75,7 @@ body {
 	z-index: 20;
 }
 
-.pros_user_btn_text_off {
+.pros_player_btn_text_off {
 	cursor: pointer;
 	width: 167px;
 	height: 36px;
@@ -282,6 +282,7 @@ body {
 	display:flex;
 	justify-content:flex-start;
 	align-items:center;
+	height:115px;
 }
 
 .pros_profile_view_container {

@@ -1,19 +1,5 @@
 $(function() {
-	$(document).on("click", ".pros_user_btn", function() {
-		location.href = "/admin";
-	});
 
-	$(document).on("click", ".pros_data_btn", function() {
-		location.href = "/admin/data";
-	});
-
-	$(document).on("click", ".pros_dropbar_btn", function() {
-		$(".pros_pokemon_select_box, .pros_pokemon_select_text, .pros_item_select_box, .pros_item_select_text, .pros_dungeon_select_box, .pros_dungeon_select_text").toggle();
-	});
-
-	$(document).on("click", ".pros_home_btn", function() {
-		location.href = "/member/admin";
-	})
 
 	$(document).on("click", ".pros_update_flag", function() {
 		const category = $(".get_category").val();
@@ -78,39 +64,53 @@ $(function() {
 	});
 
 	// 경계선 //
+	
+	$(document).on("click", ".pros_player_btn", function() {
+		location.href = "/admin/player";
+	});
+
+	$(document).on("click", ".pros_data_btn", function() {
+		location.href = "/admin/data";
+	});
+
+	$(document).on("click", ".pros_home_btn", function() {
+		location.href = "/admin/player";
+	});
+	
+	$(document).on("click", ".pros_dropbar_btn", function() {
+		$(".pros_pokemon_select_box, .pros_pokemon_select_text, .pros_item_select_box, .pros_item_select_text, .pros_dungeon_select_box, .pros_dungeon_select_text").toggle();
+	});
+
 	$(document).on("click", ".pros_pokemon_btn", function() {
 		location.href = "/admin/pokemon";
 	});
 
-	$(document).on("click", ".pros_home_btn", function() {
-		location.href = "/admin";
-	});
-
 	// scroll 이벤트시 정보가 하단에 추가되는 함수
-	$(".pros_list2").on('scroll', function() {
+	$(".pros_list, .pros_list2").on('scroll', function() {
 		const scrollPosition = $(this).scrollTop() + $(this).innerHeight();
 		const scrollHeight = $(this)[0].scrollHeight;
 		if (scrollPosition >= scrollHeight) {
 			console.log('끝 지점에 도착했습니다!');
+			const list = $(this).hasClass("pros_list");
+			const category = $(".pros_list_category").text();
 			const page = Number($(".pros_list_page").text()) + 1;
 			$(".pros_list_page").text(page);
-			const url = "/admin/pokemon/" + page;
-			console.log("Generated URL: " + url);
+			const url = "/admin/" + category + "/" + page;
 			$.ajax({
 				url: url,
 				type: "POST",
 				dataType: "json",
 				success: function(data) {
 					console.log(data);
-					console.log(data[0].image);
-					console.log(data[0].name);
 					let hdata = ``;
+					if(!list){
 					for (let i = 0; i < data.length; i++) {
 						hdata += `<div class="pros_items" data-name="${data[i].name}">
 				                    <img src="${data[i].image}" class="pros_list_img">
 				                  </div>`;
 					}
 					$(".pros_list2").append(hdata);
+					}
 				},
 				error: function() {
 					alert('실패');
@@ -122,10 +122,11 @@ $(function() {
 
 	// 검색시 검색결과가 나오는 함수
 	$(document).on("click", ".pros_search_btn", function() {
+		const category = $(".pros_list_category").text();
 		const keyword = $(".pros_keyword").val().trim();
-		console.log(keyword);
+		console.log("/admin/" + category + "/search/" + keyword);
 		$.ajax({
-			url: "/admin/pokemon/search/" + keyword,
+			url: "/admin/" + category + "/search/" + keyword,
 			type: "POST",
 			data: { "keyword": keyword },
 			dataType: "json",
@@ -139,7 +140,11 @@ $(function() {
 						                    <img src="${data[i].image}" class="pros_list_img">
 						                  </div>`;
 				}
-				$(".pros_list2").append(hdata);
+				console.log($(".pros_list").exists())
+				if($(".pros_list").exists()){
+					$(".pros_list").append(hdata);
+				} else{$(".pros_list2").append(hdata);}
+				
 				$(".pros_search_flag").text("1");
 			},
 			error: function() {
