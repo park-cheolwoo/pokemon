@@ -59,6 +59,10 @@
   	</foreach>
   </insert>
   
+  <update id="updateEvolutionId" parameterType="java.util.Map">
+  	UPDATE pokemon SET evolution_id = #{evolutionId} WHERE id = #{id}
+  </update>
+  
   <select id="selectSpritesById" resultMap="dataSpritesResultMap" parameterType="int">
     SELECT * FROM sprites WHERE id = #{id}
   </select>

@@ -37,6 +37,7 @@ CREATE TABLE pokemon (
 	flavor_text CLOB NOT NULL,
 	is_legendary NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_legendary BETWEEN 0 AND 1),
 	is_mythical NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_mythical BETWEEN 0 AND 1),
+	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	growth_id NUMBER(5),
 	evolution_id NUMBER(5),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
@@ -90,8 +91,6 @@ CREATE TABLE evolution_detail (
 	
 	CONSTRAINT fk_evolution_detail_curr_id FOREIGN KEY(curr_id) REFERENCES evolution (curr_id) ON DELETE CASCADE
 );
-
-ALTER TABLE pokemon ADD CONSTRAINT fk_pokemon_evolution FOREIGN KEY(evolution_id) REFERENCES evolution (id);
 
 CREATE TABLE ability (
 	id NUMBER(5) PRIMARY KEY,

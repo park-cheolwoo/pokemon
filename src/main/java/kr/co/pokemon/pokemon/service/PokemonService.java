@@ -17,6 +17,6 @@ public interface PokemonService extends APIGetable<PokemonDTO> {
 
 	List<PokemonDTO> getByName(String keyword);
 
-
+	void setEvolutionId(int id, int evolutionId);
 
 }

@@ -12,22 +12,9 @@
 </resultMap>
 
 <select id="selectAll" resultMap="dataResultMap">
-  <resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
-  	<result column="game_money" property="gameMoney" />
-  	<result column="real_money" property="realMoney" />
-    <result column="created_at" property="createdAt" />
-    <result column="updated_at" property="updatedAt" />
-  </resultMap>
-
-  <select id="selectAll" resultMap="dataResultMap">
     select * from player
 </select>
 <select id="selectById" resultMap="dataResultMap">
-  </select>
-  <select id="selectById" resultMap="dataResultMap">
-    select * from player where id = #{id}
-  </select>
-  <select id="chooseById" resultMap="dataResultMap">
     select * from player where id = #{id}
 </select>
 
@@ -71,42 +58,6 @@
 <select id="selectLogin" resultMap="dataResultMap">
     select * from player where id = #{id} and password = #{password}
 </select>
-  </select>
-  
-  <insert id="insertPlayer">
-  	insert into player 
-  		(id, nickname, tag, password, lv, experience, gameMoney, realMoney)
-  	values (
-  		#{id}, #{nickname}, #{tag}, #{password}, 1,0,0,0 
-  	)
-  </insert>
-  
-  <update id="updatePlayer">
-  	update player set (
-  		nickname = #{nickname},
-  		tag = #{tag},
-  		profile = #{profile},
-  		password = #{password},
-  		description = #{description}
-  	) where id = #{id}
-  </update>
-  
-  <update id="updatePlayerBySystem">
-  	update player set (
-  		lv = #{lv},
-  		experience = #{experience},
-  		game_money = #{gameMoney},
-  		real_money = #{realMoney}
-  	) where id = #{id}
-  </update>
-  
-  <delete id="deletePlayer">
-  	delete from player where id = #{id} 
-  </delete>
-  
- <select id="selectLogin" parameterType="java.util.Map" resultMap="dataResultMap">
-        select * from player where id = #{id} and password = #{password}
-    </select>
 
 <select id="chooseById" resultMap="dataResultMap">
     select * from player where id = #{id}

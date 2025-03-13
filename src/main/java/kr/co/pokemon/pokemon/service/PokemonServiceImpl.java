@@ -1,7 +1,9 @@
 package kr.co.pokemon.pokemon.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -147,7 +149,6 @@ public class PokemonServiceImpl implements PokemonService {
 	}
 	
 	
-	
 	@Override
 	public void insert(PokemonDTO dto) {
 		pokemonMapper.insert(dto);
@@ -166,6 +167,16 @@ public class PokemonServiceImpl implements PokemonService {
 	@Override
 	public PokemonSprites getSpritesById(int id) {
 		return pokemonMapper.selectSpritesById(id);
+	}
+	
+	@Override
+	public void setEvolutionId(int id, int evolutionId) {
+		Map<String, Integer> updateEvolution = new HashMap<>();
+		
+		updateEvolution.put("id", id);
+		updateEvolution.put("evolutionId", evolutionId);
+		
+		pokemonMapper.updateEvolutionId(updateEvolution);
 	}
 
 }
