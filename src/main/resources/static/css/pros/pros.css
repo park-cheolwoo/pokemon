@@ -278,8 +278,10 @@ body {
 	display: none;
 }
 
-.pros_rows, .pros_rows>td {
-	height: 105px;
+.pros_rows {
+	display:flex;
+	justify-content:flex-start;
+	align-items:center;
 }
 
 .pros_profile_view_container {
@@ -720,6 +722,16 @@ body {
 	border-radius: 5px;
 }
 
+.pros_list {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	grid-auto-rows: 100px;
+	gap: 12px;
+	width: 890px;
+	position: relative;
+	z-index: 15;
+}
+
 .pros_list2 {
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
@@ -731,6 +743,8 @@ body {
 	position: relative;
 	z-index: 15;
 }
+
+
 
 /* 임시로 저장해둔 CSS */
 .pros_profile_frame, .pros_profile_frame_img {
