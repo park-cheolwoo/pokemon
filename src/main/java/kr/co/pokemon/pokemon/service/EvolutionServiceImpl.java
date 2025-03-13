@@ -78,6 +78,7 @@ public class EvolutionServiceImpl implements EvolutionService {
 
 					}					
 				});
+				pokemonService.setEvolutionId(currId, dto.getId());
 			}
 		}
 		return count.get();

@@ -1,6 +1,7 @@
 package kr.co.pokemon.pokemon.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,8 @@ public interface PokemonMapper {
 	void insert(PokemonDTO pokemon);
 	
 	void insertAll(List<PokemonDTO> pokemons);
+	
+	void updateEvolutionId(Map<String, Integer> updateEvolutionId);
 	
 	PokemonSprites selectSpritesById(int id);
 	

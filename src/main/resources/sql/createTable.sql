@@ -37,7 +37,7 @@ CREATE TABLE pokemon (
 	flavor_text CLOB NOT NULL,
 	is_legendary NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_legendary BETWEEN 0 AND 1),
 	is_mythical NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_mythical BETWEEN 0 AND 1),
-	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_mythical BETWEEN 0 AND 1),
+	is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	growth_id NUMBER(5),
 	evolution_id NUMBER(5),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
@@ -91,8 +91,6 @@ CREATE TABLE evolution_detail (
 	
 	CONSTRAINT fk_evolution_detail_curr_id FOREIGN KEY(curr_id) REFERENCES evolution (curr_id) ON DELETE CASCADE
 );
-
-ALTER TABLE pokemon ADD CONSTRAINT fk_pokemon_evolution FOREIGN KEY(evolution_id) REFERENCES evolution (id);
 
 CREATE TABLE ability (
 	id NUMBER(5) PRIMARY KEY,
@@ -190,6 +188,7 @@ CREATE TABLE pokemon_attack (
 	pokemon_id NUMBER(10) NOT NULL,
 	attack_id NUMBER(5) NOT NULL,
 	lv NUMBER(5) DEFAULT 0 NOT NULL,
+	slot NUMBER(3) DEFAULT 0 NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
@@ -320,6 +319,10 @@ CREATE TABLE game_stage (
 	id NUMBER(5) PRIMARY KEY,
 	habitat_id NUMBER(5) NOT NULL,
 	stage NUMBER(3) NOT NULL,
+	money NUMBER(5) DEFAULT 0 NOT NULL,
+	experience NUMBER(5) DEFAULT 0 NOT NULL,
+	min_level NUMBER(3) DEFAULT 0 NOT NULL,
+	max_level NUMBER(3) DEFAULT 5 NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 
@@ -327,9 +330,10 @@ CREATE TABLE game_stage (
 );
 
 CREATE TABLE ingame (
-	player_id VARCHAR2(30) PRIMARY KEY,
+	id VARCHAR2(30) PRIMARY KEY,
 	is_ingame NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_ingame BETWEEN 0 AND 1),
-	stage_id NUMBER(5) NOT NULL,
+	stage_id NUMBER(5) DEFAULT 1 NOT NULL,
+	max_stage_id NUMBER(5) DEFAULT 1 NOT NULL,
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
@@ -339,14 +343,13 @@ CREATE TABLE ingame (
 CREATE TABLE ingame_pokemon (
 	id NUMBER(20) PRIMARY KEY,
 	player_id VARCHAR2(30) NOT NULL,
-	pokemon_id NUMBER(20) UNIQUE NOT NULL,
 	hp NUMBER(5) NOT NULL,
 	slot NUMBER(3) NOT NULL CHECK(slot BETWEEN 0 AND 5),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
 	CONSTRAINT fk_ingame_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
-	CONSTRAINT fk_ingame_pokemon_pokemon FOREIGN KEY(pokemon_id) REFERENCES player_pokemon (id) ON DELETE CASCADE
+	CONSTRAINT fk_ingame_pokemon_pokemon FOREIGN KEY(id) REFERENCES player_pokemon (id) ON DELETE CASCADE
 );
 
 CREATE TABLE ingame_enemy (

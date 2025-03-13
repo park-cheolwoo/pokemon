@@ -17,5 +17,7 @@ public class CreatedPokemonDTO {
 	private PokemonDTO pokemon;
 	private List<PokemonStatDTO> stats;
 	private CharacteristicDTO characteristic;
+	private List<PokemonOwnAttack> attacks;
+	private List<PokemonOwnAbility> abilities;
 
 }
