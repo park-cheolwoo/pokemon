@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SdungeonDTO {
-
 	private String id;
+	private int gameMoney;
 	private int dailyClearCount;
 	private int weeklyClearCount;
 	private int totalCount;
@@ -24,7 +24,4 @@ public class SdungeonDTO {
 	private int pokemon3Id;
 	private String pokemon3Name;
 	private String pokemon3Img;
-	private int gameMoney;
-	
-	
 }

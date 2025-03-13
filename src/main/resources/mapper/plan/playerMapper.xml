@@ -4,5 +4,19 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.pokemon.plan.service.SdungeonServiceImpl">
 
+    <!-- daily_clear_count 리셋 -->
+    <update id="resetDailyClearCount">
+        UPDATE SDUNGEON SET daily_clear_count = 0;
+    </update>
+
+    <!-- weekly_clear_count 리셋 -->
+    <update id="resetWeeklyClearCount">
+        UPDATE SDUNGEON SET weekly_clear_count = 0;
+    </update>
+
+    <!-- 포켓몬 데이터 리셋 및 랜덤 배정 -->
+    <update id="resetPokemonData">
+        <!-- 여기에 PL/SQL 블록이 포함될 수 있음 -->
+    </update>
 
 </mapper>

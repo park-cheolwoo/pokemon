@@ -43,10 +43,10 @@ public class MainController {
 		return "/play/dungeon";
 	}
 
-	@GetMapping("/play/sdungeon")
-	public String sdungeon() {
-		return "/play/sdungeon";
-	}
+//	@GetMapping("/play/sdungeon")
+//	public String sdungeon() {
+//		return "/play/sdungeon";
+//	}
 
 	
 	@GetMapping("/play/battle")
