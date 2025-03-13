@@ -36,6 +36,7 @@ public class ProsController {
 	@GetMapping(value = "/pokemon")
 	public String adminPokemon(@RequestParam(defaultValue = "1") int page, Model model) {
 		List<PokemonDTO> list = pokemonService.getAll(new PageRequestDTO(96,page));
+		model.addAttribute("list", list);
 		return "pros/pros_data_list";
 	}
 	
@@ -46,5 +47,8 @@ public class ProsController {
 		return "pros/pros_player_list";
 	}
 
+	
+	
+	
 
 }
