@@ -13,25 +13,44 @@
 <body>
 	<div class="flist-container">
 		<div class="flist-box">
-			<img src='/images/index/flist.png'> <img
-				src='/images/green-bar.png' class="imgflist1" id="btn1"> <img
-				src='/images/yellow-bar.png' class="imgflist2">
-			<button id="toggleBtn1" class="flistbtn">친구 목록</button>
-			<img src='/images/green-bar.png' class="imgfplus1 hidden" id="btn2">
-			<img src='/images/yellow-bar.png' class="imgfplus2">
-			<button id="toggleBtn2" class="fplusbtn">친구 추가</button>
-			<img src='/images/green-bar.png' class="imgfpls1 hidden" id="btn3">
-			<img src='/images/yellow-bar.png' class="imgfpls2">
-			<button id="toggleBtn3" class="fplsbtn">친구 요청</button>
+			<div class="flist-menu">
+				<img src='/images/green-bar.png' class="imgflist1" id="btn1">
+				<img src='/images/yellow-bar.png' class="imgflist2">
+				<button id="toggleBtn1" class="flistbtn">친구 목록</button>
+				<img src='/images/green-bar.png' class="imgfplus1 hidden" id="btn2">
+				<img src='/images/yellow-bar.png' class="imgfplus2">
+				<button id="toggleBtn2" class="fplusbtn">친구 추가</button>
+				<img src='/images/green-bar.png' class="imgfpls1 hidden" id="btn3">
+				<img src='/images/yellow-bar.png' class="imgfpls2">
+				<button id="toggleBtn3" class="fplsbtn">친구 요청</button>
+			</div>
 			<!-- 친구 목록창 -->
 			<div id="content1">
 				<c:forEach var="friend" items="${friends}">
-					<img src='/images/index/msball.png' class="msball1">
-					<img src='/images/index/wood_panner.png' class="wdpanner1">
-					<h3 class="fname1">Lv.${friend.playerFrom.lv}
-						${friend.playerFrom.nickname}</h3>
-					<img src='/images/index/wood_trade.png' class="wdtrade1">
-					<button class="tradebtn1">포켓몬 교환</button>
+					<!-- playerFrom 출력: 자신의 닉네임이 아닐 경우만 -->
+					<c:if test="${friend.playerFrom.id != sessionScope.session_id}">
+						<div class="friend-item">
+							<img src='/images/index/msball.png' class="msball"> <img
+								src='/images/index/wood_panner.png' class="wdpanner">
+							<h3 class="fname">Lv.${friend.playerFrom.lv}
+								${friend.playerFrom.nickname}
+								<span class="tag">${friend.playerFrom.tag}</span>
+								</h3>
+							<img src='/images/index/wood_trade.png' class="wdtrade">
+							<button class="tradebtn">포켓몬 교환</button>
+						</div>
+					</c:if>
+					<!-- playerTo 출력: 자신의 닉네임이 아닐 경우만 -->
+					<c:if test="${friend.playerTo.id != sessionScope.session_id}">
+						<div class="friend-item">
+							<img src='/images/index/msball.png' class="msball"> <img
+								src='/images/index/wood_panner.png' class="wdpanner">
+							<h3 class="fname">Lv.${friend.playerTo.lv}
+								${friend.playerTo.nickname}</h3>
+							<img src='/images/index/wood_trade.png' class="wdtrade">
+							<button class="tradebtn">포켓몬 교환</button>
+						</div>
+					</c:if>
 				</c:forEach>
 			</div>
 			<!-- 친구 추가 창 -->
@@ -48,9 +67,12 @@
 			</div>
 			<!-- 친구 요청창 -->
 			<div id="content3" class="hiddenbox">
-				<ul class="frequest" id="friend-requests">
-					
-				</ul>
+				<c:forEach var="friend" items="${friends}">
+					<ul class="frequest" id="friend-requests">
+						<p>To: Lv.${friend.playerFrom.lv}
+							${friend.playerFrom.nickname}</p>
+					</ul>
+				</c:forEach>
 			</div>
 		</div>
 		<img src='/images/close.png' class="close">

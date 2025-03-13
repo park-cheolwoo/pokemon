@@ -29,18 +29,14 @@
 
 	<select id="getFriendList" parameterType="string"
 		resultMap="dataResultMap">
-		select f.id, f.player_from, f.player_to, f.is_accept,
-		f.updated_at, f.created_at,
-		p1.nickname as player_nickname, p1.lv as
-		player_lv, p1.tag as player_tag,
-		p2.nickname as friend_nickname, p2.lv
-		as friend_lv, p2.tag as friend_tag
+		select f.id, f.player_from, f.player_to, f.is_accept, f.updated_at, f.created_at,
+		p1.nickname as player_nickname, p1.lv as player_lv, p1.tag as player_tag,
+		p2.nickname as friend_nickname, p2.lv as friend_lv, p2.tag as friend_tag
 		from friend f
-		join player p1 ON
-		f.player_from = p1.id
-		join player p2 ON f.player_to = p2.id
+		join player p1 on f.player_from = p1.id
+		join player p2 on f.player_to = p2.id
 		where
-		f.player_to = #{playerId, jdbcType=VARCHAR} and f.is_accept = 1
+		(f.player_from = #{playerId} or f.player_to = #{playerId}) and f.is_accept = 1
 	</select>
 
 	<insert id="insertFriend" parameterType="map">
