@@ -16,29 +16,17 @@ import kr.co.pokemon.pokemon.service.PokemonService;
 @RestController
 public class ProsRestController {
 
-	@Autowired PokemonService pokemonService;
-	
+	@Autowired
+	PokemonService pokemonService;
+
 	@ResponseBody
-	@PostMapping(value="/pokemon/{page}")
+	@PostMapping(value = "/pokemon/{page}")
 	public List<PokemonDTO> addPokemon(PageRequestDTO pDTO) {
 		System.out.println("----- 서비스단 ------");
 		pDTO.setSize(96);
-		System.out.println("page : "+pDTO.getPage());
-		System.out.println("size : "+pDTO.getSize());
+		System.out.println("page : " + pDTO.getPage());
+		System.out.println("size : " + pDTO.getSize());
 		List<PokemonDTO> list = pokemonService.getAll(pDTO);
 		return list;
 	}
-	
-	@ResponseBody
-	@PostMapping(value="/pokemon/search/{keyword}")
-	public List<PokemonDTO> searchPokemon(String keyword) {
-		System.out.println("name : "+keyword);
-		List<PokemonDTO> list = pokemonService.getByName(keyword);
-		List<Evolution>
-		return list;
-	}
-	
-	
-	
-	
 }

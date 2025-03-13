@@ -10,6 +10,7 @@
     <result column="flavor_text" property="flavorText" />
     <result column="evolution_id" property="evolutionId" />
     <result column="eggGroup_id" property="eggGroupId" />
+    <result column="is_active" property="isActive" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
