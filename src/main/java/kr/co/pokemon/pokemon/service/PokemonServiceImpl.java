@@ -144,7 +144,6 @@ public class PokemonServiceImpl implements PokemonService {
 
 	@Override
 	public List<PokemonDTO> getByName(String keyword) {
-		System.out.println("Service keyword : "+keyword);
 		return pokemonMapper.selectByName(keyword);
 	}
 	

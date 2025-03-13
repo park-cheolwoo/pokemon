@@ -179,7 +179,6 @@ body {
 	cursor: pointer;
 	width: 115px;
 	height: 120px;
-	background: url("../.../images/pros/search.png") no-repeat center center/cover;
 	border: none;
 	outline: none;
 	position: absolute;
@@ -742,6 +741,10 @@ body {
 	overflow-y: auto;
 	position: relative;
 	z-index: 15;
+}
+
+.pros_list::-webkit-scrollbar, .pros_list2::-webkit-scrollbar{
+	display:none;
 }
 
 .pros_profile_frame, .pros_profile_frame_img {

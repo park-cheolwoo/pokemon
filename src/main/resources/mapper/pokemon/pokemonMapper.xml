@@ -34,8 +34,8 @@
     SELECT * FROM pokemon WHERE id = #{id}
   </select>
   
-  <select id="selectByName" resultMap="dataResultMap" parameterType="String">
-  	 SELECT * FROM pokemon WHERE name like '%' || #{name} || '%'
+  <select id="selectByName" resultMap="dataResultMap">
+   SELECT * FROM pokemon WHERE name like '%' || #{keyword} || '%' ORDER BY id
   </select> 
     
   <select id="existById" resultType="int" parameterType="int">

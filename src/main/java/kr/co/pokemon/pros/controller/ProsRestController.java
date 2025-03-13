@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.pokemon.data.dto.PageRequestDTO;
@@ -24,19 +25,16 @@ public class ProsRestController {
 	
 	@ResponseBody
 	@PostMapping(value = "/pokemon/{page}")
-	public List<PokemonDTO> addPokemon(PageRequestDTO pDTO) {
-		pDTO.setSize(96);
-		return pokemonService.getAll(pDTO);
+	public List<PokemonDTO> addPokemon(@RequestParam(defaultValue="1") int page) {
+		return pokemonService.getAll(new PageRequestDTO(96,page));
 	}
 	
 	@ResponseBody
 	@PostMapping(value = "/player/{page}")
-	public List<PokemonDTO> addPlayer(PageRequestDTO pDTO) {
-		pDTO.setSize(96);
-		return pokemonService.getAll(pDTO);
+	public List<PlayerDTO> addPlayer(@RequestParam(defaultValue="1") int page) {
+		return playerService.getAll(new PageRequestDTO(96,page));
 	}
 	
-
 	@ResponseBody
 	@PostMapping(value = "/pokemon/search/{keyword}")
 	public List<PokemonDTO> searchPokemon(String keyword){

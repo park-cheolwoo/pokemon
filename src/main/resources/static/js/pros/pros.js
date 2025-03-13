@@ -78,16 +78,19 @@ $(function() {
 	//새로고침 버튼 클릭
 	$(document).on("click", ".pros_reload_btn", function() {
 		const category = $(".pros_list_category").text();
+		console.log("url : "+"/admin/" + category + "/1");
 		$.ajax({
-			url: "/admin/" + category + "/",
+			url: "/admin/" + category + "/1",
 			type: "POST",
 			dataType: "json",
 			success: function(data) {
+				alert("새로고침 하였습니다.");
 				console.log(data);
 				let hdata = ``;
+				$(".pros_items").remove();
 				switch(category){
 					case "player":
-					$(".pros_list").children().remove();
+					$(".pros_list").scrollTop(0);
 					for (let i = 0; i < data.length; i++) {
 						let statusText = data[i].isActive == 0 ? '활성화' : '비활성화';
 						hdata += `<div class="pros_search pros_items" data-id=${data[i].id}>
@@ -102,11 +105,11 @@ $(function() {
 						           </div>
 								   <img src="/images/pros/more.png" class="pros_more_btn">
 			              		   </div>`;
-				}
-				$(".pros_list").append(hdata);	
+						}
+						$(".pros_list").append(hdata);	
 				break;
 				default:
-					$(".pros_list2").children().remove();
+					$(".pros_list2").scrollTop(0);
 					for (let i = 0; i < data.length; i++) {
 					hdata += `<div class="pros_items" data-id="${data[i].id}">
 			                  <img src="${data[i].image}" class="pros_list_img">
