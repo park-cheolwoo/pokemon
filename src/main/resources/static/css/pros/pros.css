@@ -194,6 +194,16 @@ body {
 	position: absolute;
 	top: 235px;
 	left: 1648px;
+	z-index: 20;
+}
+
+.pros_reload_btn2 {
+	cursor: pointer;
+	width: 110px;
+	height: 110px;
+	position: absolute;
+	top: 235px;
+	left: 1648px;
 	z-index: 40;
 }
 

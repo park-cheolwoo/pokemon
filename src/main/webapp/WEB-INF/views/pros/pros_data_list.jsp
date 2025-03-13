@@ -45,7 +45,7 @@
 			<div class="pros_list2">
 				<!-- 반복 -->
 				<c:forEach items="${list}" var="list">
-					<div class="pros_items" data-name="${list.getName()}">
+					<div class="pros_items" data-id="${list.getId()}">
 						<img src="${list.getImage()}" class="pros_list_img">
 					</div>
 				</c:forEach>
@@ -58,6 +58,9 @@
 		<div class="pros_profile_view_container">
 			<div class="pros_blur"></div>
 			<img src="/images/container.png" class="pros_container_frame2">
+			<img src="/images/pros/setting.png" class="pros_update_flag pros_update_btn" /> 
+			<img src="/images/pros/retry.png" class="pros_reload_btn2" />
+			
 			<img src="/images/store/item-frame.png"	class="pros_profile_frame_img2" />
 			<img src="" class="pros_profile_img2">
 			<h4 class="pros_profile_name1 text"></h4>

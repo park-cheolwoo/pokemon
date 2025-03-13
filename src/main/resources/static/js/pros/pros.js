@@ -1,4 +1,11 @@
 $(function() {
+	//전역변수 선언
+	const category = $(".pros_list_category").text();
+	const page = Number($(".pros_list_page").text()) + 1;
+	const input = $(".pros_keyword").val();
+	const keyword = input.trim();
+	const flag = $(".pros_search_flag").text();
+	
 	$(document).on("click", ".pros_player_btn", function() {
 		location.href = "/admin/player";
 	});
@@ -19,15 +26,26 @@ $(function() {
 		location.href = "/admin/pokemon";
 	});
 
+	// 데이터 종류에 따라 버튼 색상 변경 함수
+	switch(category){
+		case "pokemon":
+			$(".pros_pokemon_select_box").attr("src","/images/green-bar.png");
+			break;
+		case "item":
+			$(".pros_item_select_box").attr("src","/images/green-bar.png");
+			break;
+		case "dungeon":
+			$(".pros_dungeon_select_box").attr("src","/images/green-bar.png");
+			break;
+	}
+	
+	
 	// scroll 이벤트시 정보가 하단에 추가되는 함수
 	$(".pros_list, .pros_list2").on('scroll', function() {
 		const scrollPosition = $(this).scrollTop() + $(this).innerHeight();
 		const scrollHeight = $(this)[0].scrollHeight;
 		if (scrollPosition >= scrollHeight) {
-			console.log('끝 지점에 도착했습니다!');
-			const list = $(this).hasClass("pros_list");
-			const category = $(".pros_list_category").text();
-			const page = Number($(".pros_list_page").text()) + 1;
+			console.log('끝 지점에 도착했습니다!');	
 			$(".pros_list_page").text(page);
 			$.ajax({
 				url: "/admin/" + category + "/" + page,
@@ -77,7 +95,6 @@ $(function() {
 
 	//새로고침 버튼 클릭
 	$(document).on("click", ".pros_reload_btn", function() {
-		const category = $(".pros_list_category").text();
 		console.log("url : "+"/admin/" + category + "/1");
 		$.ajax({
 			url: "/admin/" + category + "/1",
@@ -126,8 +143,6 @@ $(function() {
 	
 	// 검색시 검색결과가 나오는 함수
 	$(document).on("click", ".pros_search_btn", function() {
-		const category = $(".pros_list_category").text();
-		const keyword = $(".pros_keyword").val().trim();
 		console.log("/admin/" + category + "/search/" + keyword);
 		$.ajax({
 			url: "/admin/" + category + "/search/" + keyword,
@@ -184,8 +199,6 @@ $(function() {
 
 	//검색결과 지우면 전체 검색결과 다시 노출
 	$(document).on("input", ".pros_keyword", function() {
-		const flag = $(".pros_search_flag").text();
-		const input = $(".pros_keyword").val();
 		if (flag == "1" && input == "") {
 			$(".pros_search").remove();
 			$(".pros_items").show();
@@ -250,7 +263,6 @@ $(function() {
 	
 	//수정하기 버튼 클릭
 	$(document).on("click", ".pros_update_flag", function() {
-			const category = $(".pros_list_category").text();
 			switch (category) {
 				case "player":
 					const hashIndex = $(".pros_profile_name1").text().indexOf('#');
