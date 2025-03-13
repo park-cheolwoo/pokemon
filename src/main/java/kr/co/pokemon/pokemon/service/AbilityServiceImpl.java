@@ -10,9 +10,11 @@ import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.data.service.DataService;
+import kr.co.pokemon.play.dto.PokemonOwnAbility;
 import kr.co.pokemon.pokemon.dao.AbilityMapper;
 import kr.co.pokemon.pokemon.dao.relationship.PokemonAbilityMapper;
 import kr.co.pokemon.pokemon.dto.AbilityDTO;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.dto.relationship.PokemonAbilityDTO;
 
 @Service
@@ -97,6 +99,16 @@ public class AbilityServiceImpl implements AbilityService {
 	@Override
 	public DBTables getDBTable() {
 		return dbTable;
+	}
+	
+	@Override
+	public List<PokemonOwnAbility> getAbilitiesByPokemonId(int pokemonId) {
+		return pokemonAbilityMapper.selectAbilityByPokemonId(pokemonId);
+	}
+	
+	@Override
+	public List<PokemonDTO> getPokemonByAbilityId(int abilityId) {
+		return pokemonAbilityMapper.selectPokemonByAbilityId(abilityId);
 	}
 
 }

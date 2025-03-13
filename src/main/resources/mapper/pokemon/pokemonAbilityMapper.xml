@@ -10,6 +10,22 @@
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
+  
+  <resultMap id="pokemonResultMap" type="kr.co.pokemon.pokemon.dto.PokemonDTO" autoMapping="true">
+    <result column="gender_rate" property="genderRate" />
+    <result column="gender_diff" property="genderDiff" />
+    <result column="flavor_text" property="flavorText" />
+    <result column="evolution_id" property="evolutionId" />
+    <result column="eggGroup_id" property="eggGroupId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <resultMap id="abilityResultMap" type="kr.co.pokemon.play.dto.PokemonOwnAbility" autoMapping="true">
+    <result column="flavor_text" property="flavorText" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
     SELECT * FROM pokemon_ability ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
@@ -17,6 +33,24 @@
 
   <select id="selectById" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM pokemon_ability WHERE id = #{id}
+  </select>
+
+  <select id="selectAbilityByPokemonId" resultMap="abilityResultMap" parameterType="int">
+	SELECT
+		a.*, p.slot
+	FROM POKEMON_ABILITY p
+	JOIN ability a ON a.id = p.ability_id
+	WHERE p.pokemon_id = #{pokemonId}
+	ORDER BY p.slot DESC
+  </select>
+
+  <select id="selectPokemonByAbilityId" resultMap="pokemonResultMap" parameterType="int">
+	SELECT
+		p.*
+	FROM POKEMON_ABILITY a
+	JOIN pokemon p ON p.id = a.pokemon_id
+	WHERE a.ability_id = #{abilityId{
+	ORDER BY p.id
   </select>
 
   <select id="selectByPokemonId" resultMap="dataResultMap" parameterType="int">

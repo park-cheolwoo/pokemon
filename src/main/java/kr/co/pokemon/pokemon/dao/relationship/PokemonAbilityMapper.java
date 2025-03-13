@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.play.dto.PokemonOwnAbility;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.dto.relationship.PokemonAbilityDTO;
 
 @Mapper
@@ -13,6 +15,10 @@ public interface PokemonAbilityMapper {
 	List<PokemonAbilityDTO> selectAll(PageRequestDTO page);
 	
 	PokemonAbilityDTO selectById(int id);
+	
+	List<PokemonOwnAbility> selectAbilityByPokemonId(int pokemonId);
+	
+	List<PokemonDTO> selectPokemonByAbilityId(int abilityId);
 	
 	List<PokemonAbilityDTO> selectByPokemonId(int pokemonId);
 	

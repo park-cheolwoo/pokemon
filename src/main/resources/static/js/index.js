@@ -68,6 +68,19 @@ $(function() {
 		//친구 요청 데이터
 		fetchpending();
 	}
+	function logout(){
+		$.ajax({
+			url:"/logout",
+			type: 'GET',
+			success: function(){
+				location.href = "/member/login";
+			},
+			error:function(error){
+				console.error("logout failed",error);
+			}
+		});
+	};
+	
 	
 	// 친구 요청 데이터를 가져오는 함수
 	function fetchpending() {
@@ -171,6 +184,7 @@ $(function() {
 	$("#questBtn").click(function() { quest(); });
 	$("#socialBtn").click(function() { social(); });
 	$("#closeBtn").click(function() { closebtn(); });
+	$("#logoutBtn").click(function() { logout(); });
 	$("#toggleBtn1").click(function() { toggle(1); togglebtn(1); });
 	$("#toggleBtn2").click(function() { toggle(2); togglebtn(2); });
 	$("#toggleBtn3").click(function() { toggle(3); togglebtn(3); });
