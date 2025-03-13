@@ -25,17 +25,17 @@ public class PlayerServiceImpl implements PlayerService {
         return playerMapper.selectAll(pDTO);
     }
 
-    @Override
-    public PlayerDTO findById(int id) {
-        Map<String, Object> map = new HashMap<>();
-        PlayerDTO playerDto = playerMapper.selectById(id);
-        map.put("playerDto", playerDto);
-        return playerDto;
-    }
+//    @Override
+//    public PlayerDTO findById(int id) {
+//        Map<String, Object> map = new HashMap<>();
+//        PlayerDTO playerDto = playerMapper.selectById(id);
+//        map.put("playerDto", playerDto);
+//        return playerDto;
+//    }
 
     @Override
 	public PlayerDTO getById(String id) {
-		return playerMapper.getById(id);
+		return playerMapper.selectById(id);
 	}
     
     @Override

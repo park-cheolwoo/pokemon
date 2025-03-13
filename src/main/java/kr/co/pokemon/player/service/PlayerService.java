@@ -11,7 +11,7 @@ public interface PlayerService {
 	
 	List<PlayerDTO> getAll(PageRequestDTO pDTO);
 	
-	PlayerDTO findById(int id);
+	//PlayerDTO findById(int id);
 	
 	PlayerDTO getById(String id);
 

@@ -195,7 +195,7 @@ body {
 	position: absolute;
 	top: 235px;
 	left: 1648px;
-	z-index: 20;
+	z-index: 40;
 }
 
 .pros_dropbar_btn {
@@ -280,8 +280,12 @@ body {
 
 .pros_profile_view_container {
 	display: none;
+	position:absolute;
+	top:0;
+	left:0;
 	width: 1147px;
 	height: 841px;
+	z-index:35;
 }
 
 .pros_blur {
@@ -389,10 +393,11 @@ body {
 	position: absolute;
 	top: 490px;
 	left: 868px;
-	z-index: 35;
+	z-index: 45;
 }
 
 .pros_update {
+	width:400px;
 	height: 36px;
 	font-size: 36px;
 	line-height: 36px;
@@ -404,6 +409,7 @@ body {
 }
 
 .pros_create {
+	width:400px;
 	height: 36px;
 	font-size: 36px;
 	line-height: 36px;
@@ -796,6 +802,7 @@ body {
 }
 
 .pros_more_btn {
+	cursor: pointer;
 	width: 105px;
 	height: 105px;
 	position: relative;

@@ -19,11 +19,7 @@
     SELECT * FROM player ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
 </select>
 
-<select id="selectById" resultMap="dataResultMap">
-    select * from player where id = #{id}
-</select>
-
-<select id="getById" resultMap="dataResultMap">
+<select id="selectById" resultMap="dataResultMap" parameterType="String">
     select * from player where id = #{id}
 </select>
 

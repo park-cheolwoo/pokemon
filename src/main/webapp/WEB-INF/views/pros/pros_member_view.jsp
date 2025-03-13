@@ -24,24 +24,16 @@
   
   
   <div class="pros_profile_view_container">
+  
   <img src="/images/container.png" class="pros_container_frame">
-  
-  
+ 
   <img src="/images/pros/setting.png" class="pros_update_flag pros_update_btn" /> 
   <img src="/images/pros/retry.png" class="pros_reload_btn" />
-  <img src="/images/pros/list.png" class="pros_dropbar_btn" />
-  <img src="/images/yellow-bar.png" class="pros_pokemon_select_box" />
-  <h4 class="pros_pokemon_select_text text">포켓몬</h4>
-  <img src="/images/yellow-bar.png" class="pros_item_select_box" />
-  <h4 class="pros_item_select_text text">아이템</h4>
-  <img src="/images/yellow-bar.png" class="pros_dungeon_select_box" />
-  <h4 class="pros_dungeon_select_text text">던전</h4>
-
 
   <img src="/images/store/item-frame.png" class="pros_profile_frame_img2" />
   <img src="/images/pros/avarter.png" class="pros_profile_img2">
-  <h4 class="pros_profile_name1 text">한지우</h4>
-  <h4 class="pros_profile_name2 text">LV 32</h4>
+  <h4 class="pros_profile_name1 text"></h4>
+  <h4 class="pros_profile_name2 text"></h4>
   
   <!-- 내용 부분 -->
 
@@ -50,15 +42,15 @@
   <h4 class="pros_exe_txt text">exp ( 73 / 100 )</h4>
   
 
-    <h4 class="pros_update text">수정일 : 2025/02/25</h4>
-    <h4 class="pros_create text">가입일 : 2025/02/25</h4>
+    <h4 class="pros_update text"></h4>
+    <h4 class="pros_create text"></h4>
 
 	
     <img src="/images/store/coin.png" class="pros_coin">
-    <h4 class="pros_get_coin text">10,000</h4>
+    <h4 class="pros_get_coin text"></h4>
 
     <img src="/images/store/ruby.png" class="pros_ruby">
-    <h4 class="pros_get_ruby text">10,000</h4>
+    <h4 class="pros_get_ruby text"></h4>
     
     <h4 class="pros_active_txt text">활성화</h4>
     <img src="/images/store/item-frame.png" class="pros_active_frame">
@@ -67,7 +59,7 @@
     <img src="/images/close.png" class="pros_active_off" /> 
     
 
-    <h4 class="pros_intro text">자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.</h4>
+    <h4 class="pros_intro text"></h4>
 	
 	
 	

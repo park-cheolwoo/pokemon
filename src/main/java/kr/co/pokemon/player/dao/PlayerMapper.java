@@ -14,9 +14,7 @@ public interface PlayerMapper {
 
 	List<PlayerDTO> selectAll(PageRequestDTO pDTO);
 	
-	PlayerDTO selectById(int id);
-	
-	PlayerDTO getById(String id);
+	PlayerDTO selectById(String id);
 	
 	void updatePlayer(PlayerDTO player);
 	
