@@ -5,15 +5,19 @@
 <mapper namespace="kr.co.pokemon.player.dao.PlayerMapper">
 
 <resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
+	<result column="id" property="id" />
+	<result column="nickname" property="nickname" />
     <result column="game_money" property="gameMoney" />
     <result column="real_money" property="realMoney" />
+    <result column="is_active" property="isActive" />
     <result column="updated_at" property="updatedAt" />
     <result column="created_at" property="createdAt" />
 </resultMap>
 
-<select id="selectAll" resultMap="dataResultMap">
-    select * from player
+<select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM player ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
 </select>
+
 <select id="selectById" resultMap="dataResultMap">
     select * from player where id = #{id}
 </select>
