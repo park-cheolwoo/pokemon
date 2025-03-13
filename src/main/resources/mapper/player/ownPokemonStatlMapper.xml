@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.player.dao.OwnPokemonStatMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.OwnPokemonStat" autoMapping="true">
+    <result column="player_pokemon_id" property="playerPokemonId" />
+    <result column="stat_id" property="statId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+  
+  <resultMap id="statResultMap" type="kr.co.pokemon.play.dto.PokemonOwnStat" autoMapping="true">
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM own_pokemon_stat WHERE id = #{id}
+  </select>
+
+  <select id="selectStatByOwnPokemonId" resultMap="statResultMap" parameterType="int">
+	SELECT
+		s.*, p.value
+	FROM
+		own_pokemon_stat p
+	JOIN
+		stat s ON p.stat_id = s.id
+	WHERE p.player_pokemon_id = #{ownPokemonId}
+  </select>
+
+  <insert id="insert">
+  	INSERT INTO own_pokemon_stat
+  		( id, player_pokemon_id, stat_id, value, total )
+  	VALUES
+  		( own_pokemon_stat_seq.nextval, #{playerPokemonId}, #{statId}, #{value}, #{total} )
+  </insert>
+
+</mapper>

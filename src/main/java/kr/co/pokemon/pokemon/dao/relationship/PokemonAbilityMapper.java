@@ -1,6 +1,7 @@
 package kr.co.pokemon.pokemon.dao.relationship;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,6 +26,8 @@ public interface PokemonAbilityMapper {
 	List<PokemonAbilityDTO> selectByAbilityId(int abilityId);
 	
 	int existById(int id);
+	
+	int existAbilityAndPokemonId(Map<String, Integer> existMap);
 	
 	void insert(PokemonAbilityDTO pokemonAbility);
 	

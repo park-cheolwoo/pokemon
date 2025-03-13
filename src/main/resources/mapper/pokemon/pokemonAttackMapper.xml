@@ -59,6 +59,10 @@
   <select id="selectByAttackId" resultMap="dataResultMap" parameterType="int">
     SELECT * FROM pokemon_attack WHERE attack_id = #{attackId}
   </select>
+
+  <select id="existAttackAndPokemonId" resultType="int" parameterType="java.util.Map">
+    SELECT COUNT(*) FROM pokemon_attack WHERE pokemon_id = #{pokemonId} AND attack_id = #{attackId}
+  </select>
   
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
