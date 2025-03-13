@@ -19,25 +19,25 @@ public class PlanController {
 
     @Autowired PlayerMapper playerMapper;  // PlayerMapper 주입
 
-    @GetMapping("/play/sdungeon")
-    public String sdungeon(Model model) {
-        
-        // 세션에서 ID 가져오기
-        String sessionId = (String) session.getAttribute("session_id");
-        if(sessionId == null) {
-            return "redirect:/";  // 세션이 없으면 로그인 페이지로 리다이렉트
-        }
-
-        // PlayerDTO 조회
-        PlayerDTO player = playerMapper.chooseById(sessionId);  // sessionId로 PlayerDTO 조회
-
-        // PlayerDTO에서 gameMoney 가져오기
-        if (player != null) {
-            int gameMoney = player.getGameMoney();  // 게임 머니 가져오기
-            model.addAttribute("gameMoney", gameMoney);  // 모델에 gameMoney 추가
-        }
-
-        return "/play/sdungeon";  // 게임 화면으로 반환
-    }
+//    @GetMapping("/play/sdungeon")
+//    public String sdungeon(Model model) {
+//        
+//        // 세션에서 ID 가져오기
+//        String sessionId = (String) session.getAttribute("session_id");
+//        if(sessionId == null) {
+//            return "redirect:/";  // 세션이 없으면 로그인 페이지로 리다이렉트
+//        }
+//
+//        // PlayerDTO 조회
+//        PlayerDTO player = playerMapper.chooseById(sessionId);  // sessionId로 PlayerDTO 조회
+//
+//        // PlayerDTO에서 gameMoney 가져오기
+//        if (player != null) {
+//            int gameMoney = player.getGameMoney();  // 게임 머니 가져오기
+//            model.addAttribute("gameMoney", gameMoney);  // 모델에 gameMoney 추가
+//        }
+//
+//        return "/play/sdungeon";  // 게임 화면으로 반환
+//    }
 }
 
