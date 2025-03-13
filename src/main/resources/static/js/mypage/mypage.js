@@ -97,12 +97,14 @@ $(document).ready(function () {
         const defaultItemTab = $('.mypage-banner-tab .banner-item[data-tab="monsterball-item"]');
         defaultItemTab.addClass('active');
 
+        // 각 탭에 해당하는 카테고리 ID 목록
         const categoryMapping = {
             'monsterball-item': [33, 34],
             'battle-item': [1, 11, 27, 28, 29, 30],
             'training-item': [10, 26, 37]
         };
 
+        // 기본 아이템 로드
         loadItemContent('monsterball-item');
         loadItemsByCategory(categoryMapping['monsterball-item'], 'monsterball-item-list-body');
 
@@ -125,66 +127,118 @@ $(document).ready(function () {
         $('#' + tabId).show();
     }
 
-    function loadItemsByCategory(categoryIds, tableBodyId) {
-        const tableBody = $('#' + tableBodyId);
-        if (!tableBody.length) return;
+// 아이템을 테이블에 추가하는 함수
+function addItemToTable(tableBody, item) {
+    const row = $('<tr></tr>');
 
-        tableBody.html('<tr><td colspan="3">로딩 중...</td></tr>');
+    // 이미지 셀 추가
+    const imgCell = $('<td class="item-img"></td>');
+    const img = $('<img>')
+        .attr('src', item.image)
+        .attr('alt', item.name)
+        .attr('width', '50')
+        .attr('height', '50')
+        .attr('onerror', "this.src='/images/close.png'");
+    imgCell.append(img);
 
-        categoryIds.forEach(categoryId => {
-            $.get(`/api/items/category/${categoryId}`)
-                .done(function (items) {
-                    if (items && items.length > 0) {
-                        // 첫 번째 아이템이 로드되면 테이블 내용을 비웁니다
-                        if (tableBody.find('tr').length === 1 && tableBody.find('tr td').text() === '로딩 중...') {
-                            tableBody.empty();
-                        }
+    // 이름 셀 추가
+    const nameCell = $('<td class="item-name"></td>').text(item.name);
 
-                        items.forEach(item => {
-                            const row = $('<tr></tr>');
-                            row.data('item-id', item.id); // 아이템 ID 저장
+    // 수량 셀 추가
+    const countCell = $('<td class="item-quantity"></td>').text(`${item.count}개`);
 
-                            // 이미지 셀 추가
-                            const imgCell = $('<td class="item-img"></td>');
-                            // 이미지 경로는 item.image를 사용하고, 없을 경우 기본 이미지 사용
-                            const imgSrc = item.image || `/images/close.png`;
-                            const img = $('<img>').attr('src', imgSrc)
-                                .attr('alt', item.name)
-                                .attr('width', '50')
-                                .attr('height', '50')
-                                .attr('onerror', "this.src='/images/close.png'");
-                            imgCell.append(img);
+    // 셀들을 행에 추가
+    row.append(imgCell, nameCell, countCell);
 
-                            // 이름 셀 추가
-                            const nameCell = $('<td class="item-name"></td>').text(item.name);
+    // 아이템 클릭 이벤트 추가
+    row.on('click', function () {
+        showItemDetails(item);
+    });
 
-                            // 수량 셀 추가
-                            const quantityCell = $('<td class="item-quantity"></td>').text(item.quantity || '1개');
+    // 행을 테이블에 추가
+    tableBody.append(row);
+}
 
-                            // 셀들을 행에 추가
-                            row.append(imgCell, nameCell, quantityCell);
+function loadItemsByCategory(categoryIds, tableBodyId) {
+    const tableBody = $('#' + tableBodyId);
+    if (!tableBody.length) return;
 
-                            // 아이템 클릭 이벤트 추가
-                            row.on('click', function () {
-                                showItemDetails(item);
+    // 사용자 아이템을 가져옵니다
+    $.ajax({
+        url: '/player/items/my-items',
+        type: 'GET',
+        success: function (userItems) {
+            console.log("사용자 아이템 데이터:", userItems);
+            console.log("현재 카테고리 IDs:", categoryIds);
+
+            if (userItems && userItems.length > 0) {
+                // 사용자 아이템이 있으면 테이블을 비우고 사용자 아이템을 표시
+                tableBody.empty();
+
+                // 각 아이템에 대해 상세 정보를 가져옵니다
+                const promises = userItems.map(userItem => {
+                    return new Promise((resolve, reject) => {
+                        // 아이템 ID로 아이템 상세 정보를 가져옵니다
+                        $.get(`/api/items/${userItem.itemId}`)
+                            .done(function (itemDetail) {
+                                console.log(`아이템 ${userItem.itemId} 상세 정보:`, itemDetail);
+                                // 사용자 아이템 정보와 아이템 상세 정보를 합칩니다
+                                resolve({
+                                    ...userItem,
+                                    name: itemDetail.name || `아이템 ${userItem.itemId}`,
+                                    image: itemDetail.image || `/images/items/item_${userItem.itemId}.png`,
+                                    description: itemDetail.description,
+                                    flavorText: itemDetail.flavorText,
+                                    categoryId: itemDetail.categoryId
+                                });
+                            })
+                            .fail(function (error) {
+                                console.error(`아이템 ${userItem.itemId} 정보 가져오기 실패:`, error);
+                                // 아이템 상세 정보를 가져오지 못한 경우
+                                resolve({
+                                    ...userItem,
+                                    name: `아이템 ${userItem.itemId}`,
+                                    image: `/images/items/item_${userItem.itemId}.png`,
+                                    categoryId: -1 // 카테고리 정보를 가져오지 못한 경우
+                                });
                             });
+                    });
+                });
 
-                            // 행을 테이블에 추가
-                            tableBody.append(row);
+                // 모든 아이템 정보를 가져온 후 화면에 표시합니다
+                Promise.all(promises).then(itemsWithDetails => {
+                    // 현재 카테고리에 해당하는 아이템만 필터링
+                    const filteredItems = itemsWithDetails.filter(item => 
+                        categoryIds.includes(item.categoryId)
+                    );
+                    
+                    console.log("카테고리 필터링 후 아이템:", filteredItems);
+
+                    if (filteredItems.length > 0) {
+                        filteredItems.forEach(item => {
+                            // 아이템을 테이블에 추가
+                            addItemToTable(tableBody, item);
                         });
                     } else {
-                        if (tableBody.find('tr').length === 1 && tableBody.find('tr td').text() === '로딩 중...') {
-                            tableBody.html('<tr><td colspan="3">아이템이 없습니다.</td></tr>');
-                        }
+                        // 해당 카테고리에 아이템이 없는 경우
+                        tableBody.html('<tr><td colspan="3">보유한 아이템이 없습니다.</td></tr>');
                     }
-                })
-                .fail(function (error) {
-                    console.error('Error:', error);
-                    tableBody.html(`<tr><td colspan="3">오류가 발생했습니다: ${error.message}</td></tr>`);
+                }).catch(error => {
+                    console.error("아이템 상세 정보를 가져오는 중 오류 발생:", error);
+                    tableBody.html('<tr><td colspan="3">아이템 정보를 불러오는 중 오류가 발생했습니다.</td></tr>');
                 });
-        });
-    }
-
+            } else {
+                // 사용자 아이템이 없으면 '보유한 아이템이 없습니다' 메시지 표시
+                tableBody.html('<tr><td colspan="3">보유한 아이템이 없습니다.</td></tr>');
+            }
+        },
+        error: function (error) {
+            console.error("Error fetching user items:", error);
+            tableBody.html('<tr><td colspan="3">아이템 정보를 불러오는 중 오류가 발생했습니다.</td></tr>');
+        }
+    });
+}
+    
     // 아이템 상세 정보 표시 함수
     function showItemDetails(item) {
         // 이미지 업데이트
@@ -235,12 +289,6 @@ $(document).ready(function () {
         });
     }
 
-    function NotReload(event) {
-        if ((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116)) {
-            event.preventDefault();
-        }
-    }
-
     function loadPokedexViewContent(tabId) {
         const contentTabs = $('.tab-content'); // 모든 탭 콘텐츠 선택
         contentTabs.hide();  // 모든 탭 콘텐츠 숨기기
@@ -255,129 +303,76 @@ $(document).ready(function () {
         const imageContainer = $('.image-container');
         if (!imageContainer.length) return;
 
-        // 상태 변수 추가
+        // 상태 변수 초기화
         let currentPage = 0;
         const pageSize = 50; // 한 번에 로드할 포켓몬 수
         let isLoading = false;
         let hasMoreData = true;
-        // 이미 로드된 포켓몬 ID를 추적하는 Set 추가
         const loadedPokemonIds = new Set();
-
-        // 로딩 메시지 표시
-        imageContainer.html('<div class="loading">포켓몬 데이터를 불러오는 중...</div>');
 
         // 초기 데이터 로드
         loadPokemonData();
 
         // 스크롤 이벤트 리스너 추가
-        let scrollTimeout;
-        let lastScrollTop = 0;
+        imageContainer.on('scroll', function () {
+            const scrollPosition = $(this).scrollTop() + $(this).innerHeight();
+            const scrollHeight = $(this)[0].scrollHeight;
 
-        $(window).scroll(function () {
-            // 현재 스크롤 위치
-            const currentScrollTop = $(window).scrollTop();
-
-            // 스크롤 방향이 아래쪽인 경우에만 처리 (위로 스크롤할 때는 무시)
-            if (currentScrollTop > lastScrollTop) {
-                // 페이지 하단에 도달했는지 확인 (임계값 설정)
-                if (currentScrollTop + $(window).height() >= $(document).height() - 800) {
-                    // 디바운싱: 스크롤 이벤트가 연속으로 발생할 때 마지막 이벤트만 처리
-                    clearTimeout(scrollTimeout);
-                    scrollTimeout = setTimeout(function () {
-                        console.log("하단 도달 감지됨! 스크롤 위치:", currentScrollTop);
-                        if (!isLoading && hasMoreData) {
-                            console.log("추가 데이터 로드 시작, 현재 페이지:", currentPage);
-                            loadPokemonData();
-                        }
-                    }, 300); // 300ms 지연
-                }
+            if (scrollPosition >= scrollHeight - 100 && !isLoading && hasMoreData) {
+                loadPokemonData();
             }
-
-            // 현재 스크롤 위치 저장
-            lastScrollTop = currentScrollTop;
         });
 
         // 포켓몬 데이터 로드 함수
         function loadPokemonData() {
             isLoading = true;
-            console.log(`데이터 로드 시작: 페이지 ${currentPage}, 크기 ${pageSize}`);
-
-            // 로딩 인디케이터 추가
-            if (currentPage > 0) {
-                imageContainer.append('<div class="loading-more">추가 데이터 로드 중...</div>');
-            }
-
-            // 포켓몬 데이터 가져오기
-            console.log(`API 호출: /data/pokemon?page=${currentPage}&size=${pageSize}`);
             $.get(`/data/pokemon?page=${currentPage}&size=${pageSize}`)
-            
                 .done(function (pokemonList) {
-                    console.log(`페이지 ${currentPage} 응답 받음, 데이터 개수:`, pokemonList ? pokemonList.length : 0);
-                    // 로딩 인디케이터 제거
-                    $('.loading, .loading-more').remove();
-
-                    if (currentPage === 0) {
-                        imageContainer.empty(); // 첫 페이지일 경우 컨테이너 비우기
-                    }
-
-                    if (pokemonList && pokemonList.length > 0) {
-                        // ID 순으로 정렬
-                        pokemonList.sort((a, b) => a.id - b.id);
-
-                        // 각 포켓몬에 대한 이미지 요소 생성
-                        pokemonList.forEach(pokemon => {
-                            // 이미 로드된 포켓몬은 건너뜀
-                            if (loadedPokemonIds.has(pokemon.id)) {
-                                console.log(`포켓몬 ID ${pokemon.id}는 이미 로드됨, 건너뜀`);
-                                return;
-                            }
-
-                            // 로드된 ID 목록에 추가
-                            loadedPokemonIds.add(pokemon.id);
-
-                            const pokemonDiv = $('<div class="pokemon-item"></div>');
-                            const img = $('<img>')
-                                .attr('src', pokemon.image || `/images/pokemon/${pokemon.id}.png`)
-                                .attr('alt', pokemon.name)
-                                .attr('data-id', pokemon.id)
-                                .attr('onerror', "this.src='/images/close.png'");
-
-                            // 이미지 클릭 시 포켓몬 상세 정보 표시
-                            img.on('click', function () {
-                                showPokemonDetails(pokemon.id);
-                            });
-
-                            pokemonDiv.append(img);
-                            imageContainer.append(pokemonDiv);
-                        });
-
-                        // 다음 페이지 준비
+                    if (pokemonList.length > 0) {
+                        processPokemonData(pokemonList);
                         currentPage++;
-
-                        // 더 이상 데이터가 없는 경우
-                        if (pokemonList.length < pageSize) {
-                            hasMoreData = false;
-                        }
                     } else {
-                        // 데이터가 없는 경우
                         hasMoreData = false;
-                        if (currentPage === 0) {
-                            imageContainer.html('<div class="no-data">포켓몬 데이터가 없습니다.</div>');
-                        }
                     }
-
-                    isLoading = false;
                 })
                 .fail(function (error) {
-                    console.error('포켓몬 데이터 로드 실패:', error);
-                    $('.loading, .loading-more').remove();
-                    if (currentPage === 0) {
-                        imageContainer.html('<div class="error">데이터를 불러오는데 실패했습니다.</div>');
-                    } else {
-                        imageContainer.append('<div class="error">추가 데이터를 불러오는데 실패했습니다.</div>');
-                    }
+                    console.error('Error:', error);
+                })
+                .always(function () {
                     isLoading = false;
                 });
+        }
+
+        // 포켓몬 데이터 처리 함수
+        function processPokemonData(pokemonList) {
+            pokemonList.forEach(pokemon => {
+                if (!loadedPokemonIds.has(pokemon.id)) {
+                    loadedPokemonIds.add(pokemon.id);
+                    appendPokemonToContainer(pokemon);
+                }
+            });
+        }
+
+        // 포켓몬을 컨테이너에 추가하는 함수
+        function appendPokemonToContainer(pokemon) {
+            const pokemonElement = createPokemonElement(pokemon);
+            imageContainer.append(pokemonElement);
+        }
+
+        // 포켓몬 요소 생성 함수
+        function createPokemonElement(pokemon) {
+            const pokemonElement = $(`
+                <div class="pokemon-item">
+                    <img src="${pokemon.image}" alt="${pokemon.name}" onerror="this.src='/images/close.png'" />
+                    <p>${pokemon.name}</p>
+                </div>
+            `);
+            // 포켓몬 클릭 시 상세 정보 표시
+            pokemonElement.on('click', function () {
+                showPokemonDetails(pokemon.id); // 사용자가 제공한 함수 호출
+            });
+
+            return pokemonElement;
         }
     }
 
@@ -470,6 +465,12 @@ $(document).ready(function () {
         const activeTab = $('#' + tabId); // 활성화할 탭 선택
         if (activeTab.length) {
             activeTab.show();  // 해당 탭의 콘텐츠 표시
+        }
+    }
+
+    function NotReload(event) {
+        if ((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116)) {
+            event.preventDefault();
         }
     }
 

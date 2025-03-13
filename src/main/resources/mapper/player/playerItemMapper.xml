@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.player.dao.relationship.PlayerItemMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.relationship.PlayerItemDTO" autoMapping="true">
+    <result column="player_id" property="playerId" />
+    <result column="item_id" property="itemId" />
+    <result column="count" property="count" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+  
+  <resultMap id="playerResultMap" type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
+    <result column="nickname" property="nickname" />
+    <result column="tag" property="tag" />
+    <result column="profile" property="profile" />
+    <result column="lv" property="lv" />
+    <result column="experience" property="experience" />
+    <result column="game_money" property="gameMoney" />
+    <result column="real_money" property="realMoney" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <resultMap id="itemResultMap" type="kr.co.pokemon.item.dto.ItemDTO" autoMapping="true">
+    <result column="name" property="name" />
+    <result column="image" property="image" />
+    <result column="category_id" property="categoryId" />
+    <result column="cost" property="cost" />
+    <result column="real_cost" property="realCost" />
+    <result column="description" property="description" />
+    <result column="flavor_text" property="flavorText" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM player_item ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM player_item WHERE id = #{id}
+  </select>
+
+  <select id="selectItemsByPlayerId" resultMap="itemResultMap" parameterType="String">
+    SELECT
+      i.*
+    FROM player_item p
+    JOIN item i ON i.id = p.item_id
+    WHERE p.player_id = #{playerId}
+    ORDER BY i.id
+  </select>
+
+  <select id="selectPlayersByItemId" resultMap="playerResultMap" parameterType="int">
+    SELECT
+      p.*
+    FROM player_item i
+    JOIN player p ON p.id = i.player_id
+    WHERE i.item_id = #{itemId}
+    ORDER BY p.id
+  </select>
+
+  <select id="selectByPlayerId" resultMap="dataResultMap" parameterType="String">
+    SELECT * FROM player_item WHERE player_id = #{playerId}
+  </select>
+
+  <select id="selectByItemId" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM player_item WHERE item_id = #{itemId}
+  </select>
+  
+  <select id="existById" resultType="int" parameterType="int">
+    SELECT CASE
+        WHEN EXISTS (SELECT 1 FROM player_item WHERE id = #{id}) THEN 1
+        ELSE 0
+    END
+    FROM dual
+  </select>
+  
+  <insert id="insert">
+    INSERT INTO player_item
+      ( id, player_id, item_id, count )
+    VALUES
+      ( player_item_seq.NEXTVAL, #{playerId}, #{itemId}, #{count} )
+  </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+    INSERT INTO player_item ( id, player_id, item_id, count )
+    SELECT player_item_seq.NEXTVAL, a.* FROM (
+    <foreach collection="list" item="item" separator="UNION ALL">
+        SELECT #{item.playerId} AS player_id, #{item.itemId} AS item_id, #{item.count} AS count
+        FROM dual
+    </foreach>) a
+  </insert>
+  
+  <update id="update">
+    UPDATE player_item
+    SET count = #{count},
+        updated_at = SYSDATE
+    WHERE id = #{id}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM player_item WHERE id = #{id}
+  </delete>
+
+</mapper>

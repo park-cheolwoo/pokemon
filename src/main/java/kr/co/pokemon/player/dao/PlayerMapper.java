@@ -28,7 +28,6 @@ public interface PlayerMapper {
 	
 	PlayerDTO findByTag(String tag);
 	
-	
 //	int countPlayerPokemons(String playerId);
 	
 }

@@ -298,6 +298,7 @@ body > div > div.mypage-banner-container > a{
     /* 수직 스크롤 */
     width: 800px;
     height: 560px;
+    overflow-y: auto;
     padding: 10px;
     position: relative;
     /* 상대적인 위치 설정 */
