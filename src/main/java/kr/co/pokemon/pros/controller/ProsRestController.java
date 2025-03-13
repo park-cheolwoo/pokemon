@@ -29,4 +29,14 @@ public class ProsRestController {
 		List<PokemonDTO> list = pokemonService.getAll(pDTO);
 		return list;
 	}
+
+//	@ResponseBody
+//	@PostMapping(value="/pokemon/search/{keyword}")
+//	public List<PokemonDTO> searchPokemon(String keyword) {
+//		System.out.println("name : "+keyword);
+//		List<PokemonDTO> list = pokemonService.getByName(keyword);
+//		List<Evolution>
+//		return list;
+//	}
+
 }
