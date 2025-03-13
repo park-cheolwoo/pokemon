@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
+import kr.co.pokemon.play.dto.PokemonOwnAttack;
 import kr.co.pokemon.pokemon.dao.relationship.PokemonAttackMapper;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.dto.relationship.PokemonMoveDTO;
 
 @Service
@@ -85,4 +87,14 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 		pokemonAttackMapper.insert(dto);
 	}
 
+	@Override
+	public List<PokemonOwnAttack> getAttacksByPokemonId(int pokemonId) {
+		return pokemonAttackMapper.selectAttackByPokemonId(pokemonId);
+	}
+	
+	@Override
+	public List<PokemonDTO> getPokemonByAttackId(int attackId) {
+		return pokemonAttackMapper.selectPokemonByAttackId(attackId);
+	}
+	
 }

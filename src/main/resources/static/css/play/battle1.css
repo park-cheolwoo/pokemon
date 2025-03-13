@@ -1,0 +1,153 @@
+main {
+	background-color: black;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	position: relative;
+	min-width: 800px;
+    min-height: 450px;
+    border-radius: 5px;
+    background-image: url(/images/play/battle/battlebackground4.png);
+    background-size: contain;
+}
+
+#text-box {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 400px;
+    height: 100px;
+    background-color: #00000080;
+    border-radius: 5px;
+    padding: 20px;
+    color: white;
+}
+
+.pokemon {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.pokemon.me {
+    bottom: 20px;
+    left: 50px;
+}
+
+.pokemon.you {
+	bottom: 240px;
+	right: 50px;
+}
+
+.pokemon__info {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pokemon__info--level {
+	font-size: 12px;
+}
+
+.pokemon__info--name {
+	font-size: 15px;
+}
+
+.pokemon__info--hp {
+    margin-top: 5px;	
+}
+
+.hp-bar {
+    border: 2px solid black;
+    width: 150px;
+    height: 15px;
+    border-radius: 60px;
+    overflow: hidden;
+}
+
+.hp-bar__value {
+    width: 100%;
+    height: 100%;
+    background-color: #34ff1e;
+    transition: 1s ease-in-out;
+}
+
+.pokemon-image {
+	display: flex;
+	justify-content: center;
+}
+
+.pokemon-image img {
+	margin-top: 10px;
+	min-height: 100px;
+}
+
+.pokemon.me .pokemon-image img {
+	width: 150px;
+}
+
+.selection-box {
+	position: absolute;
+	bottom: 25px;
+	right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.selection-box__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 35px;
+    background-color: #00000080;
+    color: white;
+    transition: .2s ease-in-out;
+}
+
+.selection-box__btn:hover {
+	transform: translate(10px) scale(1.03);
+	color: #f9ed40;
+}
+.selection-box__btn:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+.selection-box__btn:nth-child(2) {
+	margin-right: 20px;
+}
+
+.selection-box__btn:nth-child(3) {
+	margin-right: 40px;
+}
+
+.selection-box__btn:nth-child(4) {
+	margin-right: 60px;
+}
+
+.damaged-pokemon {
+	animation: damaged-it .3s ease-in-out infinite;
+}
+
+.shake-device {
+	animation: shake-it .3s ease-in-out;
+}
+
+@keyframes damaged-it {
+	0% { opacity: 0; }
+	50% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@keyframes shake-it {
+	0% { transform: translateX(30px); }
+	25% { transform: translateX(-30px); }
+	50% { transform: translateX(0px); }
+	75% { transform: translateX(-10px); }
+	100% { transform: translateX(-10px); }
+}
