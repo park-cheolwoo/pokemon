@@ -10,6 +10,22 @@
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
+  
+  <resultMap id="pokemonResultMap" type="kr.co.pokemon.pokemon.dto.PokemonDTO" autoMapping="true">
+    <result column="gender_rate" property="genderRate" />
+    <result column="gender_diff" property="genderDiff" />
+    <result column="flavor_text" property="flavorText" />
+    <result column="evolution_id" property="evolutionId" />
+    <result column="eggGroup_id" property="eggGroupId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+  
+  <resultMap id="habitatResultMap" type="kr.co.pokemon.pokemon.dto.HabitatDTO" autoMapping="true">
+  	<result column="original_name" property="originalName" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
     SELECT * FROM pokemon_habitat ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
@@ -19,8 +35,24 @@
     SELECT * FROM pokemon_habitat WHERE id = #{id}
   </select>
 
-  <select id="selectByPokemonId" resultMap="dataResultMap" parameterType="int">
-    SELECT * FROM pokemon_habitat WHERE pokemon_id = #{pokemonId}
+  <select id="selectHabitatByPokemonId" resultMap="dataResultMap" parameterType="int">
+    SELECT
+    	h.*
+    FROM
+    	POKEMON_HABITAT p
+	JOIN
+		habitat h ON h.id = p.habitat_id
+	WHERE p.pokemon_id = #{pokemonId}
+  </select>
+  
+  <select id="selectPokemonByHabitatId" resultMap="pokemonResultMap" parameterType="int">
+  	SELECT
+  		p.*
+  	FROM
+  		POKEMON_HABITAT h
+	JOIN
+		pokemon p ON p.id = h.pokemon_id
+	WHERE h.habitat_id = #{habitatId}
   </select>
 
   <insert id="insert">

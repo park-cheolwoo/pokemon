@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.pokemon.dto.HabitatDTO;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.dto.relationship.PokemonHabitatDTO;
 
 @Mapper
@@ -14,7 +16,9 @@ public interface PokemonHabitatMapper {
 	
 	PokemonHabitatDTO selectById(int id);
 	
-	List<PokemonHabitatDTO> selectByPokemonId(int pokemonId);
+	List<HabitatDTO> selectHabitatByPokemonId(int pokemonId);
+	
+	List<PokemonDTO> selectPokemonByHabitatId(int habitatId);
 	
 	void insert(PokemonHabitatDTO pokemonHabitat);
 	
