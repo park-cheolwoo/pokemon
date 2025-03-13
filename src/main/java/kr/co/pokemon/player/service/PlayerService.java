@@ -2,15 +2,18 @@ package kr.co.pokemon.player.service;
 
 import java.util.List;
 
+import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.player.dto.FriendDTO;
 //import kr.co.pokemon.player.controller.Player;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 public interface PlayerService {
 	
-	List<PlayerDTO> findAll(int size, int page);
+	List<PlayerDTO> getAll(PageRequestDTO pDTO);
 	
-	PlayerDTO findById(int id);
+	//PlayerDTO findById(int id);
+	
+	PlayerDTO getById(String id);
 
 	PlayerDTO updatePlayer(int id, PlayerDTO player);
 	
@@ -22,6 +25,7 @@ public interface PlayerService {
 
 	boolean insertPlayer(PlayerDTO playerDto);
 
+	List<PlayerDTO> getByNickname(String keyword);
 
 //	int countPlayerPokemons(String playerId);
 

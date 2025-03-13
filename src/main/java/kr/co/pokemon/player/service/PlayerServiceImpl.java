@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.player.dao.PlayerMapper;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
@@ -20,19 +21,23 @@ public class PlayerServiceImpl implements PlayerService {
     private PlayerMapper playerMapper;
 
     @Override
-    public List<PlayerDTO> findAll(int size, int page) {
-        throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
+    public List<PlayerDTO> getAll(PageRequestDTO pDTO) {
+        return playerMapper.selectAll(pDTO);
     }
+
+//    @Override
+//    public PlayerDTO findById(int id) {
+//        Map<String, Object> map = new HashMap<>();
+//        PlayerDTO playerDto = playerMapper.selectById(id);
+//        map.put("playerDto", playerDto);
+//        return playerDto;
+//    }
 
     @Override
-    public PlayerDTO findById(int id) {
-        Map<String, Object> map = new HashMap<>();
-        PlayerDTO playerDto = playerMapper.selectById(id);
-        map.put("playerDto", playerDto);
-        return playerDto;
-    }
-
-
+	public PlayerDTO getById(String id) {
+		return playerMapper.selectById(id);
+	}
+    
     @Override
     public PlayerDTO updatePlayer(int id, PlayerDTO player) {
         throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
@@ -62,6 +67,14 @@ public class PlayerServiceImpl implements PlayerService {
     private String generateRandomTag() {
         return "#" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9); // 랜덤 태그 생성
     }
+
+	@Override
+	public List<PlayerDTO> getByNickname(String keyword) {
+		return playerMapper.getByNickname(keyword);
+	}
+
+	
+
 
 }
 

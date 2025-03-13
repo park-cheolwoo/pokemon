@@ -28,4 +28,15 @@ public class ItemRestController {
     public List<ItemDTO> getItemsByCategory(@PathVariable int categoryId) {
         return itemService.getByCategoryId(categoryId);
     }
+
+    /**
+     * 아이템 ID에 해당하는 아이템 정보를 반환합니다.
+     * 
+     * @param itemId 아이템 ID
+     * @return 해당 아이템 정보
+     */
+    @GetMapping("/{itemId}")
+    public ItemDTO getItemById(@PathVariable int itemId) {
+        return itemService.getById(itemId);
+    }
 }
