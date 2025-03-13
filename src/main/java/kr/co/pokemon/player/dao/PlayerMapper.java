@@ -29,6 +29,10 @@ public interface PlayerMapper {
 	PlayerDTO chooseById(String id);
 	
 	PlayerDTO findByTag(String tag);
+
+	List<PlayerDTO> getByNickname(String keyword);
+
+	PlayerDTO getByNicknameAndTag(String keyword, String tag);
 	
 	
 //	int countPlayerPokemons(String playerId);

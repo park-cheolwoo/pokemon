@@ -63,5 +63,15 @@ public class PlayerServiceImpl implements PlayerService {
         return "#" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9); // 랜덤 태그 생성
     }
 
+	@Override
+	public List<PlayerDTO> getByNickname(String keyword) {
+		return playerMapper.getByNickname(keyword);
+	}
+
+	@Override
+	public PlayerDTO getByNicknameAndTag(String keyword, String tag) {
+		return playerMapper.getByNicknameAndTag(keyword,tag);
+	}
+
 }
 

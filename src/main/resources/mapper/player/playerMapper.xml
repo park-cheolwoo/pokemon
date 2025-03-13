@@ -22,6 +22,14 @@
     select * from player where id = #{id}
 </select>
 
+<select id="getByNickname" resultMap="dataResultMap" parameterType="String">
+	select * from player ORDER BY nickname where nickname like '%' || #{keyword} || '%'
+</select> 
+
+<select id="getByNicknameAndTag" resultMap="dataResultMap" parameterType="String">
+	select * from player where nickname = #{keyword} and tag = #{tag}
+</select> 
+
 <insert id="insertPlayer" parameterType="kr.co.pokemon.player.dto.PlayerDTO">
     INSERT INTO player (id, nickname, password, tag, lv, game_money, real_money)
     VALUES (
