@@ -24,8 +24,6 @@
     <result column="front_female" property="frontFemale" />
     <result column="front_shiny" property="frontShiny" />
     <result column="front_shiny_female" property="frontShinyFemale" />
-    <result column="created_at" property="createdAt" />
-    <result column="updated_at" property="updatedAt" />
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
@@ -61,6 +59,10 @@
   		SELECT #{item.id}, #{item.name}, #{item.image, jdbcType=VARCHAR}, #{item.image3d, jdbcType=VARCHAR}, #{item.genderRate}, #{item.genderDiff}, #{item.genus}, #{item.height}, #{item.weight}, #{item.flavorText, jdbcType=CLOB}, #{item.isLegendary}, #{item.isMythical} FROM DUAL
   	</foreach>
   </insert>
+  
+  <update id="updateEvolutionId" parameterType="java.util.Map">
+  	UPDATE pokemon SET evolution_id = #{evolutionId} WHERE id = #{id}
+  </update>
   
   <select id="selectSpritesById" resultMap="dataSpritesResultMap" parameterType="int">
     SELECT * FROM sprites WHERE id = #{id}
