@@ -44,7 +44,10 @@
        		<div class="pros_profile_wrap">
        		<img src="/images/pros/wood-bar2.png" class="pros_profile_bar">
             <h4 class="pros_profile">${list.nickname }</h4>
-            <h4 class="pros_profile_info">활성화</h4>
+            <h4 class="pros_profile_info">
+            	<c:if test="${list.isActive == '0' }">활성화</c:if>
+            	<c:if test="${list.isActive == '1' }">비활성화</c:if>
+            </h4>
        		</div>
         	<img src="/images/pros/more.png" class="pros_more_btn">
         </div>

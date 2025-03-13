@@ -23,6 +23,7 @@ public class PlayerDTO {
 	private int experience = 0;
 	private int gameMoney = 0;
 	private int realMoney = 0;
+	private int isActive = 0;
 	
 	private Timestamp updatedAt;
 	private Timestamp createdAt;
