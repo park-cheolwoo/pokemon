@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <div id="content-container" class="mypage-content-container">
 	<div class="item-view-info-container">
-		<div class="item-img">
-			<img src="/images/monsterball.png" alt="몬스터볼 이미지">
+		<div class="mypage-item-img">
+			<img/>
 		</div>
-		<div class="item-text-container">
-			<div class="item-text">
-				<div class="item-name">몬스터볼</div>
-				<div class="item-info">아이템 내용</div>
+		<div class="mypage-item-text-container">
+			<div class="mypage-item-text">
+				<div class="mypage-item-name"></div>
+				<div class="mypage-item-info"></div>
 			</div>
 		</div>
 	</div>
@@ -36,11 +36,6 @@
 						</tr>
 					</thead>
 					<tbody id="monsterball-item-list-body">
-						<tr>
-							<td>이미지</td>
-							<td>몬스터볼</td>
-							<td>1개</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -54,11 +49,6 @@
 						</tr>
 					</thead>
 					<tbody id="battle-item-list-body">
-						<tr>
-							<td>이미지</td>
-							<td>배틀 아이템</td>
-							<td>1개</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -72,11 +62,6 @@
 						</tr>
 					</thead>
 					<tbody id="training-item-list-body">
-						<tr>
-							<td>이미지</td>
-							<td>육성 아이템</td>
-							<td>1개</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>

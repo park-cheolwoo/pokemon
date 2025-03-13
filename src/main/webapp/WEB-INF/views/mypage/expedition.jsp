@@ -49,45 +49,6 @@
 
 	<div class="mypage-container">
 		<div class="image-container">
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
-			<div>
-				<img src="/images/image 1.png" alt="이미지1">
-			</div>
 			<!-- 추가 이미지들 -->
 		</div>
 	</div>
