@@ -46,8 +46,7 @@ public class ProsRestController {
 	@ResponseBody
 	@PostMapping(value = "/player/search/{keyword}")
 	public List<PlayerDTO> searchPlayer(String keyword){
-		List<PlayerDTO> list = playerService.getByNickname(keyword);
-		return list;
+		return playerService.getByNickname(keyword);
 	}
 	
 	@ResponseBody

@@ -218,7 +218,6 @@ $(function() {
 	
 	// 플레이어 상세보기 페이지 전환
 	$(document).on("click", ".pros_more_btn", function() {
-		alert("클릭");
 		const id = $(this).parent().data("id");
 		console.log("url : "+"/admin/player/view/" + id )
 		$.ajax({

@@ -24,7 +24,7 @@
 </select>
 
 <select id="getByNickname" resultMap="dataResultMap" parameterType="String">
-	select * from player ORDER BY nickname where nickname like '%' || #{keyword} || '%'
+	select * from player where nickname like '%' || #{keyword} || '%' ORDER BY nickname
 </select> 
 
 <select id="getByNicknameAndTag" resultMap="dataResultMap" parameterType="String">
