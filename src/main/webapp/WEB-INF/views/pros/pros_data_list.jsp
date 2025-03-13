@@ -61,14 +61,14 @@
   <div class="pros_blur"></div> 	  
   <img src="/images/container.png" class="pros_container_frame2">
   <img src="/images/store/item-frame.png" class="pros_profile_frame_img2" />
-  <img src="/images/pros/avarter.png" class="pros_profile_img2">
-  <h4 class="pros_profile_name1 text">일레도리자드</h4>
+  <img src="" class="pros_profile_img2">
+  <h4 class="pros_profile_name1 text"></h4>
   <img src="/images/pros/type-grass.png" class="pros_pokemon_type1">
   <img src="/images/pros/type-poison.png" class="pros_pokemon_type2">
-  <h4 class="pros_profile_name2 text">씨앗포켓몬</h4>
+  <h4 class="pros_profile_name2 text"></h4>
   
-  <h4 class="pros_update text">수정일 : 2025/02/25</h4>
-  <h4 class="pros_create text">등록일 : 2025/02/25</h4>
+  <h4 class="pros_update text"></h4>
+  <h4 class="pros_create text"></h4>
 
   <!-- 내용 부분 -->
   <img src="/images/pros/pokemon.png" class="pros_pokemon_img1">
@@ -85,8 +85,7 @@
 
 
 
-  	<h4 class="pros_intro text">자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.자기소개가 너무 길면 스크롤이 됩니다.</h4>
-
+  	<h4 class="pros_intro text"></h4>
 	<form name="updateFrm" method="post" class="updateFrm">
 	<input type="hidden" name="get_category" class="get_category" value="pokemon" />
 	<input type="hidden" name="get_active" class="pros_active" value="on" />
