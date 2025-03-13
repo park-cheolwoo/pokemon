@@ -278,13 +278,6 @@ body {
 	display: none;
 }
 
-.pros_rows {
-	display:flex;
-	justify-content:flex-start;
-	align-items:center;
-	height:115px;
-}
-
 .pros_profile_view_container {
 	display: none;
 	width: 1147px;
@@ -745,15 +738,16 @@ body {
 	z-index: 15;
 }
 
-
-
-/* 임시로 저장해둔 CSS */
 .pros_profile_frame, .pros_profile_frame_img {
 	width: 96px;
 	height: 100px;
 	margin-right: 13px;
 	position: relative;
 	z-index: 25;
+}
+
+.pros_profile_frame, .pros_profile_wrap{
+	float:left;
 }
 
 .pros_profile_img {

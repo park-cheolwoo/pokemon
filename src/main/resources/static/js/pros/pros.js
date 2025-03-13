@@ -124,6 +124,7 @@ $(function() {
 	$(document).on("click", ".pros_search_btn", function() {
 		const category = $(".pros_list_category").text();
 		const keyword = $(".pros_keyword").val().trim();
+		const list = $(this).hasClass("pros_list");
 		console.log("/admin/" + category + "/search/" + keyword);
 		$.ajax({
 			url: "/admin/" + category + "/search/" + keyword,
@@ -133,6 +134,7 @@ $(function() {
 			success: function(data) {
 				alert("성공");
 				console.log(data);
+				if(!list){
 				$(".pros_list2").children().hide();
 				let hdata = ``;
 				for (let i = 0; i < data.length; i++) {
@@ -140,11 +142,8 @@ $(function() {
 						                    <img src="${data[i].image}" class="pros_list_img">
 						                  </div>`;
 				}
-				console.log($(".pros_list").exists())
-				if($(".pros_list").exists()){
-					$(".pros_list").append(hdata);
-				} else{$(".pros_list2").append(hdata);}
-				
+				$(".pros_list2").append(hdata);
+				} else{alert("미구현 기능입니다.")}
 				$(".pros_search_flag").text("1");
 			},
 			error: function() {

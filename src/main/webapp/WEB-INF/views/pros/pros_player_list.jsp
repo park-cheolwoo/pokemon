@@ -36,7 +36,7 @@
       <div class="pros_list">
         <!-- 반복 -->
         <c:forEach items="${list }" var="list">
-        <div class="pros_rows">
+        <div class="pros_items">
         	<div class="pros_profile_frame">
         		<img src="/images/store/item-frame.png" class="pros_profile_frame_img">
          	    <img src="/images/pros/avarter.png" class="pros_profile_img">

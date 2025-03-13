@@ -16,10 +16,10 @@
 
 <body>
   <img src="/images/pros/gear.png" class="pros_gear" />
-  <img src="/images/pros/wood-ellipse-bar.png" class="pros_user_btn pros_user_btn_box_off" />
-  <h4 class="pros_user_btn pros_user_btn_text_off text">유저 정보</h4>
-  <img src="/images/pros/yellow-ellipse-bar.png" class="pros_data_btn pros_data_btn_box_on" />
-  <h4 class="pros_data_btn pros_data_btn_text_on text">데이터 정보</h4>
+  <img src="/images/pros/wood-ellipse-bar.png" class="pros_player_btn pros_player_btn_box_off" />
+  <h4 class="pros_player_btn pros_player_btn_text_off text">유저 정보</h4>
+  <img src="/images/pros/yellow-ellipse-bar.png" class="pros_data_btn_box_on" />
+  <h4 class="pros_data_btn_text_on text">데이터 정보</h4>
   
   
   <div class="pros_profile_data_container">
