@@ -1,10 +1,22 @@
 $(function() {
-	let isIdValidated = false; // 아이디 중복 확인 상태
+
+	const appState = {
+		isValidated: false, // 중복 확인 상태
+	};
 
 	// 로그인 버튼 함수
 	function loginBtn() {
 		const id = $("#id").val();
 		const password = $("#password").val();
+
+		if (!id) {
+			alert("아이디를 입력하세요.");
+			return;
+		}
+		if (!password) {
+			alert("비밀번호를 입력하세요.");
+			return;
+		}
 
 		$.ajax({
 			url: "/member/login",
@@ -14,10 +26,10 @@ $(function() {
 				password: password
 			},
 			success: function(response) {
-				console.log("Response:", response);
-				if (response.loginChk === "0") {
+				if (response.loginChk == "0") {
+					console.log("Incorrect ID or Password");
 					alert("아이디 또는 패스워드가 일치하지 않습니다.");
-				} else if (response.loginChk === "1") {
+				} else if (response.loginChk == "1") {
 					alert("로그인 성공");
 					location.href = "/index";
 				}
@@ -38,8 +50,10 @@ $(function() {
 		const id = $('input[name="id"]').val();
 		if (!id) {
 			alert("아이디를 입력해주세요!");
-			return;
+			return false;
 		}
+
+		let isValid = false; // 로컬 상태 관리
 
 		$.ajax({
 			url: "/member/checkId",
@@ -48,22 +62,32 @@ $(function() {
 			success: function(response) {
 				if (response == "Able") {
 					$(".idmatch").text("사용 가능한 ID입니다.").css("color", "green");
-					$('input[name="id"]').data("isValidated", true); // 상태 저장
+					appState.isValidated = true; 
 				} else {
 					$(".idmatch").text("이미 사용 중인 ID입니다.").css("color", "red");
-					$('input[name="id"]').data("isValidated", false); // 상태 저장
+					appState.isValidated = false; 
 				}
+				console.log("중복 확인 후 isValidated:", appState.isValidated);
 			},
 			error: function() {
 				alert("중복 확인 중 오류가 발생했습니다.");
+				appState.isValidated = false; // 오류 시 초기화
 			}
 		});
+
+		return isValid; // 결과 반환
 	}
 
 	// 비밀번호 확인 함수
 	function checkPasswords() {
 		const password = $('input[name="password"]').val();
 		const password2 = $('input[name="password2"]').val();
+
+		if (!password && !password2) {
+			$(".pwmatch").text("").css("color", ""); // 메시지 초기화
+			return false;
+		}
+
 		if (password == password2) {
 			$(".pwmatch").text("비밀번호가 일치합니다.").css("color", "green");
 			return true;
@@ -75,24 +99,30 @@ $(function() {
 
 	// 회원가입 버튼 클릭 이벤트 처리
 	$('#joinBtn').click(function() {
+		const joinid = $('input[name="id"]').val();
+		const joinpassword = $('input[name="password"]').val();
+		const joinnickname = $('input[name="nickname"]').val();
+		if (!appState.isValidated) {
+		        alert("아이디 중복 확인을 먼저 해주세요.");
+		        return;
+		    }
 		if (!checkPasswords()) {
 			alert("비밀번호가 일치하지 않습니다.");
 			return;
 		}
-		if (isIdValidated = false) {
-			alert("아이디 중복 확인을 먼저 해주세요.");
+		if (!joinnickname) {
+			alert("닉네임을 입력해주세요.");
 			return;
 		}
-		const joinid = $('input[name="id"]').val();
-		const joinpassword = $('input[name="password"]').val();
-		const joinnickname = $('input[name="nickname"]').val();
+
 		$.ajax({
 			url: "/member/join",
 			type: "POST",
-			data: { id : joinid,
-					password : joinpassword,
-					nickname : joinnickname,
-				},
+			data: {
+				id: joinid,
+				password: joinpassword,
+				nickname: joinnickname,
+			},
 			success: function() {
 				alert("회원가입이 완료되었습니다!");
 				window.location.href = "/member/login"; // 성공 시 로그인 페이지로 이동

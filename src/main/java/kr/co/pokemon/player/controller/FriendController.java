@@ -32,7 +32,6 @@ public class FriendController {
 	    List<FriendDTO> friends = friendService.getFriendList(session_id);
 	    if (friends != null && !friends.isEmpty()) {
 	        System.out.println("친구 목록 불러오기 성공: " + friends); 
-	        
 	    } else {
 	        System.out.println("친구 목록이 없습니다.");
 	    }

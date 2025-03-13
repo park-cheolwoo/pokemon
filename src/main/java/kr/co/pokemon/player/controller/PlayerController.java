@@ -51,7 +51,6 @@ public class PlayerController {
     public String join(PlayerDTO playerDto, Model model, HttpSession session) {
         if (playerService.insertPlayer(playerDto)) {
             session.removeAttribute("isIdValidated"); 
-            System.out.println("DEBUG: PlayerDTO 데이터 = " + playerDto);
             return "redirect:/member/login"; 
         } else {
             model.addAttribute("error", "회원가입에 실패했습니다. 다시 시도해 주세요."); 
@@ -65,7 +64,7 @@ public class PlayerController {
     public String checkId(@RequestParam String id) {
         return playerService.isIdAble(id) ? "Able" : "unAble";
     }
-
+    
     
     private void setSessionAttributes(HttpSession session, PlayerDTO playerDto) {
         session.setAttribute("session_id", playerDto.getId());

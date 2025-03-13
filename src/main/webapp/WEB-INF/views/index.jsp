@@ -26,8 +26,11 @@
                 <img src="/images/index/diamond.png" class="resource-icon" alt="다이아몬드">
                 <img src="/images/index/wood_button3.png" class="wood-bg">
                 <h3 class="resource-info">${session_realMoney} 원</h3>
-                <img src="/images/index/option.png" class="option">
             </div>
+                <div style="position: relative; width: 111px; height: 111px;">
+                <img src="/images/index/option.png" class="option">
+                <button type="button" id="logoutBtn" class="closebtn"></button>
+                </div>
         </div>
 
         <div class="buttons-container">
