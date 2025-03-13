@@ -51,7 +51,7 @@ public class PlayServiceImpl implements PlayService {
 		pokemon.setSprites(pokemonService.getSpritesById(pokemonId));
 		List<PokemonStatDTO> stats = getRandomStat(pokemon);
 
-		return new CreatedPokemonDTO(pokemon, stats, getCharacteristic(stats), pokemonMoveService.getAttacksByPokemonId(pokemonId), abilityService.getAbilitiesByPokemonId(pokemonId));
+		return new CreatedPokemonDTO(pokemon, pokemon.getName(), stats, getCharacteristic(stats), pokemonMoveService.getAttacksByPokemonId(pokemonId), abilityService.getAbilitiesByPokemonId(pokemonId));
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public class PlayServiceImpl implements PlayService {
 		
 		List<PokemonStatDTO> stats = getRandomStat(pokemon);
 
-		return new CreatedPokemonDTO(pokemon, stats, getCharacteristic(stats), pokemonMoveService.getAttacksByPokemonId(pokemon.getId()), abilityService.getAbilitiesByPokemonId(pokemon.getId()));
+		return new CreatedPokemonDTO(pokemon, pokemon.getName(), stats, getCharacteristic(stats), pokemonMoveService.getAttacksByPokemonId(pokemon.getId()), abilityService.getAbilitiesByPokemonId(pokemon.getId()));
 	}
 	
 	private List<PokemonStatDTO> getRandomStat(PokemonDTO pokemon) {

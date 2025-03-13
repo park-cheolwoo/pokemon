@@ -178,4 +178,8 @@ public class PokemonServiceImpl implements PokemonService {
 		pokemonMapper.updateEvolutionId(updateEvolution);
 	}
 
+	@Override
+	public List<PokemonDTO> getPokemonListWithOwnership(Long playerId) {
+		return pokemonMapper.selectAllWithOwnership(playerId, new PageRequestDTO());
+	}
 }

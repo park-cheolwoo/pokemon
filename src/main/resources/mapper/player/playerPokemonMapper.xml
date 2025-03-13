@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.player.dao.PlayerPokemonMapper">
+
+  <resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.PlayerPokemonDTO" autoMapping="true">
+    <result column="player_id" property="playerId" />
+    <result column="pokemon_id" property="pokemonId" />
+    <result column="lv" property="level" />
+    <result column="characteristic_id" property="characteristicId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM player_pokemon WHERE id = #{id}
+  </select>
+
+  <select id="selectByPlayerId" resultMap="dataResultMap" parameterType="String">
+    SELECT * FROM player_pokemon WHERE player_id = #{playerId}
+  </select>
+
+  <select id="selectIdByPokemonIdAndPlayerId" resultType="int" parameterType="java.util.Map">
+    SELECT id FROM player_pokemon WHERE player_id = #{playerId} AND pokemon_id = #{pokemonId}
+  </select>
+  
+  <update id="updateNameByCharacteristicById" parameterType="java.util.Map">
+  	UPDATE player_pokemon SET characteristic_id=#{characteristicId} WHERE id = #{id}
+  </update>
+  
+  <update id="updateNameById" parameterType="java.util.Map">
+  	UPDATE player_pokemon SET name=#{name} WHERE id = #{id}
+  </update>
+  
+  <update id="updateLevelById" parameterType="java.util.Map">
+  	UPDATE player_pokemon SET lv=#{level} WHERE id = #{id}
+  </update>
+  
+  <update id="updatExperienceById" parameterType="java.util.Map">
+  	UPDATE player_pokemon SET experience=#{experience} WHERE id = #{id}
+  </update>
+
+  <insert id="insert">
+  	<selectKey keyProperty="id" resultType="int" order="BEFORE">
+  		SELECT player_pokemon_seq.nextval FROM dual
+  	</selectKey>
+  	INSERT INTO player_pokemon
+  		( id, player_id, pokemon_id, name, gender, lv, experience, characteristic_id )
+  	VALUES
+  		( #{id}, #{playerId}, #{pokemonId}, #{name}, #{gender}, #{level}, #{experience}, #{characteristicId} )
+  </insert>
+
+</mapper>

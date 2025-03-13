@@ -68,6 +68,10 @@
 	END
 	FROM dual
   </select>
+
+  <select id="existAbilityAndPokemonId" resultType="int" parameterType="java.util.Map">
+	SELECT COUNT(*) FROM pokemon_ability WHERE pokemon_id = #{pokemonId} AND ability_id = #{abilityId}
+  </select>
   
   <insert id="insert">
   	INSERT INTO pokemon_ability

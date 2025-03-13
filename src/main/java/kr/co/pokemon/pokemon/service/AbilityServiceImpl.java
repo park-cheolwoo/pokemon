@@ -1,7 +1,9 @@
 package kr.co.pokemon.pokemon.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,6 +111,14 @@ public class AbilityServiceImpl implements AbilityService {
 	@Override
 	public List<PokemonDTO> getPokemonByAbilityId(int abilityId) {
 		return pokemonAbilityMapper.selectPokemonByAbilityId(abilityId);
+	}
+	
+	@Override
+	public boolean existAbilityAndPokemonId(int pokemonId, int abilityId) {
+		Map<String, Integer> existMap = new HashMap<>();
+		existMap.put("pokemonId", pokemonId);
+		existMap.put("abilityId", abilityId);
+		return pokemonAbilityMapper.existAbilityAndPokemonId(existMap) != 0;
 	}
 
 }

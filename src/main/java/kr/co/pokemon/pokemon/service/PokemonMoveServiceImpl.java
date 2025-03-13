@@ -1,7 +1,9 @@
 package kr.co.pokemon.pokemon.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,6 +97,15 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 	@Override
 	public List<PokemonDTO> getPokemonByAttackId(int attackId) {
 		return pokemonAttackMapper.selectPokemonByAttackId(attackId);
+	}
+	
+	@Override
+	public boolean existAttackAndPokemonId(int pokemonId, int attackId) {
+		Map<String, Integer> existMap = new HashMap<>();
+		existMap.put("pokemonId", pokemonId);
+		existMap.put("attackId", attackId);
+
+		return pokemonAttackMapper.existAttackAndPokemonId(existMap) != 0;
 	}
 	
 }

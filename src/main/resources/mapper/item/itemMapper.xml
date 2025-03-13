@@ -29,9 +29,9 @@
 	</foreach>
   </select>
 
-  <select id="selectByCategoryId" resultMap="dataResultMap" parameterType="int">
-    SELECT * FROM item WHERE id = #{category_id}
-  </select>
+<select id="selectByCategoryId" resultMap="dataResultMap" parameterType="int">
+  SELECT * FROM item WHERE category_id = #{categoryId}
+</select>
   
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
