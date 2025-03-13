@@ -5,14 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.player.dto.FriendDTO;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 @Mapper
 public interface PlayerMapper {
 
-	List<PlayerDTO> selectAll();
-	PlayerDTO selectById(int id);
+	List<PlayerDTO> selectAll(PageRequestDTO pDTO);
+	
+	PlayerDTO selectById(String id);
 	
 	void updatePlayer(PlayerDTO player);
 	
@@ -27,6 +29,8 @@ public interface PlayerMapper {
 	PlayerDTO chooseById(String id);
 	
 	PlayerDTO findByTag(String tag);
+
+	List<PlayerDTO> getByNickname(String keyword);
 	
 //	int countPlayerPokemons(String playerId);
 	
