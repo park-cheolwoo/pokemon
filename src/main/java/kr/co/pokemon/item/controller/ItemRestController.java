@@ -12,7 +12,7 @@ import kr.co.pokemon.item.dto.ItemDTO;
 import kr.co.pokemon.item.service.ItemService;
 
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping("/items")
 public class ItemRestController {
 
     @Autowired
