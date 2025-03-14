@@ -15,6 +15,7 @@ import lombok.Setter;
 public class CreatedPokemonDTO {
 
 	private PokemonDTO pokemon;
+	private String name;
 	private List<PokemonStatDTO> stats;
 	private CharacteristicDTO characteristic;
 	private List<PokemonOwnAttack> attacks;

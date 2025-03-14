@@ -12,5 +12,7 @@ public interface PokemonMoveService extends APIGetable<PokemonMoveDTO> {
 	List<PokemonOwnAttack> getAttacksByPokemonId(int pokemonId);
 	
 	List<PokemonDTO> getPokemonByAttackId(int attackId);
+	
+	boolean existAttackAndPokemonId(int pokemonId, int attackId);
 
 }

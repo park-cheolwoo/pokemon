@@ -268,6 +268,7 @@ CREATE TABLE player (
     experience NUMBER(5) DEFAULT 0 NOT NULL,
     game_money NUMBER(20) DEFAULT 0 NOT NULL,
     real_money NUMBER(20) DEFAULT 0 NOT NULL,
+    is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
     
@@ -289,6 +290,43 @@ CREATE TABLE player_pokemon (
 	CONSTRAINT fk_player_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
 	CONSTRAINT fk_player_pokemon_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE,
 	CONSTRAINT fk_player_pokemon_characteristic FOREIGN KEY(characteristic_id) REFERENCES characteristic (id) ON DELETE CASCADE
+);
+
+CREATE TABLE own_pokemon_ability (
+	id NUMBER(20) PRIMARY KEY,
+	player_pokemon_id NUMBER(20) NOT NULL,
+	ability_id NUMBER(5) NOT NULL,
+	slot NUMBER(3) DEFAULT 0 NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL,
+
+	CONSTRAINT fk_own_pokemon_ability_pokemon FOREIGN KEY(player_pokemon_id) REFERENCES player_pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_own_pokemon_ability_ability FOREIGN KEY(ability_id) REFERENCES ability (id) ON DELETE CASCADE
+);
+
+CREATE TABLE own_pokemon_attack (
+	id NUMBER(20) PRIMARY KEY,
+	player_pokemon_id NUMBER(20) NOT NULL,
+	attack_id NUMBER(5) NOT NULL,
+	slot NUMBER(3) DEFAULT 0 NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL,
+
+	CONSTRAINT fk_own_pokemon_attack_pokemon FOREIGN KEY(player_pokemon_id) REFERENCES player_pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_own_pokemon_attack_attack FOREIGN KEY(attack_id) REFERENCES attack (id) ON DELETE CASCADE
+);
+
+CREATE TABLE own_pokemon_stat (
+	id NUMBER(20) PRIMARY KEY,
+	player_pokemon_id NUMBER(20) NOT NULL,
+	stat_id NUMBER(5) NOT NULL,
+	value NUMBER(3) NOT NULL,
+	total NUMBER(3) NOT NULL,
+	updated_at DATE DEFAULT SYSDATE NOT NULL,
+	created_at DATE DEFAULT SYSDATE NOT NULL,
+	
+	CONSTRAINT fk_own_pokemon_stat_pokemon FOREIGN KEY(player_pokemon_id) REFERENCES player_pokemon (id) ON DELETE CASCADE,
+	CONSTRAINT fk_own_pokemon_stat_stat FOREIGN KEY(stat_id) REFERENCES stat (id) ON DELETE CASCADE
 );
 
 CREATE TABLE friend (
@@ -433,6 +471,34 @@ CREATE SEQUENCE evolution_detail_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 9999
+;
+
+CREATE SEQUENCE player_pokemon_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE own_pokemon_ability_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE own_pokemon_attack_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE own_pokemon_stat_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
 ;
 
 COMMIT;

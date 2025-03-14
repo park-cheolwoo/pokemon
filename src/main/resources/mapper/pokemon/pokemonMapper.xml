@@ -10,6 +10,7 @@
     <result column="flavor_text" property="flavorText" />
     <result column="evolution_id" property="evolutionId" />
     <result column="eggGroup_id" property="eggGroupId" />
+    <result column="is_active" property="isActive" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
@@ -33,8 +34,8 @@
     SELECT * FROM pokemon WHERE id = #{id}
   </select>
   
-  <select id="selectByName" resultMap="dataResultMap" parameterType="String">
-  	 SELECT * FROM pokemon WHERE name like '%' || #{name} || '%'
+  <select id="selectByName" resultMap="dataResultMap">
+   SELECT * FROM pokemon WHERE name like '%' || #{keyword} || '%' ORDER BY id
   </select> 
     
   <select id="existById" resultType="int" parameterType="int">
@@ -80,5 +81,18 @@
   		SELECT #{item.id}, #{item.backDefault, jdbcType=VARCHAR}, #{item.backFemale, jdbcType=VARCHAR}, #{item.backShiny, jdbcType=VARCHAR}, #{item.backShinyFemale, jdbcType=VARCHAR}, #{item.frontDefault, jdbcType=VARCHAR}, #{item.frontFemale, jdbcType=VARCHAR}, #{item.frontShiny, jdbcType=VARCHAR}, #{item.frontShinyFemale, jdbcType=VARCHAR} FROM DUAL
   	</foreach>
   </insert>
+  
+  <select id="selectAllWithOwnership" resultMap="dataResultMap">
+    SELECT 
+      p.*,
+      CASE WHEN pp.pokemon_id IS NOT NULL THEN 1 ELSE 0 END AS is_owned
+    FROM 
+      pokemon p
+    LEFT JOIN 
+      player_pokemon pp ON p.id = pp.pokemon_id AND pp.player_id = #{playerId}
+    <if test="page != null">
+      OFFSET ((#{page.page} - 1) * #{page.size}) ROWS FETCH NEXT #{page.size} ROWS ONLY
+    </if>
+  </select>
 
 </mapper>

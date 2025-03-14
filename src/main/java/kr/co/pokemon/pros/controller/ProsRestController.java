@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.player.dto.PlayerDTO;
+import kr.co.pokemon.player.service.PlayerService;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.PokemonService;
 
@@ -16,28 +18,47 @@ import kr.co.pokemon.pokemon.service.PokemonService;
 @RestController
 public class ProsRestController {
 
-	@Autowired PokemonService pokemonService;
+	@Autowired
+	PokemonService pokemonService;
+	@Autowired
+	PlayerService playerService;
 	
 	@ResponseBody
-	@PostMapping(value="/pokemon/{page}")
-	public List<PokemonDTO> addPokemon(PageRequestDTO pDTO) {
-		System.out.println("----- 서비스단 ------");
-		pDTO.setSize(96);
-		System.out.println("page : "+pDTO.getPage());
-		System.out.println("size : "+pDTO.getSize());
-		List<PokemonDTO> list = pokemonService.getAll(pDTO);
-		return list;
+	@PostMapping(value = "/pokemon/{page}")
+	public List<PokemonDTO> addPokemon(@RequestParam(defaultValue="1") int page) {
+		return pokemonService.getAll(new PageRequestDTO(96,page));
 	}
 	
 	@ResponseBody
-	@PostMapping(value="/pokemon/search/{keyword}")
-	public List<PokemonDTO> searchPokemon(String keyword) {
-		System.out.println("name : "+keyword);
-		List<PokemonDTO> list = pokemonService.getByName(keyword);
-		return list;
+	@PostMapping(value = "/player/{page}")
+	public List<PlayerDTO> addPlayer(@RequestParam(defaultValue="1") int page) {
+		return playerService.getAll(new PageRequestDTO(96,page));
 	}
 	
+	@ResponseBody
+	@PostMapping(value = "/pokemon/search/{keyword}")
+	public List<PokemonDTO> searchPokemon(String keyword){
+		return pokemonService.getByName(keyword);
+	}
 	
+	@ResponseBody
+	@PostMapping(value = "/player/search/{keyword}")
+	public List<PlayerDTO> searchPlayer(String keyword){
+		return playerService.getByNickname(keyword);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/player/view/{id}")
+	public PlayerDTO findPlayer(String id){
+		return playerService.getById(id);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/pokemon/view/{id}")
+	public PokemonDTO findPokemon(int id){
+		return pokemonService.getById(id);
+	}
+
 	
 	
 }
