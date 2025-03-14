@@ -335,6 +335,7 @@ $(function() {
 		switch (category) {
 			case "player":
 				if (active == "on") { active = 0; } else { active = 1; }
+				console.log("active : " + active);
 				if (confirm(nickname + "님 정보를 수정하시겠습니까?")) {
 					$.ajax({
 						url: "/admin/update/" + category + "/id/" + id,

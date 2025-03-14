@@ -76,20 +76,11 @@ public class ProsRestController {
 	public String updatePlayerSystem(PlayerDTO pDTO) {
 		System.out.println("pDTO : " + pDTO.getId() + pDTO.getNickname() + pDTO.getProfile() + pDTO.getGameMoney()
 				+ pDTO.getRealMoney() + pDTO.getIsActive());
-		System.out.println(pDTO.getId() != null);
-		System.out.println(!pDTO.getId().isEmpty());
-		System.out.println(pDTO.getNickname() != null);
-		System.out.println(!pDTO.getNickname().equals(""));
-		System.out.println(pDTO.getProfile() != null);
-		System.out.println(!pDTO.getProfile().equals(""));
-		System.out.println(pDTO.getGameMoney() >= 0);
-		System.out.println(pDTO.getRealMoney() >= 0);
-		System.out.println(pDTO.getIsActive() == 1);
 				if (pDTO.getId() != null && !pDTO.getId().isEmpty() &&
 				pDTO.getNickname() != null && !pDTO.getNickname().equals("") &&
 				pDTO.getProfile() != null && !pDTO.getProfile().equals("") &&
 				pDTO.getGameMoney() >= 0 && pDTO.getRealMoney() >= 0 &&
-				pDTO.getIsActive() == 1) {
+				(pDTO.getIsActive() == 1 || pDTO.getIsActive() == 0)) {
 			playerService.updatePlayerBySystem(pDTO);
 			return "success";
 		} else {
