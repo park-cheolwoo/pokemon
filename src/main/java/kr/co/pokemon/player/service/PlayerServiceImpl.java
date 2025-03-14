@@ -33,7 +33,20 @@ public class PlayerServiceImpl implements PlayerService {
 //        return playerDto;
 //    }
 
+    @Override
+    public PlayerDTO getById(String id) {
+        return playerMapper.selectById(id);
+    }
 
+    @Override
+    public PlayerDTO updatePlayer(int id,PlayerDTO player) {
+        throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
+    }
+
+    @Override
+    public void updatePlayerBySystem(PlayerDTO player) {
+       playerMapper.updatePlayerBySystem(player);
+    }
 
     @Override
     public void deletePlayer(int id) {
