@@ -9,6 +9,8 @@ import kr.co.pokemon.pokemon.dto.PokemonDTO;
 
 public interface AbilityService extends APIGetable<AbilityDTO> {
 	
+	boolean existAbilityAndPokemonId(int pokemonId, int abilityId);
+	
 	List<PokemonOwnAbility> getAbilitiesByPokemonId(int pokemonId);
 	
 	List<PokemonDTO> getPokemonByAbilityId(int abilityId);

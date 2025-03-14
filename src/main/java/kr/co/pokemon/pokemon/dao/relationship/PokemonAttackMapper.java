@@ -1,6 +1,7 @@
 package kr.co.pokemon.pokemon.dao.relationship;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -27,6 +28,8 @@ public interface PokemonAttackMapper {
 	List<PokemonMoveDTO> selectByAttackId(int AttackId);
 	
 	int existById(int id);
+	
+	int existAttackAndPokemonId(Map<String, Integer> existMap);
 	
 	void insert(PokemonMoveDTO pokemonAttack);
 	

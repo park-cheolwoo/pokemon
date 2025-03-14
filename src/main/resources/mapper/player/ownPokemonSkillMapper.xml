@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.player.dao.OwnPokemonSkillMapper">
+
+  <resultMap id="skillResultMap" type="kr.co.pokemon.player.dto.OwnPokemonSkill" autoMapping="true">
+    <result column="player_pokemon_id" property="playerPokemonId" />
+    <result column="skill_id" property="skillId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <resultMap id="abilityResultMap" type="kr.co.pokemon.play.dto.PokemonOwnAbility" autoMapping="true">
+    <result column="flavor_text" property="flavorText" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+  
+  <resultMap id="attackResultMap" type="kr.co.pokemon.play.dto.PokemonOwnAttack" autoMapping="true">
+    <result column="types_id" property="typesId" />
+    <result column="flavor_text" property="flavorText" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectAbilityById" resultMap="skillResultMap" parameterType="int">
+    SELECT * FROM own_pokemon_ability WHERE id = #{id}
+  </select>
+
+  <select id="selectAttackById" resultMap="skillResultMap" parameterType="int">
+    SELECT * FROM own_pokemon_attack WHERE id = #{id}
+  </select>
+
+  <select id="selectAbilityByOwnPokemonId" resultMap="abilityResultMap" parameterType="int">
+	SELECT a.*, p.slot FROM
+		own_pokemon_ability p
+	JOIN
+		ability a ON p.ability_id = a.id
+	WHERE
+		p.player_pokemon_id = #{ownPokemonId}
+	ORDER BY
+		p.slot DESC
+  </select>
+
+  <select id="selectAttackByOwnPokemonId" resultMap="attackResultMap" parameterType="int">
+	SELECT a.*, p.slot FROM
+		own_pokemon_attack p
+	JOIN
+		attack a ON p.attack_id = a.id
+	WHERE
+		p.player_pokemon_id = #{ownPokemonId}
+	ORDER BY
+		p.slot DESC
+  </select>
+  
+  <update id="updateSlotAbility" parameterType="java.util.Map">
+  	UPDATE own_pokemon_ability SET slot = #{slot} WHERE id = #{id}
+  </update>
+  
+  <update id="updateSlotAttack" parameterType="java.util.Map">
+  	UPDATE own_pokemon_attack SET slot = #{slot} WHERE id = #{id}
+  </update>
+
+  <insert id="insertAbility">
+  	INSERT INTO own_pokemon_ability
+  		( id, player_pokemon_id, ability_id )
+  	VALUES
+  		( own_pokemon_ability_seq.nextval, #{playerPokemonId}, #{skillId} )
+  </insert>
+
+  <insert id="insertAttack">
+  	INSERT INTO own_pokemon_attack
+  		( id, player_pokemon_id, attack_id )
+  	VALUES
+  		( own_pokemon_attack_seq.nextval, #{playerPokemonId}, #{skillId} )
+  </insert>
+
+</mapper>
