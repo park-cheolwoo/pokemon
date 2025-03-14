@@ -68,13 +68,18 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     public boolean insertPlayer(PlayerDTO player) {
-        player.setTag(generateRandomTag()); 
-        boolean isPlayerInserted = playerMapper.insertPlayer(player) > 0; 
-        if (isPlayerInserted) {
-        	sdungeonService.createSdungeonForPlayer(player.getId());
-        }
-        return isPlayerInserted;
+        player.setTag(generateRandomTag());
+        return playerMapper.insertPlayer(player) > 0;
     }
+    
+//    public boolean insertPlayer(PlayerDTO player) {
+//        player.setTag(generateRandomTag()); 
+//        boolean isPlayerInserted = playerMapper.insertPlayer(player) > 0; 
+//        if (isPlayerInserted) {
+//        	sdungeonService.createSdungeonForPlayer(player.getId());
+//        }
+//        return isPlayerInserted;
+//    }
 
     private String generateRandomTag() {
         return "#" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9); // 랜덤 태그 생성
