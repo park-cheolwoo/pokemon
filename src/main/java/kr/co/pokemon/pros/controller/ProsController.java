@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.item.dto.ItemDTO;
+import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
@@ -22,12 +24,9 @@ public class ProsController {
 	PlayerService playerService;
 	@Autowired
 	PokemonService pokemonService;
-
-	@GetMapping(value = "")
-	public String admin() {
-		return "pros/pros_player_list";
-	}
-
+	@Autowired
+	ItemService itemService;
+	
 	@GetMapping(value = "/data")
 	public String adminData() {
 		return "pros/pros_data";
@@ -37,6 +36,7 @@ public class ProsController {
 	public String adminPokemon(@RequestParam(defaultValue = "1") int page, Model model) {
 		List<PokemonDTO> list = pokemonService.getAll(new PageRequestDTO(96,page));
 		model.addAttribute("list", list);
+		model.addAttribute("category","pokemon");
 		return "pros/pros_data_list";
 	}
 	
@@ -44,9 +44,17 @@ public class ProsController {
 	public String adminPlayer(@RequestParam(defaultValue = "1") int page, Model model) {
 		List<PlayerDTO> list = playerService.getAll(new PageRequestDTO(96,page));
 		model.addAttribute("list", list);
+		model.addAttribute("category","player");
 		return "pros/pros_player_list";
 	}
 
+	@GetMapping(value = "/item")
+	public String adminItem(@RequestParam(defaultValue = "1") int page, Model model) {
+		List<ItemDTO> list = itemService.getAll(new PageRequestDTO(96,page));
+		model.addAttribute("list", list);
+		model.addAttribute("category","item");
+		return "pros/pros_data_list";
+	}
 	
 	
 	

@@ -275,7 +275,7 @@ body {
 }
 
 .pros_list_wrap {
-	width: 880px;
+	width: 900px;
 	max-height: 330px;
 	overflow-y: auto;
 	position: absolute;
@@ -354,7 +354,7 @@ body {
 }
 
 .pros_profile_name1, .pros_get_name_input {
-	width: 300px;
+	width: 450px;
 	height: 50px;
 	font-size: 50px;
 	line-height: 50px;
@@ -365,7 +365,7 @@ body {
 }
 
 .pros_profile_name2, .pros_get_lv_input {
-	width: 300px;
+	width: 400px;
 	height: 50px;
 	font-size: 50px;
 	line-height: 50px;
@@ -746,7 +746,7 @@ body {
 	grid-template-columns: repeat(8, 1fr);
 	grid-auto-rows: 100px;
 	gap: 12px;
-	width: 890px;
+	width: 880px;
 	height: 350px;
 	overflow-y: auto;
 	position: relative;
@@ -810,7 +810,7 @@ body {
 	text-align: right;
 	position: absolute;
 	top: 31px;
-	left: 485px;
+	right:40px;
 	z-index: 25;
 }
 
