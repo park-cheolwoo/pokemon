@@ -15,13 +15,13 @@ public class SdungeonDTO {
 	private int dailyClearCount;
 	private int weeklyClearCount;
 	private int totalCount;
-	private int pokemon1Id;
+	private Integer pokemon1Id;
 	private String pokemon1Name;
 	private String pokemon1Img;
-	private int pokemon2Id;
+	private Integer pokemon2Id;
 	private String pokemon2Name;
 	private String pokemon2Img;
-	private int pokemon3Id;
+	private Integer pokemon3Id;
 	private String pokemon3Name;
 	private String pokemon3Img;
 	private int gameMoney;

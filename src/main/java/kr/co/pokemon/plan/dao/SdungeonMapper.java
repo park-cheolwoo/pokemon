@@ -1,7 +1,11 @@
 package kr.co.pokemon.plan.dao;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import kr.co.pokemon.plan.dto.SdungeonDTO;
 
 @Mapper
 
@@ -69,4 +73,55 @@ public interface SdungeonMapper {
         END;
     """)
     void resetPokemonData();
+    
+    
+    // player 가입시 sdungeon 생성
+    @Insert("""
+    	    INSERT INTO SDUNGEON (id, daily_clear_count, weekly_clear_count, total_count, game_money, 
+    	        pokemon1_id, pokemon1_name, pokemon1_img, 
+    	        pokemon2_id, pokemon2_name, pokemon2_img, 
+    	        pokemon3_id, pokemon3_name, pokemon3_img)
+    	    VALUES (
+    	        #{id}, 
+    	        #{dailyClearCount}, 
+    	        #{weeklyClearCount}, 
+    	        #{totalCount}, 
+    	        #{gameMoney},
+    	        (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT NAME FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT IMAGE FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT ID FROM POKEMON WHERE ID != 
+    	            (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	        ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT NAME FROM POKEMON WHERE ID != 
+    	            (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	        ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT IMAGE FROM POKEMON WHERE ID != 
+    	            (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	        ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT ID FROM POKEMON WHERE ID NOT IN 
+    	            (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	            (SELECT ID FROM POKEMON WHERE ID != 
+    	                (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	            ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	        ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT NAME FROM POKEMON WHERE ID NOT IN 
+    	            (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	            (SELECT ID FROM POKEMON WHERE ID != 
+    	                (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	            ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	        ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	        (SELECT IMAGE FROM POKEMON WHERE ID NOT IN 
+    	            (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY),
+    	            (SELECT ID FROM POKEMON WHERE ID != 
+    	                (SELECT ID FROM POKEMON ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	            ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	        ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1 ROWS ONLY)
+    	    )
+    	""")
+    	void insertSdungeon(SdungeonDTO sdungeonDto);
+    
+    
+    // sdungeon 데이터 가져오기
+	SdungeonDTO findById(String id);
 }

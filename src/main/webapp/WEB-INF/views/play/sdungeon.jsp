@@ -76,6 +76,12 @@
         </div>
         <div class="score"></div>
         <div class="goldfinch"></div>
+		<pre>
+		    ${sdungeon.id}
+		    ${sdungeon.pokemon1Id}
+		    ${sdungeon.pokemon1Name}
+		    ${sdungeon.pokemon1Img}
+		</pre>
         <button class="get"><img src="../images/play/sdungeon/check1.png"></button>
       </div>
     </div> 

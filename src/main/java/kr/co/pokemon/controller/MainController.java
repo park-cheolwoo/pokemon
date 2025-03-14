@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpSession;
+import kr.co.pokemon.plan.dto.SdungeonDTO;
+import kr.co.pokemon.plan.service.SdungeonService;
 import kr.co.pokemon.player.dao.PlayerMapper;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
@@ -15,6 +17,7 @@ import kr.co.pokemon.player.service.PlayerService;
 public class MainController {
 	
 	@Autowired HttpSession session;
+	@Autowired SdungeonService sdungeonService;
 //	private PlayerService playerService;
 	
 	@GetMapping(value = "/")
@@ -52,22 +55,27 @@ public class MainController {
 
 	@GetMapping("/play/sdungeon")
 	public String sdungeon(Model model) {
-        String Id = (String) session.getAttribute("session_id");
+	    String playerId = (String) session.getAttribute("session_id");
 
-        if (Id == null) {
-            return "redirect:/member/login";
-        }
-        
-     // session_id를 통해 PlayerDTO 가져오기
-//        PlayerDTO playerDto = PlayerMapper.chooseById(id);
-//
-//        // playerDto가 존재하면 gameMoney 값을 모델에 추가
-//        if (playerDto != null) {
-//            model.addAttribute("gameMoney", playerDto.getGameMoney());
-//        }
-        
-        return "/play/sdungeon";
+	    if (playerId == null) {
+	        return "redirect:/member/login";
+	    }
+
+	    // playerId로 SdungeonDTO 가져오기
+	    SdungeonDTO sdungeonDto = sdungeonService.getSdungeonById(playerId);
+
+	    // 모델에 추가
+	    if (sdungeonDto != null) {
+	        model.addAttribute("sdungeon", sdungeonDto);
+	        // 결과 출력 (디버깅용)
+	        System.out.println("sdungeon : " + sdungeonDto);
+	    } else {
+	        System.out.println("sdungeonDto is null for playerId: " + playerId);
+	    }
+
+	    return "/play/sdungeon";
 	}
+
 
 	
 	@GetMapping("/play/battle")
