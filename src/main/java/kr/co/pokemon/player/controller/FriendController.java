@@ -30,14 +30,12 @@ public class FriendController {
 	public String flist(Model model, HttpSession session) {
 	    String session_id = (String) session.getAttribute("session_id"); 
 	    List<FriendDTO> friends = friendService.getFriendList(session_id);
-	    if (friends != null && !friends.isEmpty()) {
-	        System.out.println("친구 목록 불러오기 성공: " + friends); 
-	    } else {
-	        System.out.println("친구 목록이 없습니다.");
-	    }
-	    model.addAttribute("friends", friends); 
-	    return "/friend/flist";
+	    List<FriendDTO> pendings = friendService.getPendingList(session_id);
+	    model.addAttribute("friends", friends);
+	    model.addAttribute("pendings", pendings);
+	    return "/friend/flist"; 
 	}
+
 	//친구 요청 
 	@PostMapping(value = "/add")
 	@ResponseBody
@@ -51,47 +49,54 @@ public class FriendController {
 	    }
 	}
 	
-	@GetMapping("/pending")
-	@ResponseBody
-	public List<Map<String, Object>> getPending(HttpSession session) {
-	    String playerToId = (String) session.getAttribute("session_id");
-	    System.out.println("DEBUG: playerToId = " + playerToId); 
-
-	    List<FriendDTO> pendingRequests = friendService.getPending(playerToId);
-	    System.out.println("DEBUG: 요청 데이터 = " + pendingRequests); 
-
-	    List<Map<String, Object>> response = new ArrayList<>();
-	    for (FriendDTO request : pendingRequests) {
-	        PlayerDTO playerFrom = request.getPlayerFrom();
-
-	        String nickname = (playerFrom != null && playerFrom.getNickname() != null) 
-	                          ? playerFrom.getNickname() 
-	                          : "알 수 없음";
-	        String level = (playerFrom != null && playerFrom.getLv() != 0) 
-	                       ? String.valueOf(playerFrom.getLv()) 
-	                       : "알 수 없음";
-
-	        Map<String, Object> data = new HashMap<>();
-	        data.put("id", request.getId()); 
-	        data.put("lv", level);           
-	        data.put("nickname", nickname);  
-
-	        response.add(data);
-	    }
-	    return response; // 가공된 데이터를 반환
-	}
-
     // 친구 요청 수락 처리
-    @PostMapping(value = "/accept")
-    @ResponseBody
-    public String acceptFriend(@RequestParam String playerId, HttpSession session) {
-        String sessionId = (String) session.getAttribute("session_id");
-        boolean result = friendService.acceptFriend(sessionId, playerId);
-
-        if (result) {
-            return "SUCCESS";
-        } else {
-            return "FAILED"; // 요청 수락 중 오류 발생
-        }
-    }
+	@PostMapping(value = "/accept")
+	@ResponseBody
+	public String acceptFriend(@RequestParam("playerFrom") String playerFrom, HttpSession session) {
+	    String session_id = (String) session.getAttribute("session_id");
+	    boolean success = friendService.acceptFriend(session_id, playerFrom);
+	    if (success) {
+	        System.out.println("친구 요청 수락 성공: " + playerFrom);
+	        return "success";
+	    } else {
+	        System.out.println("친구 요청 수락 실패: " + playerFrom);
+	        return "fail";
+	    }
+	}
+	 // 친구 요청 취소 처리
+		@PostMapping(value = "/cancel")
+		@ResponseBody
+		public String Friendcancel(@RequestParam("playerFrom") String playerFrom, HttpSession session) {
+		    String session_id = (String) session.getAttribute("session_id");
+		    boolean success = friendService.cancelFriend(session_id, playerFrom);
+		    if (success) {
+		        return "success";
+		    } else {
+		        return "fail";
+		    }
+		}
+		
+		@PostMapping(value="/delete1")
+		@ResponseBody
+		public String deleteFriend1(@RequestParam("playerFrom") String playerFrom, HttpSession session) {
+			String session_id = (String)session.getAttribute("session_id");
+			boolean success = friendService.deleteFriend1(session_id, playerFrom);
+			if(success) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}
+		@PostMapping(value="/delete2")
+		@ResponseBody
+		public String deleteFriend2(@RequestParam("playerTo") String playerTo, HttpSession session) {
+			String session_id = (String)session.getAttribute("session_id");
+			boolean success = friendService.deleteFriend2(session_id, playerTo);
+			if(success) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}
+		
 }

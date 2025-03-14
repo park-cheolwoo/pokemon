@@ -16,6 +16,8 @@ public interface PlayerService {
 	PlayerDTO getById(String id);
 
 	PlayerDTO updatePlayer(int id, PlayerDTO player);
+
+	void updatePlayerBySystem(PlayerDTO player);
 	
 	void deletePlayer(int id);
 	

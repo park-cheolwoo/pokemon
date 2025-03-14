@@ -4,13 +4,16 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     /* 화면 크기에 맞게 배경 이미지 크기 조정 */
     height: 100vh;
     width: 100vw;
     position: fixed;
     top: 0;
-	    left: 0;
-	    z-index: -1;
+    left: 0;
+    z-index: -1;
 }
 
 /* ------------------------ 배너 css -------------------------- */
@@ -95,11 +98,11 @@
 .mypage-banner-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
     position: relative;
     align-items: center;
+    width: 1920px;
     height: 108px;
-    margin-left: 80px;
+    margin-left: 40px;
 }
 
 
@@ -591,6 +594,37 @@ div.myPokemon-info-text-container {
     /* 내용 너비 */
     text-align: left;
     /* 내용은 왼쪽 정렬 */
+}
+
+/* 포켓몬 소유 여부에 따른 스타일 */
+.pokemon-item.not-owned {
+    opacity: 0.6; /* 소유하지 않은 포켓몬은 투명도를 낮춰 어둡게 표시 */
+    filter: grayscale(50%); /* 흑백 필터 적용 */
+}
+
+.pokemon-item.not-owned img {
+    filter: brightness(0.7); /* 이미지 밝기 낮추기 */
+}
+
+.pokemon-item.not-owned p {
+    color: #777; /* 텍스트 색상을 회색으로 변경 */
+}
+
+/* 호버 효과 - 마우스를 올렸을 때 원래 모습으로 돌아오도록 */
+.pokemon-item.not-owned:hover {
+    opacity: 0.8;
+    filter: grayscale(20%);
+    transition: all 0.3s ease;
+}
+
+.pokemon-item.not-owned:hover img {
+    filter: brightness(0.9);
+    transition: all 0.3s ease;
+}
+
+.pokemon-item.not-owned:hover p {
+    color: #444;
+    transition: all 0.3s ease;
 }
 
 

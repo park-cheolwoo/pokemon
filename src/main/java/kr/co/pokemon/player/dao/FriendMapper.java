@@ -13,12 +13,25 @@ public interface FriendMapper {
 
 	List<FriendDTO> getFriendList(String playerId);
 
-	FriendDTO selectFriend(String playerId, String sessionId);
+	List<FriendDTO> getPendingList(String playerId);
 
 	void insertFriend(@Param("id") Long id, @Param("playerFrom") String playerFrom, @Param("playerTo") String playerTo);
 
-	void updateFriendAccept(String playerId, String sessionId);
+	String selectFriendByPlayerFrom(String playerFrom, String session_id);
+
+	void updateFriendAcceptByPlayerFrom(String playerFrom, String session_id);
+
+	void cancelFriendByPlayerFrom(String playerFrom, String session_id);
+
+	String selectFrinedFordelete1(String playerFrom, String session_id);
+
+	void deleteFriendByPlayerFrom(String playerFrom, String session_id);
+
+	String selectFrinedFordelete2(String playerTo, String session_id);
+
+	void deleteFriendByPlayerTo(String playerTo, String session_id);
+
+
 	
-	List<FriendDTO> getPending(@Param("playerTo") String playerTo);
 
 }

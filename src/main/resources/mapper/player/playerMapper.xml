@@ -16,7 +16,7 @@
 </resultMap>
 
 <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
-    SELECT * FROM player ORDER BY id OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+    SELECT * FROM player ORDER BY nickname OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
 </select>
 
 <select id="selectById" resultMap="dataResultMap" parameterType="String">
@@ -58,9 +58,11 @@
 <update id="updatePlayerBySystem">
     update player
     set lv = #{lv},
-        experience = #{experience},
+        nickname = #{nickname},
         game_money = #{gameMoney},
-        real_money = #{realMoney}
+        real_money = #{realMoney},
+        profile = #{profile},
+        is_active = #{isActive}
     where id = #{id}
 </update>
 
