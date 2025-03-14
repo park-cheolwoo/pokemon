@@ -16,8 +16,6 @@ public interface PlayerMapper {
 	
 	PlayerDTO selectById(String id);
 	
-	void updatePlayer(PlayerDTO player);
-	
 	void updatePlayerBySystem(PlayerDTO player);
 	
 	void deletePlayer(int id);

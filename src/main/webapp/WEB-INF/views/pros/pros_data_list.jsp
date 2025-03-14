@@ -30,25 +30,34 @@
 			<img src="/images/pros/search.png" class="pros_search_btn" />
 			<img src="/images/pros/retry.png" class="pros_reload_btn" />
 			<img src="/images/pros/list.png" class="pros_dropbar_btn" />
-			<img src="/images/yellow-bar.png" class="pros_pokemon_select_box" />
-			<h4 class="pros_pokemon_select_text text">포켓몬</h4>
-			<img src="/images/yellow-bar.png" class="pros_item_select_box" />
-			<h4 class="pros_item_select_text text">아이템</h4>
-			<img src="/images/yellow-bar.png" class="pros_dungeon_select_box" />
-			<h4 class="pros_dungeon_select_text text">던전</h4>
+			<img src="/images/yellow-bar.png" class="pros_pokemon_btn pros_pokemon_select_box" />
+			<h4 class="pros_pokemon_btn pros_pokemon_select_text text">포켓몬</h4>
+			<img src="/images/yellow-bar.png" class="pros_item_btn pros_item_select_box" />
+			<h4 class="pros_item_btn pros_item_select_text text">아이템</h4>
+			<img src="/images/yellow-bar.png" class="pros_dungeon_btn pros_dungeon_select_box" />
+			<h4 class="pros_dungeon_btn pros_dungeon_select_text text">던전</h4>
 		</div>
 
 		<div class="pros_list_wrap">
-			<h4 class="pros_list_category" style="display: none">pokemon</h4>
+			<h4 class="pros_list_category" style="display: none">${category }</h4>
 			<h4 class="pros_list_page" style="display: none">1</h4>
 			<h4 class="pros_search_flag" style="display: none">0</h4>
 			<div class="pros_list2">
 				<!-- 반복 -->
+				<c:if test="${categoty == 'player' }">
 				<c:forEach items="${list}" var="list">
-					<div class="pros_items" data-id="${list.getId()}">
+					<div class="pros_items" data-id="${list.getId()} data-nickname=${list.nickname}">
 						<img src="${list.getImage()}" class="pros_list_img">
 					</div>
 				</c:forEach>
+				</c:if>
+				<c:if test="${categoty != 'player' }">
+				<c:forEach items="${list}" var="list">
+					<div class="pros_items" data-id="${list.getId()}" data-name="${list.name}">
+						<img src="${list.getImage()}" class="pros_list_img">
+					</div>
+				</c:forEach>
+				</c:if>
 				<!-- 반복 -->
 			</div>
 		</div>
