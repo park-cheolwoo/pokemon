@@ -17,7 +17,7 @@ public class FriendDTO {
 	private PlayerDTO playerFrom;
 	private PlayerDTO playerTo;
 	
-	private boolean isAccept;
+	private int isAccept;
 	
 	private Timestamp updatedAt;
 	private Timestamp createdAt;

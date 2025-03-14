@@ -27,8 +27,7 @@
 		</association>
 	</resultMap>
 
-	<select id="getFriendList" parameterType="string"
-		resultMap="dataResultMap">
+	<select id="getFriendList" parameterType="string" resultMap="dataResultMap">
 		select f.id, f.player_from, f.player_to, f.is_accept, f.updated_at, f.created_at,
 		p1.nickname as player_nickname, p1.lv as player_lv, p1.tag as player_tag,
 		p2.nickname as friend_nickname, p2.lv as friend_lv, p2.tag as friend_tag
@@ -38,30 +37,54 @@
 		where
 		(f.player_from = #{playerId} or f.player_to = #{playerId}) and f.is_accept = 1
 	</select>
+	
+	<select id="getPendingList" parameterType="string" resultMap="dataResultMap">
+		select f.id, f.player_from, f.player_to, f.is_accept, f.updated_at, f.created_at,
+		p1.nickname as player_nickname, p1.lv as player_lv, p1.tag as player_tag,
+		p2.nickname as friend_nickname, p2.lv as friend_lv, p2.tag as friend_tag
+		from friend f
+		join player p1 on f.player_from = p1.id
+		join player p2 on f.player_to = p2.id
+		where
+		(f.player_from = #{playerId} or f.player_to = #{playerId}) and f.is_accept = 0
+	</select>
 
 	<insert id="insertFriend" parameterType="map">
 		insert into friend (id, player_from, player_to, is_accept, created_at,
 		updated_at)
 		values (#{id}, #{playerFrom}, #{playerTo}, 0, sysdate, sysdate)
 	</insert>
+	
+	<select id="selectFriendByPlayerFrom" resultType="String" parameterType="String">
+    select player_from from friend
+    where player_from = #{playerFrom} and player_to = #{session_id} and is_accept = 0
+	</select>
 
-
-	<update id="updateFriendAccept">
-		update friend set is_accept = true,
-		updated_at = sysdate
-		where player_from = #{playerFromId} and player_to = #{playerToId}
+	<update id="updateFriendAcceptByPlayerFrom">
+    update friend set is_accept = 1 
+    where player_from = #{playerFrom} and player_to = #{session_id}
 	</update>
-
-	<select id="selectFriend"
-		resultType="kr.co.pokemon.player.dto.FriendDTO">
-		select * from friend
-		where player_from = #{playerFromId}
-		and
-		player_to = #{playerToId}
+	
+	<delete id="cancelFriendByPlayerFrom">
+    delete from friend where player_from = #{playerFrom} and player_to =#{session_id} and is_accept =0
+	</delete>
+	
+	<select id="selectFrinedFordelete1" resultType="String" parameterType="String">
+	select player_from from friend
+	where player_from =#{playerFrom} and player_to = #{session_id} and is_accept=1
 	</select>
 	
-	<select id="getPending" parameterType="String" resultMap="dataResultMap">
-		select * from friend where player_to = #{playerTo} AND is_accept = 0
+	<delete id="deleteFriendByPlayerFrom">
+    delete from friend where player_from = #{playerFrom} and player_to =#{session_id} and is_accept =1
+	</delete>
+	
+	<select id="selectFrinedFordelete2" resultType="String" parameterType="String">
+	select player_to from friend
+	where player_from =#{session_id} and player_to = #{playerTo} and is_accept=1
 	</select>
-
+	
+	<delete id="deleteFriendByPlayerTo">
+    delete from friend where player_from = #{session_id} and player_to =#{playerTo} and is_accept =1
+	</delete>
+	
 </mapper>
