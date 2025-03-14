@@ -34,4 +34,5 @@ public class PlayerPokemonDTO extends EntityDTO {
 	private List<PokemonOwnAttack> attacks;
 	private List<PokemonOwnStat> stats;
 
+	private boolean isOwned;
 }
