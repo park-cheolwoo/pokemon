@@ -329,26 +329,21 @@ $(function() {
 			alert("숫자는 0 이상, 레벨은 1 이상이어야 합니다.");
 			return false;
 		}
-		switch (category) { 
+		switch (category) {
 			case "player":
-				if (active == "on") {active = 0;} else { active = 1; }
-				if(confirm(nickname+"님 정보를 수정하시겠습니까?")){
+				if (active == "on") { active = 0; } else { active = 1; }
+				if (confirm(nickname + "님 정보를 수정하시겠습니까?")) {
 					$.ajax({
 						url: "/admin/update/" + category + "/id/" + id,
 						type: "POST",
 						data: { "id": id, "nickname": nickname, "lv": lv, "gamemoney": coin, "realmoney": ruby, "profile": intro, "isactive": active },
 						success: function (data) {
 							alert("수정되었습니다.");
-							// /admin/player / view /id 의 ajax를 다시 실행
-							
-						}
-							/admin/player / view / + id
-
 						},
 						error: function () {
-							alert("수정 실패");
-						}
-					})
+								alert("수정 실패");
+							}
+						})
 				}
 		}
 	})		
