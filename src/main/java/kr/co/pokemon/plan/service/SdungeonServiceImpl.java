@@ -57,9 +57,16 @@ public class SdungeonServiceImpl implements SdungeonService {
     public SdungeonDTO getSdungeonById(String id) {
         System.out.println("조회할 playerId: " + id); // playerId가 잘 넘어오는지 확인
         SdungeonDTO sdungeon = sdungeonMapper.findById(id);
-        System.out.println("가져온 Sdungeon 데이터: " + sdungeon); // sdungeon이 null인지 확인
+        
+        if (sdungeon == null) {
+            System.out.println("sdungeon 데이터가 없습니다.");
+        } else {
+            System.out.println("가져온 Sdungeon 데이터: " + sdungeon); // sdungeon 객체 출력
+        }
+
         return sdungeon;
     }
+
 
 	@Override
 	public void createSdungeonForPlayer(String id) {
