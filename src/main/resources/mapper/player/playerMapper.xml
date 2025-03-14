@@ -59,7 +59,6 @@
     update player
     set lv = #{lv},
         nickname = #{nickname},
-        experience = #{experience},
         game_money = #{gameMoney},
         real_money = #{realMoney},
         profile = #{profile},

@@ -1,8 +1,6 @@
 $(function() {
 	//전역변수 선언
 	const category = $(".pros_list_category").text();
-	const input = $(".pros_keyword").val();
-	const flag = $(".pros_search_flag").text();
 	
 	$(document).on("click", ".pros_player_btn", function() {
 		location.href = "/admin/player";
@@ -47,9 +45,10 @@ $(function() {
 		const scrollPosition = $(this).scrollTop() + $(this).innerHeight();
 		const scrollHeight = $(this)[0].scrollHeight;
 		const page = Number($(".pros_list_page").text()) + 1;
+		const searchFlag = $(".pros_search_flag").text();
 		console.log(scrollHeight);
 		console.log(scrollPosition);
-		if (scrollPosition >= scrollHeight) {
+		if (scrollPosition >= scrollHeight && searchFlag == "0") {
 			console.log('끝 지점에 도착했습니다!');	
 			console.log("url : "+"/admin/" + category + "/" + page);
 			$.ajax({
@@ -206,7 +205,9 @@ $(function() {
 	});
 
 	//검색결과 지우면 전체 검색결과 다시 노출
-	$(document).on("input", ".pros_keyword", function() {
+	$(document).on("input", ".pros_keyword", function () {
+		const flag = $(".pros_search_flag").text();
+		const input = $(".pros_keyword").val();
 		if (flag == "1" && input == "") {
 			$(".pros_search").remove();
 			$(".pros_items").show();
@@ -259,6 +260,7 @@ $(function() {
 				$(".pros_get_coin").text(data.gameMoney.toLocaleString());
 				$(".pros_get_ruby").text(data.realMoney.toLocaleString());
 				$(".pros_get_id").val(data.id);
+				$(".updateFrm").hide();
 				const active = data.isActive == 0 ? "on" : "off";
 				$(".pros_active_first").text(active);
 				if (active == "on") { 
@@ -269,8 +271,9 @@ $(function() {
 					$(".pros_active_off").show();
 				}
 				$(".pros_get_id").val(data.id);
-				$(".pros_exe_txt").text("exp ( "+data.experience+" / 100 )")
-				$(".pros_exe_bar").attr("width", (518 / 100 * Number(data.experience))+"px")
+				$(".pros_exe_txt").text("exp ( " + data.experience + " / 100 )");
+				const exp = (518 / 100 * Number(data.experience));
+				$(".pros_exe_bar").css("width", `${exp}px`);
 				$(".pros_profile_view_container").show();
 			},
 			error: function() {
@@ -312,16 +315,16 @@ $(function() {
 				$(".pros_active_on, .pros_active_off").toggle();
 			});	
 		
-	//수정하기 버튼 클릭
+	//수정완료하기 버튼 클릭
 	$(document).on("click", ".pros_update_confirm_btn", function() {
 		const id = $(".pros_get_id").val();
 		const nickname = $(".pros_get_name_input").val();
-		const lv = $(".pros_get_lv_input").val();
-		const coin = $(".pros_get_coin_input").val();
-		const ruby = $(".pros_get_ruby_input").val();
+		const lv = Number($(".pros_get_lv_input").val());
+		const coin = Number($(".pros_get_coin_input").val());
+		const ruby = Number($(".pros_get_ruby_input").val());
 		const intro = $(".pros_intro_input").val();
 		let active = $(".pros_active").val();
-		if(id == "" || nickname == "" || lv == "" || coin == "" || ruby == "" || intro == ""){	
+		if(id == "" || nickname == "" || intro == ""){	
 			alert("모든 항목을 입력해주세요");
 			return false;
 		}
@@ -336,9 +339,11 @@ $(function() {
 					$.ajax({
 						url: "/admin/update/" + category + "/id/" + id,
 						type: "POST",
-						data: { "id": id, "nickname": nickname, "lv": lv, "gamemoney": coin, "realmoney": ruby, "profile": intro, "isactive": active },
+						data: { "id": id, "nickname": nickname, "lv": lv, "gameMoney": coin, "realMoney": ruby, "profile": intro, "isActive": active },
 						success: function (data) {
 							alert("수정되었습니다.");
+							const button = $(".pros_items").find("data-id", id).find(".pros_more_btn");
+							button.click();
 						},
 						error: function () {
 								alert("수정 실패");
