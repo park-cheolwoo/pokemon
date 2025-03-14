@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.item.dto.ItemDTO;
+import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.PokemonService;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RequestMapping("/admin")
 @RestController
@@ -22,6 +26,8 @@ public class ProsRestController {
 	PokemonService pokemonService;
 	@Autowired
 	PlayerService playerService;
+	@Autowired
+	ItemService itemService;
 	
 	@ResponseBody
 	@PostMapping(value = "/pokemon/{page}")
@@ -33,6 +39,12 @@ public class ProsRestController {
 	@PostMapping(value = "/player/{page}")
 	public List<PlayerDTO> addPlayer(@RequestParam(defaultValue="1") int page) {
 		return playerService.getAll(new PageRequestDTO(96,page));
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/item/{page}")
+	public List<ItemDTO> addItem(@RequestParam(defaultValue="1") int page) {
+		return itemService.getAll(new PageRequestDTO(96,page));
 	}
 	
 	@ResponseBody
@@ -59,6 +71,18 @@ public class ProsRestController {
 		return pokemonService.getById(id);
 	}
 
+	@ResponseBody
+	@PostMapping(value = "/update/player/id/{id}")
+	public String updatePlayer(PlayerDTO pDTO) {
+		if(pDTO.getId() != "" && pDTO.getNickname() != ""  && pDTO.getProfile() != "" && pDTO.getGameMoney() >=0 
+		   && pDTO.getRealMoney() >= 0 && ( pDTO.getIsActive() == 1 ||  pDTO.getIsActive() == 1) ) {
+			playerService.updatePlayerBySystem(pDTO);
+			return "success";
+		} else {
+			System.out.println("컨트롤러단 유효성 검사 실패");
+			return "fail";
+		}
+	}
 	
 	
 }

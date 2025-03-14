@@ -13,6 +13,11 @@ public interface PlayerService {
 	
 	//PlayerDTO findById(int id);
 	
+	PlayerDTO getById(String id);
+
+	PlayerDTO updatePlayer(int id, PlayerDTO player);
+
+	void updatePlayerBySystem(PlayerDTO player);
 	
 	void deletePlayer(int id);
 	
