@@ -15,7 +15,6 @@ import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.PokemonService;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RequestMapping("/admin")
