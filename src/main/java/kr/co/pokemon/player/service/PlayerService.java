@@ -10,8 +10,6 @@ public interface PlayerService {
 	
 	List<PlayerDTO> findAll(int size, int page);
 	
-	PlayerDTO findById(int id);
-
 	PlayerDTO updatePlayer(int id, PlayerDTO player);
 	
 	void deletePlayer(int id);

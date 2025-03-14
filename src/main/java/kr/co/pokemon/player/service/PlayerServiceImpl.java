@@ -25,15 +25,6 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public PlayerDTO findById(int id) {
-        Map<String, Object> map = new HashMap<>();
-        PlayerDTO playerDto = playerMapper.selectById(id);
-        map.put("playerDto", playerDto);
-        return playerDto;
-    }
-
-
-    @Override
     public PlayerDTO updatePlayer(int id, PlayerDTO player) {
         throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
     }

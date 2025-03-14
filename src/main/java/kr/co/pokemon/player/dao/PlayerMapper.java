@@ -12,8 +12,7 @@ import kr.co.pokemon.player.dto.PlayerDTO;
 public interface PlayerMapper {
 
 	List<PlayerDTO> selectAll();
-	PlayerDTO selectById(int id);
-	
+
 	void updatePlayer(PlayerDTO player);
 	
 	void updatePlayerBySystem(PlayerDTO player);
