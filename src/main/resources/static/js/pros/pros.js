@@ -43,10 +43,12 @@ $(function() {
 	
 	
 	// scroll 이벤트시 정보가 하단에 추가되는 함수
-	$(".pros_list, .pros_list2").on('scroll', function() {
+	$(".pros_list_wrap, .pros_list2").on('scroll', function() {
 		const scrollPosition = $(this).scrollTop() + $(this).innerHeight();
 		const scrollHeight = $(this)[0].scrollHeight;
-		const page = Number($(".pros_list_page").text())+1;
+		const page = Number($(".pros_list_page").text()) + 1;
+		console.log(scrollHeight);
+		console.log(scrollPosition);
 		if (scrollPosition >= scrollHeight) {
 			console.log('끝 지점에 도착했습니다!');	
 			console.log("url : "+"/admin/" + category + "/" + page);
@@ -78,7 +80,7 @@ $(function() {
 									   <img src="/images/pros/more.png" class="pros_more_btn">
 				              		   </div>`;
 					}
-					$(".pros_list").append(hdata);	
+					$(".pros_list_wrap").append(hdata);	
 					break;
 					default:
 						for (let i = 0; i < data.length; i++) {
@@ -91,7 +93,7 @@ $(function() {
 				}
 				},
 				error: function() {
-					alert('실패');
+					alert('스크롤 실패');
 				}
 			})
 
@@ -128,7 +130,7 @@ $(function() {
 								   <img src="/images/pros/more.png" class="pros_more_btn">
 			              		   </div>`;
 						}
-						$(".pros_list").append(hdata);	
+						$(".pros_list").append(hdata);
 				break;
 				default:
 					$(".pros_list2").scrollTop(0);
@@ -141,14 +143,14 @@ $(function() {
 			}
 			},
 			error: function() {
-				alert('실패');
+				alert('새로고침 실패');
 			}
 		})
 	});
 	
 	// 검색시 검색결과가 나오는 함수
 	$(document).on("click", ".pros_search_btn", function() {
-		const keyword = input.trim();
+		const keyword = $(".pros_keyword").val();
 		console.log("/admin/" + category + "/search/" + keyword);
 		$.ajax({
 			url: "/admin/" + category + "/search/" + keyword,
@@ -193,7 +195,7 @@ $(function() {
 				$(".pros_search_flag").text("1");
 			},
 			error: function() {
-				alert("실패");
+				alert("검색 실패");
 			}
 		})
 	});
@@ -233,7 +235,7 @@ $(function() {
 				$(".pros_profile_view_container").show();
 			},
 			error: function() {
-				alert("실패");
+				alert("상세보기 전환 실패");
 			}
 		});
 	});
@@ -254,15 +256,25 @@ $(function() {
 				$(".pros_update").text("수정일 : "+data.updatedAt.slice(0, 10));
 				$(".pros_create").text("등록일 : " + data.createdAt.slice(0, 10));
 				$(".pros_intro").text(data.profile);
-				$(".pros_get_coin").text(data.gameMoney);
-				$(".pros_get_ruby").text(data.realMoney);
+				$(".pros_get_coin").text(data.gameMoney.toLocaleString());
+				$(".pros_get_ruby").text(data.realMoney.toLocaleString());
+				$(".pros_get_id").val(data.id);
 				const active = data.isActive == 0 ? "on" : "off";
 				$(".pros_active_first").text(active);
+				if (active == "on") { 
+					$(".pros_active_on").show();
+					$(".pros_active_off").hide();
+				} else {
+					$(".pros_active_on").hide();
+					$(".pros_active_off").show();
+				}
 				$(".pros_get_id").val(data.id);
+				$(".pros_exe_txt").text("exp ( "+data.experience+" / 100 )")
+				$(".pros_exe_bar").attr("width", (518 / 100 * Number(data.experience))+"px")
 				$(".pros_profile_view_container").show();
 			},
 			error: function() {
-				alert("실패");
+				alert("상세보기 전환 실패");
 			}
 		});
 	});
@@ -274,8 +286,8 @@ $(function() {
 					const hashIndex = $(".pros_profile_name1").text().indexOf('#');
 					$(".pros_get_name_input").val($(".pros_profile_name1").text().slice(0,hashIndex-1));
 					$(".pros_get_lv_input").val($(".pros_profile_name2").text().slice(3));
-					$(".pros_get_coin_input").val($(".pros_get_coin").text());
-					$(".pros_get_ruby_input").val($(".pros_get_ruby").text());
+					$(".pros_get_coin_input").val($(".pros_get_coin").text().replace(",",""));
+					$(".pros_get_ruby_input").val($(".pros_get_ruby").text().replace(",", ""));
 					$(".pros_intro_input").val($(".pros_intro").text());
 					$(".pros_profile_name1, .pros_profile_name2, .pros_get_coin, .pros_get_ruby, .pros_intro").toggle();
 					break;
@@ -302,11 +314,42 @@ $(function() {
 		
 	//수정하기 버튼 클릭
 	$(document).on("click", ".pros_update_confirm_btn", function() {
-		const name = $(".pros_get_name_input").val();
-		if(confirm(name+"님 정보를 수정하시겠습니까?")){
-			$.ajax({
-				url:"/pros/update/"+category+"/id/"+id,
-			})
+		const id = $(".pros_get_id").val();
+		const nickname = $(".pros_get_name_input").val();
+		const lv = $(".pros_get_lv_input").val();
+		const coin = $(".pros_get_coin_input").val();
+		const ruby = $(".pros_get_ruby_input").val();
+		const intro = $(".pros_intro_input").val();
+		let active = $(".pros_active").val();
+		if(id == "" || nickname == "" || lv == "" || coin == "" || ruby == "" || intro == ""){	
+			alert("모든 항목을 입력해주세요");
+			return false;
+		}
+		if (Number(coin) < 0 || Number(ruby) < 0 || Number(lv) < 1) {
+			alert("숫자는 0 이상, 레벨은 1 이상이어야 합니다.");
+			return false;
+		}
+		switch (category) { 
+			case "player":
+				if (active == "on") {active = 0;} else { active = 1; }
+				if(confirm(nickname+"님 정보를 수정하시겠습니까?")){
+					$.ajax({
+						url: "/admin/update/" + category + "/id/" + id,
+						type: "POST",
+						data: { "id": id, "nickname": nickname, "lv": lv, "gamemoney": coin, "realmoney": ruby, "profile": intro, "isactive": active },
+						success: function (data) {
+							alert("수정되었습니다.");
+							// /admin/player / view /id 의 ajax를 다시 실행
+							
+						}
+							/admin/player / view / + id
+
+						},
+						error: function () {
+							alert("수정 실패");
+						}
+					})
+				}
 		}
 	})		
 				
@@ -328,7 +371,7 @@ $(function() {
 				$(".pros_active_off").hide();
 			} else {
 				$(".pros_active_on").hide();
-				$(".pros_active_off").shoe();
+				$(".pros_active_off").show();
 			}
 			$(".pros_update_btn").addClass("pros_update_flag");
 			$(".pros_active_on, .pros_active_off").removeClass("active_update");

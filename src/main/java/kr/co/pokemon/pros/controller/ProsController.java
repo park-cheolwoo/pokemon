@@ -27,11 +27,6 @@ public class ProsController {
 	@Autowired
 	ItemService itemService;
 	
-	@GetMapping(value = "")
-	public String admin() {
-		return "pros/pros_player_list";
-	}
-
 	@GetMapping(value = "/data")
 	public String adminData() {
 		return "pros/pros_data";

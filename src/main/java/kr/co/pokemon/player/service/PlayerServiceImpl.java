@@ -39,8 +39,8 @@ public class PlayerServiceImpl implements PlayerService {
 	}
     
     @Override
-    public PlayerDTO updatePlayer(int id, PlayerDTO player) {
-        throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
+    public void updatePlayerBySystem(PlayerDTO player) {
+       playerMapper.updatePlayerBySystem(player);
     }
 
     @Override
