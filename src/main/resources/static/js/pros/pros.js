@@ -429,8 +429,7 @@ $(function() {
 						data: { "id": id, "name": nickname, "flavorText": intro, "isActive": active },
 						success: function (data) {
 							alert("수정되었습니다.");
-							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_list_img
-								");
+							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_list_img");
 							button.click();
 						},
 						error: function () {
