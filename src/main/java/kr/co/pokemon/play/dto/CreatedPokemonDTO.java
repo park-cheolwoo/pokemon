@@ -23,5 +23,6 @@ public class CreatedPokemonDTO {
 	private List<PokemonOwnAbility> abilities;
 	private List<PokemonOwnAttack> attacks;
 	private List<PokemonOwnStat> stats;
+	private List<PokemonOwnType> types;
 
 }

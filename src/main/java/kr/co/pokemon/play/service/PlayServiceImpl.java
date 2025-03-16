@@ -11,6 +11,7 @@ import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.play.dto.PokemonOwnAbility;
 import kr.co.pokemon.play.dto.PokemonOwnAttack;
 import kr.co.pokemon.play.dto.PokemonOwnStat;
+import kr.co.pokemon.play.dto.PokemonOwnType;
 import kr.co.pokemon.player.service.PlayerPokemonService;
 import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
@@ -18,6 +19,7 @@ import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.HabitatService;
 import kr.co.pokemon.pokemon.service.PokemonMoveService;
 import kr.co.pokemon.pokemon.service.PokemonService;
+import kr.co.pokemon.pokemon.service.TypesService;
 
 @Service
 public class PlayServiceImpl implements PlayService {
@@ -39,6 +41,9 @@ public class PlayServiceImpl implements PlayService {
 
 	@Autowired
 	PlayerPokemonService playerPokemonService;
+
+	@Autowired
+	TypesService typesService;
 	
 	Random random = new Random();
 
@@ -74,10 +79,11 @@ public class PlayServiceImpl implements PlayService {
 
 		List<PokemonOwnAttack> attacks = pokemonMoveService.getAttacksByPokemonId(pokemon.getId());
 		List<PokemonOwnAbility> abilities = abilityService.getAbilitiesByPokemonId(pokemon.getId());
+		List<PokemonOwnType> types = typesService.getTypesByPokemonId(pokemon.getId());
 
 		int level = minLevel + random.nextInt((maxLevel - minLevel) + 1);
 
-		return new CreatedPokemonDTO(pokemon, pokemon.getName(), random.nextBoolean(), level, characteristic, abilities, attacks, stats);
+		return new CreatedPokemonDTO(pokemon, pokemon.getName(), random.nextBoolean(), level, characteristic, abilities, attacks, stats, types);
 	}
 
 	@Override
@@ -92,7 +98,7 @@ public class PlayServiceImpl implements PlayService {
 			return new CreatedPokemonDTO(
 				pokemon, playerPokemon.getName(), playerPokemon.isGender(), playerPokemon.getLevel(),
 				playerPokemon.getCharacteristic(), playerPokemon.getAbilities(), playerPokemon.getAttacks(),
-				playerPokemon.getStats());
+				playerPokemon.getStats(), playerPokemon.getTypes());
 		}).toList();
 	}
 }

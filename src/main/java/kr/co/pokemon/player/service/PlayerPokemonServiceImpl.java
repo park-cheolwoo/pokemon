@@ -24,6 +24,7 @@ import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.PokemonMoveService;
 import kr.co.pokemon.pokemon.service.PokemonService;
+import kr.co.pokemon.pokemon.service.TypesService;
 
 @Service
 public class PlayerPokemonServiceImpl implements PlayerPokemonService {
@@ -49,6 +50,9 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	@Autowired
 	private PokemonMoveService pokemonMoveService;
 
+	@Autowired
+	private TypesService typesService;
+
 	Random random = new Random();
 
 	@Override
@@ -65,6 +69,7 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 			playerPokemon.setAttacks(ownPokemonSkillMapper.selectAttackByOwnPokemonId(playerPokemon.getId()));
 			playerPokemon.setStats(ownPokemonStatMapper.selectStatByOwnPokemonId(playerPokemon.getId()));
 			playerPokemon.setCharacteristic(characteristicService.getById(playerPokemon.getId()));
+			playerPokemon.setTypes(typesService.getTypesByPokemonId(playerPokemon.getPokemonId()));
 		});
 		return playerPokemons;
 	}

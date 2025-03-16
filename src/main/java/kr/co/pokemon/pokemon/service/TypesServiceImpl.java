@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.pokemon.data.dto.EntityDTO;
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.data.service.DataService;
+import kr.co.pokemon.play.dto.PokemonOwnType;
 import kr.co.pokemon.pokemon.dao.TypesMapper;
 import kr.co.pokemon.pokemon.dao.TypesRelationshipMapper;
 import kr.co.pokemon.pokemon.dao.relationship.PokemonTypesMapper;
@@ -62,34 +64,32 @@ public class TypesServiceImpl implements TypesService {
 		List<TypesRelationshipDTO> relationships = new ArrayList<>();
 		List<PokemonTypesDTO> pokemonRelationships = new ArrayList<>();
 
-		list.stream().forEach(dto -> {
+		list.forEach(dto -> {
 			dto.setOriginalName(dto.getName());
-			dto.getLanguagesName("ko").ifPresent(name -> dto.setName(name));
-			
+			dto.getLanguagesName("ko").ifPresent(dto::setName);
+			dto.setImage("/images/pros/type-" + dto.getOriginalName() + ".png");
+
 			DamageRelations dr = dto.getDamageRelations();
 			
-			dr.getDoubleDamageTo().stream()
-			.forEach(types -> {
+			dr.getDoubleDamageTo().forEach(types -> {
 				int toId = APIService.getIdByUrl(types.getUrl());
 				TypesRelationshipDTO relationship = new TypesRelationshipDTO(dto.getId(), toId, 2);
 				relationships.add(relationship);
 			});
 			
-			dr.getHalfDamageTo().stream()
-			.forEach(types -> {
+			dr.getHalfDamageTo().forEach(types -> {
 				int toId = APIService.getIdByUrl(types.getUrl());
 				TypesRelationshipDTO relationship = new TypesRelationshipDTO(dto.getId(), toId, 1);
 				relationships.add(relationship);
 			});
 			
-			dr.getNoDamageTo().stream()
-			.forEach(types -> {
+			dr.getNoDamageTo().forEach(types -> {
 				int toId = APIService.getIdByUrl(types.getUrl());
 				TypesRelationshipDTO relationship = new TypesRelationshipDTO(dto.getId(), toId, 0);
 				relationships.add(relationship);
 			});	
 			
-			dto.getPokemon().stream().forEach(poke -> {
+			dto.getPokemon().forEach(poke -> {
 				int pokemonId = APIService.getIdByUrl(poke.getPokemon().getUrl());
 				
 				if (pokemonService.existById(pokemonId)) {
@@ -99,18 +99,22 @@ public class TypesServiceImpl implements TypesService {
 				}
 			});
 		});
-		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+
+		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(EntityDTO::getId).toList())) {
 			typesMapper.insertAll(list);
 
 			if (dataService.deleteAllData(DBTables.TYPES_RELATIONSHIP.getTableName())) {
-				typesRelationshipMapper.insertAll(relationships);
-				
+				if (dataService.recreateSequence(DBTables.TYPES_RELATIONSHIP.getTableName())) {
+					typesRelationshipMapper.insertAll(relationships);
+				} else {
+					throw new IllegalArgumentException(DBTables.TYPES_RELATIONSHIP.getTableName() + " 시퀀스 생성에 실패하였습니다.");
+				}
 			} else {
 				throw new IllegalArgumentException(DBTables.TYPES_RELATIONSHIP.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
 			}
 			
 			if (dataService.deleteAllData(DBTables.POKEMON_TYPES.getTableName())) {
-				if (pokemonRelationships.size() > 0) {
+				if (!pokemonRelationships.isEmpty()) {
 					pokemonTypesMapper.insertAll(pokemonRelationships);
 					
 				}
@@ -141,4 +145,30 @@ public class TypesServiceImpl implements TypesService {
 		return dbTable;
 	}
 
+	@Override
+	public List<PokemonOwnType> getTypesByPokemonId(int pokemonId) {
+		List<PokemonOwnType> ownTypes = pokemonTypesMapper.selectTypesByPokemonId(pokemonId);
+		ownTypes.forEach(ownType -> {
+			List<TypesRelationshipDTO> relationships = getTypesRelationshipByTypesId(ownType.getId());
+			List<PokemonOwnType.DamageEffect> damageTo = new ArrayList<>();
+			List<PokemonOwnType.DamageEffect> damageFrom = new ArrayList<>();
+
+			relationships.forEach(relationship -> {
+				if (ownType.getId() == relationship.getFromId()) {
+					damageTo.add(new PokemonOwnType.DamageEffect(relationship.getToId(), relationship.getEffect()));
+				} else if (ownType.getId() == relationship.getToId()) {
+					damageFrom.add(new PokemonOwnType.DamageEffect(relationship.getFromId(), relationship.getEffect()));
+				}
+			});
+
+			ownType.setDamageTo(damageTo);
+			ownType.setDamageFrom(damageFrom);
+		});
+		return ownTypes;
+	}
+
+	@Override
+	public List<TypesRelationshipDTO> getTypesRelationshipByTypesId(int typesId) {
+		return typesRelationshipMapper.selectByTypeId(typesId);
+	}
 }
