@@ -12,3 +12,11 @@ export const attackComments = (myPokemonName, enemyName, attackName, attackPower
         [`이제 ${myPokemonName} 은(는) 무엇을 할까?`]
     ];
 }
+
+export const stageClearComments = (myPokemonName, enemyName, attackName, attackPower) => {
+    return [
+        [`${myPokemonName} 이(가) ${attackName} 공격 !`],
+        [`${enemyName}는 ${attackPower}의 데미지를 입었다.`],
+        [`야호! ${enemyName} 을(를) 쓰러뜨렸다!`]
+    ];
+}
