@@ -8,6 +8,7 @@
     <result column="gender_rate" property="genderRate" />
     <result column="gender_diff" property="genderDiff" />
     <result column="flavor_text" property="flavorText" />
+    <result column="growth_id" property="growthId" />
     <result column="evolution_id" property="evolutionId" />
     <result column="eggGroup_id" property="eggGroupId" />
     <result column="is_active" property="isActive" />
@@ -62,6 +63,10 @@
   
   <update id="updateEvolutionId" parameterType="java.util.Map">
   	UPDATE pokemon SET evolution_id = #{evolutionId} WHERE id = #{id}
+  </update>
+
+  <update id="updateGrowthId" parameterType="java.util.Map">
+    UPDATE pokemon SET growth_id = #{growthId} WHERE id = #{id}
   </update>
   
   <select id="selectSpritesById" resultMap="dataSpritesResultMap" parameterType="int">

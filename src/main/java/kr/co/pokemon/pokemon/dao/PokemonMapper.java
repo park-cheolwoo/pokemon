@@ -26,7 +26,9 @@ public interface PokemonMapper {
 	void insert(PokemonDTO pokemon);
 	
 	void insertAll(List<PokemonDTO> pokemons);
-	
+
+	void updateGrowthId(Map<String, Integer> updateGrowthId);
+
 	void updateEvolutionId(Map<String, Integer> updateEvolutionId);
 	
 	PokemonSprites selectSpritesById(int id);

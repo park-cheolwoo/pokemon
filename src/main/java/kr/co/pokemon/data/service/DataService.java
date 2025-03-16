@@ -17,14 +17,16 @@ public interface DataService {
 	
 	<D, S extends Getable<D>> void insert(D dto, Class<S> serviceClass);
 
-	public List<TableInfoDTO> getAllTableInfo();
+	List<TableInfoDTO> getAllTableInfo();
 
-	public Optional<TableInfoDTO> getTableInfo(String tableName);
+	Optional<TableInfoDTO> getTableInfo(String tableName);
 	
-	public void dropAllTable();
+	void dropAllTable();
 	
-	public boolean deleteAllData(String tableName, List<Integer> ids);
+	boolean deleteAllData(String tableName, List<Integer> ids);
 
-	public boolean deleteAllData(String tableName);
+	boolean deleteAllData(String tableName);
+
+	boolean recreateSequence(String tableName);
 
 }

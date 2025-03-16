@@ -34,6 +34,7 @@ public class PokemonDTO extends EntityDTO {
 	private boolean isLegendary;
 	private boolean isMythical;
 	private boolean isActive;
+	private int growthId;
 	private int evolutionId;
 
 	private APIPageResultDTO species;
