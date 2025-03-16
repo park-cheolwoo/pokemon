@@ -15,7 +15,9 @@ import kr.co.pokemon.item.dto.ItemDTO;
 import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
+import kr.co.pokemon.pokemon.dao.EvolutionMapper;
 import kr.co.pokemon.pokemon.dao.relationship.PokemonTypesMapper;
+import kr.co.pokemon.pokemon.dto.EvolutionDTO;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.PokemonService;
 
@@ -32,6 +34,8 @@ public class ProsRestController {
 	ItemService itemService;
 	@Autowired
 	PokemonTypesMapper pokemonTypesMapper;
+	@Autowired
+	EvolutionMapper evolutionMapper;
 
 	@ResponseBody
 	@PostMapping(value = "/pokemon/{page}")
@@ -75,7 +79,15 @@ public class ProsRestController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("category", "pokemon");
 		map.put("pokemon", pokemonService.getById(id));
-		map.put("types",pokemonTypesMapper.selectByPokemonId(id));
+		map.put("types", pokemonTypesMapper.selectByPokemonId(id));
+		EvolutionDTO eDTO = evolutionMapper.selectByCurrId(id);
+		map.put("evolution", eDTO );
+		if (eDTO.getPrevId() != null) {
+			map.put("prev", pokemonService.getById(eDTO.getPrevId()));
+		}
+		if (eDTO.getNextId() != null) {
+			map.put("next", pokemonService.getById(eDTO.getNextId()));
+		}
 		return map;
 	}
 
