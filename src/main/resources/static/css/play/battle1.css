@@ -13,9 +13,11 @@ main {
     border-radius: 5px;
     background-image: url(/images/play/battle/battlebackground4.png);
     background-size: contain;
+    opacity: 0;
+    transition: 1s ease-in-out;
 }
 
-#text-box {
+.text-box {
     position: absolute;
     top: 15px;
     left: 15px;
@@ -27,10 +29,33 @@ main {
     color: white;
 }
 
+.text-box.wait::after {
+    position: absolute;
+    content: "";
+    border-top: 10px solid white;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    bottom: 10px;
+    right: 10px;
+    animation: damaged-it 1s ease-in-out infinite;
+}
+
+.text-box > .text-box__comment {
+    width: max-content;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.text-box > .text-box__comment:not(:last-child) {
+    margin-bottom: 5px;
+}
+
 .pokemon {
     position: absolute;
     display: flex;
     flex-direction: column;
+    transition: .5s ease-in-out;
 }
 
 .pokemon.me {
@@ -93,10 +118,37 @@ main {
 .selection-box {
 	position: absolute;
 	bottom: 25px;
-	right: 30px;
+	right: 80px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+
+.selection-box__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.selection-box > .selection-box__group > .selection-box__back {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -45px;
+    width: 35px;
+    height: 34px;
+    background-image: url(/images/play/battle/back.png);
+    background-size: contain;
+    transition: .2s ease-in-out;
+    opacity: 0;
+}
+
+.selection-box > .selection-box__group > .selection-box__back.active {
+    opacity: 1;
+}
+
+.selection-box > .selection-box__group > .selection-box__back:hover {
+    transform: scale(1.1) rotate(-10deg);
 }
 
 .selection-box__btn {
@@ -108,6 +160,12 @@ main {
     background-color: #00000080;
     color: white;
     transition: .2s ease-in-out;
+    opacity: 0;
+}
+
+.selection-box__btn > img {
+    width: 18px;
+    margin-right: 5px;
 }
 
 .selection-box__btn:hover {
@@ -134,8 +192,20 @@ main {
 	animation: damaged-it .3s ease-in-out infinite;
 }
 
+.active-device {
+    opacity: 1;
+}
+
+.active-btn {
+    opacity: 1;
+}
+
 .shake-device {
 	animation: shake-it .3s ease-in-out;
+}
+
+.appearing-btn {
+    animation: appeared-right .5s ease-in-out forwards;
 }
 
 @keyframes damaged-it {
@@ -150,4 +220,14 @@ main {
 	50% { transform: translateX(0px); }
 	75% { transform: translateX(-10px); }
 	100% { transform: translateX(-10px); }
+}
+
+@keyframes appeared-right {
+    0% {
+        opacity: 0;
+        transform: translateX(50px) rotateX(80deg);
+    }
+    100% {
+        opacity: 1;
+    }
 }

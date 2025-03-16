@@ -16,9 +16,12 @@ public class CreatedPokemonDTO {
 
 	private PokemonDTO pokemon;
 	private String name;
-	private List<PokemonStatDTO> stats;
+	private boolean gender;
+	private int level;
+
 	private CharacteristicDTO characteristic;
-	private List<PokemonOwnAttack> attacks;
 	private List<PokemonOwnAbility> abilities;
+	private List<PokemonOwnAttack> attacks;
+	private List<PokemonOwnStat> stats;
 
 }
