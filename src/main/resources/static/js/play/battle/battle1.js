@@ -100,9 +100,15 @@ $(function() {
 			button.append(content);
 			return button;
 		}));
+
+		if (btnGroup.children().length === 0) {
+			btnGroup.append($("<div>", {class: "selection-box__btn none-btn", text: "< 선택 없음 >"}));
+		}
+
 		if (hasPrev) {
 			btnGroup.prepend($("<div>", {class: "selection-box__back"}));
 		}
+
 		btnContainer.append(btnGroup);
 
 		activateBtns(btnGroup, btns.map(btn => btn.event));
@@ -119,7 +125,7 @@ $(function() {
 					$(this).removeClass("appearing-btn");
 					$(this).addClass("active-btn");
 
-					if (events !== undefined) {
+					if (events !== undefined && events.length > 0) {
 						$(this).off("click");
 						$(this).click(function () {
 							const event = events[idx];

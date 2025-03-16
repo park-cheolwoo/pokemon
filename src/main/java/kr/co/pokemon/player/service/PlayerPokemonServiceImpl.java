@@ -65,8 +65,11 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	public List<PlayerPokemonDTO> getByPlayerId(String playerId) {
 		List<PlayerPokemonDTO> playerPokemons = playerPokemonMapper.selectByPlayerId(playerId);
 		playerPokemons.forEach(playerPokemon -> {
+			List<PokemonOwnAttack> attacks = ownPokemonSkillMapper.selectAttackByOwnPokemonId(playerPokemon.getId());
+			attacks.forEach(attack -> attack.setTypes(typesService.getById(attack.getTypesId())));
+
 			playerPokemon.setAbilities(ownPokemonSkillMapper.selectAbilityByOwnPokemonId(playerPokemon.getId()));
-			playerPokemon.setAttacks(ownPokemonSkillMapper.selectAttackByOwnPokemonId(playerPokemon.getId()));
+			playerPokemon.setAttacks(attacks);
 			playerPokemon.setStats(ownPokemonStatMapper.selectStatByOwnPokemonId(playerPokemon.getId()));
 			playerPokemon.setCharacteristic(characteristicService.getById(playerPokemon.getId()));
 			playerPokemon.setTypes(typesService.getTypesByPokemonId(playerPokemon.getPokemonId()));

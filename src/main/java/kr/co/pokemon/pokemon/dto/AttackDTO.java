@@ -38,6 +38,8 @@ public class AttackDTO extends EntityDTO implements EffectGroup, FlavorTextGroup
 
 	private boolean isActive;
 
+	private TypesDTO types;
+
 	private List<LanguageNameDTO> names;
 
 	@JsonProperty(value = "effect_entries")

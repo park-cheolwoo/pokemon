@@ -168,7 +168,7 @@ main {
     margin-right: 5px;
 }
 
-.selection-box__btn:hover {
+.selection-box__btn:not(.none-btn):hover {
 	transform: translate(10px) scale(1.03);
 	color: #f9ed40;
 }

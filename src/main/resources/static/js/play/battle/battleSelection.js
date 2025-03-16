@@ -28,7 +28,7 @@ export const attackSelection = (attacks) => {
     return attacks.map(attack => {
         return {
             text: attack.name,
-            image: `/images/pros/type-${attack.id}.png`,
+            image: `/images/pros/type-${attack.types.originalName}.png`,
             event: {
                 name: "attack",
                 data: attack
