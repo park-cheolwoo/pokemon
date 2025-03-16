@@ -23,6 +23,8 @@ public interface PokemonMapper {
 	
 	int existById(int id);
 	
+	void UpdatePokemonBySystem(PokemonDTO pDTO);
+	
 	void insert(PokemonDTO pokemon);
 	
 	void insertAll(List<PokemonDTO> pokemons);

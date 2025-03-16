@@ -44,20 +44,11 @@
 			<h4 class="pros_search_flag" style="display: none">0</h4>
 			<div class="pros_list2">
 				<!-- 반복 -->
-				<c:if test="${categoty == 'player' }">
-				<c:forEach items="${list}" var="list">
-					<div class="pros_items" data-id="${list.getId()} data-nickname=${list.nickname}">
-						<img src="${list.getImage()}" class="pros_list_img">
-					</div>
-				</c:forEach>
-				</c:if>
-				<c:if test="${categoty != 'player' }">
 				<c:forEach items="${list}" var="list">
 					<div class="pros_items" data-id="${list.getId()}" data-name="${list.name}">
 						<img src="${list.getImage()}" class="pros_list_img">
 					</div>
 				</c:forEach>
-				</c:if>
 				<!-- 반복 -->
 			</div>
 		</div>
@@ -73,8 +64,12 @@
 			<img src="/images/store/item-frame.png"	class="pros_profile_frame_img2" />
 			<img src="" class="pros_profile_img2">
 			<h4 class="pros_profile_name1 text"></h4>
-			<img src="/images/pros/type-grass.png" class="pros_pokemon_type1">
-			<img src="/images/pros/type-poison.png" class="pros_pokemon_type2">
+			<h4 class="pros_profile_type1 text"></h4>
+			<h4 class="pros_profile_type2 text"></h4>
+			<c:if test="${category == 'pokemon'}">
+				<img src="" class="pros_pokemon_type1">
+				<img src="" class="pros_pokemon_type2">
+			</c:if>
 			<h4 class="pros_profile_name2 text"></h4>
 			<h4 class="pros_update text"></h4>
 			<h4 class="pros_create text"></h4>
@@ -93,6 +88,7 @@
 			<h4 class="pros_intro text"></h4>
 
 			<form name="updateFrm" method="post" class="updateFrm">
+				<input type="hidden" name="get_id" class="pros_get_id" value="" />
 				<input type="hidden" name="get_category" class="get_category" value="pokemon" />
 				<input type="hidden" name="get_active" class="pros_active" value="on" /> 
 				<input type="text" name="get_name" class="pros_get_name_input" maxlength="9" />

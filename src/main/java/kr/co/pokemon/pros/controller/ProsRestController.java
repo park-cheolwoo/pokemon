@@ -1,6 +1,8 @@
 package kr.co.pokemon.pros.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import kr.co.pokemon.item.dto.ItemDTO;
 import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
+import kr.co.pokemon.pokemon.dao.relationship.PokemonTypesMapper;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.PokemonService;
 
@@ -27,7 +30,9 @@ public class ProsRestController {
 	PlayerService playerService;
 	@Autowired
 	ItemService itemService;
-	
+	@Autowired
+	PokemonTypesMapper pokemonTypesMapper;
+
 	@ResponseBody
 	@PostMapping(value = "/pokemon/{page}")
 	public List<PokemonDTO> addPokemon(@RequestParam(defaultValue="1") int page) {
@@ -66,8 +71,12 @@ public class ProsRestController {
 	
 	@ResponseBody
 	@PostMapping(value = "/pokemon/view/{id}")
-	public PokemonDTO findPokemon(int id){
-		return pokemonService.getById(id);
+	public Map<String, Object> findPokemon(int id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("category", "pokemon");
+		map.put("pokemon", pokemonService.getById(id));
+		map.put("types",pokemonTypesMapper.selectByPokemonId(id));
+		return map;
 	}
 
 	@ResponseBody
@@ -75,7 +84,7 @@ public class ProsRestController {
 	public String updatePlayerSystem(PlayerDTO pDTO) {
 		System.out.println("pDTO : " + pDTO.getId() + pDTO.getNickname() + pDTO.getProfile() + pDTO.getGameMoney()
 				+ pDTO.getRealMoney() + pDTO.getIsActive());
-				if (pDTO.getId() != null && !pDTO.getId().isEmpty() &&
+		if (pDTO.getId() != null && !pDTO.getId().isEmpty() &&
 				pDTO.getNickname() != null && !pDTO.getNickname().equals("") &&
 				pDTO.getProfile() != null && !pDTO.getProfile().equals("") &&
 				pDTO.getGameMoney() >= 0 && pDTO.getRealMoney() >= 0 &&
@@ -86,8 +95,14 @@ public class ProsRestController {
 			System.out.println("컨트롤러단 유효성 검사 실패");
 			return "fail";
 		}
-
 	}
 	
+	@ResponseBody
+	@PostMapping(value = "/update/pokemon/id/{id}")
+	public String UpdatePokemon(PokemonDTO pDTO) {
+		System.out.println("isActive : "+pDTO.getIsActive());
+		pokemonService.updatePokemonBySystem(pDTO);
+		return "success";
+	}
 	
 }
