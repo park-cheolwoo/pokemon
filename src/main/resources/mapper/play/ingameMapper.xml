@@ -29,8 +29,12 @@
   		( #{id} )
   </insert>
   
-  <update id="updateSelectionIdx" parameterType="int">
-  	UPDATE ingame SET selection_idx = #{selectionIdx}
+  <update id="updateSelectionIdx">
+  	UPDATE ingame SET selection_idx = #{value} WHERE id = #{playerId}
+  </update>
+
+  <update id="updateIngameStatus">
+  	UPDATE ingame SET is_ingame = #{value} WHERE id = #{playerId}
   </update>
 
 </mapper>
