@@ -191,7 +191,6 @@ public class PlayerPokemonController {
 	            return null;
 	        })
 	        .filter(image -> image != null) // null 값 제외
-	        .limit(6) // 최대 6개로 제한
 	        .collect(Collectors.toList());
 
 	    return new DataStatusDTO<>("success", images);

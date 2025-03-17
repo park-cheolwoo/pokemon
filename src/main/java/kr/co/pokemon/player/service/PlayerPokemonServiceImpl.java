@@ -1,10 +1,12 @@
 package kr.co.pokemon.player.service;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -243,13 +245,13 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	public List<PlayerPokemonDTO> minePlayerId(String sessionId) {
 	    List<PlayerPokemonDTO> playerPokemons = playerPokemonMapper.selectByPlayerId(sessionId);
 
-	    playerPokemons.forEach(playerPokemon -> {
-	        PokemonDTO pokemonDTO = pokemonService.minePokemonById(playerPokemon.getPokemonId());
-	        if (pokemonDTO != null) {
-	            playerPokemon.setName(pokemonDTO.getName());
-	        }
-	    });
-	    return playerPokemons;
+	    if (playerPokemons.size() <= 6) {
+	        return playerPokemons;
+	    }
+	    // 랜덤하게 섞기
+	    Collections.shuffle(playerPokemons);
+	    // 처음 6마리만 반환
+	    return playerPokemons.stream().limit(6).collect(Collectors.toList());
 	}
 
 }
