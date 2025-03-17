@@ -1,5 +1,7 @@
 package kr.co.pokemon.play.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.pokemon.play.dto.IngameDTO;
+import kr.co.pokemon.play.dto.IngameEnemyDTO;
 import kr.co.pokemon.play.dto.IngameInfoDTO;
+import kr.co.pokemon.play.dto.IngamePokemonDTO;
+import kr.co.pokemon.play.service.IngamePokemonService;
 import kr.co.pokemon.play.service.IngameService;
 
 @RestController
@@ -21,6 +26,9 @@ public class ImgameController {
 	
 	@Autowired
 	private IngameService ingameService;
+	
+	@Autowired
+	private IngamePokemonService ingamePokemonService;
 	
 	@GetMapping(value = "/me")
 	public IngameDTO getMyIngame() {
@@ -49,5 +57,14 @@ public class ImgameController {
 		
 		return ingameService.updateSelectionIdx(session_id, idx);
 	}
-
+	
+	@PostMapping(value = "/pokemon")
+	public boolean saveIngamePokemon(@RequestBody List<IngamePokemonDTO> ownPokemons) {
+		return ingamePokemonService.saveIngamePokemons(ownPokemons);
+	}
+	
+	@PostMapping(value = "/enemy")
+	public boolean saveIngameEnemy(@RequestBody List<IngameEnemyDTO> enemies) {
+		return ingamePokemonService.saveIngameEnemies(enemies);
+	}
 }
