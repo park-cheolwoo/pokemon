@@ -23,7 +23,7 @@ public interface PokemonService extends APIGetable<PokemonDTO> {
 	
 	PokemonDTO getById(int id);
 
-    
+    void updatePokemonBySystem(PokemonDTO pDTO);
     /**
      * 포켓몬 리스트를 소유 여부와 함께 가져옵니다.
      * 

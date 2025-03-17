@@ -47,6 +47,10 @@
 	FROM dual
   </select>
   
+  <update id="UpdatePokemonBySystem">
+    Update pokemon set name=#{name}, flavor_text = #{flavorText}, is_active=#{isActive} where id=#{id}
+  </update>
+
   <insert id="insert">
   	INSERT INTO pokemon
   		( id, name, image, image3d, gender_rate, gender_diff, genus, height, weight, flavor_text, is_legendary, is_mythical )
