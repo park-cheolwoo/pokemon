@@ -147,6 +147,10 @@ public class PokemonServiceImpl implements PokemonService {
 		return pokemonMapper.selectByName(keyword);
 	}
 	
+	@Override
+	public void updatePokemonBySystem(PokemonDTO pDTO) {
+		pokemonMapper.UpdatePokemonBySystem(pDTO);
+	}
 	
 	@Override
 	public void insert(PokemonDTO dto) {

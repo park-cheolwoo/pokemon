@@ -66,8 +66,8 @@
 
   <img src="/images/store/item-frame.png" class="pros_profile_frame_img2" />
   <img src="/images/pros/avarter.png" class="pros_profile_img2">
-  <h4 class="pros_profile_name1 text"></h4>
-  <h4 class="pros_profile_name2 text"></h4>
+  <h4 class="pros_profile_name1 pros_modal1 text"></h4>
+  <h4 class="pros_profile_name2 pros_modal2 text"></h4>
   
   <!-- 내용 부분 -->
 
