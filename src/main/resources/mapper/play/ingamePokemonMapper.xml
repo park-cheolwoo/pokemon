@@ -8,6 +8,8 @@
     <result column="player_id" property="playerId" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
+    <result column="name" property="name" />
+    <result column="image" property="image" />
   </resultMap>
 
   <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
@@ -19,7 +21,12 @@
   </select>
 
   <select id="selectByPlayerId" resultMap="dataResultMap" parameterType="String">
-    SELECT * FROM ingame_pokemon WHERE player_id = #{playerId} ORDER BY slot DESC
+    SELECT ip.*, p.name, p.image 
+    FROM ingame_pokemon ip
+    LEFT JOIN player_pokemon pp ON ip.id = pp.id
+    LEFT JOIN pokemon p ON pp.pokemon_id = p.id
+    WHERE ip.player_id = #{playerId} 
+    ORDER BY ip.slot DESC
   </select>
   
   <insert id="insert">
