@@ -55,23 +55,23 @@ public class MainController {
 
 	@GetMapping("/play/sdungeon")
 	public String sdungeon(Model model) {
-//	    String playerId = (String) session.getAttribute("session_id");
-//
-//	    if (playerId == null) {
-//	        return "redirect:/member/login";
-//	    }
-//
-//	    // playerId로 SdungeonDTO 가져오기
-//	    SdungeonDTO sdungeonDto = sdungeonService.getSdungeonById(playerId);
-//
-//	    // 모델에 추가
-//	    if (sdungeonDto != null) {
-//	        model.addAttribute("sdungeon", sdungeonDto);
-//	        // 결과 출력 (디버깅용)
-//	        System.out.println("sdungeon : " + sdungeonDto);
-//	    } else {
-//	        System.out.println("sdungeonDto is null for playerId: " + playerId);
-//	    }
+	    String playerId = (String) session.getAttribute("session_id");
+
+	    if (playerId == null) {
+	        return "redirect:/member/login";
+	    }
+
+	    // playerId로 SdungeonDTO 가져오기
+	    SdungeonDTO sdungeonDto = sdungeonService.getSdungeonById(playerId);
+
+	    // 모델에 추가
+	    if (sdungeonDto != null) {
+	        model.addAttribute("sdungeon", sdungeonDto);
+	        // 결과 출력 (디버깅용)
+	        System.out.println("sdungeon : " + sdungeonDto);
+	    } else {
+	        System.out.println("sdungeonDto is null for playerId: " + playerId);
+	    }
 
 	    return "/play/sdungeon";
 	}

@@ -67,10 +67,24 @@ public class PlayerServiceImpl implements PlayerService {
         return playerdto == null; 
     }
 
+//    public boolean insertPlayer(PlayerDTO player) {
+//        player.setTag(generateRandomTag());
+//        return playerMapper.insertPlayer(player) > 0;
+//    }
+    
+    @Override
     public boolean insertPlayer(PlayerDTO player) {
-        player.setTag(generateRandomTag());
-        return playerMapper.insertPlayer(player) > 0;
+        player.setTag(generateRandomTag()); 
+        boolean isPlayerInserted = playerMapper.insertPlayer(player) > 0; 
+        
+        if (isPlayerInserted) {
+            // 플레이어가 성공적으로 추가되면 해당 플레이어의 sdungeon 데이터도 생성
+            sdungeonService.createSdungeonForPlayer(player.getId());
+        }
+
+        return isPlayerInserted;
     }
+
     
 //    public boolean insertPlayer(PlayerDTO player) {
 //        player.setTag(generateRandomTag()); 
@@ -89,6 +103,8 @@ public class PlayerServiceImpl implements PlayerService {
 	public List<PlayerDTO> getByNickname(String keyword) {
 		return playerMapper.getByNickname(keyword);
 	}
+
+
 
 	
 

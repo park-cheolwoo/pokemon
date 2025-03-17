@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.pokemon.plan.dao.SdungeonMapper">
     
-<!--      <resultMap id="sdungeonResultMap" type="kr.co.pokemon.plan.dto.SdungeonDTO">
+      <resultMap id="sdungeonResultMap" type="kr.co.pokemon.plan.dto.SdungeonDTO">
         <id property="id" column="id" />
         <result property="dailyClearCount" column="daily_clear_count" />
         <result property="weeklyClearCount" column="weekly_clear_count" />
@@ -24,5 +24,5 @@
     <select id="findById" resultMap="sdungeonResultMap">
         SELECT * FROM SDUNGEON WHERE id = #{id}
     </select>
--->
+
 </mapper>
