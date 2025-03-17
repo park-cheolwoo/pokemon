@@ -182,7 +182,7 @@ $(function() {
 					$(".pros_list").children().hide();
 					for (let i = 0; i < data.length; i++) {
 						let statusText = data[i].isActive == 0 ? '활성화' : '비활성화';
-						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}"
+						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}">
 						        	<div class="pros_profile_frame">
 						        		<img src="/images/store/item-frame.png" class="pros_profile_frame_img">
 						         	    <img src="/images/pros/avarter.png" class="pros_profile_img">

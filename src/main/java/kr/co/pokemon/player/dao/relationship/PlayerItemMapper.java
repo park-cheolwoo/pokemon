@@ -22,6 +22,8 @@ public interface PlayerItemMapper {
 	List<PlayerDTO> selectPlayersByItemId(int itemId);
 	
 	List<PlayerItemDTO> selectByPlayerId(String playerId);
+
+	PlayerItemDTO getByPlayerIdAndItemId(String playerId, int itemId);
 	
 	List<PlayerItemDTO> selectByItemId(int itemId);
 	

@@ -86,14 +86,19 @@ public class ProsRestController {
 		map.put("category", "pokemon");
 		map.put("pokemon", pokemonService.getById(id));
 		map.put("types", pokemonTypesMapper.selectByPokemonId(id));
-		EvolutionDTO eDTO = evolutionMapper.selectByCurrId(id);
-		map.put("evolution", eDTO);
-		if (eDTO.getPrevId() != null) {
-			map.put("prev", pokemonService.getById(eDTO.getPrevId()));
-		}
-		if (eDTO.getNextId() != null) {
-			map.put("next", pokemonService.getById(eDTO.getNextId()));
-		}
+		try{
+			EvolutionDTO eDTO = evolutionMapper.selectByCurrId(id);
+			if(eDTO != null) {			
+				map.put("evolution", eDTO);
+			}
+			if (eDTO.getPrevId() != null) {
+				map.put("prev", pokemonService.getById(eDTO.getPrevId()));
+			}
+			if (eDTO.getNextId() != null) {
+				map.put("next", pokemonService.getById(eDTO.getNextId()));
+			}
+		}catch(Exception e){
+			map.put("evolution","no-evolution");}
 		return map;
 	}
 	

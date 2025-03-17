@@ -16,6 +16,8 @@ public interface PlayerItemService{
     List<PlayerItemDTO> getByPlayerId(String playerId);
     
     List<PlayerItemDTO> getByItemId(int itemId);
+
+    PlayerItemDTO getByPlayerIdAndItemId(String playerId, int itemId); 
     
     void addItem(PlayerItemDTO playerItem);
     
