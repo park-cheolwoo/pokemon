@@ -15,5 +15,7 @@ public interface GameStageMapper {
 	GameStageDTO selectById(int id);
 	
 	void insert(GameStageDTO gameStage);
+	
+	void insertAll(List<GameStageDTO> list);
 
 }

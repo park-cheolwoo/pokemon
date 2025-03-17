@@ -9,6 +9,7 @@ import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.play.dao.GameStageMapper;
 import kr.co.pokemon.play.dto.GameStageDTO;
+import kr.co.pokemon.pokemon.service.HabitatService;
 
 @Service
 public class GameStageServiceImpl implements GameStageService {
@@ -17,15 +18,24 @@ public class GameStageServiceImpl implements GameStageService {
 	
 	@Autowired
 	private GameStageMapper gameStageMapper;
+	
+	@Autowired
+	private HabitatService habitatService;
 
 	@Override
 	public List<GameStageDTO> getAll(PageRequestDTO page) {
-		return gameStageMapper.selectAll(page);
+		List<GameStageDTO> list = gameStageMapper.selectAll(page);
+		list.forEach(habitat -> habitat.setHabitat(habitatService.getById(habitat.getHabitatId())));
+
+		return list;
 	}
 
 	@Override
 	public GameStageDTO getById(int id) {
-		return gameStageMapper.selectById(id);
+		GameStageDTO gameStage = gameStageMapper.selectById(id);
+		gameStage.setHabitat(habitatService.getById(gameStage.getHabitatId()));
+		
+		return gameStage;
 	}
 
 	@Override
