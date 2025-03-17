@@ -266,12 +266,26 @@ $(function() {
 						$(".pros_profile_view_container").show();
 						$(".pros_profile_name1, .pros_intro").show();
 						$(".pros_update_btn").addClass("pros_update_flag");
+						let prev = data.prev;
+						let next = data.next;
+						hdata = ``
+						if (prev != null) {
+							hdata += `<img src="${data.prev.image}" class="pros_pokemon_img1">`
+							hdata += `<img src="/images/pros/wood-right.png" class="pros_wood_right1">`
+						}
+						hdata += `<img src="${data.pokemon.image}" class="pros_pokemon_img2">`
+						if (next != null) {
+							hdata += `<img src="${data.next.image}" class="pros_pokemon_img3">`
+							hdata += `<img src="/images/pros/wood-right.png" class="pros_wood_right2">`
+						}
+						$(".pros_pokemon_evolution").html(hdata);
+
 						for (i = 0; i < 2; i++) {
 							type = data.types[i].typesId;
-							img = $(".pros_pokemon_type" + i+1)
+							img = $(".pros_pokemon_type" + i + 1)
 							if (type) {
 								switch (type) {
-									case 1: $(".pros_pokemon_type" + (i+1)).attr("src", "/images/pros/type-normal.png"); break;
+									case 1: $(".pros_pokemon_type" + (i + 1)).attr("src", "/images/pros/type-normal.png"); break;
 									case 2: $(".pros_pokemon_type" + (i + 1)).attr("src", "/images/pros/type-fighting.png"); break;
 									case 3: $(".pros_pokemon_type" + (i + 1)).attr("src", "/images/pros/type-flying.png"); break;
 									case 4: $(".pros_pokemon_type" + (i + 1)).attr("src", "/images/pros/type-poison.png"); break;
@@ -292,21 +306,38 @@ $(function() {
 									case 19: $(".pros_pokemon_type" + (i + 1)).attr("src", "/images/pros/type-stellar.png"); break;
 									default: $(".pros_pokemon_type" + (i + 1)).attr("src", "/images/pros/no-type.png");
 								}
-								if (data.types.length == 1) { 
+								if (data.types.length == 1) {
 									$(".pros_pokemon_type2").hide();
 								}
 							}
 						}
+						break;
+					case "item":
+						$(".pros_get_id").val(data.id);
+						$(".pros_profile_img2").attr("src", data.image);
+						$(".pros_profile_name1").text(data.name);
+						$(".pros_profile_name2").text("코인 : "+data.cost + " / 루비 : "+data.realCost);
+						$(".pros_intro").text(data.flavorText);
+						let active2 = data.isActive == 0 ? "on" : "off";
+						$(".pros_active_first").text(active2);
+						if (active2 == "on") {
+							$(".pros_active_on").show();
+							$(".pros_active_off").hide();
+						} else {
+							$(".pros_active_on").hide();
+							$(".pros_active_off").show();
+						}
+						$(".updateFrm").hide();
+						$(".pros_profile_name1, .pros_intro").show();
+						$(".pros_update_btn").addClass("pros_update_flag");
+						$(".pros_profile_view_container").show();
 				}
 			},
 			error: function() {
 				alert("상세보기 전환 실패");
 			}
 		});
-	});
-	
-	// 속성에 따른 이미지 변경
-	
+	});	
 
 	// 플레이어 상세보기 페이지 전환
 	$(document).on("click", ".pros_more_btn", function() {
@@ -363,7 +394,7 @@ $(function() {
 					$(".pros_active").val($(".pros_active_first").text());
 					$(".pros_profile_name1, .pros_profile_name2, .pros_get_coin, .pros_get_ruby, .pros_intro").toggle();
 					break;
-				case "pokemon":
+				default:
 					$(".pros_get_name_input").val($(".pros_profile_name1").text());
 					$(".pros_intro_input").val($(".pros_intro").text());
 					$(".pros_profile_name1, .pros_intro").toggle();
@@ -437,6 +468,26 @@ $(function() {
 						}
 					});
 				}
+				break;
+			case "item":
+				if (active == "on") { active = 0; } else { active = 1; }
+				console.log("active : " + active);
+				if (confirm(nickname + " 정보를 수정하시겠습니까?")) {
+					$.ajax({
+						url: "/admin/update/" + category + "/id/" + id,
+						type: "POST",
+						data: { "id": id, "name": nickname, "flavorText": intro, "isActive": active },
+						success: function (data) {
+							alert("수정되었습니다.");
+							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_list_img");
+							button.click();
+						},
+						error: function () {
+							alert("수정 실패");
+						}
+					});
+				}
+				break;
 		}
 	});
 				
@@ -450,6 +501,8 @@ $(function() {
 					$(".pros_profile_name1, .pros_profile_name2, .pros_get_coin, .pros_get_ruby, .pros_intro").show();
 					break;
 				case "pokemon":
+					$(".pros_profile_name1, .pros_intro").show();
+				case "item":
 					$(".pros_profile_name1, .pros_intro").show();
 			}
 

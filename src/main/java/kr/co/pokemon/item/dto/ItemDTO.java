@@ -43,7 +43,7 @@ public class ItemDTO extends EntityDTO implements NamesGroup, EffectGroup, Flavo
 	private String description;
 	private String flavorText;
 	private int storeType;
-	private boolean isActive;
+	private int isActive = 0;
 
 	@JsonProperty(value = "effect_entries")
 	private List<EffectEntryDTO> effectEntries;

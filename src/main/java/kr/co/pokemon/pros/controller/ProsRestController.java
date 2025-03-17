@@ -63,8 +63,14 @@ public class ProsRestController {
 	
 	@ResponseBody
 	@PostMapping(value = "/player/search/{keyword}")
-	public List<PlayerDTO> searchPlayer(String keyword){
+	public List<PlayerDTO> searchPlayer(String keyword) {
 		return playerService.getByNickname(keyword);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/item/search/{keyword}")
+	public List<ItemDTO> searchItem(String keyword){
+		return itemService.getByNickname(keyword);
 	}
 	
 	@ResponseBody
@@ -81,7 +87,7 @@ public class ProsRestController {
 		map.put("pokemon", pokemonService.getById(id));
 		map.put("types", pokemonTypesMapper.selectByPokemonId(id));
 		EvolutionDTO eDTO = evolutionMapper.selectByCurrId(id);
-		map.put("evolution", eDTO );
+		map.put("evolution", eDTO);
 		if (eDTO.getPrevId() != null) {
 			map.put("prev", pokemonService.getById(eDTO.getPrevId()));
 		}
@@ -89,6 +95,12 @@ public class ProsRestController {
 			map.put("next", pokemonService.getById(eDTO.getNextId()));
 		}
 		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/item/view/{id}")
+	public ItemDTO findItem(int id) {
+		return itemService.getById(id);
 	}
 
 	@ResponseBody
@@ -112,8 +124,15 @@ public class ProsRestController {
 	@ResponseBody
 	@PostMapping(value = "/update/pokemon/id/{id}")
 	public String UpdatePokemon(PokemonDTO pDTO) {
-		System.out.println("isActive : "+pDTO.getIsActive());
+		System.out.println("isActive : " + pDTO.getIsActive());
 		pokemonService.updatePokemonBySystem(pDTO);
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/update/item/id/{id}")
+	public String UpdateItem(ItemDTO iDTO) {
+		itemService.UpdateItemBySystem(iDTO);
 		return "success";
 	}
 	

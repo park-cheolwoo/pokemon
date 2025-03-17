@@ -74,11 +74,8 @@
 			<h4 class="pros_update text"></h4>
 			<h4 class="pros_create text"></h4>
 			<!-- 내용 부분 -->
-			<img src="/images/pros/pokemon.png" class="pros_pokemon_img1">
-			<img src="/images/pros/wood-right.png" class="pros_wood_right1">
-			<img src="/images/pros/pokemon.png" class="pros_pokemon_img2">
-			<img src="/images/pros/wood-right.png" class="pros_wood_right2">
-			<img src="/images/pros/pokemon.png" class="pros_pokemon_img3">
+			<div class="pros_pokemon_evolution">
+			</div>
 
 			<h4 class="pros_active_txt text">활성화</h4>
 			<img src="/images/store/item-frame.png" class="pros_active_frame">

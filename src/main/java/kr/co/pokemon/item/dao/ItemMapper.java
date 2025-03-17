@@ -18,8 +18,12 @@ public interface ItemMapper {
 
 	List<ItemDTO> selectByCategoryId(int categoryId);
 	
+	List<ItemDTO> selectByNickname(String keyword);
+
 	void insert(ItemDTO dto);
 	
 	void insertAll(List<ItemDTO> dtos);
+
+	void UpdateItemBySystem(ItemDTO iDTO);
 
 }

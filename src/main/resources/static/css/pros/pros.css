@@ -371,7 +371,7 @@ body {
 }
 
 .pros_profile_name2, .pros_get_lv_input {
-	width: 460px;
+	width: 485px;
 	height: 50px;
 	font-size: 50px;
 	line-height: 50px;
@@ -752,7 +752,7 @@ body {
 	grid-template-columns: repeat(8, 1fr);
 	grid-auto-rows: 100px;
 	gap: 12px;
-	width: 880px;
+	width: 890px;
 	height: 350px;
 	overflow-y: auto;
 	position: relative;
