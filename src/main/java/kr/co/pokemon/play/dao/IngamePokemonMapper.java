@@ -14,8 +14,14 @@ public interface IngamePokemonMapper {
 	
 	IngamePokemonDTO selectById(int id);
 	
-	List<IngamePokemonDTO> selectByPlayerId(int playerId);
+	List<IngamePokemonDTO> selectByPlayerId(String playerId);
 	
 	void insert(IngamePokemonDTO ingamePokemon);
+	
+	void insertAll(List<IngamePokemonDTO> list);
+	
+	void updateHp(int hp);
+	
+	void deleteByPlayerId(String playerId);
 	
 }

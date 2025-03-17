@@ -10,6 +10,8 @@ import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
 import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.data.service.DataService;
+import kr.co.pokemon.play.dao.GameStageMapper;
+import kr.co.pokemon.play.dto.GameStageDTO;
 import kr.co.pokemon.pokemon.dao.HabitatMapper;
 import kr.co.pokemon.pokemon.dao.relationship.PokemonHabitatMapper;
 import kr.co.pokemon.pokemon.dto.HabitatDTO;
@@ -29,6 +31,9 @@ public class HabitatServiceImpl implements HabitatService {
 	
 	@Autowired
 	private HabitatMapper habitatMapper;
+	
+	@Autowired
+	private GameStageMapper gameStageMapper;
 	
 	@Autowired
 	private PokemonHabitatMapper pokemonHabitatMapper;
@@ -53,8 +58,8 @@ public class HabitatServiceImpl implements HabitatService {
 		List<PokemonHabitatDTO> pokemonHabitats = new ArrayList<>();
 
 		list.stream().forEach(dto -> {
-			dto.setOriginalName(dto.getName());			
-
+			dto.setOriginalName(dto.getName());
+			
 			dto.getPokemonSpecies().stream().forEach(poke -> {
 				int pokemonId = APIService.getIdByUrl(poke.getUrl());
 				
@@ -68,6 +73,11 @@ public class HabitatServiceImpl implements HabitatService {
 			habitatMapper.insertAll(list);
 			if (dataService.deleteAllData(DBTables.POKEMON_HABITAT.getTableName())) {
 				pokemonHabitatMapper.insertAll(pokemonHabitats);
+				if (dataService.deleteAllData(DBTables.GAME_STAGE.getTableName())) {
+					if (dataService.recreateSequence(DBTables.GAME_STAGE.getTableName())) {
+						gameStageMapper.insertAll(list.stream().map(habitat -> new GameStageDTO(habitat.getId(), 1, 0, 0, 0, 0, null)).toList());
+					}
+				}
 
 			} else {
 				throw new IllegalArgumentException(DBTables.POKEMON_HABITAT.getTableName() + " 의 데이터 삭제에 실패하였습니다.");

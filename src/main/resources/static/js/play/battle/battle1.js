@@ -9,87 +9,90 @@ $(function() {
 	const btnContainer = $(".selection-box");
 	const textBox = $(".text-box");
 
-	$.when(
-		$.ajax('/play/create/pokemon/habitat/2?maxLevel=10'),
-		$.ajax('/play/me/pokemon')
-	).then(function (enemy, my) {
-		const enemyData = enemy[0];
-		const myData = my[0];
-		let pokemonIdx = 0;
-		console.log(enemyData);
-		console.log(myData);
+	$.ajax({
+		url: '/ingame/me/info',
+		dataType: 'json',
+		success: function(data) {
+			const { myPokemons, enemies } = data;
+			let selectionIdx = data.selectionIdx;
+			
+			container.append(pokemonBlockForm("you", enemies[0]));
+			container.append(pokemonBlockForm("me", myPokemons[selectionIdx]));
 
-		container.append(pokemonBlockForm("you", enemyData));
-		container.append(pokemonBlockForm("me", myData[pokemonIdx]));
+			$(container).one("transitionend", () => $(textBox).trigger("nextComment", [{
+				comments: firstComments(myPokemons[selectionIdx].name, enemies[0].name),
+				callback: () => $(btnContainer).trigger("nextSelection")
+			}]));
 
-		$(container).one("transitionend", () => $(textBox).trigger("nextComment", [{comments: firstComments(myData[pokemonIdx].name, enemyData.name), callback: () => $(btnContainer).trigger("nextSelection")}]));
-
-		$(btnContainer).on("nextSelection", function (e, data) {
-			if (data === undefined) {
-				appendBtns(firstSelection(myData, pokemonIdx), false);
-				return;
-			}
-
-			appendBtns(data, true);
-		});
-
-		$(btnContainer).on("attackList", function (e, data) {
-			btnContainer.children(".selection-box__group").css({display: "none"});
-			btnContainer.find(".selection-box__btn").removeClass("active-btn");
-
-			appendBtns(attackSelection(data), true);
-		});
-
-		$(btnContainer).on("attack", function (e, data) {
-			$(this).children(".selection-box__group:not(.main-group)").remove();
-
-			$(".pokemon.you").addClass("damaged-pokemon");
-			setTimeout(() => $(".pokemon.you").removeClass("damaged-pokemon"), 1000);
-			const power = executeDamage(enemyData, data.typesId, data.power * (myData[pokemonIdx].level / 100));
-			let nextCommentData;
-			if (changeHp("you", power) > 0) {
-				nextCommentData = {
-					comments: attackComments(myData[pokemonIdx].name, enemyData.name, data.name, power),
-					callback: () => $(btnContainer).trigger("nextSelection")
-				};
-			} else {
-				nextCommentData = {
-					comments: stageClearComments(myData[pokemonIdx].name, enemyData.name, data.name, power),
-					callback: () => console.log("스테이지 클리어!!")
+			$(btnContainer).on("nextSelection", function (e, data) {
+				if (data === undefined) {
+					appendBtns(firstSelection(myPokemons, selectionIdx), false);
+					return;
 				}
+
+				appendBtns(data, true);
+			});
+
+			$(btnContainer).on("attackList", function (e, data) {
+				btnContainer.children(".selection-box__group").css({display: "none"});
+				btnContainer.find(".selection-box__btn").removeClass("active-btn");
+
+				appendBtns(attackSelection(data), true);
+			});
+
+			$(btnContainer).on("attack", function (e, data) {
+				$(this).children(".selection-box__group:not(.main-group)").remove();
+
+				$(".pokemon.you").addClass("damaged-pokemon");
+				setTimeout(() => $(".pokemon.you").removeClass("damaged-pokemon"), 1000);
+				const power = executeDamage(enemies[0], data.typesId, data.power * (myPokemons[selectionIdx].level / 100));
+				let nextCommentData;
+				if (changeHp("you", power) > 0) {
+					nextCommentData = {
+						comments: attackComments(myPokemons[selectionIdx].name, enemies[0].name, data.name, power),
+						callback: () => $(btnContainer).trigger("nextSelection")
+					};
+				} else {
+					nextCommentData = {
+						comments: stageClearComments(myPokemons[selectionIdx].name, enemies[0].name, data.name, power),
+						callback: () => console.log("스테이지 클리어!!")
+					}
+				}
+				$(textBox).trigger("nextComment", [nextCommentData]);
+			});
+
+			$(btnContainer).on("changePokemon", function (e, data) {
+				console.log(data)
+				$(btnContainer).children().remove();
+				$(container).children(".modal-container").remove();
+				selectionIdx = data;
+				$(textBox).trigger("nextComment", [{comments: [[`${myPokemons[selectionIdx].name} (으)로 포켓몬 교체 !!`]], callback: () => {
+						const changePokemon = $(pokemonBlockForm("me", myPokemons[selectionIdx]));
+						changePokemon.css({opacity: 0});
+						togglePokemon("me", false);
+						setTimeout(() => {
+							container.children(".pokemon.me").remove();
+							container.append(changePokemon);
+
+							setTimeout(() => togglePokemon("me", true, () => $(textBox).trigger("nextComment", [{
+								comments: [[`가랏! ${myPokemons[selectionIdx].name} !`, `${myPokemons[selectionIdx].name} 은(는) 무엇을 할까?`]],
+								callback: () => $(btnContainer).trigger("nextSelection")
+							}])), 500);
+						}, 500);
+					}}]
+				);
+			});
+
+			function executeDamage(targetType, type, power) {
+				console.log(targetType, type, power);
+				return power;
 			}
-			$(textBox).trigger("nextComment", [nextCommentData]);
-		});
 
-		$(btnContainer).on("changePokemon", function (e, data) {
-			$(btnContainer).children().remove();
-			$(container).children(".modal-container").remove();
-			pokemonIdx = data;
-			$(textBox).trigger("nextComment", [{comments: [[`${myData[pokemonIdx].name} (으)로 포켓몬 교체 !!`]], callback: () => {
-					const changePokemon = $(pokemonBlockForm("me", myData[pokemonIdx]));
-					changePokemon.css({opacity: 0});
-					togglePokemon("me", false);
-					setTimeout(() => {
-						container.children(".pokemon.me").remove();
-						container.append(changePokemon);
-
-						setTimeout(() => togglePokemon("me", true, () => $(textBox).trigger("nextComment", [{
-							comments: [[`가랏! ${myData[pokemonIdx].name} !`, `${myData[pokemonIdx].name} 은(는) 무엇을 할까?`]],
-							callback: () => $(btnContainer).trigger("nextSelection")
-						}])), 500);
-					}, 500);
-				}}]
-			);
-		});
-
-		function executeDamage(targetType, type, power) {
-			console.log(targetType, type, power);
-			return power;
+			container.addClass("active-device");
+		},
+		error: function(e) {
+			console.log(e);
 		}
-
-		container.addClass("active-device");
-	}).fail(function (e) {
-		console.log(e);
 	});
 
 	function pokemonBlockForm(part, data) {

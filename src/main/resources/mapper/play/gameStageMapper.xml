@@ -26,5 +26,14 @@
   	VALUES
   		( #{id}, #{habitatId}, #{stage}, #{money}, #{experience}, #{minLevel}, #{maxLevel} )
   </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO game_stage ( id, habitat_id, stage )
+  	SELECT game_stage_seq.NEXTVAL, a.* FROM (
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  			SELECT #{item.habitatId} AS habitat_id, #{item.stage} AS stage
+  			FROM dual
+  	</foreach>) a
+  </insert>
 
 </mapper>
