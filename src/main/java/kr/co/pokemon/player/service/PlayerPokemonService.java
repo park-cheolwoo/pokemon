@@ -8,6 +8,7 @@ import kr.co.pokemon.play.dto.PokemonOwnStat;
 import kr.co.pokemon.player.dto.OwnPokemonSkill;
 import kr.co.pokemon.player.dto.OwnPokemonStat;
 import kr.co.pokemon.player.dto.PlayerPokemonDTO;
+import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
 
 public interface PlayerPokemonService {
 
@@ -36,5 +37,9 @@ public interface PlayerPokemonService {
 	List<PokemonOwnAttack> getAttacksByOwnPokemonId(int ownPokemonId);
 	
 	List<PokemonOwnStat> getStatByOwnPokemonId(int ownPokemonId);
-	
+
+	List<PokemonOwnStat> getRandomStatsByPokemonId(int pokemonId);
+
+	CharacteristicDTO getRandomCharacteristicByStats(List<PokemonOwnStat> ownStats);
+
 }

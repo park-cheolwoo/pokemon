@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.model.DBTables;
+import kr.co.pokemon.data.service.APIService;
 import kr.co.pokemon.data.service.DataService;
 import kr.co.pokemon.pokemon.dao.GrowthMapper;
 import kr.co.pokemon.pokemon.dto.GrowthDTO;
@@ -18,6 +19,9 @@ public class GrowthServiceImpl implements GrowthService {
 	
 	@Autowired
 	private DataService dataService;
+
+	@Autowired
+	private PokemonService pokemonService;
 	
 	@Autowired
 	private GrowthMapper growthMapper;
@@ -28,6 +32,11 @@ public class GrowthServiceImpl implements GrowthService {
 			dto.getLanguagesDescription("en").ifPresent(name -> dto.setName(name));
 			
 			dto.getLevels().stream().forEach(level -> level.setGrowthId(dto.getId()));
+
+			dto.getPokemonSpecies().stream().forEach(pokemonSpecies -> {
+				int pokemonId = APIService.getIdByUrl(pokemonSpecies.getUrl());
+				pokemonService.setGrowthId(pokemonId, dto.getId());
+			});
 		});
 
 		insert(list);
@@ -60,17 +69,21 @@ public class GrowthServiceImpl implements GrowthService {
 	}
 
 	public void insert(List<GrowthDTO> list) {
-		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
+		if (dataService.deleteAllData(dbTable.getTableName())) {
 			growthMapper.insertAll(list);
 			if (dataService.deleteAllData(DBTables.TOTAL_EXPERIENCE.getTableName())) {
-				list.stream().forEach(dto -> {
-					growthMapper.insertAllLevel(dto.getLevels());
-				});
-				
+				if (dataService.recreateSequence(DBTables.TOTAL_EXPERIENCE.getTableName())) {
+					list.stream().forEach(dto -> {
+						growthMapper.insertAllLevel(dto.getLevels());
+					});
+				} else {
+					throw new IllegalArgumentException(DBTables.TOTAL_EXPERIENCE.getTableName() + " 의 시퀀스 생성에 실패하였습니다.");
+				}
+
 			} else {
 				throw new IllegalArgumentException(DBTables.TOTAL_EXPERIENCE.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
 			}
-			
+
 		} else {
 			throw new IllegalArgumentException(dbTable.getTableName() + " 의 데이터 삭제에 실패하였습니다.");
 		}

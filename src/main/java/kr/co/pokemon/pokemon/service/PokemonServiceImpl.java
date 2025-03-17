@@ -171,7 +171,17 @@ public class PokemonServiceImpl implements PokemonService {
 	public PokemonSprites getSpritesById(int id) {
 		return pokemonMapper.selectSpritesById(id);
 	}
-	
+
+	@Override
+	public void setGrowthId(int id, int growthId) {
+		Map<String, Integer> updateGrowth = new HashMap<>();
+
+		updateGrowth.put("id", id);
+		updateGrowth.put("growthId", growthId);
+
+		pokemonMapper.updateGrowthId(updateGrowth);
+	}
+
 	@Override
 	public void setEvolutionId(int id, int evolutionId) {
 		Map<String, Integer> updateEvolution = new HashMap<>();

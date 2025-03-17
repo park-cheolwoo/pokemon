@@ -46,7 +46,13 @@ public enum DBTables {
     GAME_STAGE("game_stage", null, List.of(DBTables.HABITAT)),
     INGAME("ingame", null, List.of(DBTables.GAME_STAGE)),
     INGAME_POKEMON("ingame_pokemon", null, List.of(DBTables.PLAYER, DBTables.PLAYER_POKEMON)),
-    INGAME_ENEMY("ingame_enemy", null, List.of(DBTables.POKEMON, DBTables.PLAYER));
+    INGAME_ENEMY("ingame_enemy", null, List.of(DBTables.POKEMON, DBTables.PLAYER)),
+	
+	OWN_POKEMON_ABILITY("own_pokemon_ability", null, List.of(DBTables.PLAYER_POKEMON, DBTables.POKEMON_ABILITY)),
+	OWN_POKEMON_ATTACK("own_pokemon_attack", null, List.of(DBTables.PLAYER_POKEMON, DBTables.POKEMON_ATTACK)),
+	OWN_POKEMON_STAT("own_pokemon_stat", null, List.of(DBTables.PLAYER_POKEMON, DBTables.POKEMON_BASE_STAT))
+	
+	;
 
     private final String tableName;
     private final String uri;
