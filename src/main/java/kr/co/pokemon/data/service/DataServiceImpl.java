@@ -143,4 +143,17 @@ public class DataServiceImpl implements DataService {
 		}
 	}
 
+	@Override
+	public boolean recreateSequence(String tableName) {
+		try {
+			String sequenceName = tableName + "_seq";
+
+			dataInfoMapper.dropSequenceByName(sequenceName);
+			dataInfoMapper.createSequenceByName(sequenceName);
+			return true;
+		} catch (Exception e) {
+			e.getStackTrace();
+			return false;
+		}
+	}
 }

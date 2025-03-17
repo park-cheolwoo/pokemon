@@ -15,11 +15,13 @@ public interface DataInfoMapper {
 	int getTableDataCountByName(String tableName);
 	
 	void dropTableByName(String tableName);
-	
+
 	void dropSequenceByName(String sequenceName);
 	
 	void deleteDataByName(String tableName);
 
 	void deleteDataByPage(DataDeleteDTO table);
+
+	void createSequenceByName(String sequenceName);
 
 }

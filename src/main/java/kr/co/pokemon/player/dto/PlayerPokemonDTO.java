@@ -8,6 +8,7 @@ import kr.co.pokemon.data.dto.EntityDTO;
 import kr.co.pokemon.play.dto.PokemonOwnAbility;
 import kr.co.pokemon.play.dto.PokemonOwnAttack;
 import kr.co.pokemon.play.dto.PokemonOwnStat;
+import kr.co.pokemon.play.dto.PokemonOwnType;
 import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class PlayerPokemonDTO extends EntityDTO {
 	private List<PokemonOwnAbility> abilities;
 	private List<PokemonOwnAttack> attacks;
 	private List<PokemonOwnStat> stats;
+	private List<PokemonOwnType> types;
 
 	private boolean isOwned;
 }

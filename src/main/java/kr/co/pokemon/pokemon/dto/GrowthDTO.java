@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import kr.co.pokemon.data.dto.APIPageResultDTO;
 import kr.co.pokemon.data.dto.DescriptionGroup;
 import kr.co.pokemon.data.dto.DescriptionsDTO;
 import kr.co.pokemon.data.dto.EntityDTO;
@@ -26,6 +28,9 @@ public class GrowthDTO extends EntityDTO implements DescriptionGroup {
 	private List<TotalExperience> levels;
 	
 	private List<DescriptionsDTO> descriptions;
+
+	@JsonProperty(value = "pokemon_species")
+	private List<APIPageResultDTO> pokemonSpecies;
 
 	@Getter
 	@Setter

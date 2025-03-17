@@ -26,6 +26,9 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 	
 	@Autowired
 	private AttackService attackService;
+
+	@Autowired
+	private TypesService typesService;
 	
 	@Autowired
 	private PokemonAttackMapper pokemonAttackMapper;
@@ -91,7 +94,9 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 
 	@Override
 	public List<PokemonOwnAttack> getAttacksByPokemonId(int pokemonId) {
-		return pokemonAttackMapper.selectAttackByPokemonId(pokemonId);
+		List<PokemonOwnAttack> list = pokemonAttackMapper.selectAttackByPokemonId(pokemonId);
+		list.forEach(attack -> attack.setTypes(typesService.getById(attack.getTypesId())));
+		return list;
 	}
 	
 	@Override

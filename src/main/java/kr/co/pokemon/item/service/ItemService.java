@@ -8,4 +8,8 @@ import kr.co.pokemon.item.dto.ItemDTO;
 public interface ItemService extends APIGetable<ItemDTO> {
 
 	List<ItemDTO> getByCategoryId(int categoryId);
+
+	List<ItemDTO> getByNickname(String keyword);
+
+	void UpdateItemBySystem(ItemDTO iDTO);
 }

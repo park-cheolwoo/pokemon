@@ -21,21 +21,30 @@ public class AttackServiceImpl implements AttackService {
 	private DataService dataService;
 
 	@Autowired
-	AttackMapper attackMapper;
-	
+	private AttackMapper attackMapper;
+
+	@Autowired
+	private TypesService typesService;
+
 	@Override
 	public List<AttackDTO> getAll(PageRequestDTO page) {
-		return attackMapper.selectAll(page);
+		List<AttackDTO> list = attackMapper.selectAll(page);
+		list.forEach(attack -> attack.setTypes(typesService.getById(attack.getTypesId())));
+		return list;
 	}
 	
 	@Override
 	public List<AttackDTO> getByTypeId(int typesId) {
-		return attackMapper.selectByTypeId(typesId);
+		List<AttackDTO> list = attackMapper.selectByTypeId(typesId);
+		list.forEach(attack -> attack.setTypes(typesService.getById(attack.getTypesId())));
+		return list;
 	}
 
 	@Override
 	public AttackDTO getById(int id) {
-		return attackMapper.selectById(id);
+		AttackDTO attack = attackMapper.selectById(id);
+		attack.setTypes(typesService.getById(attack.getTypesId()));
+		return attack;
 	}
 	
 	@Override
