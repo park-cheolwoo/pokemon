@@ -31,4 +31,7 @@ public interface PokemonService extends APIGetable<PokemonDTO> {
      * @return 소유 여부가 포함된 포켓몬 리스트
      */
     List<PokemonDTO> getPokemonListWithOwnership(Long playerId);
+
+
+	PokemonDTO minePokemonById(int pokemonId);
 }

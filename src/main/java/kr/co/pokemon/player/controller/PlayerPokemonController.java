@@ -1,12 +1,16 @@
 package kr.co.pokemon.player.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +18,8 @@ import kr.co.pokemon.data.dto.DataStatusDTO;
 import kr.co.pokemon.player.dto.OwnPokemonSkill;
 import kr.co.pokemon.player.dto.PlayerPokemonDTO;
 import kr.co.pokemon.player.service.PlayerPokemonService;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
+import kr.co.pokemon.pokemon.service.PokemonService;
 
 @RestController
 @RequestMapping(value = "/player/pokemon")
@@ -24,6 +30,12 @@ public class PlayerPokemonController {
 
 	@Autowired
 	private PlayerPokemonService playerPokemonService;
+	
+	@Autowired
+	private PokemonService pokemonService;
+	
+
+	
 
 	@GetMapping(value = "/me")
 	public DataStatusDTO<List<PlayerPokemonDTO>> getOwnPokemon() {
@@ -157,5 +169,33 @@ public class PlayerPokemonController {
 			return new DataStatusDTO<>("error", false, e.getMessage());
 		}
 	}
+	
+	@GetMapping(value = "/mine")
+	public DataStatusDTO<List<Map<String, String>>> getMinePokemons(@RequestParam(required = false, defaultValue = "false") boolean use3d) {
+	    String sessionId = (String) session.getAttribute("session_id");
+	    if (sessionId == null) {
+	        return new DataStatusDTO<>("fail", null, "세션 정보가 유효하지 않습니다.");
+	    }
+
+	    List<PlayerPokemonDTO> minePokemons = playerPokemonService.minePlayerId(sessionId);
+
+	    List<Map<String, String>> images = minePokemons.stream()
+	        .map(playerPokemon -> {
+	            PokemonDTO pokemonDTO = pokemonService.minePokemonById(playerPokemon.getPokemonId());
+	            if (pokemonDTO != null) {
+	                Map<String, String> imageMap = new HashMap<>();
+	                imageMap.put("2D", pokemonDTO.getImage());  // 2D 이미지
+	                imageMap.put("3D", pokemonDTO.getImage3d()); // 3D 이미지
+	                return imageMap;
+	            }
+	            return null;
+	        })
+	        .filter(image -> image != null) // null 값 제외
+	        .limit(6) // 최대 6개로 제한
+	        .collect(Collectors.toList());
+
+	    return new DataStatusDTO<>("success", images);
+	}
+
 
 }

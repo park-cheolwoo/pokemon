@@ -50,5 +50,11 @@
   	VALUES
   		( #{id}, #{playerId}, #{pokemonId}, #{name}, #{gender}, #{level}, #{experience}, #{characteristicId} )
   </insert>
+  
+  <select id="countPokemonByPlayerId" parameterType="string" resultType="int">
+    select count(*)
+    from player_pokemon
+    where player_id = #{playerId}
+</select>
 
 </mapper>

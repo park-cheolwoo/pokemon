@@ -20,6 +20,7 @@ import kr.co.pokemon.player.dto.OwnPokemonSkill;
 import kr.co.pokemon.player.dto.OwnPokemonStat;
 import kr.co.pokemon.player.dto.PlayerPokemonDTO;
 import kr.co.pokemon.pokemon.dto.CharacteristicDTO;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.PokemonMoveService;
@@ -226,4 +227,19 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 				return characteristics.get(random.nextInt(characteristics.size()));
 			}).orElse(null);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<PlayerPokemonDTO> minePlayerId(String sessionId) {
+	    List<PlayerPokemonDTO> playerPokemons = playerPokemonMapper.selectByPlayerId(sessionId);
+
+	    playerPokemons.forEach(playerPokemon -> {
+	        PokemonDTO pokemonDTO = pokemonService.minePokemonById(playerPokemon.getPokemonId());
+	        if (pokemonDTO != null) {
+	            playerPokemon.setName(pokemonDTO.getName());
+	        }
+	    });
+	    return playerPokemons;
+	}
+
 }

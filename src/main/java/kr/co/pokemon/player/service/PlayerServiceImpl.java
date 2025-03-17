@@ -13,6 +13,7 @@ import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.play.dao.IngameMapper;
 import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.player.dao.PlayerMapper;
+import kr.co.pokemon.player.dao.PlayerPokemonMapper;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 @Service
@@ -21,9 +22,10 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     private PlayerMapper playerMapper;
-    
     @Autowired
     private IngameMapper ingameMapper;
+    @Autowired
+    private PlayerPokemonMapper playerPokemonMapper;
 
     @Override
     public List<PlayerDTO> getAll(PageRequestDTO pDTO) {
@@ -88,8 +90,10 @@ public class PlayerServiceImpl implements PlayerService {
 		ingameMapper.insertIngame(id);
 	}
 
-	
-
+	@Override
+    public int countPlayerPokemon(String playerId) {
+        return playerPokemonMapper.countPokemonByPlayerId(playerId);
+    }
 
 }
 

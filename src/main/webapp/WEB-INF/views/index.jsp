@@ -33,7 +33,9 @@
                 <button type="button" id="logoutBtn" class="closebtn"></button>
                 </div>
         </div>
-
+			<div id ="pokemon-images-container">
+			</div>
+        
         <div class="buttons-container">
             <div class="button-group">
                 <img src="/images/index/wood_button2.png" class="button-bg">

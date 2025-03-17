@@ -31,7 +31,6 @@ public interface PlayerService {
 
 	List<PlayerDTO> getByNickname(String keyword);
 
-
-//	int countPlayerPokemons(String playerId);
+	int countPlayerPokemon(String playerId);
 
 }

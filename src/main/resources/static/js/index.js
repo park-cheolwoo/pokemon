@@ -144,6 +144,57 @@ $(function() {
 			}
 		});
 	}
+	$(document).ready(function () {
+	    function formatCurrency(amount) {
+	        return parseInt(amount).toLocaleString('ko-KR') + ' 원';
+	    }
+
+	    function updateResourceDisplay() {
+	        const gameMoneyElement = $('.resource-group:nth-child(1) .resource-info'); 
+	        const realMoneyElement = $('.resource-group:nth-child(2) .resource-info'); 
+
+	        const gameMoney = gameMoneyElement.text().replace(/[^0-9]/g, ''); 
+	        const realMoney = realMoneyElement.text().replace(/[^0-9]/g, ''); 
+
+	        gameMoneyElement.text(formatCurrency(gameMoney));
+	        realMoneyElement.text(formatCurrency(realMoney));
+	    }
+	    updateResourceDisplay();
+	});
+
+	$(document).ready(function () {
+	    function loadMinePokemons() {
+	        $.ajax({
+	            url: '/player/pokemon/mine',
+	            type: 'GET',
+	            dataType: 'json',
+	            success: function (response) {
+	                if (response.status === 'success') {
+	                    renderPokemonImages(response.data); // 데이터를 렌더링
+	                } else {
+	                    console.error('데이터를 불러오지 못했습니다:', response.message);
+	                }
+	            },
+	            error: function (error) {
+	                console.error('API 요청 실패:', error);
+	            }
+	        });
+	    }
+
+	    function renderPokemonImages(images) {
+	        const container = $('#pokemon-images-container');
+	        container.empty();
+
+	        images.forEach(image => {
+	            // 기본적으로 3D 이미지를 사용하고, 없으면 2D 이미지로 대체
+	            const selectedImage = image['3D'] || image['2D']; // 3D가 없을 경우 2D를 사용
+	            const imageHTML = `<img src="${selectedImage}" alt="포켓몬 이미지" class="pokemon-image" />`;
+	            container.append(imageHTML);
+	        });
+	    }
+
+	    loadMinePokemons(); // 포켓몬 이미지 로드
+	});
 
 
 
