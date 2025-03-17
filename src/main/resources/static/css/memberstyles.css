@@ -68,6 +68,10 @@
 /* 버튼 스타일 */
 #loginBtn {
 	position: absolute;
+	box-sizing: border-box;
+    max-width: 100%; 
+    overflow: hidden; 
+    text-align: center;
 	top: 74.1%;
   	left: 13.2%;
     width: 73.5%;

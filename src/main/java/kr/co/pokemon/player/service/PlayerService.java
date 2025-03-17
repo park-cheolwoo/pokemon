@@ -26,8 +26,11 @@ public interface PlayerService {
 	boolean isIdAble(String id);
 
 	boolean insertPlayer(PlayerDTO playerDto);
+	
+	void insertIngameData(String id);
 
 	List<PlayerDTO> getByNickname(String keyword);
+
 
 //	int countPlayerPokemons(String playerId);
 

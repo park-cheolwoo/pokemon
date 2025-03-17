@@ -25,13 +25,14 @@ $(function() {
 				id: id,
 				password: password
 			},
+			dataType:"json",
 			success: function(response) {
+			console.log("서버 응답:", response)
 				if (response.loginChk == "0") {
 					console.log("Incorrect ID or Password");
 					alert("아이디 또는 패스워드가 일치하지 않습니다.");
 				} else if (response.loginChk == "1") {
-					alert("로그인 성공");
-					location.href = "/index";
+					location.href = "/";
 				}
 			},
 			error: function() {
