@@ -80,32 +80,32 @@ public interface SdungeonMapper {
     
     // player 가입시 sdungeon 생성
     @Insert("""
-    	    INSERT INTO SDUNGEON (id, daily_clear_count, weekly_clear_count, total_count, gamemoney, 
-    	        pokemon1_id, pokemon1_name, pokemon1_img, 
-    	        pokemon2_id, pokemon2_name, pokemon2_img, 
-    	        pokemon3_id, pokemon3_name, pokemon3_img)
-    	    WITH RandomPokemon AS (
-    	        SELECT ID, NAME, IMAGE, ROWNUM AS rn
-    	        FROM POKEMON
-    	        ORDER BY DBMS_RANDOM.VALUE
-    	        FETCH FIRST 3 ROWS ONLY
-    	    )
-    	    SELECT 
-    	        #{id}, 
-    	        #{dailyClearCount}, 
-    	        #{weeklyClearCount}, 
-    	        #{totalCount}, 
-    	        #{gameMoney},
-    	        MAX(CASE WHEN rn = 1 THEN ID END),
-    	        MAX(CASE WHEN rn = 1 THEN NAME END),
-    	        MAX(CASE WHEN rn = 1 THEN IMAGE END),
-    	        MAX(CASE WHEN rn = 2 THEN ID END),
-    	        MAX(CASE WHEN rn = 2 THEN NAME END),
-    	        MAX(CASE WHEN rn = 2 THEN IMAGE END),
-    	        MAX(CASE WHEN rn = 3 THEN ID END),
-    	        MAX(CASE WHEN rn = 3 THEN NAME END),
-    	        MAX(CASE WHEN rn = 3 THEN IMAGE END)
-    	    FROM RandomPokemon
+    	   INSERT INTO SDUNGEON (id, daily_clear_count, weekly_clear_count, total_count, gamemoney, 
+		    pokemon1_id, pokemon1_name, pokemon1_img, 
+		    pokemon2_id, pokemon2_name, pokemon2_img, 
+		    pokemon3_id, pokemon3_name, pokemon3_img)
+		WITH RandomPokemon AS (
+		    SELECT ID, NAME, IMAGE, 
+		           ROW_NUMBER() OVER (ORDER BY DBMS_RANDOM.VALUE) AS rn
+		    FROM POKEMON
+		    FETCH FIRST 3 ROWS ONLY
+		)
+		SELECT 
+		    #{id}, 
+		    #{dailyClearCount}, 
+		    #{weeklyClearCount}, 
+		    #{totalCount}, 
+		    #{gameMoney},
+		    MAX(CASE WHEN rn = 1 THEN ID END),
+		    MAX(CASE WHEN rn = 1 THEN NAME END),
+		    MAX(CASE WHEN rn = 1 THEN IMAGE END),
+		    MAX(CASE WHEN rn = 2 THEN ID END),
+		    MAX(CASE WHEN rn = 2 THEN NAME END),
+		    MAX(CASE WHEN rn = 2 THEN IMAGE END),
+		    MAX(CASE WHEN rn = 3 THEN ID END),
+		    MAX(CASE WHEN rn = 3 THEN NAME END),
+		    MAX(CASE WHEN rn = 3 THEN IMAGE END)
+		FROM RandomPokemon
     	""")
     	void insertSdungeon(SdungeonDTO sdungeonDto);
 

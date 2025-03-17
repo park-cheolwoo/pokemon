@@ -92,7 +92,10 @@ public class MainController {
 
 	    // playerId로 SdungeonDTO 가져오기
 	    SdungeonDTO sdungeonDto = sdungeonService.getSdungeonById(playerId);
-
+	    
+	    if (sdungeonDto != null && sdungeonDto.getDailyClearCount() >= 1) {
+	    	return "redirect:/";
+	    }
 	    // 모델에 추가
 	    if (sdungeonDto != null) {
 	        model.addAttribute("sdungeon", sdungeonDto);
