@@ -22,7 +22,7 @@
 			<a href="" class="link3">PW 찾기</a>
 		</div>
 		
-		<button type="submit" id="loginBtn">로그인</button>
+		<button type="button" id="loginBtn">로그인</button>
 		</div>
 			<img src="/images/index/kakao_login.png" class="kakao">
 			<img src="/images/index/naver_login.png" class="naver">

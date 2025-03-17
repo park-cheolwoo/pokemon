@@ -1,6 +1,7 @@
 package kr.co.pokemon.player.controller;
 
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,16 +31,22 @@ public class PlayerController {
     }
     
     // 로그인 처리
+    @ResponseBody
     @PostMapping(value = "/login")
-    public String login(@RequestParam String id, @RequestParam String password, Model model, HttpSession session) {
-        PlayerDTO playerDto = playerService.login(id, password);
-        if (playerDto != null) {
-            setSessionAttributes(session, playerDto);
-            return "redirect:/"; 
+    public Map<String, String> login(@RequestParam String id, @RequestParam String password, HttpSession session) {
+        Map<String, String> response = new HashMap<>();
+
+        PlayerDTO playerDTO = playerService.login(id, password); 
+        if (playerDTO != null) {
+        	setSessionAttributes(session, playerDTO);
+            response.put("loginChk", "1"); 
+        } else {
+            response.put("loginChk", "0"); 
         }
-        model.addAttribute("loginChk", "0"); 
-        return "member/login";
+
+        return response; 
     }
+
 
     // 회원가입 페이지
     @GetMapping(value = "/join")
