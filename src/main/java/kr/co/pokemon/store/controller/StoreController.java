@@ -20,14 +20,14 @@ public class StoreController {
 	@Autowired ItemService itemService;
 	
     // 상점 메인페이지 오픈	
-	@GetMapping(value = "/store/basicStore")
+	@GetMapping(value = "/store")
 	public String basicStore(@RequestParam(defaultValue = "1") int page, Model model) {
 		List<ItemDTO> list = itemService.getAll(new PageRequestDTO(200, page));
 		List<Integer> categoryList = Arrays.asList(1, 10, 11, 26, 27, 28, 29, 30, 33, 34, 37);
 		List<ItemDTO> filteredList = new ArrayList<ItemDTO>();
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(categoryList.contains(list.get(i).getCategoryId()));
-			if (categoryList.contains(list.get(i).getCategoryId())) {
+			if (categoryList.contains(list.get(i).getCategoryId()) && list.get(i).getIsActive() == 0) {
 				filteredList.add(list.get(i)); // Add matching items to the new list
 			}
 		}

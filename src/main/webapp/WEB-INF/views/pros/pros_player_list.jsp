@@ -111,6 +111,6 @@
 	<img src="/images/close.png" class="pros_profile_view_exit">
   </div>
   <!-- 모달 끝 -->
-  
+  <img src="/images/pros/home.png" class="pros_home_btn">
 </body>
 </html>
