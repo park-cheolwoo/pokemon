@@ -1,7 +1,5 @@
 package kr.co.pokemon.play.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,11 +34,4 @@ public class PlayController {
 	) {
 		return playService.createPokemonByHabitatId(habitatId, minLevel, maxLevel);
 	}
-
-	@GetMapping(value = "/me/pokemon")
-	public List<CreatedPokemonDTO> getMyPokemons() {
-		String sessionId = (String) session.getAttribute("session_id");
-		return playService.getIngamePokemons(sessionId);
-	}
-
 }

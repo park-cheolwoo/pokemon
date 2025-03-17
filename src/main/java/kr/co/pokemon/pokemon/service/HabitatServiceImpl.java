@@ -75,7 +75,7 @@ public class HabitatServiceImpl implements HabitatService {
 				pokemonHabitatMapper.insertAll(pokemonHabitats);
 				if (dataService.deleteAllData(DBTables.GAME_STAGE.getTableName())) {
 					if (dataService.recreateSequence(DBTables.GAME_STAGE.getTableName())) {
-						gameStageMapper.insertAll(list.stream().map(habitat -> new GameStageDTO(habitat.getId(), 1, 0, 0, 0, 0)).toList());
+						gameStageMapper.insertAll(list.stream().map(habitat -> new GameStageDTO(habitat.getId(), 1, 0, 0, 0, 0, null)).toList());
 					}
 				}
 

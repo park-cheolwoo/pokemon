@@ -5,9 +5,11 @@
 <mapper namespace="kr.co.pokemon.play.dao.IngameMapper">
 
   <resultMap id="dataResultMap" type="kr.co.pokemon.play.dto.IngameDTO" autoMapping="true">
+    <id column="id" property="playerId" />
     <result column="is_ingame" property="isIngame" />
     <result column="stage_id" property="stageId" />
     <result column="max_stage_id" property="maxStageId" />
+    <result column="selection_idx" property="selectionIdx" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
@@ -16,7 +18,7 @@
     SELECT * FROM ingame ORDER BY updated_at OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
   </select>
 
-  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+  <select id="selectById" resultMap="dataResultMap" parameterType="String">
     SELECT * FROM ingame WHERE id = #{id}
   </select>
   
@@ -26,5 +28,9 @@
   	VALUES
   		( #{id} )
   </insert>
+  
+  <update id="updateSelectionIdx" parameterType="int">
+  	UPDATE ingame SET selection_idx = #{selectionIdx}
+  </update>
 
 </mapper>
