@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.pokemon.item.dto.ItemDTO;
 import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.player.dao.relationship.PlayerItemMapper;
@@ -35,6 +36,8 @@ public class StoreRestController {
   @Autowired
   PlayerService playerService;
 
+  @Autowired
+  HttpSession session;
 
   @ResponseBody
   @PostMapping("/view/{id}")
@@ -58,15 +61,24 @@ public class StoreRestController {
       playerItemService.updateItem(piDTO);
     }
     PlayerDTO pDTO = playerService.getById(playerId);
+
     int own_money = pDTO.getGameMoney();
-    pDTO.setGameMoney(own_money-cost);
+    pDTO.setGameMoney(own_money - cost);
     playerService.updatePlayerBySystem(pDTO);
+    System.out.println("gamemoney : " + pDTO.getGameMoney());
     Map<String, Object> map = new HashMap<String, Object>();
     map.put("cost", own_money - cost);
     map.put("result", "success");
+    // 비밀번호 세션 저장 방지
+    pDTO.setPassword("");
+    session.invalidate();
+    session.setAttribute("session_id", pDTO.getId());
+    session.setAttribute("session_nickname", pDTO.getRealMoney());
+    session.setAttribute("session_tag", pDTO.getTag());
+    session.setAttribute("session_lv", pDTO.getLv());
+    session.setAttribute("session_gameMoney", pDTO.getGameMoney());
+    session.setAttribute("session_realMoney", pDTO.getRealMoney());
     return map;
   }
   
-  
-
 }

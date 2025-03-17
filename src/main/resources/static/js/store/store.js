@@ -224,7 +224,7 @@ $(function() {
 				alert("구매 완료하였습니다.");
 				$(".game_money").text(Number(data.cost).toLocaleString());
 				// session_gameMoney 값 수정
-				
+				session_money = Number(data.cost).toLocaleString();
 				$(".item_confirm_container").hide();
 			},
 			error: function () { alert("실패"); }
