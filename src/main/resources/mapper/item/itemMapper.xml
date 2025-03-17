@@ -32,6 +32,10 @@
 <select id="selectByCategoryId" resultMap="dataResultMap" parameterType="int">
   SELECT * FROM item WHERE category_id = #{categoryId}
 </select>
+
+<select id="selectByNickname" resultMap="dataResultMap" parameterType="String"> 
+SELECT * FROM item WHERE name like '%' ||  #{keyword} || '%'
+</select>
   
   <select id="existById" resultType="int" parameterType="int">
 	SELECT CASE
@@ -54,5 +58,10 @@
   		SELECT #{item.id}, #{item.name}, #{item.image}, #{item.categoryId}, #{item.cost}, #{item.value, jdbcType=INTEGER}, #{item.description, jdbcType=CLOB}, #{item.flavorText, jdbcType=CLOB} FROM DUAL
   	</foreach>
   </insert>
-
+  
+  <update id="UpdateItemBySystem">
+    UPDATE item set 
+     name = #{name}, flavor_text = #{flavorText}, is_active = #{isActive}
+     where id = #{id}
+  </update>
 </mapper>

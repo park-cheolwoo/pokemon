@@ -1,6 +1,8 @@
 package kr.co.pokemon.pros.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +15,11 @@ import kr.co.pokemon.item.dto.ItemDTO;
 import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
+import kr.co.pokemon.pokemon.dao.EvolutionMapper;
+import kr.co.pokemon.pokemon.dao.relationship.PokemonTypesMapper;
+import kr.co.pokemon.pokemon.dto.EvolutionDTO;
 import kr.co.pokemon.pokemon.dto.PokemonDTO;
 import kr.co.pokemon.pokemon.service.PokemonService;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RequestMapping("/admin")
@@ -28,7 +32,11 @@ public class ProsRestController {
 	PlayerService playerService;
 	@Autowired
 	ItemService itemService;
-	
+	@Autowired
+	PokemonTypesMapper pokemonTypesMapper;
+	@Autowired
+	EvolutionMapper evolutionMapper;
+
 	@ResponseBody
 	@PostMapping(value = "/pokemon/{page}")
 	public List<PokemonDTO> addPokemon(@RequestParam(defaultValue="1") int page) {
@@ -55,8 +63,14 @@ public class ProsRestController {
 	
 	@ResponseBody
 	@PostMapping(value = "/player/search/{keyword}")
-	public List<PlayerDTO> searchPlayer(String keyword){
+	public List<PlayerDTO> searchPlayer(String keyword) {
 		return playerService.getByNickname(keyword);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/item/search/{keyword}")
+	public List<ItemDTO> searchItem(String keyword){
+		return itemService.getByNickname(keyword);
 	}
 	
 	@ResponseBody
@@ -67,8 +81,26 @@ public class ProsRestController {
 	
 	@ResponseBody
 	@PostMapping(value = "/pokemon/view/{id}")
-	public PokemonDTO findPokemon(int id){
-		return pokemonService.getById(id);
+	public Map<String, Object> findPokemon(int id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("category", "pokemon");
+		map.put("pokemon", pokemonService.getById(id));
+		map.put("types", pokemonTypesMapper.selectByPokemonId(id));
+		EvolutionDTO eDTO = evolutionMapper.selectByCurrId(id);
+		map.put("evolution", eDTO);
+		if (eDTO.getPrevId() != null) {
+			map.put("prev", pokemonService.getById(eDTO.getPrevId()));
+		}
+		if (eDTO.getNextId() != null) {
+			map.put("next", pokemonService.getById(eDTO.getNextId()));
+		}
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/item/view/{id}")
+	public ItemDTO findItem(int id) {
+		return itemService.getById(id);
 	}
 
 	@ResponseBody
@@ -76,7 +108,7 @@ public class ProsRestController {
 	public String updatePlayerSystem(PlayerDTO pDTO) {
 		System.out.println("pDTO : " + pDTO.getId() + pDTO.getNickname() + pDTO.getProfile() + pDTO.getGameMoney()
 				+ pDTO.getRealMoney() + pDTO.getIsActive());
-				if (pDTO.getId() != null && !pDTO.getId().isEmpty() &&
+		if (pDTO.getId() != null && !pDTO.getId().isEmpty() &&
 				pDTO.getNickname() != null && !pDTO.getNickname().equals("") &&
 				pDTO.getProfile() != null && !pDTO.getProfile().equals("") &&
 				pDTO.getGameMoney() >= 0 && pDTO.getRealMoney() >= 0 &&
@@ -87,8 +119,21 @@ public class ProsRestController {
 			System.out.println("컨트롤러단 유효성 검사 실패");
 			return "fail";
 		}
-
 	}
 	
+	@ResponseBody
+	@PostMapping(value = "/update/pokemon/id/{id}")
+	public String UpdatePokemon(PokemonDTO pDTO) {
+		System.out.println("isActive : " + pDTO.getIsActive());
+		pokemonService.updatePokemonBySystem(pDTO);
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/update/item/id/{id}")
+	public String UpdateItem(ItemDTO iDTO) {
+		itemService.UpdateItemBySystem(iDTO);
+		return "success";
+	}
 	
 }

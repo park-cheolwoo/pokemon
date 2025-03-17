@@ -39,15 +39,15 @@
   
   <insert id="insert">
   	INSERT INTO types
-  		( id, name, original_name )
+  		( id, name, original_name, image )
   	VALUES
-  		( #{id}, #{name}, #{originalName} )
+  		( #{id}, #{name}, #{originalName}, #{image} )
   </insert>
   
   <insert id="insertAll" parameterType="java.util.List">
-  	INSERT INTO types ( id, name, original_name )
+  	INSERT INTO types ( id, name, original_name, image )
   	<foreach collection="list" item="item" separator="UNION ALL">
-  		SELECT #{item.id}, #{item.name}, #{item.originalName} FROM DUAL
+  		SELECT #{item.id}, #{item.name}, #{item.originalName}, #{item.image} FROM DUAL
   	</foreach>
   </insert>
 

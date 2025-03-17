@@ -43,6 +43,11 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
+	public List<ItemDTO> getByNickname(String keyword) {
+		return itemMapper.selectByNickname(keyword);
+	}
+
+	@Override
 	public int insertDataFromAPI(List<ItemDTO> list) throws Exception {
 		List<ItemDTO> filtered = list.stream().filter(dto -> {
 			int categoryId = APIService.getIdByUrl(dto.getCategory().getUrl());
@@ -95,5 +100,10 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<ItemDTO> getByCategoryId(int categoryId) {
 		return itemMapper.selectByCategoryId(categoryId);
+	}
+
+	@Override
+	public void UpdateItemBySystem(ItemDTO iDTO) {
+		itemMapper.UpdateItemBySystem(iDTO);
 	}
 }

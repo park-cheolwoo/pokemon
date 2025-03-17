@@ -20,7 +20,7 @@
     SELECT * FROM ingame WHERE id = #{id}
   </select>
   
-  <insert id="insert">
+  <insert id="insertIngame">
   	INSERT INTO ingame
   		( id )
   	VALUES

@@ -11,6 +11,9 @@ import kr.co.pokemon.plan.dto.SdungeonDTO;
 
 public interface SdungeonMapper {
 
+	 @Update("UPDATE SDUNGEON SET gamemoney = 0")
+	    void resetGameMoney();
+	
     @Update("UPDATE SDUNGEON SET daily_clear_count = 0")
     void resetDailyClearCount();
 
@@ -111,4 +114,13 @@ public interface SdungeonMapper {
     
     // sdungeon 데이터 가져오기
 	SdungeonDTO findById(String id);
+	
+    // SDungeonDTO를 업데이트하는 메서드
+    @Update("UPDATE sdungeon SET daily_clear_count = #{dailyClearCount}, " +
+            "weekly_clear_count = #{weeklyClearCount}, total_count = #{totalCount},  gamemoney = #{gameMoney} " +
+            "WHERE id = #{id}")
+    void updateSdungeonCount(SdungeonDTO sdungeonDto);
+    
+    // SdungeonDTO를 가져오는 메서드
+    SdungeonDTO getSdungeonById(String playerId);
 }

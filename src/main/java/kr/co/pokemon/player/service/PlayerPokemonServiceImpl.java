@@ -1,5 +1,6 @@
 package kr.co.pokemon.player.service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import kr.co.pokemon.pokemon.service.AbilityService;
 import kr.co.pokemon.pokemon.service.CharacteristicService;
 import kr.co.pokemon.pokemon.service.PokemonMoveService;
 import kr.co.pokemon.pokemon.service.PokemonService;
+import kr.co.pokemon.pokemon.service.TypesService;
 
 @Service
 public class PlayerPokemonServiceImpl implements PlayerPokemonService {
@@ -47,7 +49,12 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	
 	@Autowired
 	private PokemonMoveService pokemonMoveService;
-	
+
+	@Autowired
+	private TypesService typesService;
+
+	Random random = new Random();
+
 	@Override
 	public PlayerPokemonDTO getById(int id) {
 		return playerPokemonMapper.selectById(id);
@@ -57,11 +64,15 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	@Transactional(readOnly = true)
 	public List<PlayerPokemonDTO> getByPlayerId(String playerId) {
 		List<PlayerPokemonDTO> playerPokemons = playerPokemonMapper.selectByPlayerId(playerId);
-		playerPokemons.stream().forEach(playerPokemon -> {
+		playerPokemons.forEach(playerPokemon -> {
+			List<PokemonOwnAttack> attacks = ownPokemonSkillMapper.selectAttackByOwnPokemonId(playerPokemon.getId());
+			attacks.forEach(attack -> attack.setTypes(typesService.getById(attack.getTypesId())));
+
 			playerPokemon.setAbilities(ownPokemonSkillMapper.selectAbilityByOwnPokemonId(playerPokemon.getId()));
-			playerPokemon.setAttacks(ownPokemonSkillMapper.selectAttackByOwnPokemonId(playerPokemon.getId()));
+			playerPokemon.setAttacks(attacks);
 			playerPokemon.setStats(ownPokemonStatMapper.selectStatByOwnPokemonId(playerPokemon.getId()));
 			playerPokemon.setCharacteristic(characteristicService.getById(playerPokemon.getId()));
+			playerPokemon.setTypes(typesService.getTypesByPokemonId(playerPokemon.getPokemonId()));
 		});
 		return playerPokemons;
 	}
@@ -84,33 +95,28 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 
 		playerPokemonMapper.insert(playerPokemon);
 
-		Random random = new Random();
-		
-		final OwnPokemonStat maxValueStat = new OwnPokemonStat(playerPokemon.getId(), 0, 0, 0);
-		List<PokemonOwnStat> ownStats = playerPokemon.getStats();
-		pokemonService.getStatsByPokemonId(playerPokemon.getPokemonId()).stream().forEach(stat -> {
-			OwnPokemonStat ownStat;
-			if (ownStats != null) {
-				ownStat = ownStats.stream().filter(s -> s.getId() == stat.getStatId())
-						.findFirst().map(s -> new OwnPokemonStat(playerPokemon.getId(), s.getId(), s.getValue() < stat.getValue()? s.getValue() : stat.getValue(), stat.getValue()))
-						.orElse(new OwnPokemonStat(playerPokemon.getId(), stat.getStatId(), stat.getValue() - random.nextInt(15), stat.getValue()));
-			} else {
-				ownStat = new OwnPokemonStat(playerPokemon.getId(), stat.getStatId(), stat.getValue() - random.nextInt(15), stat.getValue());
-			}
-			
-			if (ownStat.getValue() > maxValueStat.getValue()) {
-				maxValueStat.setStatId(ownStat.getStatId());
-				maxValueStat.setValue(ownStat.getValue());
-			}
-			
-			ownPokemonStatMapper.insert(ownStat);
-		});
-		
-		List<CharacteristicDTO> characteristics = characteristicService.getCharacteristicsByStatId(maxValueStat.getStatId());
+		List<PokemonOwnStat> randomPokemonStats = getRandomStatsByPokemonId(playerPokemon.getPokemonId());
+		List<OwnPokemonStat> ownPokemonStats = randomPokemonStats.stream()
+			.map(randomStat -> new OwnPokemonStat(playerPokemon.getId(), randomStat.getId(), randomStat.getValue(), randomStat.getTotal()))
+			.toList();
+
+		if (playerPokemon.getStats() != null) {
+			playerPokemon.getStats().stream().forEach(ownStat -> {
+				OwnPokemonStat ownPokemonStat = ownPokemonStats.stream().filter(stat -> stat.getId() == ownStat.getId()).findFirst().orElse(null);
+				if (ownPokemonStat != null) {
+					if (ownPokemonStat.getTotal() > ownStat.getValue()) {
+						ownPokemonStat.setValue(ownStat.getValue());
+					}
+				}
+			});
+		}
+
+		CharacteristicDTO characteristic = getRandomCharacteristicByStats(randomPokemonStats);
 		Map<String, Integer> updateCharacteristic = new HashMap<>();
 		updateCharacteristic.put("id", playerPokemon.getId());
-		updateCharacteristic.put("characteristicId", characteristics.get(random.nextInt(characteristics.size())).getId());
+		updateCharacteristic.put("characteristicId", characteristic.getId());
 
+		ownPokemonStats.forEach(ownPokemonStat -> ownPokemonStatMapper.insert(ownPokemonStat));
 		playerPokemonMapper.updateNameByCharacteristicById(updateCharacteristic);
 		
 		if (playerPokemon.getAbilities() != null) {
@@ -124,7 +130,7 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	}
 	
 	private void saveAbilities(int playerPokemonId, int pokemonId, List<Integer> abilityIds) {
-		abilityIds.stream().forEach(abilityId -> {
+		abilityIds.forEach(abilityId -> {
 			if (abilityService.existAbilityAndPokemonId(pokemonId, abilityId)) {
 				savePokemonAbility(new OwnPokemonSkill(playerPokemonId, abilityId, 0));
 			}
@@ -132,7 +138,7 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	}
 	
 	private void saveAttacks(int playerPokemonId, int pokemonId, List<Integer> attackIds) {
-		attackIds.stream().forEach(attackId -> {
+		attackIds.forEach(attackId -> {
 			if (pokemonMoveService.existAttackAndPokemonId(pokemonId, attackId)) {
 				savePokemonAttack(new OwnPokemonSkill(playerPokemonId, attackId, 0));
 			}
@@ -196,4 +202,28 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 		return ownPokemonStatMapper.selectStatByOwnPokemonId(ownPokemonId);
 	}
 
+	@Override
+	public List<PokemonOwnStat> getRandomStatsByPokemonId(int pokemonId) {
+		final int minValue = 15;
+
+		return pokemonService.getStatsByPokemonId(pokemonId).stream().map(baseStat -> {
+			int randomValue = baseStat.getValue() - random.nextInt(baseStat.getValue());
+			if (randomValue < minValue) {
+				randomValue = minValue;
+			}
+			PokemonOwnStat stat = new PokemonOwnStat(randomValue, baseStat.getValue());
+			stat.setId(baseStat.getStatId());
+
+			return stat;
+		}).toList();
+	}
+
+	@Override
+	public CharacteristicDTO getRandomCharacteristicByStats(List<PokemonOwnStat> ownStats) {
+		return ownStats.stream().max(Comparator.comparingInt(PokemonOwnStat::getValue))
+			.map(maxStat -> {
+				List<CharacteristicDTO> characteristics = characteristicService.getCharacteristicsByStatId(maxStat.getId());
+				return characteristics.get(random.nextInt(characteristics.size()));
+			}).orElse(null);
+	}
 }

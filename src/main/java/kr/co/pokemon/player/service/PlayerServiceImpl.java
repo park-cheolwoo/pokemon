@@ -11,8 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.plan.service.SdungeonService;
+import kr.co.pokemon.play.dao.IngameMapper;
+import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.player.dao.PlayerMapper;
 import kr.co.pokemon.player.dto.PlayerDTO;
+import kr.co.pokemon.pokemon.dao.PokemonMapper;
 
 @Service
 @Transactional
@@ -22,6 +25,10 @@ public class PlayerServiceImpl implements PlayerService {
 	
     @Autowired
     private PlayerMapper playerMapper;
+    
+    @Autowired
+    private IngameMapper ingameMapper;
+
 
     @Override
     public List<PlayerDTO> getAll(PageRequestDTO pDTO) {
@@ -76,11 +83,11 @@ public class PlayerServiceImpl implements PlayerService {
     public boolean insertPlayer(PlayerDTO player) {
         player.setTag(generateRandomTag()); 
         boolean isPlayerInserted = playerMapper.insertPlayer(player) > 0; 
-        
-        if (isPlayerInserted) {
+
             // 플레이어가 성공적으로 추가되면 해당 플레이어의 sdungeon 데이터도 생성
             sdungeonService.createSdungeonForPlayer(player.getId());
-        }
+
+        
 
         return isPlayerInserted;
     }
@@ -105,6 +112,10 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 
+	@Override
+	public void insertIngameData(String id) {
+		ingameMapper.insertIngame(id);
+	}
 
 	
 

@@ -16,6 +16,17 @@ public class SdungeonServiceImpl implements SdungeonService {
     @Autowired 
     private SdungeonMapper sdungeonMapper;
 
+    @Transactional
+    public void resetGameMoney() {
+        sdungeonMapper.resetGameMoney();
+    }
+
+    // 매일 00시에 게임 머니 리셋 (한국 시간 기준)
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
+    public void scheduleResetGameMoney() {
+        resetGameMoney();
+    }
+    
     // daily_clear_count 리셋
     @Transactional
     public void resetDailyClearCount() {
@@ -91,6 +102,12 @@ public class SdungeonServiceImpl implements SdungeonService {
 	    // SDUNGEON 테이블에 데이터 삽입
 	    sdungeonMapper.insertSdungeon(sdungeonDto);
 	}
+
+
+    // 카운트를 업데이트하는 메서드
+    public void updateSdungeonCount(SdungeonDTO sdungeonDto) {
+        sdungeonMapper.updateSdungeonCount(sdungeonDto);
+    }
 
     
 }

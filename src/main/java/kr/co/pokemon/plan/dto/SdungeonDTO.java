@@ -26,5 +26,4 @@ public class SdungeonDTO {
 	private String pokemon3Img;
 	private int gameMoney;
 	
-	
 }

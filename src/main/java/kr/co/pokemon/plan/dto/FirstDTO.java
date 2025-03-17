@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class FirstDTO {
-	private String id;
-
+	private String id;   // 플레이어 아이디
+	private String pokemon_id; // 받아온 포켓몬 id(이상해씨 1, 파이리 4, 꼬북이 7)
+	private String pokemon_name; // 받아온 포켓몬 이름(새로 지은거 혹은 기존이름)
 }

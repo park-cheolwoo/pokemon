@@ -8,5 +8,8 @@ public interface SdungeonService {
 	
 	// player 계정만들때 sdungeon 디비 같이 생성
 	void createSdungeonForPlayer(String id);
+	
+	// 특수던전 클리어 횟수 증가
+	void updateSdungeonCount(SdungeonDTO sdungeonDto);
 
 }
