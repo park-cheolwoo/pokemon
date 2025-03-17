@@ -135,17 +135,17 @@
 #pokemon-images-container{
 	position: absolute;
 	bottom:20%;
-	left:10%;
-	transform: translate(-50%, 0);
-	width:18%;
+	width:100%;
 	height:auto;
 	border:none;
+	display:flex;
+	justify-content:center;
+	gap : 10px;
 	z-index:3;
-	overflow:hidden;
 }
 #pokemon-images-container img{
-	width:100%;
-	height:100%;
+	width:15%;
+	height:auto;
 	object-fit:contain;
 	animation: waveXY 4s infinite ease-in-out;
 }
@@ -165,26 +165,6 @@
         100% {
             transform: translate(0, 0); /* 기본 위치로 돌아옴 */
         }
-    }
-
-    /* 이미지 간 애니메이션 시간 차이 추가 */
-    .pokemon-image:nth-child(1) {
-        animation-delay: 0s;
-    }
-    .pokemon-image:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-    .pokemon-image:nth-child(3) {
-        animation-delay: 0.4s;
-    }
-    .pokemon-image:nth-child(4) {
-        animation-delay: 0.6s;
-    }
-    .pokemon-image:nth-child(5) {
-        animation-delay: 0.8s;
-    }
-    .pokemon-image:nth-child(6) {
-        animation-delay: 1s;
     }
     
 @media (max-width: 942px) {
