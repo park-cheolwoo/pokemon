@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.play.dto.CreatedPokemonDTO;
-import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.play.dto.PokemonOwnAbility;
 import kr.co.pokemon.play.dto.PokemonOwnAttack;
 import kr.co.pokemon.play.dto.PokemonOwnStat;
@@ -37,10 +36,10 @@ public class PlayServiceImpl implements PlayService {
 	PokemonMoveService pokemonMoveService;
 
 	@Autowired
-	IngameService ingameService;
-
-	@Autowired
 	PlayerPokemonService playerPokemonService;
+	
+	@Autowired
+	IngamePokemonService ingamePokemonService;
 
 	@Autowired
 	TypesService typesService;
@@ -67,11 +66,6 @@ public class PlayServiceImpl implements PlayService {
 		return getAllInfoCreating(pokemons.get(random.nextInt(pokemons.size())), minLevel, maxLevel);
 	}
 
-	@Override
-	public IngameDTO getIngame(int playerId) {
-		return ingameService.getById(playerId);
-	}
-
 	private CreatedPokemonDTO getAllInfoCreating(PokemonDTO pokemon, int minLevel, int maxLevel) {
 		pokemon.setSprites(pokemonService.getSpritesById(pokemon.getId()));
 		List<PokemonOwnStat> stats = playerPokemonService.getRandomStatsByPokemonId(pokemon.getId());
@@ -82,23 +76,8 @@ public class PlayServiceImpl implements PlayService {
 		List<PokemonOwnType> types = typesService.getTypesByPokemonId(pokemon.getId());
 
 		int level = minLevel + random.nextInt((maxLevel - minLevel) + 1);
+		int hp = stats.stream().filter(stat -> stat.getId() == 1).map(PokemonOwnStat::getValue).findFirst().orElse(0);
 
-		return new CreatedPokemonDTO(pokemon, pokemon.getName(), random.nextBoolean(), level, characteristic, abilities, attacks, stats, types);
-	}
-
-	@Override
-	public List<CreatedPokemonDTO> getIngamePokemons(String playerId) {
-		return playerPokemonService.getByPlayerId(playerId).stream().map(playerPokemon -> {
-			PokemonDTO pokemon = pokemonService.getById(playerPokemon.getPokemonId());
-			if (pokemon == null) {
-				return null;
-			}
-			pokemon.setSprites(pokemonService.getSpritesById(pokemon.getId()));
-
-			return new CreatedPokemonDTO(
-				pokemon, playerPokemon.getName(), playerPokemon.isGender(), playerPokemon.getLevel(),
-				playerPokemon.getCharacteristic(), playerPokemon.getAbilities(), playerPokemon.getAttacks(),
-				playerPokemon.getStats(), playerPokemon.getTypes());
-		}).toList();
+		return new CreatedPokemonDTO(pokemon, pokemon.getName(), random.nextBoolean(), level, hp, characteristic, abilities, attacks, stats, types);
 	}
 }
