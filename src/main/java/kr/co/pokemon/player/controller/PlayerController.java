@@ -57,6 +57,8 @@ public class PlayerController {
     @PostMapping("/join")
     public String join(PlayerDTO playerDto, Model model, HttpSession session) {
         if (playerService.insertPlayer(playerDto)) {
+        	//회원가입 성공 시 ingame 데이터 추가
+        	playerService.insertIngameData(playerDto.getId());
             session.removeAttribute("isIdValidated"); 
             return "redirect:/member/login"; 
         } else {

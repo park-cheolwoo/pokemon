@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.play.dao.IngameMapper;
+import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.player.dao.PlayerMapper;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
@@ -19,6 +21,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     private PlayerMapper playerMapper;
+    
+    @Autowired
+    private IngameMapper ingameMapper;
 
     @Override
     public List<PlayerDTO> getAll(PageRequestDTO pDTO) {
@@ -76,6 +81,11 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public List<PlayerDTO> getByNickname(String keyword) {
 		return playerMapper.getByNickname(keyword);
+	}
+
+	@Override
+	public void insertIngameData(String id) {
+		ingameMapper.insertIngame(id);
 	}
 
 	
