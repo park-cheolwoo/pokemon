@@ -11,7 +11,7 @@ $(function() {
 	});
 
 	$(document).on("click", ".pros_home_btn", function() {
-		location.href = "/admin/player";
+		location.href = "/";
 	});
 	
 	$(document).on("click", ".pros_dropbar_btn", function() {
@@ -182,7 +182,11 @@ $(function() {
 					$(".pros_list").children().hide();
 					for (let i = 0; i < data.length; i++) {
 						let statusText = data[i].isActive == 0 ? '활성화' : '비활성화';
+<<<<<<< HEAD
 						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}"
+=======
+						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}">
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 						        	<div class="pros_profile_frame">
 						        		<img src="/images/store/item-frame.png" class="pros_profile_frame_img">
 						         	    <img src="/images/pros/avarter.png" class="pros_profile_img">
@@ -395,6 +399,10 @@ $(function() {
 					$(".pros_profile_name1, .pros_profile_name2, .pros_get_coin, .pros_get_ruby, .pros_intro").toggle();
 					break;
 				default:
+<<<<<<< HEAD
+=======
+					$(".pros_active").val($(".pros_active_first").text());
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 					$(".pros_get_name_input").val($(".pros_profile_name1").text());
 					$(".pros_intro_input").val($(".pros_intro").text());
 					$(".pros_profile_name1, .pros_intro").toggle();
@@ -407,9 +415,11 @@ $(function() {
 	//수정할 때 활성화 on/off 버튼 클릭
 		$(document).on("click", ".active_update", function() {
 				let active = $(".pros_active").val();
-				if (active == "on") {
+			if (active == "on") {
+					console.log("비활성화 시킴");
 					$(".pros_active").val("off");
-				} else {
+			} else {
+					console.log("활성화 시킴");
 					$(".pros_active").val("on");
 				}
 				$(".pros_active_on, .pros_active_off").toggle();
@@ -450,6 +460,7 @@ $(function() {
 						}
 					})
 				}
+<<<<<<< HEAD
 			case "pokemon":
 				if (active == "on") { active = 0; } else { active = 1; }
 				console.log("active : " + active);
@@ -469,6 +480,39 @@ $(function() {
 					});
 				}
 				break;
+=======
+			break;
+			case "pokemon":
+				if (active == "on") { active = 0; } else { active = 1; }
+				console.log("active : " + active);
+				if (confirm(nickname + " 정보를 수정하시겠습니까?")) {
+					$.ajax({
+						url: "/admin/update/" + category + "/id/" + id,
+						type: "POST",
+						data: { "id": id, "name": nickname, "flavorText": intro, "isActive": active },
+						success: function (data) {
+							alert("수정되었습니다.");
+							setInterval(0.1);
+							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_list_img");
+							button.click();
+							if (active = 0) {
+								$(".pros_active_first").text("on");
+								$(".pros_active_on").show();
+								$(".pros_active_off").hide();
+							} else {
+								$(".pros_active_first").text("off");
+								$(".pros_active_on").hide();
+								$(".pros_active_off").show();
+							}
+							
+						},
+						error: function () {
+							alert("수정 실패");
+						}
+					});
+				}
+			break;
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 			case "item":
 				if (active == "on") { active = 0; } else { active = 1; }
 				console.log("active : " + active);

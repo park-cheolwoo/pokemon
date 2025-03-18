@@ -10,9 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class IngamePokemonDTO extends EntityDTO {
 
-	private int playerId;
+	private String playerId;
 	private int hp;
-	private CreatedPokemonDTO pokemon;
 	private int slot;
 	
 }

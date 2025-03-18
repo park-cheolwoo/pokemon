@@ -42,5 +42,4 @@ public class PlayController {
 		String sessionId = (String) session.getAttribute("session_id");
 		return playService.getIngamePokemons(sessionId);
 	}
-
 }

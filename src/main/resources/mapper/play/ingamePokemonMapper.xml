@@ -5,9 +5,7 @@
 <mapper namespace="kr.co.pokemon.play.dao.IngamePokemonMapper">
 
   <resultMap id="dataResultMap" type="kr.co.pokemon.play.dto.IngamePokemonDTO" autoMapping="true">
-    <result column="is_ingame" property="isIngame" />
-    <result column="stage_id" property="stageId" />
-    <result column="max_stage_id" property="maxStageId" />
+    <result column="player_id" property="playerId" />
     <result column="created_at" property="createdAt" />
     <result column="updated_at" property="updatedAt" />
   </resultMap>
@@ -20,15 +18,30 @@
     SELECT * FROM ingame_pokemon WHERE id = #{id}
   </select>
 
-  <select id="selectByPlayerId" resultMap="dataResultMap" parameterType="int">
+  <select id="selectByPlayerId" resultMap="dataResultMap" parameterType="String">
     SELECT * FROM ingame_pokemon WHERE player_id = #{playerId} ORDER BY slot DESC
   </select>
   
   <insert id="insert">
   	INSERT INTO ingame_pokemon
-  		( id )
+  		( id, player_id, hp, slot )
   	VALUES
-  		( #{id} )
+  		( #{id}, #{playerId}, #{hp},#{slot} )
   </insert>
+  
+  <insert id="insertAll" parameterType="java.util.List">
+  	INSERT INTO ingame_pokemon ( id, player_id, hp, slot )
+  	<foreach collection="list" item="item" separator="UNION ALL">
+  		SELECT #{item.id}, #{item.playerId}, #{item.hp}, #{item.slot} FROM DUAL
+  	</foreach>
+  </insert>
+  
+   <update id="updateHp" parameterType="int">
+  	UPDATE ingame_pokemon SET hp = #{hp}
+  </update>
+  
+  <delete id="deleteByPlayerId" parameterType="String">
+  	DELETE FROM ingame_pokemon WHERE player_id = #{playerId}
+  </delete>
 
 </mapper>
