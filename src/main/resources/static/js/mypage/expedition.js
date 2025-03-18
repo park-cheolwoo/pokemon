@@ -50,106 +50,101 @@
             $(this).removeAttr('data-pokemon-id');
         });
 
-        // 서버에서 원정대 목록을 가져옴
-        $.ajax({
-            url: '/ingame/expedition',
-            type: 'GET',
-            success: function(response) {
-                if (response.status === 'success' && response.data) {
-                    console.log('원정대 목록 조회 성공:', response.data);
-                    console.log('원정대 데이터 길이:', response.data.length);
-                    if (response.data.length > 0) {
-                        console.log('원정대 첫 번째 항목:', response.data[0]);
-                    }
-                    
-                    // 원정대 리스트에 포켓몬 추가
-                    response.data.forEach(function(pokemon) {
-                        console.log('처리 중인 포켓몬:', pokemon);
-                        // 포켓몬 데이터 가공
-                        const playerPokemon = {
-                            id: pokemon.id,
-                            name: pokemon.name || '포켓몬 #' + pokemon.id, // 이름이 있으면 사용, 없으면 기본 이름 설정
-                            image: pokemon.image || `/images/pokemon/${pokemon.id}.png` // 이미지 경로 설정
-                        };
-                        console.log('가공된 포켓몬 데이터:', playerPokemon);
-                        
-                        // 원정대에 추가
-                        const expeditionItems = $('.expedition-item');
-                        let slotIndex = pokemon.slot;
-                        console.log('슬롯 인덱스:', slotIndex);
-                        
-                        // 슬롯 인덱스가 유효한 범위인지 확인
-                        if (slotIndex >= 0 && slotIndex < expeditionItems.length) {
-                            const item = expeditionItems.eq(slotIndex);
-                            const imgElement = item.find('img');
-                            const descElement = item.find('.expedition-description');
-                            
-                            // 포켓몬 이미지와 이름 설정
-                            imgElement.attr('src', playerPokemon.image);
-                            imgElement.attr('alt', playerPokemon.name);
-                            descElement.text(playerPokemon.name);
-                            
-                            // 포켓몬 ID 저장
-                            item.attr('data-pokemon-id', playerPokemon.id);
-                            console.log('포켓몬이 슬롯', slotIndex, '에 추가됨');
-                        } else {
-                            console.log('슬롯 인덱스가 유효하지 않음:', slotIndex);
-                        }
-                    });
-                    
-                    // 소유한 포켓몬 목록 초기화
-                    expeditionInitializeOwnedPokemonList();
-                }
-            },
-            error: function(error) {
-                console.error('원정대 목록 조회 실패:', error);
-                
-                // 오류 발생 시에도 소유한 포켓몬 목록은 초기화
-                expeditionInitializeOwnedPokemonList();
-            }
-        });
-        
-        // 원정대 초기 상태 저장 (수정 감지용)
-        expeditionSaveInitialState();
-        
-        // 원정대 변경 감지 및 버튼 상태 업데이트
-        expeditionUpdateButtons();
-    };
-
-    // 소유한 포켓몬 목록 초기화 함수
-    function expeditionInitializeOwnedPokemonList() {
-        // 포켓몬 컨테이너 초기화
+        // 소유한 포켓몬 목록 컨테이너 초기화
         $('.image-container').empty();
-        
-        // 서버에서 소유한 포켓몬 목록 가져오기
-        $.ajax({
-            url: '/player/pokemon/me',
-            type: 'GET',
-            success: function(response) {
-                if (response.status === 'success' && response.data) {
-                    console.log('소유한 포켓몬 목록 조회 성공:', response.data);
+
+        // 서버에서 원정대 목록과 소유한 포켓몬 목록을 병렬로 가져옴
+        $.when(
+            // 원정대 목록 가져오기
+            $.ajax({
+                url: '/ingame/expedition',
+                type: 'GET'
+            }),
+            // 소유한 포켓몬 목록 가져오기
+            $.ajax({
+                url: '/player/pokemon/me',
+                type: 'GET'
+            })
+        ).then(function(expeditionResponse, playerPokemonResponse) {
+            console.log('원정대 및 소유 포켓몬 데이터 로드 완료');
+            
+            // 플레이어 포켓몬 데이터를 ID를 키로 하는 맵으로 변환
+            const playerPokemonMap = {};
+            if (playerPokemonResponse[0].status === 'success' && playerPokemonResponse[0].data) {
+                playerPokemonResponse[0].data.forEach(function(pokemon) {
+                    playerPokemonMap[pokemon.id] = pokemon;
+                });
+            }
+            
+            // 원정대 데이터 처리
+            if (expeditionResponse[0].status === 'success' && expeditionResponse[0].data) {
+                console.log('원정대 목록 조회 성공:', expeditionResponse[0].data);
+                
+                // 원정대 리스트에 포켓몬 추가
+                expeditionResponse[0].data.forEach(function(pokemon) {
+                    // 플레이어 포켓몬 데이터에서 이름 가져오기
+                    const playerPokemonData = playerPokemonMap[pokemon.id];
                     
-                    // 포켓몬 데이터 처리 및 UI에 표시
-                    expeditionProcessPlayerPokemonData(response, function(processedPokemons) {
-                        if (processedPokemons && processedPokemons.length > 0) {
-                            // 포켓몬 목록을 UI에 추가
-                            processedPokemons.forEach(function(pokemon) {
-                                expeditionAppendPokemonToContainer(pokemon);
-                            });
-                        } else {
-                            $('.image-container').html('<p>소유한 포켓몬이 없습니다.</p>');
-                        }
-                    });
-                } else {
-                    $('.image-container').html('<p>소유한 포켓몬 정보를 가져오는데 실패했습니다.</p>');
-                }
-            },
-            error: function(error) {
-                console.error('소유한 포켓몬 목록 조회 실패:', error);
+                    // 포켓몬 데이터 가공
+                    const playerPokemon = {
+                        id: pokemon.id,
+                        name: (playerPokemonData && playerPokemonData.name) || pokemon.name || '포켓몬 #' + pokemon.id,
+                        image: (playerPokemonData && playerPokemonData.image) || pokemon.image || `/images/pokemon/${pokemon.id}.png`
+                    };
+                    
+                    // 원정대에 추가
+                    const expeditionItems = $('.expedition-item');
+                    let slotIndex = pokemon.slot;
+                    
+                    // 슬롯 인덱스가 유효한 범위인지 확인
+                    if (slotIndex >= 0 && slotIndex < expeditionItems.length) {
+                        const item = expeditionItems.eq(slotIndex);
+                        const imgElement = item.find('img');
+                        const descElement = item.find('.expedition-description');
+                        
+                        // 포켓몬 이미지와 이름 설정
+                        imgElement.attr('src', playerPokemon.image);
+                        imgElement.attr('alt', playerPokemon.name);
+                        descElement.text(playerPokemon.name);
+                        
+                        // 포켓몬 ID 저장
+                        item.attr('data-pokemon-id', playerPokemon.id);
+                    }
+                });
+            }
+            
+            // 소유한 포켓몬 목록 처리
+            if (playerPokemonResponse[0].status === 'success' && playerPokemonResponse[0].data) {
+                console.log('소유한 포켓몬 목록 조회 성공:', playerPokemonResponse[0].data);
+                
+                // 포켓몬 데이터 처리 및 UI에 표시
+                expeditionProcessPlayerPokemonData(playerPokemonResponse[0], function(processedPokemons) {
+                    if (processedPokemons && processedPokemons.length > 0) {
+                        // 포켓몬 목록을 UI에 추가
+                        processedPokemons.forEach(function(pokemon) {
+                            expeditionAppendPokemonToContainer(pokemon);
+                        });
+                    } else {
+                        $('.image-container').html('<p>소유한 포켓몬이 없습니다.</p>');
+                    }
+                });
+            } else {
                 $('.image-container').html('<p>소유한 포켓몬 정보를 가져오는데 실패했습니다.</p>');
             }
+            
+            // 원정대 초기 상태 저장 (수정 감지용)
+            expeditionSaveInitialState();
+            
+            // 원정대 변경 감지 및 버튼 상태 업데이트
+            expeditionUpdateButtons();
+        }).fail(function(error) {
+            console.error('데이터 로드 실패:', error);
+            $('.image-container').html('<p>데이터를 가져오는데 실패했습니다.</p>');
+            
+            // 오류 발생 시에도 버튼 상태 업데이트
+            expeditionUpdateButtons();
         });
-    }
+    };
 
     // 포켓몬을 컨테이너에 추가하는 함수
     function expeditionAppendPokemonToContainer(pokemon) {
@@ -224,7 +219,7 @@
                             resolve({
                                 id: playerPokemon.id,
                                 pokemonId: pokemonId,
-                                name: pokemonDetail.name || playerPokemon.name || `포켓몬 #${pokemonId}`,
+                                name: playerPokemon.name || pokemonDetail.name || `포켓몬 #${pokemonId}`,
                                 image: pokemonDetail.image || playerPokemon.image || `/images/pokemon/${pokemonId}.png`,
                                 level: playerPokemon.level,
                                 hp: playerPokemon.hp,
@@ -284,9 +279,7 @@
                 // 포켓몬 이미지와 이름 설정
                 imgElement.attr('src', playerPokemon.image);
                 imgElement.attr('alt', playerPokemon.name);
-                // playerPokemon.nickname이 있으면 사용, 없으면 pokemon.name 사용
-                const displayName = playerPokemon.name;
-                descElement.text(displayName);
+                descElement.text(playerPokemon.name);
                 
                 // 포켓몬 ID 저장 (나중에 서버에 전송하기 위해)
                 $(this).attr('data-pokemon-id', playerPokemon.id);
