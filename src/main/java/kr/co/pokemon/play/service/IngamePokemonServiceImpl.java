@@ -65,6 +65,8 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 			if (ownPokemons.size() < 1 || 6 < ownPokemons.size()) {
 				throw new IllegalArgumentException("1개 미만 또는 6개 이상 저장할 수 없습니다.");
 			}
+			
+			ownPokemons.forEach(pokemon -> pokemon.setHp(pokemon.getHp()));
 			ingamePokemonMapper.deleteByPlayerId(ownPokemons.get(0).getPlayerId());
 			ingamePokemonMapper.insertAll(ownPokemons);
 			return true;
@@ -80,6 +82,8 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 			if (enemies.size() < 1 || 6 < enemies.size()) {
 				throw new IllegalArgumentException("1개 미만 또는 6개 이상 저장할 수 없습니다.");
 			}
+
+			enemies.forEach(enemy -> enemy.setHp(enemy.getHp()));
 			ingameEnemyMapper.deleteByPlayerId(enemies.get(0).getPlayerId());
 			ingameEnemyMapper.insertAll(enemies);
 			return true;

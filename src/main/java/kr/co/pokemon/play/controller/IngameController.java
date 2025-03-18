@@ -1,8 +1,11 @@
 package kr.co.pokemon.play.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -147,6 +150,47 @@ public class IngameController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	@GetMapping("/expedition")
+	public ResponseEntity<?> getExpeditionList() {
+		String playerId = (String) session.getAttribute("session_id");
+		if (playerId == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(Map.of("status", "error", "message", "로그인이 필요합니다."));
+		}
+
+		try {
+			List<IngamePokemonDTO> expeditionList = ingameService.getExpeditionByPlayerId(playerId);
+			return ResponseEntity.ok(Map.of("status", "success", "data", expeditionList));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Map.of("status", "error", "message", "원정대 목록 조회 중 오류가 발생했습니다."));
+		}
+	}
+
+	@PostMapping("/expedition/save")
+	public ResponseEntity<?> saveExpeditionList(@RequestBody List<Integer> expeditionPokemonIds) {
+		String playerId = (String) session.getAttribute("session_id");
+		if (playerId == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(Map.of("status", "error", "message", "로그인이 필요합니다."));
+		}
+
+		try {
+			boolean result = ingameService.saveExpeditionList(playerId, expeditionPokemonIds);
+			if (result) {
+				return ResponseEntity.ok(Map.of("status", "success", "message", "원정대 목록이 저장되었습니다."));
+			} else {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body(Map.of("status", "error", "message", "원정대 목록 저장에 실패했습니다."));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Map.of("status", "error", "message", "원정대 목록 저장 중 오류가 발생했습니다."));
 		}
 	}
 	
