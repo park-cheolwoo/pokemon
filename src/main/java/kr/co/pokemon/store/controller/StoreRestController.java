@@ -73,7 +73,7 @@ public class StoreRestController {
     pDTO.setPassword("");
     session.invalidate();
     session.setAttribute("session_id", pDTO.getId());
-    session.setAttribute("session_nickname", pDTO.getRealMoney());
+    session.setAttribute("session_nickname", pDTO.getNickname());
     session.setAttribute("session_tag", pDTO.getTag());
     session.setAttribute("session_lv", pDTO.getLv());
     session.setAttribute("session_gameMoney", pDTO.getGameMoney());

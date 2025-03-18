@@ -11,7 +11,10 @@ export const firstSelection = (myPokemons, idx) => {
             text: "포켓몬",
             event: {
                 name: "pokemonList",
-                data: myPokemons
+                data: {
+					pokemons: myPokemons,
+					selectionIdx: idx
+				}
             }
         },
         {

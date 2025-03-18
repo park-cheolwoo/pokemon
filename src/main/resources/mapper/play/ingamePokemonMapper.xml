@@ -43,8 +43,8 @@
   	</foreach>
   </insert>
   
-   <update id="updateHp" parameterType="int">
-  	UPDATE ingame_pokemon SET hp = #{hp}
+  <update id="updateHp">
+  	UPDATE ingame_pokemon SET hp = #{hp} WHERE id = #{id}
   </update>
   
   <delete id="deleteByPlayerId" parameterType="String">
