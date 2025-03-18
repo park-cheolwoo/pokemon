@@ -379,14 +379,10 @@ body > div > div.mypage-banner-container > a{
 /* ---------------------------- pokedexView css --------------------------- */
 
 div.pokedexView-info-text-container {
-	width: 800px;
-	height: 450px;
-	padding: 10px;
-	position: relative;
-	top: 5%;
-	left: 11%;
+    display: flex;
 	font-size: 32px;
-	color: white;
+	justify-content: center;
+    margin-top: 30px;
 }
 
 .pokedexView-table {
