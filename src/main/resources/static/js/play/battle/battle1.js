@@ -9,211 +9,257 @@ $(function() {
 	const btnContainer = $(".selection-box");
 	const textBox = $(".text-box");
 
-	$.ajax({
-		url: '/ingame/me/info',
-		dataType: 'json',
-		success: function(data) {
+	$.when(
+		$.ajax({ url: '/ingame/me/info', dataType: 'json'}),
+		$.ajax({ url: '/player/items/my-items/info', dataType: 'json'})
+	).then(function (battleResponse, itemResponse) {
+
+		if (battleResponse[0] === undefined || itemResponse[0] === undefined) {
+			alert("잘못된 접근입니다.");
+			location.href = "/";
+			return;
+		}
+
+		const { myPokemons, enemies, ingame, stageId, maxStageId, stage } = battleResponse[0];
+		let selectionIdx = battleResponse[0].selectionIdx;
+
+		if (
+			(myPokemons === undefined || myPokemons.length === 0)
+			|| (enemies === undefined || enemies.length === 0)
+			|| (stage === undefined)
+		) {
+			alert("잘못된 접근입니다.");
+			location.href = "/";
+		}
+
+		$(container).css({backgroundImage: `url(/images/play/battle/${stage.habitat.name}.png)`});
+
+		if (enemies[0].hp === 0) {
+			$(container).trigger("stageClear", [{ stageId, maxStageId, stage, enemyName: enemies[0].name }]);
+		} else {
+			container.append(pokemonBlockForm("you", enemies[0]));
+		}
+
+		if (myPokemons[selectionIdx].hp === 0) {
+			$(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
+		} else {
+			container.append(pokemonBlockForm("me", myPokemons[selectionIdx]));
+
+			$(container).one("transitionend", () => {
+				let firstCommentData;
+				if (ingame) {
+					firstCommentData = {
+						comments: ingameComments(myPokemons[selectionIdx].name),
+						callback: () => $(btnContainer).trigger("nextSelection")
+					}
+				} else {
+					ingameStatus(true);
+					firstCommentData = {
+						comments: firstComments(myPokemons[selectionIdx].name, enemies[0].name),
+						callback: () => $(btnContainer).trigger("nextSelection")
+					}
+				}
+
+				$(textBox).trigger("nextComment", [firstCommentData]);
+			});
+		}
+
+
+		$(btnContainer).on("nextSelection", function (e, data) {
 			if (data === undefined) {
-				alert("잘못된 접근입니다.");
-				location.href = "/";
+				appendBtns(firstSelection(myPokemons, selectionIdx, itemResponse[0]), false);
 				return;
 			}
 
-			const { myPokemons, enemies, ingame, stageId, maxStageId, stage } = data;
-			let selectionIdx = data.selectionIdx;
-			
-			if (
-				(myPokemons === undefined || myPokemons.length == 0)
-				|| (enemies === undefined || enemies.length === 0)
-				|| (stage === undefined)
-			) {
-				alert("잘못된 접근입니다.");
-				location.href = "/";
-			}
-			
-			$(container).css({backgroundImage: `url(/images/play/battle/${stage.habitat.name}.png)`});
-			
-			if (enemies[0].hp === 0) {
-				$(container).trigger("stageClear", [{ stageId, maxStageId, stage, enemyName: enemies[0].name }]);
+			appendBtns(data, true);
+		});
+
+		$(btnContainer).on("attackList", function (e, data) {
+			btnContainer.children(".selection-box__group").css({display: "none"});
+			btnContainer.find(".selection-box__btn").removeClass("active-btn");
+
+			appendBtns(attackSelection(data), true);
+		});
+
+		$(btnContainer).on("attack", function (e, data) {
+			$(this).children(".selection-box__group:not(.main-group)").remove();
+
+			$(".pokemon.you").addClass("damaged-pokemon");
+			$(".pokemon.me").addClass("right-attack-pokemon");
+			setTimeout(() => {
+				$(".pokemon.you").removeClass("damaged-pokemon");
+				$(".pokemon.me").removeClass("right-attack-pokemon");
+			}, 1000);
+
+			const executedPower = executeDamage(enemies[0].types[0], data.typesId, data.power * (myPokemons[selectionIdx].level / 50));
+			const hp = changeHp("you", executedPower.power);
+			ingameEnemyHp(enemies[0].id, hp);
+			enemies[0].hp = hp;
+
+			let callback;
+			if (hp > 0) {
+				callback = () => $(textBox).trigger("damaged");
 			} else {
-				container.append(pokemonBlockForm("you", enemies[0]));				
+				callback = () => $(container).trigger("stageClear", [{ stageId, maxStageId, stage, enemyName: enemies[0].name }]);
 			}
 
-			if (myPokemons[selectionIdx].hp === 0) {
-				$(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
+			$(textBox).trigger("nextComment", [{ comments: attackComments(myPokemons[selectionIdx].name, enemies[0].name, data.name, executedPower), isWait: true, callback }]);
+		});
+
+		$(textBox).on("damaged", function (e, data) {
+			const { attacks } = enemies[0];
+			const attack = attacks[Math.floor(Math.random() * (attacks.length))];
+
+			$(".pokemon.me").addClass("damaged-pokemon");
+			$(".pokemon.you").addClass("left-attack-pokemon");
+			$(container).addClass("shake-device");
+			setTimeout(() => {
+				$(".pokemon.me").removeClass("damaged-pokemon");
+				$(".pokemon.you").removeClass("left-attack-pokemon");
+				$(container).removeClass("shake-device");
+			}, 1000);
+
+			const executedPower = executeDamage(myPokemons[selectionIdx].types[0], attack.typesId, attack.power * (enemies[0].level / 50));
+			const hp = changeHp("me", executedPower.power);
+			ingamePokemonHp(myPokemons[selectionIdx].id, hp);
+			myPokemons[selectionIdx].hp = hp;
+
+			let callback;
+			if (hp > 0) {
+				callback = () => $(btnContainer).trigger("nextSelection");
 			} else {
-				container.append(pokemonBlockForm("me", myPokemons[selectionIdx]));			
-				
-				$(container).one("transitionend", () => {
-					let firstCommentData;
-					if (ingame) {
-						firstCommentData = {
-							comments: ingameComments(myPokemons[selectionIdx].name),
-							callback: () => $(btnContainer).trigger("nextSelection")
-						}
-					} else {
-						ingameStatus(true);
-						firstCommentData = {
-							comments: firstComments(myPokemons[selectionIdx].name, enemies[0].name),
-							callback: () => $(btnContainer).trigger("nextSelection")
-						}
-					}
-
-					$(textBox).trigger("nextComment", [firstCommentData]);
-				});	
+				callback = () => $(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
 			}
 
+			$(textBox).trigger("nextComment", [{ comments: attackComments(enemies[0].name, myPokemons[selectionIdx].name, attack.name, executedPower), isWait: true, callback }]);
+		});
 
-			$(btnContainer).on("nextSelection", function (e, data) {
-				if (data === undefined) {
-					appendBtns(firstSelection(myPokemons, selectionIdx), false);
-					return;
-				}
+		$(btnContainer).on("changePokemon", function (e, data) {
 
-				appendBtns(data, true);
-			});
+			$.ajax({
+				url: '/ingame/pokemon/idx',
+				type: 'POST',
+				data: JSON.stringify(data),
+				contentType: 'application/json',
+				success: function (d) {
+					if (d) {
+						$(btnContainer).children().remove();
+						$(container).children(".modal-container").remove();
+						selectionIdx = data;
+						$(textBox).trigger("nextComment", [{comments: [[`${myPokemons[selectionIdx].name} (으)로 포켓몬 교체 !!`]], callback: () => {
+								const changePokemon = pokemonBlockForm("me", myPokemons[selectionIdx]);
+								changePokemon.css({opacity: 0});
+								togglePokemon("me", false);
+								setTimeout(() => {
+									container.children(".pokemon.me").remove();
+									container.append(changePokemon);
+									changeHp("me", 0);
 
-			$(btnContainer).on("attackList", function (e, data) {
-				btnContainer.children(".selection-box__group").css({display: "none"});
-				btnContainer.find(".selection-box__btn").removeClass("active-btn");
-
-				appendBtns(attackSelection(data), true);
-			});
-
-			$(btnContainer).on("attack", function (e, data) {
-				$(this).children(".selection-box__group:not(.main-group)").remove();
-
-				$(".pokemon.you").addClass("damaged-pokemon");
-				$(".pokemon.me").addClass("right-attack-pokemon");
-				setTimeout(() => {
-					$(".pokemon.you").removeClass("damaged-pokemon");
-					$(".pokemon.me").removeClass("right-attack-pokemon");
-				}, 1000);
-
-				const executedPower = executeDamage(enemies[0].types[0], data.typesId, data.power * (myPokemons[selectionIdx].level / 100));
-				const hp = changeHp("you", executedPower.power);
-				ingameEnemyHp(enemies[0].id, hp);
-				enemies[0].hp = hp;
-
-				let callback;
-				if (hp > 0) {
-					callback = () => $(textBox).trigger("damaged");
-				} else {
-					callback = () => $(container).trigger("stageClear", [{ stageId, maxStageId, stage, enemyName: enemies[0].name }]);
-				}
-
-				$(textBox).trigger("nextComment", [{ comments: attackComments(myPokemons[selectionIdx].name, enemies[0].name, data.name, executedPower), callback }]);
-			});
-
-			$(textBox).on("damaged", function (e, data) {
-				const { attacks } = enemies[0];
-				const attack = attacks[Math.floor(Math.random() * (attacks.length))];
-
-				$(".pokemon.me").addClass("damaged-pokemon");
-				$(".pokemon.you").addClass("left-attack-pokemon");
-				$(container).addClass("shake-device");
-				setTimeout(() => {
-					$(".pokemon.me").removeClass("damaged-pokemon");
-					$(".pokemon.you").removeClass("left-attack-pokemon");
-					$(container).removeClass("shake-device");
-				}, 1000);
-
-				const executedPower = executeDamage(myPokemons[selectionIdx].types[0], attack.typesId, attack.power * (enemies[0].level / 100));
-				const hp = changeHp("me", executedPower.power);
-				ingamePokemonHp(myPokemons[selectionIdx].id, hp);
-				myPokemons[selectionIdx].hp = hp;
-				
-				let callback;
-				if (hp > 0) {
-					callback = () => $(btnContainer).trigger("nextSelection");
-				} else {
-					callback = () => $(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
-				}
-
-				$(textBox).trigger("nextComment", [{ comments: attackComments(enemies[0].name, myPokemons[selectionIdx].name, attack.name, executedPower), callback }]);
-			});
-
-			$(btnContainer).on("changePokemon", function (e, data) {
-
-				$.ajax({
-					url: '/ingame/pokemon/idx',
-					type: 'POST',
-					data: JSON.stringify(data),
-					contentType: 'application/json',
-					success: function (d) {
-						if (d) {
-							$(btnContainer).children().remove();
-							$(container).children(".modal-container").remove();
-							selectionIdx = data;
-							$(textBox).trigger("nextComment", [{comments: [[`${myPokemons[selectionIdx].name} (으)로 포켓몬 교체 !!`]], callback: () => {
-									const changePokemon = pokemonBlockForm("me", myPokemons[selectionIdx]);
-									changePokemon.css({opacity: 0});
-									togglePokemon("me", false);
-									setTimeout(() => {
-										container.children(".pokemon.me").remove();
-										container.append(changePokemon);
-										changeHp("me", 0);
-
-										setTimeout(() => togglePokemon("me", true, () => $(textBox).trigger("nextComment", [{
-											comments: [[`가랏! ${myPokemons[selectionIdx].name} !`, `${myPokemons[selectionIdx].name} 은(는) 무엇을 할까?`]],
-											callback: () => $(btnContainer).trigger("nextSelection")
-										}])), 500);
-									}, 500);
-								}}]
-							);
-						}
-					},
-					error: function (e) {
-						console.log(e);
-						alert("서버와의 연결이 불안정합니다.");
-						location.href = "/";
+									setTimeout(() => togglePokemon("me", true, () => $(textBox).trigger("nextComment", [{
+										comments: [[`가랏! ${myPokemons[selectionIdx].name} !`, `${myPokemons[selectionIdx].name} 은(는) 무엇을 할까?`]],
+										callback: () => $(btnContainer).trigger("nextSelection")
+									}])), 500);
+								}, 500);
+							}}]
+						);
 					}
-				});
-			});
-
-			function executeDamage(targetTypeInfo, type, power) {
-				const { damageFrom } = targetTypeInfo;
-				if (damageFrom !== undefined) {
-					const info = damageFrom.find(t => t.type == type);
-					if (info !== undefined && info.damage !== undefined) {
-						const commentTail = ["효과는 굉장했다!", "평범했다.", "효과가 별로인듯 하다 .."];
-						return {
-							power: Math.round(power * info.damage),
-							comments: commentTail[info.damage] 
-						}
-					}
+				},
+				error: function (e) {
+					console.log(e);
+					alert("서버와의 연결이 불안정합니다.");
+					location.href = "/";
 				}
+			});
+		});
 
-				return {
-					power: Math.round(power),
-					comments: "평범했다." 
-				};
+		$(container).on("catchPokemon", function (e, data) {
+			const { name, cost } = data.info;
+			const totalHp = enemies[0].stats.find(stat => stat.id === 1).value;
+			const hpPercent = enemies[0].hp / totalHp;
+			const percent = Math.max(cost / 1000, 0.4);
+
+			if (Math.random() < percent - hpPercent) {
+				catchPokemon(enemies[0]);
+
+				$(textBox).trigger("nextComment", [{
+					comments: [[`${enemies[0].name} 을 잡았어 !`]],
+					isWait: true,
+					callback: () => $(container).trigger("stageClear", [{ stageId, maxStageId, stage, enemyName: enemies[0].name }])
+				}]);
+			} else {
+				$(textBox).trigger("nextComment", [{
+					comments: [[`${name} (으)로 시도했지만, 잡지 못했어 ..`]],
+					isWait: true,
+					callback: () => $(textBox).trigger("damaged")
+				}]);
 			}
 
-			container.addClass("active-device");
-			
-			function changeHp(target, value) {
-				const bar = $(".pokemon." + target).find(".hp-bar__value");
-				const total = bar.attr("data-total");
-				let hp = bar.attr("data-value");
-				
-				hp = Math.max(hp - value, 0);
+		});
 
-				bar.attr("data-value", hp);
-
-				const percent = hp / total * 100;
-				bar.css({width: percent + "%", backgroundColor: `rgb(${(100 - percent) / 50 * 255}, ${percent / 50 * 255}, 0)`});
-				
-				return hp;
+		$(container).on("healPokemon", function (e, data) {
+			let { fling_power } = data.info;
+			if (fling_power === undefined) {
+				fling_power = 10;
 			}
-			
-			function pokemonBlockForm(part, data) {
-				const maleSprites = part === "you" ? data.pokemon.sprites.front_default : data.pokemon.sprites.back_default;
-				const femaleSprites = part === "you" ? data.pokemon.sprites.front_female : data.pokemon.sprites.back_female;
 
-				const totalHp = data.stats.find(stat => stat.id === 1).value;
-				const pokemon = $("<div>", {class: `pokemon ${part}`});
-				pokemon.html(`
+			const totalHp = myPokemons[selectionIdx].stats.find(stat => stat.id === 1).value;
+			const prevHp = myPokemons[selectionIdx].hp;
+			const hp = Math.min(prevHp + fling_power, totalHp);
+
+			ingamePokemonHp(myPokemons[selectionIdx].id, hp);
+			myPokemons[selectionIdx].hp = hp;
+			changeHp("me", prevHp - hp);
+
+			$(textBox).trigger("nextComment", [{
+				comments: [[`${myPokemons[selectionIdx].name} 은(는) ${hp - prevHp} 만큼 회복했다.`]],
+				callback: () => $(btnContainer).trigger("nextSelection")
+			}]);
+
+		});
+
+		function executeDamage(targetTypeInfo, type, power) {
+			const { damageFrom } = targetTypeInfo;
+			if (damageFrom !== undefined) {
+				const info = damageFrom.find(t => t.type == type);
+				if (info !== undefined && info.damage !== undefined) {
+					const commentTail = ["효과는 굉장했다!", "평범했다.", "효과가 별로인듯 하다 .."];
+					return {
+						power: Math.round(power * info.damage),
+						comments: commentTail[info.damage]
+					}
+				}
+			}
+
+			return {
+				power: Math.round(power),
+				comments: "평범했다."
+			};
+		}
+
+		container.addClass("active-device");
+
+		function changeHp(target, value) {
+			const bar = $(".pokemon." + target).find(".hp-bar__value");
+			const total = bar.attr("data-total");
+			let hp = bar.attr("data-value");
+
+			hp = Math.max(hp - value, 0);
+
+			bar.attr("data-value", hp);
+
+			const percent = hp / total * 100;
+			bar.css({width: percent + "%", backgroundColor: `rgb(${(100 - percent) / 50 * 255}, ${percent / 50 * 255}, 0)`});
+
+			return hp;
+		}
+
+		function pokemonBlockForm(part, data) {
+			const maleSprites = part === "you" ? data.pokemon.sprites.front_default : data.pokemon.sprites.back_default;
+			const femaleSprites = part === "you" ? data.pokemon.sprites.front_female : data.pokemon.sprites.back_female;
+
+			const totalHp = data.stats.find(stat => stat.id === 1).value;
+			const pokemon = $("<div>", {class: `pokemon ${part}`});
+			pokemon.html(`
 					<div class="pokemon__info">
 						<div class="pokemon__info--level">LV ${data.level}</div>
 						<div class="pokemon__info--name">${data.name}</div>
@@ -225,14 +271,14 @@ $(function() {
 						<img src="${femaleSprites !== noImagePokemon && !data.gender ? femaleSprites : maleSprites }" />
 					</div>
 				`);
-				setTimeout(() => changeHp(part, 0), 100);
+			setTimeout(() => changeHp(part, 0), 100);
 
-				return pokemon;
-			}
-		},
-		error: function(e) {
-			console.log(e);
+			return pokemon;
 		}
+	}).fail(function(e) {
+		console.log(e);
+		alert("서버와의 연결이 불안정합니다.");
+		location.href = "/";
 	});
 
 	function appendBtns(btns, hasPrev) {
@@ -345,5 +391,18 @@ $(function() {
 				console.log(e);
 			}
 		});
+	}
+
+	function catchPokemon(enemy) {
+		const { pokemon } = enemy;
+		$.ajax({
+			url: '/player/pokemon/save',
+			type: 'POST',
+			data: JSON.stringify({ pokemonId: pokemon.id, name: pokemon.name, gender: enemy.gender, level: enemy.level }),
+			contentType: 'application/json',
+			error: function (e) {
+				console.log(e);
+			}
+		})
 	}
 });

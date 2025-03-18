@@ -5,23 +5,23 @@ $(function () {
     const btnContainer = $(".selection-box");
     const textBox = $(".text-box");
 
-    function appendComments(comments = [], next, callback) {
+    function appendComments(comments = [], next, isWait, callback) {
         const commentNodes = comments.map(function (comment) {
             return $("<div>", {class: "text-box__comment", text: comment});
         });
 
         textBox.html(commentNodes);
-        activateComments(commentNodes, next, callback);
+        activateComments(commentNodes, next, isWait, callback);
     }
 
-    function activateComments(commentNodes = [], next, callback) {
+    function activateComments(commentNodes = [], next, isWait, callback) {
         if (commentNodes.length > 0) {
             const originWidth = commentNodes[0].outerWidth();
 
             commentNodes[0].css({ width: 0, opacity: 1 });
             commentNodes[0].animate({ width: originWidth}, originWidth * 5, "linear", function () {
                 if (commentNodes.length > 1) {
-                    activateComments(commentNodes.slice(1), next, callback);
+                    activateComments(commentNodes.slice(1), next, isWait, callback);
                     return;
                 }
 
@@ -42,7 +42,22 @@ $(function () {
                 }
 
                 if (callback !== undefined) {
-                    callback();
+					if (isWait) {
+						textBox.addClass("wait");
+
+						function handleKeyUpWait(e) {
+							if (e.keyCode === 13) {
+								textBox.removeClass("wait");
+
+								callback();
+								$(window).off("keyup", handleKeyUpWait);
+							}
+						}
+
+						$(window).on("keyup", handleKeyUpWait);
+					} else {
+						callback();
+					}
                 }
             });
 
@@ -89,8 +104,10 @@ $(function () {
 
     $(textBox).on("nextComment", function (e, data) {
         const { comments, callback } = data;
+		let isWait = data.isWait;
+		if (isWait === undefined) isWait = false;
 
-        appendComments(comments[0], comments.slice(1), callback);
+        appendComments(comments[0], comments.slice(1), isWait, callback);
     });
 
     $(btnContainer).on("pokemonList", function (e, data) {
@@ -134,23 +151,68 @@ $(function () {
     });
 
     $(btnContainer).on("itemList", function (e, data) {
-        console.log("아이템 ..");
-        console.log(data);
+        const itemScroller = $("<div>", {class: "modal-wrapper__scroll"});
+		const itemWrapper = $("<div>", {class: "modal-wrapper__scroll--wrapper"});
+		itemWrapper.html(data.map(item => {
+			const itemContainer = $("<div>", {class: "modal-wrapper__item"});
+			itemContainer.html(`
+                <div class="modal-wrapper__item--title">${item.info.name}</div>
+                <div class="modal-wrapper__item--image small">
+                    <img src="${item.info.image}" />
+                </div>
+                <div class="modal-wrapper__item--count">${item.count} 개</div>
+			`);
+
+			if (item.count > 0) {
+				itemContainer.addClass("active-item");
+
+				itemContainer.click(function () {
+					$(container).children(".modal-container").remove();
+					$(container).trigger("useItem", [item]);
+				});
+			}
+
+			return itemContainer;
+		}));
+
+		itemScroller.html(itemWrapper);
+		popupModal(itemScroller);
     });
+
+	$(container).on("useItem", function (e, data) {
+		$(btnContainer).children().remove();
+		const { name, categoryId } = data.info;
+
+		let callback;
+		if (categoryId === 34) {
+			callback = () => $(container).trigger("catchPokemon", [data]);
+		} else if (categoryId === 27) {
+			callback = () => $(container).trigger("healPokemon", [data]);
+		}
+
+		$(textBox).trigger("nextComment", [{
+			comments: [[`${name} 을(를) 사용했다.`]],
+			isWait: true,
+			callback
+		}]);
+
+		setCountItem(data);
+	});
 	
 	$(container).on("stageClear", function (e, data) {
 		setWaitComments(() => {
 			$(textBox).trigger("nextComment", [{
 				comments: [[`야호! ${data.enemyName} 을(를) 쓰러뜨렸다!`]],
-				callback: () => setWaitComments(() => {
+				isWait: true,
+				callback: () => {
 					$(btnContainer).remove();
 					$(textBox).remove();
 					const { stageId, maxStageId, stage } = data;
-					
+
 					if (maxStageId < stageId) {
 						setMaxStage(stageId);
 					}
-					
+
 					$.when(
 						$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'}),
 						$.ajax({url: '/ingame/enemy/delete', type: 'POST'})
@@ -178,7 +240,7 @@ $(function () {
 								modalBtn.click(function() {
 									location.href = "/play/plist";
 								});
-								
+
 								modalContents.html([modalForm, modalBtn]);
 								popupModal(modalContents, false);
 							});
@@ -191,7 +253,7 @@ $(function () {
 						alert("서버와의 연결이 좋지 않습니다 ..");
 						location.href = "/";
 					});
-				})
+				}
 			}]);
 		});
 	});
@@ -210,6 +272,7 @@ $(function () {
 		$(".pokemon.me").css({opacity: 0});
 		$(textBox).trigger("nextComment", [{
 			comments: [[`${myPokemons[selectionIdx].name} 이(가) 쓰러졌다.`, "다른 포켓몬을 꺼내야 한다."]],
+			isWait: true,
 			callback: () => $(btnContainer).trigger("pokemonList", [{
 				pokemons: myPokemons,
 				selectionIdx: selectionIdx,
@@ -228,6 +291,11 @@ $(function () {
 				console.log(e);
 			}
 		});
+	}
+
+	function setCountItem(item) {
+		const { info } = item;
+		console.log(info.name, item.count);
 	}
 	
 	function setWaitComments(callback) {

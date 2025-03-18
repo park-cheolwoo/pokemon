@@ -50,7 +50,8 @@ public class PlayerPokemonController {
 		try {
 			String session_id = (String) session.getAttribute("session_id");
 
-			if (session_id != null && session_id.equals(playerPokemon.getPlayerId())) {
+			if (session_id != null) {
+				playerPokemon.setPlayerId(session_id);
 				playerPokemonService.save(playerPokemon);
 				return new DataStatusDTO<>("success", true);
 			}
