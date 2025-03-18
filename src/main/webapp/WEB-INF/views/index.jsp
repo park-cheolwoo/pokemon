@@ -57,10 +57,6 @@
                 <img src="/images/index/wood_button2.png" class="button-bg">
                 <button id="socialBtn" class="menu-btn">소셜</button>
             </div>
-            <div class="button-group">
-        <img src="/images/index/wood_button2.png" class="button-bg">
-        <button id="experienceBtn" class="menu-btn">경험치 +150</button>
-    </div>
         </div>
     </div>
 

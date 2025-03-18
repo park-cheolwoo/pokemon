@@ -49,10 +49,6 @@ public class MainController {
     	return "redirect:/member/login";
     }
 	
-	
-	
-	
-	
 	@GetMapping("/play/plist")
 	public String plist(HttpSession session, Model model) {
 	    String playerId = (String) session.getAttribute("session_id");
