@@ -26,7 +26,7 @@
         <button class="habitat-btn" data-habitat="shore" style="background-image: url(../images/play/dungeon/signboard_0.png)">물가</button>
       </div>
       <div class="playboard" style="background-image: url(../images/play/dungeon/playboard.png);">
-        <div class="Difficulty_level">
+        <div class="Difficulty_level" id="difficulty-level-container">
           <button class="difficulty-btn" data-level="1" style="background-image: url(../images/play/dungeon/Difficulty_level_1.png);">1 단계</button>
           <button class="difficulty-btn" data-level="2" style="background-image: url(../images/play/dungeon/Difficulty_level.png);">2 단계</button>
           <button class="difficulty-btn" data-level="3" style="background-image: url(../images/play/dungeon/Difficulty_level.png);">3 단계</button>

@@ -94,6 +94,28 @@ public class IngameServiceImpl implements IngameService {
 	}
 	
 	@Override
+	public boolean updateIngameStage(String playerId, int stage) {
+		try {
+			ingameMapper.updateStageId(new UpdateIngameDTO(playerId, stage));
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean updateIngameMaxStage(String playerId, int stage) {
+		try {
+			ingameMapper.updateMaxStageId(new UpdateIngameDTO(playerId, stage));
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
 	public IngameInfoDTO getIngameInfoByPlayerId(String playerId) {
 		return new IngameInfoDTO(getByPlayerId(playerId), getIngamePokemons(playerId), getIngameEnemies(playerId));
 	}
@@ -108,7 +130,7 @@ public class IngameServiceImpl implements IngameService {
 			}
 			pokemon.setSprites(pokemonService.getSpritesById(pokemon.getId()));
 
-			return new CreatedPokemonDTO(
+			return new CreatedPokemonDTO(ingamePokemon.getId(),
 				pokemon, playerPokemon.getName(), playerPokemon.isGender(), playerPokemon.getLevel(), ingamePokemon.getHp(),
 				playerPokemon.getCharacteristic(), playerPokemon.getAbilities(), playerPokemon.getAttacks(),
 				playerPokemon.getStats(), playerPokemon.getTypes());
@@ -119,6 +141,7 @@ public class IngameServiceImpl implements IngameService {
 	public List<CreatedPokemonDTO> getIngameEnemies(String playerId) {
 		return ingamePokemonService.getIngameEnemies(playerId).stream().map(ingameEnemy -> {
 			CreatedPokemonDTO generatedPokemon = playService.createPokemon(ingameEnemy.getPokemonId(), 0, 1);
+			generatedPokemon.setId(ingameEnemy.getId());
 			generatedPokemon.setLevel(ingameEnemy.getLevel());
 			generatedPokemon.setHp(ingameEnemy.getHp());
 			

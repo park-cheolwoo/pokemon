@@ -12,6 +12,7 @@ import kr.co.pokemon.play.dao.IngameEnemyMapper;
 import kr.co.pokemon.play.dao.IngamePokemonMapper;
 import kr.co.pokemon.play.dto.IngameEnemyDTO;
 import kr.co.pokemon.play.dto.IngamePokemonDTO;
+import kr.co.pokemon.play.dto.UpdateHpPokemonDTO;
 
 @Service
 public class IngamePokemonServiceImpl implements IngamePokemonService {
@@ -89,16 +90,27 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 	}
 	
 	@Override
-	public void updateIngamePokemonHp(int hp) {
-		if (hp >= 0) {
-			ingamePokemonMapper.updateHp(hp);
+	public boolean deleteEnemies(String playerId) {
+		try {
+			ingameEnemyMapper.deleteByPlayerId(playerId);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public void updateIngamePokemonHp(UpdateHpPokemonDTO updateHp) {
+		if (updateHp.getHp() >= 0) {
+			ingamePokemonMapper.updateHp(updateHp);
 		}
 	}
 	
 	@Override
-	public void updateIngameEnemyHp(int hp) {
-		if (hp >= 0) {
-			ingameEnemyMapper.updateHp(hp);
+	public void updateIngameEnemyHp(UpdateHpPokemonDTO updateHp) {
+		if (updateHp.getHp() >= 0) {
+			ingameEnemyMapper.updateHp(updateHp);
 		}
 	}
 

@@ -5,18 +5,23 @@ export const firstComments = (myPokemonName, enemyName) => {
     ];
 }
 
-export const attackComments = (myPokemonName, enemyName, attackName, attackPower) => {
+export const ingameComments = (myPokemonName) => {
+	return [
+		[`${myPokemonName} 은(는) 무엇을 할까?`]
+	]
+}
+
+export const attackComments = (myPokemonName, enemyName, attackName, executedPower) => {
     return [
         [`${myPokemonName} 이(가) ${attackName} 공격 !`],
-        [`${enemyName}는 ${attackPower}의 데미지를 입었다.`],
-        [`이제 ${myPokemonName} 은(는) 무엇을 할까?`]
+        [executedPower.comments, `${enemyName}는 ${executedPower.power}의 데미지를 입었다.`]
     ];
 }
 
-export const stageClearComments = (myPokemonName, enemyName, attackName, attackPower) => {
+export const stageClearComments = (myPokemonName, enemyName, attackName, executedPower) => {
     return [
         [`${myPokemonName} 이(가) ${attackName} 공격 !`],
-        [`${enemyName}는 ${attackPower}의 데미지를 입었다.`],
+        [executedPower.comments, `${enemyName}는 ${executedPower.power}의 데미지를 입었다.`],
         [`야호! ${enemyName} 을(를) 쓰러뜨렸다!`]
     ];
 }

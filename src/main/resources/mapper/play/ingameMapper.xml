@@ -28,13 +28,21 @@
   	VALUES
   		( #{id} )
   </insert>
+
+  <update id="updateIngameStatus">
+  	UPDATE ingame SET is_ingame = #{value} WHERE id = #{playerId}
+  </update>
   
   <update id="updateSelectionIdx">
   	UPDATE ingame SET selection_idx = #{value} WHERE id = #{playerId}
   </update>
-
-  <update id="updateIngameStatus">
-  	UPDATE ingame SET is_ingame = #{value} WHERE id = #{playerId}
+  
+  <update id="updateStageId">
+  	UPDATE ingame SET stage_id = #{value} WHERE id = #{playerId}
+  </update>
+  
+  <update id="updateMaxStageId">
+  	UPDATE ingame SET max_stage_id = #{value} WHERE id = #{playerId}
   </update>
 
 </mapper>
