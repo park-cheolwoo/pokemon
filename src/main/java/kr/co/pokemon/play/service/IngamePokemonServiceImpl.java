@@ -12,6 +12,7 @@ import kr.co.pokemon.play.dao.IngameEnemyMapper;
 import kr.co.pokemon.play.dao.IngamePokemonMapper;
 import kr.co.pokemon.play.dto.IngameEnemyDTO;
 import kr.co.pokemon.play.dto.IngamePokemonDTO;
+import kr.co.pokemon.play.dto.UpdateHpPokemonDTO;
 
 @Service
 public class IngamePokemonServiceImpl implements IngamePokemonService {
@@ -64,6 +65,8 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 			if (ownPokemons.size() < 1 || 6 < ownPokemons.size()) {
 				throw new IllegalArgumentException("1개 미만 또는 6개 이상 저장할 수 없습니다.");
 			}
+			
+			ownPokemons.forEach(pokemon -> pokemon.setHp(pokemon.getHp()));
 			ingamePokemonMapper.deleteByPlayerId(ownPokemons.get(0).getPlayerId());
 			ingamePokemonMapper.insertAll(ownPokemons);
 			return true;
@@ -79,6 +82,8 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 			if (enemies.size() < 1 || 6 < enemies.size()) {
 				throw new IllegalArgumentException("1개 미만 또는 6개 이상 저장할 수 없습니다.");
 			}
+
+			enemies.forEach(enemy -> enemy.setHp(enemy.getHp()));
 			ingameEnemyMapper.deleteByPlayerId(enemies.get(0).getPlayerId());
 			ingameEnemyMapper.insertAll(enemies);
 			return true;
@@ -89,17 +94,32 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 	}
 	
 	@Override
-	public void updateIngamePokemonHp(int hp) {
-		if (hp >= 0) {
-			ingamePokemonMapper.updateHp(hp);
+	public boolean deleteEnemies(String playerId) {
+		try {
+			ingameEnemyMapper.deleteByPlayerId(playerId);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public void updateIngamePokemonHp(UpdateHpPokemonDTO updateHp) {
+		if (updateHp.getHp() >= 0) {
+			ingamePokemonMapper.updateHp(updateHp);
 		}
 	}
 	
 	@Override
-	public void updateIngameEnemyHp(int hp) {
-		if (hp >= 0) {
-			ingameEnemyMapper.updateHp(hp);
+	public void updateIngameEnemyHp(UpdateHpPokemonDTO updateHp) {
+		if (updateHp.getHp() >= 0) {
+			ingameEnemyMapper.updateHp(updateHp);
 		}
 	}
 
+	@Override
+	public void save(IngamePokemonDTO ingamePokemon) {
+		ingamePokemonMapper.insert(ingamePokemon);
+	}
 }

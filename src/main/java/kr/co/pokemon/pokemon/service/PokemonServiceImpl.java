@@ -196,4 +196,9 @@ public class PokemonServiceImpl implements PokemonService {
 	public List<PokemonDTO> getPokemonListWithOwnership(Long playerId) {
 		return pokemonMapper.selectAllWithOwnership(playerId, new PageRequestDTO());
 	}
+
+	@Override
+	public PokemonDTO minePokemonById(int pokemonId) {
+		return pokemonMapper.selectById(pokemonId);
+	}
 }

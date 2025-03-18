@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
+import kr.co.pokemon.data.dto.DataStatusDTO;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
 
@@ -80,7 +82,58 @@ public class PlayerController {
         session.setAttribute("session_nickname", playerDto.getNickname());
         session.setAttribute("session_tag", playerDto.getTag());
         session.setAttribute("session_lv", playerDto.getLv());
+        session.setAttribute("session_experience", playerDto.getExperience());
         session.setAttribute("session_gameMoney", playerDto.getGameMoney());
         session.setAttribute("session_realMoney", playerDto.getRealMoney());
     }
+    
+    @PostMapping(value = "/update/player")
+    public DataStatusDTO<Boolean> updatePlayer(@RequestBody PlayerDTO playerDto, HttpSession session) {
+        try {
+            String session_id = (String) session.getAttribute("session_id");
+
+            if (session_id != null) {
+                playerService.updateplayer(session_id, playerDto);
+                return new DataStatusDTO<>("success", true, "플레이어 정보 업데이트 성공");
+            }
+
+            throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataStatusDTO<>("error", false, e.getMessage());
+        }
+    }
+    
+    @PostMapping(value = "/update/prlevel")
+    public DataStatusDTO<Boolean> updatePlayerLevel(@RequestParam int level, HttpSession session) {
+        try {
+            String session_id = (String) session.getAttribute("session_id");
+            if (session_id != null) {
+                // 플레이어 레벨 업데이트
+                playerService.updateplayerLevel(session_id, level);
+                return new DataStatusDTO<>("success", true);
+            }
+            throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataStatusDTO<>("error", false, e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/update/prexperience")
+    public DataStatusDTO<Boolean> updatePlayerExperience(@RequestParam int experience, HttpSession session) {
+        try {
+            String session_id = (String) session.getAttribute("session_id");
+            if (session_id != null) {
+                // 플레이어 경험치 업데이트
+                playerService.updateplayerExperience(session_id, experience);
+                return new DataStatusDTO<>("success", true);
+            }
+            throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataStatusDTO<>("error", false, e.getMessage());
+        }
+    }
+
 }

@@ -20,10 +20,10 @@
       <img src="../images/first/starting1.png" alt="Starting 1" />
     </div>
     <div id="starting2" onclick="showDark(2)">
-      <img src="../images/first/starting2.png" alt="Starting 2" />
+      <img src="../images/first/starting2.png" alt="Starting 4" />
     </div>
     <div id="starting3" onclick="showDark(3)">
-      <img src="../images/first/starting3.png" alt="Starting 3" />
+      <img src="../images/first/starting3.png" alt="Starting 7" />
     </div>
     
     <div id="deep_dark" onclick="hideDark()">

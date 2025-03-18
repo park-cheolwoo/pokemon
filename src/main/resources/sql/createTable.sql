@@ -265,7 +265,7 @@ CREATE TABLE player (
     password VARCHAR2(255) NOT NULL,
     description CLOB,
     lv NUMBER(5) DEFAULT 1 NOT NULL,
-    experience NUMBER(5) DEFAULT 0 NOT NULL,
+    experience NUMBER(5) DEFAULT 0 NOT NULL CHECK (experience BETWEEN 0 AND 100),
     game_money NUMBER(20) DEFAULT 0 NOT NULL,
     real_money NUMBER(20) DEFAULT 0 NOT NULL,
     is_active NUMBER(1) DEFAULT 0 NOT NULL CHECK(is_active BETWEEN 0 AND 1),
@@ -376,19 +376,21 @@ CREATE TABLE ingame (
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
-	CONSTRAINT fk_ingame_stage FOREIGN KEY(stage_id) REFERENCES game_stage (id) ON DELETE CASCADE
+	CONSTRAINT fk_ingame_stage FOREIGN KEY(stage_id) REFERENCES game_stage (id) ON DELETE CASCADE,
+	CONSTRAINT fk_ingame_player FOREIGN KEY(id) REFERENCES player (id) ON DELETE CASCADE
 );
 
 CREATE TABLE ingame_pokemon (
 	id NUMBER(20) PRIMARY KEY,
 	player_id VARCHAR2(30) NOT NULL,
 	hp NUMBER(5) NOT NULL,
-	slot NUMBER(3) NOT NULL CHECK(slot BETWEEN 0 AND 5) UNIQUE,
+	slot NUMBER(3) NOT NULL CHECK(slot BETWEEN 0 AND 5),
 	updated_at DATE DEFAULT SYSDATE NOT NULL,
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
 	CONSTRAINT fk_ingame_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
 	CONSTRAINT fk_ingame_pokemon_pokemon FOREIGN KEY(id) REFERENCES player_pokemon (id) ON DELETE CASCADE
+	CONSTRAINT unique_player_slot UNIQUE (player_id, slot)
 );
 
 CREATE TABLE ingame_enemy (

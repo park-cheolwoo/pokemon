@@ -27,4 +27,8 @@ public interface PlayerPokemonMapper {
 
 	void updateExperienceById(Map<String, Integer> updateExperienceMap);
 
+	int countPokemonByPlayerId(String playerId);
+
+	List<PlayerPokemonDTO> selectByIngamePlayerId(String sessionId);
+
 }
