@@ -25,10 +25,13 @@ $(function() {
 			if (
 				(myPokemons === undefined || myPokemons.length == 0)
 				|| (enemies === undefined || enemies.length === 0)
+				|| (stage === undefined)
 			) {
 				alert("잘못된 접근입니다.");
 				location.href = "/";
 			}
+			
+			$(container).css({backgroundImage: `url(/images/play/battle/${stage.habitat.name}.png)`});
 			
 			if (enemies[0].hp === 0) {
 				$(container).trigger("stageClear", [{ stageId, maxStageId, stage, enemyName: enemies[0].name }]);
@@ -207,8 +210,7 @@ $(function() {
 			function pokemonBlockForm(part, data) {
 				const maleSprites = part === "you" ? data.pokemon.sprites.front_default : data.pokemon.sprites.back_default;
 				const femaleSprites = part === "you" ? data.pokemon.sprites.front_female : data.pokemon.sprites.back_female;
-				
-				console.log(data)
+
 				const totalHp = data.stats.find(stat => stat.id === 1).value;
 				const pokemon = $("<div>", {class: `pokemon ${part}`});
 				pokemon.html(`

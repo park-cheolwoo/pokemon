@@ -96,6 +96,10 @@ $(function () {
     $(btnContainer).on("pokemonList", function (e, data) {
 		$(btnContainer).children().remove();
 		const { pokemons, selectionIdx } = data;
+		let isExit = data.isExit;
+		if (isExit === undefined) {
+			isExit = true;
+		}
 
 		const itemWrapper = $("<div>", {class: "modal-wrapper__grid"});
 		itemWrapper.html(pokemons.map((pokemon, idx) => {
@@ -126,7 +130,7 @@ $(function () {
             return itemContainer;
         }));
 
-        popupModal(itemWrapper, true);
+        popupModal(itemWrapper, isExit);
     });
 
     $(btnContainer).on("itemList", function (e, data) {
@@ -203,11 +207,13 @@ $(function () {
 			return;
 		}
 
+		$(".pokemon.me").css({opacity: 0});
 		$(textBox).trigger("nextComment", [{
 			comments: [[`${myPokemons[selectionIdx].name} 이(가) 쓰러졌다.`, "다른 포켓몬을 꺼내야 한다."]],
 			callback: () => $(btnContainer).trigger("pokemonList", [{
 				pokemons: myPokemons,
-				selectionIdx: selectionIdx
+				selectionIdx: selectionIdx,
+				isExit: false
 			}])
 		}]);
 	});
