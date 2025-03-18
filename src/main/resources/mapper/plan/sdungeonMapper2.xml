@@ -25,4 +25,16 @@
         SELECT * FROM SDUNGEON WHERE id = #{id}
     </select>
 
+	<!-- userId에 해당하는 Sdungeon 정보를 가져오는 SQL 쿼리 -->
+    <select id="getSdungeonInfo" resultType="kr.co.pokemon.plan.dto.SdungeonDTO">
+        SELECT 
+            id,
+            daily_clear_count AS dailyClearCount,
+            weekly_clear_count AS weeklyClearCount,
+            total_count AS totalCount,
+            gameMoney AS gameMoney
+        FROM sdungeon
+        WHERE id = #{playerId}
+    </select>
+
 </mapper>
