@@ -1,19 +1,8 @@
-// 모든 habitat 버튼을 가져옵니다.
 const habitatButtons = document.querySelectorAll('.habitat-btn');
-
-// 모든 difficulty 버튼을 가져옵니다.
 const difficultyButtons = document.querySelectorAll('.difficulty-btn');
-
-// 환경 이미지 변경을 위한 div를 가져옵니다.
 const environmentImage = document.getElementById('environment-image');
-
-// subtitle을 업데이트할 div를 가져옵니다.
 const subtitle = document.querySelector('.subtitle');
-
-// explanation을 업데이트할 div를 가져옵니다.
 const explanation = document.querySelector('.explanation');
-
-// 현재 선택된 habitat과 difficulty를 추적합니다.
 let selectedHabitat = '';
 let selectedDifficulty = '';
 

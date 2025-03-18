@@ -373,6 +373,7 @@ $(function() {
 				$(".pros_exe_bar").css("width", `${exp}px`);
 				$(".pros_profile_view_container").show();
 				$(".pros_profile_name1, .pros_profile_name2, .pros_get_coin, .pros_get_ruby, .pros_intro").show();
+				$(".pros_active_on, .pros_active_off").removeClass("active_update");
 				$(".pros_update_btn").addClass("pros_update_flag");
 			},
 			error: function() {

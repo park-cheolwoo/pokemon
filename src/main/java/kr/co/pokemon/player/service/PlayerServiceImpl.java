@@ -10,15 +10,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.plan.service.SdungeonService;
+
 import kr.co.pokemon.play.dao.IngameMapper;
 import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.player.dao.PlayerMapper;
 import kr.co.pokemon.player.dto.PlayerDTO;
+import kr.co.pokemon.pokemon.dao.PokemonMapper;
 
 @Service
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
 
+    @Autowired private SdungeonService sdungeonService;
+    
     @Autowired
     private PlayerMapper playerMapper;
     
@@ -30,27 +35,19 @@ public class PlayerServiceImpl implements PlayerService {
         return playerMapper.selectAll(pDTO);
     }
 
-//    @Override
-//    public PlayerDTO findById(int id) {
-//        Map<String, Object> map = new HashMap<>();
-//        PlayerDTO playerDto = playerMapper.selectById(id);
-//        map.put("playerDto", playerDto);
-//        return playerDto;
-//    }
-
     @Override
     public PlayerDTO getById(String id) {
         return playerMapper.selectById(id);
     }
 
     @Override
-    public PlayerDTO updatePlayer(int id,PlayerDTO player) {
+    public PlayerDTO updatePlayer(int id, PlayerDTO player) {
         throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
     }
 
     @Override
     public void updatePlayerBySystem(PlayerDTO player) {
-       playerMapper.updatePlayerBySystem(player);
+        playerMapper.updatePlayerBySystem(player);
     }
 
     @Override
@@ -69,27 +66,33 @@ public class PlayerServiceImpl implements PlayerService {
         return playerdto == null; 
     }
 
+    @Override
     public boolean insertPlayer(PlayerDTO player) {
         player.setTag(generateRandomTag()); 
-        return playerMapper.insertPlayer(player) > 0; 
+        boolean isPlayerInserted = playerMapper.insertPlayer(player) > 0; 
+
+        // 플레이어가 성공적으로 추가되면 해당 플레이어의 sdungeon 데이터도 생성
+        if (isPlayerInserted) {
+            sdungeonService.createSdungeonForPlayer(player.getId());
+        }
+
+        return isPlayerInserted;
     }
 
     private String generateRandomTag() {
         return "#" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9); // 랜덤 태그 생성
     }
 
-	@Override
-	public List<PlayerDTO> getByNickname(String keyword) {
-		return playerMapper.getByNickname(keyword);
-	}
+    @Override
+    public List<PlayerDTO> getByNickname(String keyword) {
+        return playerMapper.getByNickname(keyword);
+    }
 
-	@Override
-	public void insertIngameData(String id) {
-		ingameMapper.insertIngame(id);
-	}
 
-	
+    @Override
+    public void insertIngameData(String id) {
+        ingameMapper.insertIngame(id);
+    }
 
 
 }
-

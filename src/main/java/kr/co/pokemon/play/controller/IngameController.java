@@ -20,7 +20,7 @@ import kr.co.pokemon.play.service.IngameService;
 
 @RestController
 @RequestMapping(value = "/ingame")
-public class ImgameController {
+public class IngameController {
 
 	@Autowired
 	private HttpSession session;

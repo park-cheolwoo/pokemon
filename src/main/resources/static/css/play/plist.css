@@ -38,7 +38,7 @@
   height: 161px; 
   margin-bottom: 111px;
 }
-.line a{
+.line a,.line button{
   display: inline; 
   margin-right: 71px;
   width: 464px; 
@@ -48,4 +48,4 @@
   padding: 0;
   cursor: pointer;
 }
-  
+

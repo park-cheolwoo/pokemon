@@ -5,45 +5,48 @@
 			<!-- 카드 1 -->
 			<li class="expedition-item">
 				<div class="expedition-img">
-					<img src="/images/image 1.png" alt="이미지1">
+					<img src=""/>
 				</div>
-				<div class="expedition-description">냄새꼬</div>
+				<div class="expedition-description"></div>
 			</li>
 			<!-- 카드 2 -->
 			<li class="expedition-item">
 				<div class="expedition-img">
-					<img src="/images/image 1.png" alt="이미지1">
+					<img src=""/>
 				</div>
-				<div class="expedition-description">냄새꼬</div>
+				<div class="expedition-description"></div>
 			</li>
 			<!-- 카드 3 -->
 			<li class="expedition-item">
 				<div class="expedition-img">
-					<img src="/images/image 1.png" alt="이미지1">
+					<img/>
 				</div>
-				<div class="expedition-description">냄새꼬</div>
+				<div class="expedition-description"></div>
 			</li>
 			<!-- 카드 4 -->
 			<li class="expedition-item">
 				<div class="expedition-img">
-					<img src="/images/image 1.png" alt="이미지1">
+					<img src=""/>
 				</div>
-				<div class="expedition-description">냄새꼬</div>
+				<div class="expedition-description"></div>
 			</li>
 			<!-- 카드 5 -->
 			<li class="expedition-item">
 				<div class="expedition-img">
-					<img src="/images/image 1.png" alt="이미지1">
+					<img src=""/>
 				</div>
-				<div class="expedition-description">냄새꼬</div>
+				<div class="expedition-description"></div>
 			</li>
 			<!-- 카드 6 -->
 			<li class="expedition-item">
 				<div class="expedition-img">
-					
+					<img src=""/>
 				</div>
-				<div class="expedition-description">카드 6</div>
+				<div class="expedition-description"></div>
 			</li>
+			<button id="save-expedition-btn" class="expedition-btn save-btn">저장하기</button>
+			<button id="edit-expedition-btn" class="expedition-btn edit-btn">수정하기</button>
+
 		</ul>
 	</div>
 
