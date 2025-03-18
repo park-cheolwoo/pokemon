@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.play.dto.IngamePokemonDTO;
+import kr.co.pokemon.play.dto.UpdateHpPokemonDTO;
 
 @Mapper
 public interface IngamePokemonMapper {
@@ -20,7 +21,7 @@ public interface IngamePokemonMapper {
 	
 	void insertAll(List<IngamePokemonDTO> list);
 	
-	void updateHp(int hp);
+	void updateHp(UpdateHpPokemonDTO updateHp);
 	
 	void deleteByPlayerId(String playerId);
 	

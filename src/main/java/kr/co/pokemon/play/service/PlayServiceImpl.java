@@ -78,6 +78,8 @@ public class PlayServiceImpl implements PlayService {
 		int level = minLevel + random.nextInt((maxLevel - minLevel) + 1);
 		int hp = stats.stream().filter(stat -> stat.getId() == 1).map(PokemonOwnStat::getValue).findFirst().orElse(0);
 
-		return new CreatedPokemonDTO(pokemon, pokemon.getName(), random.nextBoolean(), level, hp, characteristic, abilities, attacks, stats, types);
+		return new CreatedPokemonDTO(-1,
+				pokemon, pokemon.getName(), random.nextBoolean(), level, hp, characteristic, abilities, attacks, stats, types
+		);
 	}
 }

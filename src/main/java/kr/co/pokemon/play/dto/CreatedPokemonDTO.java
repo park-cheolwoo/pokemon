@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreatedPokemonDTO {
 
+	private int id;
 	private PokemonDTO pokemon;
 	private String name;
 	private boolean gender;

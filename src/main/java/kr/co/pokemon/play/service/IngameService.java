@@ -15,6 +15,10 @@ public interface IngameService extends Getable<IngameDTO> {
 	
 	boolean updateIngameStatus(String playerId, boolean isInGame);
 	
+	boolean updateIngameStage(String playerId, int stage);
+
+	boolean updateIngameMaxStage(String playerId, int stage);
+	
 	IngameInfoDTO getIngameInfoByPlayerId(String playerId);
 
 	List<CreatedPokemonDTO> getIngamePokemons(String playerId);
