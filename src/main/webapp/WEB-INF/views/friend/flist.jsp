@@ -87,6 +87,7 @@
 			<!-- 친구 요청창 -->
 			<div id="content3" class="hiddenbox">
 				<c:forEach var="pending" items="${pendings}">
+				<c:if test="${pending.playerFrom.id !=sessionScope.session_id}">
 						<div class="frequest" id="friend-requests">
 							<img src='/images/index/msball.png' class="msball">
 							<div class="woodpanner">
@@ -103,6 +104,7 @@
 	                        <button class="cancel-request" data-player-from="${pending.playerFrom.id}">거절</button>
 	                    	</div>
 						</div>
+				</c:if>
 				</c:forEach>
 			</div>
 		</div>

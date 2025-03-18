@@ -16,12 +16,12 @@ $(function() {
 
 	function store() {
 		$.ajax({
-			url: "/store/basicStore",
+			url: "/store",
 			type: 'GET',
 			success: function(response) {
-				location.href = "/store/basicStore";
+				location.href = "/store";
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.error('Error:', error);
 			}
 		});
@@ -34,7 +34,7 @@ $(function() {
 			success: function(response) {
 				location.href = "/play/plist";
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.error('Error:', error);
 			}
 		});
@@ -139,13 +139,60 @@ $(function() {
 			success: function(response) {
 				location.href = "/";
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.error('Error:', error);
 			}
 		});
 	}
+	$(document).ready(function () {
+	    function formatCurrency(amount) {
+	        return parseInt(amount).toLocaleString('ko-KR') + ' 원';
+	    }
 
+	    function updateResourceDisplay() {
+	        const gameMoneyElement = $('.resource-group:nth-child(1) .resource-info'); 
+	        const realMoneyElement = $('.resource-group:nth-child(2) .resource-info'); 
 
+	        const gameMoney = gameMoneyElement.text().replace(/[^0-9]/g, ''); 
+	        const realMoney = realMoneyElement.text().replace(/[^0-9]/g, ''); 
+
+	        gameMoneyElement.text(formatCurrency(gameMoney));
+	        realMoneyElement.text(formatCurrency(realMoney));
+	    }
+	    updateResourceDisplay();
+	});
+
+	//메인화면 소유 포켓몬 불러오기
+	$(document).ready(function () {
+	    function loadMinePokemons() {
+	        $.ajax({
+	            url: '/player/pokemon/mine',
+	            type: 'GET',
+	            dataType: 'json',
+	            success: function (response) {
+	                if (response.status === 'success') {
+	                    renderPokemonImages(response.data); 
+	                } else {
+	                    console.error('데이터를 불러오지 못했습니다:', response.message);
+	                }
+	            },
+	            error: function (error) {
+	                console.error('API 요청 실패:', error);
+	            }
+	        });
+	    }
+
+	    function renderPokemonImages(images) {
+	        const container = $('#pokemon-images-container');
+	        container.empty();
+	        images.forEach((image) => {
+	            const imageHTML = `<img src="${image}" alt="포켓몬 이미지" class="pokemon-image" />`;
+	            container.append(imageHTML);
+	        });
+	    }
+
+	    loadMinePokemons();
+	});
 
 	$("#mypageBtn").click(function() { mypage(); });
 	$("#storeBtn").click(function() { store(); });

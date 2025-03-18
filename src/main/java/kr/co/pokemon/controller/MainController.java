@@ -16,14 +16,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kr.co.pokemon.plan.dto.SdungeonDTO;
 import kr.co.pokemon.plan.service.SdungeonService;
+import kr.co.pokemon.player.service.PlayerService;
 
 
 @Controller
 public class MainController {
 	
+	@Autowired
+	private PlayerService playerService;
+	
 	@Autowired HttpSession session;
 	@Autowired SdungeonService sdungeonService;
-//	private PlayerService playerService;
 	
 	@GetMapping(value = "/")
 	public String index(HttpSession session, HttpServletResponse response) {
@@ -34,10 +37,10 @@ public class MainController {
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
-//		int pokemonCount = playerService.countPlayerPokemons(playerId);
-//		if(pokemonCount ==0) {
-//			return "redirect:/first";
-//		}
+        int pokemonCount = playerService.countPlayerPokemon(playerId);
+		if(pokemonCount ==0) {
+			return "redirect:/first/first";
+		}
 		return "index";
 	}
 	
@@ -46,10 +49,6 @@ public class MainController {
     	session.invalidate();
     	return "redirect:/member/login";
     }
-	
-	
-	
-	
 	
 	@GetMapping("/play/plist")
 	public String plist(HttpSession session, Model model) {
