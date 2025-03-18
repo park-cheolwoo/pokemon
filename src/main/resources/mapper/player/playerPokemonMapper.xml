@@ -55,6 +55,13 @@
     select count(*)
     from player_pokemon
     where player_id = #{playerId}
-</select>
+	</select>
+	
+	<select id="selectByIngamePlayerId" parameterType="string" resultMap="dataResultMap">
+    select player_pokemon.* from player_pokemon
+	inner join ingame_pokemon ON player_pokemon.id = ingame_pokemon.id
+	where ingame_pokemon.player_id = #{playerId}
+	</select>
+
 
 </mapper>

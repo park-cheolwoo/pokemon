@@ -44,4 +44,6 @@ public interface PlayerPokemonService {
 
 	List<PlayerPokemonDTO> minePlayerId(String sessionId);
 
+	void saveSelectedPokemon(String sessionId, int pokemonId);
+
 }

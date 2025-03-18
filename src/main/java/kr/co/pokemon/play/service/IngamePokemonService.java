@@ -21,4 +21,7 @@ public interface IngamePokemonService extends Getable<IngamePokemonDTO> {
 	
 	void updateIngameEnemyHp(int hp);
 
+	void save(IngamePokemonDTO ingamePokemon);
+
+
 }

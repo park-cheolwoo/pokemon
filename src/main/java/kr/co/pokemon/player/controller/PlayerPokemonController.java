@@ -3,6 +3,7 @@ package kr.co.pokemon.player.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,6 @@ public class PlayerPokemonController {
 	private PokemonService pokemonService;
 	
 
-	
-
 	@GetMapping(value = "/me")
 	public DataStatusDTO<List<PlayerPokemonDTO>> getOwnPokemon() {
 		String session_id = (String) session.getAttribute("session_id");
@@ -53,10 +52,8 @@ public class PlayerPokemonController {
 
 			if (session_id != null && session_id.equals(playerPokemon.getPlayerId())) {
 				playerPokemonService.save(playerPokemon);
-
 				return new DataStatusDTO<>("success", true);
 			}
-
 			throw new IllegalArgumentException(
 					"로그인 정보와 다른 정보입니다. : " + session_id + ", " + playerPokemon.getPlayerId());
 		} catch (Exception e) {
@@ -171,7 +168,7 @@ public class PlayerPokemonController {
 	}
 	
 	@GetMapping(value = "/mine")
-	public DataStatusDTO<List<Map<String, String>>> getMinePokemons(@RequestParam(required = false, defaultValue = "false") boolean use3d) {
+	public DataStatusDTO<List<String>> getMinePokemons(@RequestParam(required = false, defaultValue = "false") boolean use3d) {
 	    String sessionId = (String) session.getAttribute("session_id");
 	    if (sessionId == null) {
 	        return new DataStatusDTO<>("fail", null, "세션 정보가 유효하지 않습니다.");
@@ -179,22 +176,38 @@ public class PlayerPokemonController {
 
 	    List<PlayerPokemonDTO> minePokemons = playerPokemonService.minePlayerId(sessionId);
 
-	    List<Map<String, String>> images = minePokemons.stream()
+	    List<String> images = minePokemons.stream()
 	        .map(playerPokemon -> {
 	            PokemonDTO pokemonDTO = pokemonService.minePokemonById(playerPokemon.getPokemonId());
 	            if (pokemonDTO != null) {
-	                Map<String, String> imageMap = new HashMap<>();
-	                imageMap.put("2D", pokemonDTO.getImage());  // 2D 이미지
-	                imageMap.put("3D", pokemonDTO.getImage3d()); // 3D 이미지
-	                return imageMap;
+	                return pokemonDTO.getImage3d() != null && !pokemonDTO.getImage3d().isEmpty()
+	                        ? pokemonDTO.getImage3d() // 3D 이미지가 있으면 사용
+	                        : pokemonDTO.getImage(); // 없으면 2D 이미지 사용
 	            }
 	            return null;
 	        })
-	        .filter(image -> image != null) // null 값 제외
+	        .filter(Objects::nonNull) // null 제거
 	        .collect(Collectors.toList());
 
 	    return new DataStatusDTO<>("success", images);
 	}
 
+
+	@PostMapping(value ="/select")
+	public DataStatusDTO<Boolean> selectPokemon(@RequestBody Map<String, Integer> payload){
+		try {
+			String sessionId = (String) session.getAttribute("session_id");
+			if(sessionId == null) {
+				throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+			}
+			
+			int pokemonId = payload.get("pokemonId");
+			playerPokemonService.saveSelectedPokemon(sessionId, pokemonId);
+			return new DataStatusDTO<>("success",true);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new DataStatusDTO<>("error",false,e.getMessage());
+		}
+	}
 
 }

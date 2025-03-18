@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.pokemon.play.dto.IngamePokemonDTO;
 import kr.co.pokemon.play.dto.PokemonOwnAbility;
 import kr.co.pokemon.play.dto.PokemonOwnAttack;
 import kr.co.pokemon.play.dto.PokemonOwnStat;
+import kr.co.pokemon.play.service.IngamePokemonService;
 import kr.co.pokemon.player.dao.OwnPokemonSkillMapper;
 import kr.co.pokemon.player.dao.OwnPokemonStatMapper;
 import kr.co.pokemon.player.dao.PlayerPokemonMapper;
@@ -55,6 +57,10 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 
 	@Autowired
 	private TypesService typesService;
+	
+	@Autowired 
+	private IngamePokemonService ingamePokemonService;
+	
 
 	Random random = new Random();
 
@@ -243,15 +249,34 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<PlayerPokemonDTO> minePlayerId(String sessionId) {
-	    List<PlayerPokemonDTO> playerPokemons = playerPokemonMapper.selectByPlayerId(sessionId);
+	    return playerPokemonMapper.selectByIngamePlayerId(sessionId);
+	}
 
-	    if (playerPokemons.size() <= 6) {
-	        return playerPokemons;
-	    }
-	    // 랜덤하게 섞기
-	    Collections.shuffle(playerPokemons);
-	    // 처음 6마리만 반환
-	    return playerPokemons.stream().limit(6).collect(Collectors.toList());
+	@Override
+	@Transactional
+	public void saveSelectedPokemon(String sessionId, int pokemonId) {
+		PokemonDTO pokemon = pokemonService.minePokemonById(pokemonId);
+		if(pokemon == null) {
+			throw new IllegalArgumentException("존재하지 않는 포켓몬입니다.");
+		}
+		PlayerPokemonDTO playerPokemon = new PlayerPokemonDTO();
+		playerPokemon.setPlayerId(sessionId);
+		playerPokemon.setPokemonId(pokemonId);
+		playerPokemon.setName(pokemon.getName());
+		playerPokemon.setGender(random.nextBoolean());
+		playerPokemon.setLevel(5);
+		playerPokemon.setExperience(0);
+		playerPokemon.setCharacteristicId(1);
+		
+		save(playerPokemon);
+		
+		IngamePokemonDTO ingamePokemon = new IngamePokemonDTO();
+		ingamePokemon.setId(playerPokemon.getId());
+		ingamePokemon.setPlayerId(sessionId);
+		ingamePokemon.setHp(100);
+		ingamePokemon.setSlot(0);
+		
+		ingamePokemonService.save(ingamePokemon);
 	}
 
 }

@@ -16,10 +16,10 @@ $(function() {
 
 	function store() {
 		$.ajax({
-			url: "/store/basicStore",
+			url: "/store",
 			type: 'GET',
 			success: function(response) {
-				location.href = "/store/basicStore";
+				location.href = "/store";
 			},
 			error: function(xhr, status, error) {
 				console.error('Error:', error);
@@ -181,20 +181,19 @@ $(function() {
 	            }
 	        });
 	    }
+
 	    function renderPokemonImages(images) {
 	        const container = $('#pokemon-images-container');
 	        container.empty();
-
-			images.forEach((image) => {
-			            const selectedImage = image['3D'] || image['2D']; // 3D 우선 사용, 없으면 2D
-			            const delay = Math.random() * 2 + 's'; // 각 이미지에 0~2초 사이의 랜덤 딜레이 설정
-			            const imageHTML = `<img src="${selectedImage}" alt="포켓몬 이미지" class="pokemon-image" style="animation-delay: ${delay};" />`;
-			            container.append(imageHTML);
-			      });
+	        images.forEach((image) => {
+	            const imageHTML = `<img src="${image}" alt="포켓몬 이미지" class="pokemon-image" />`;
+	            container.append(imageHTML);
+	        });
 	    }
 
-	    loadMinePokemons(); // 포켓몬 이미지 로드
+	    loadMinePokemons();
 	});
+
 
 	$("#mypageBtn").click(function() { mypage(); });
 	$("#storeBtn").click(function() { store(); });

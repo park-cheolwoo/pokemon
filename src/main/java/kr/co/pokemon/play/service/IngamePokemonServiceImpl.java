@@ -102,4 +102,9 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 		}
 	}
 
+	@Override
+	public void save(IngamePokemonDTO ingamePokemon) {
+		ingamePokemonMapper.insert(ingamePokemon);
+	}
+
 }

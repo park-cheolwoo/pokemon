@@ -29,4 +29,6 @@ public interface PlayerPokemonMapper {
 
 	int countPokemonByPlayerId(String playerId);
 
+	List<PlayerPokemonDTO> selectByIngamePlayerId(String sessionId);
+
 }
