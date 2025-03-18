@@ -1,12 +1,11 @@
 package kr.co.pokemon.player.service;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,7 +119,7 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 			.toList();
 
 		if (playerPokemon.getStats() != null) {
-			playerPokemon.getStats().stream().forEach(ownStat -> {
+			playerPokemon.getStats().forEach(ownStat -> {
 				OwnPokemonStat ownPokemonStat = ownPokemonStats.stream().filter(stat -> stat.getId() == ownStat.getId()).findFirst().orElse(null);
 				if (ownPokemonStat != null) {
 					if (ownPokemonStat.getTotal() > ownStat.getValue()) {
@@ -144,6 +143,8 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 		
 		if (playerPokemon.getAttacks() != null) {
 			saveAttacks(playerPokemon.getId(), playerPokemon.getPokemonId(), playerPokemon.getAttacks().stream().map(PokemonOwnAttack::getId).toList());
+		} else {
+			saveRandomAttack(playerPokemon.getId(), playerPokemon.getPokemonId());
 		}
 
 	}
@@ -162,6 +163,16 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 				savePokemonAttack(new OwnPokemonSkill(playerPokemonId, attackId, 0));
 			}
 		});
+	}
+
+	private void saveRandomAttack(int playerPokemonId, int pokemonId) {
+		int typesId = typesService.getTypesByPokemonId(pokemonId).get(0).getId();
+		List<PokemonOwnAttack> allOwnAttackByTypes = pokemonMoveService.getAttacksByPokemonIdAndTypeId(pokemonId, typesId);
+		randomIntegerList(2, allOwnAttackByTypes.size())
+			.forEach(i -> savePokemonAttack(new OwnPokemonSkill(playerPokemonId, allOwnAttackByTypes.get(i).getId(), i)));
+
+		List<PokemonOwnAttack> normalAttack = pokemonMoveService.getAttacksByPokemonIdAndTypeId(pokemonId, 1);
+		savePokemonAttack(new OwnPokemonSkill(playerPokemonId, normalAttack.get(random.nextInt(normalAttack.size())).getId(), 0));
 	}
 
 	@Override
@@ -223,13 +234,9 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 
 	@Override
 	public List<PokemonOwnStat> getRandomStatsByPokemonId(int pokemonId) {
-		final int minValue = 15;
-
 		return pokemonService.getStatsByPokemonId(pokemonId).stream().map(baseStat -> {
-			int randomValue = baseStat.getValue() - random.nextInt(baseStat.getValue());
-			if (randomValue < minValue) {
-				randomValue = minValue;
-			}
+			int minValue = Math.max((int)(baseStat.getValue() * 0.7), 1);
+			int randomValue = baseStat.getValue() - random.nextInt(baseStat.getValue()) + minValue;
 			PokemonOwnStat stat = new PokemonOwnStat(randomValue, baseStat.getValue());
 			stat.setId(baseStat.getStatId());
 
@@ -279,4 +286,16 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 		ingamePokemonService.save(ingamePokemon);
 	}
 
+	private List<Integer> randomIntegerList(int count, int maxValue) {
+		List<Integer> list = new ArrayList<>();
+
+		while (list.size() < count) {
+			int randomValue = random.nextInt(maxValue);
+			if (!list.contains(randomValue)) {
+				list.add(randomValue);
+			}
+		}
+
+		return list;
+	}
 }

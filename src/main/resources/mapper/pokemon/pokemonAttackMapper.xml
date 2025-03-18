@@ -32,7 +32,7 @@
 	FROM
 		pokemon_attack p
 	JOIN attack a ON a.id = p.attack_id
-	WHERE p.pokemon_id = #{pokemonId}
+	WHERE p.pokemon_id = #{pokemonId} AND a.damage > 0
 	ORDER BY p.slot DESC
   </select>
 
@@ -43,6 +43,16 @@
 	JOIN pokemon p ON p.id = a.pokemon_id
 	WHERE a.attack_id = #{attackId}
 	ORDER BY p.id
+  </select>
+
+  <select id="selectByPokemonIdAndTypeId" resultMap="attackResultMap">
+    SELECT
+    a.*, p.slot
+    FROM
+    pokemon_attack p
+    JOIN attack a ON a.id = p.attack_id
+    WHERE p.pokemon_id = #{pokemonId} AND a.types_id = #{typesId} AND a.damage > 0
+    ORDER BY p.slot DESC
   </select>
 
   <select id="selectByIds" resultType="java.util.List" parameterType="java.util.List">
