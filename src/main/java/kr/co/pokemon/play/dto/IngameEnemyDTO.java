@@ -8,11 +8,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngameDTO extends EntityDTO {
+public class IngameEnemyDTO extends EntityDTO {
   private String playerId;
-  private boolean isIngame;
-  private int stageId;
-  private int maxStageId;
-  private int selectionIdx;
-  private GameStageDTO stage;
+  private int pokemonId;
+  private int hp;
+  private int level;
 }

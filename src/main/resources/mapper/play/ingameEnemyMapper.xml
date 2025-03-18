@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.play.dao.IngameEnemyMapper">
+  <resultMap id="dataResultMap" type="kr.co.pokemon.play.dto.IngameEnemyDTO" autoMapping="true">
+    <result column="player_id" property="playerId" />
+    <result column="pokemon_id" property="pokemonId" />
+    <result column="lv" property="level" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+  <select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+    SELECT * FROM ingame_enemy ORDER BY updated_at OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+  <select id="selectById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM ingame_enemy WHERE id = #{id}
+  </select>
+  <select id="selectByPlayerId" resultMap="dataResultMap" parameterType="String">
+    SELECT * FROM ingame_enemy WHERE player_id = #{playerId}
+  </select>
+  <insert id="insert">
+    INSERT INTO ingame_enemy
+      ( id, player_id, pokemon_id, hp, lv )
+    VALUES
+      ( #{id}, #{playerId}, #{pokemonId}, #{hp}, #{lv} )
+  </insert>
+  <insert id="insertAll" parameterType="java.util.List">
+    INSERT INTO ingame_enemy ( id, player_id, pokemon_id, hp, lv )
+    <foreach collection="list" item="item" separator="UNION ALL">
+      SELECT #{id}, #{playerId}, #{pokemonId}, #{hp}, #{lv} FROM DUAL
+    </foreach>
+  </insert>
+  <update id="updateHp" parameterType="int">
+    UPDATE ingame_enemy SET hp = #{hp}
+  </update>
+  <delete id="deleteByPlayerId" parameterType="String">
+    DELETE FROM ingame_enemy WHERE player_id = #{playerId}
+  </delete>
+</mapper>
