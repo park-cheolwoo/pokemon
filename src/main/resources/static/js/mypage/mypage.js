@@ -31,7 +31,7 @@ $(document).ready(function () {
                     initializeMyPokemonTabs();
                 }
                 if (page === '/mypage/expedition') {
-                    initializeExpedition();
+                    expeditionInitialize();
                 }
             },
             error: function () {
@@ -93,169 +93,6 @@ $(document).ready(function () {
         });
     }
 
-    function initializeItemTabs() {
-        const itemTabs = $('.mypage-banner-tab .banner-item');
-
-        const defaultItemTab = $('.mypage-banner-tab .banner-item[data-tab="monsterball-item"]');
-        defaultItemTab.addClass('active');
-
-        // 각 탭에 해당하는 카테고리 ID 목록
-        const categoryMapping = {
-            'monsterball-item': [33, 34],
-            'battle-item': [1, 11, 27, 28, 29, 30],
-            'training-item': [10, 26, 37]
-        };
-
-        // 기본 아이템 로드
-        loadItemContent('monsterball-item');
-        loadItemsByCategory(categoryMapping['monsterball-item'], 'monsterball-item-list-body');
-
-        itemTabs.on('click', function () {
-            itemTabs.removeClass('active');
-            $(this).addClass('active');
-
-            const itemTabId = $(this).data('tab');
-            loadItemContent(itemTabId);
-
-            const categoryId = categoryMapping[itemTabId];
-            if (categoryId) {
-                loadItemsByCategory(categoryId, itemTabId + '-list-body');
-            }
-        });
-    }
-
-    function loadItemContent(tabId) {
-        $('.tab-content').hide();
-        $('#' + tabId).show();
-    }
-
-    // 아이템을 테이블에 추가하는 함수
-    function addItemToTable(tableBody, item) {
-        const row = $('<tr></tr>');
-
-        // 이미지 셀 추가
-        const imgCell = $('<td class="item-img"></td>');
-        const img = $('<img>')
-            .attr('src', item.image)
-            .attr('alt', item.name)
-            .attr('width', '50')
-            .attr('height', '50')
-            .attr('onerror', "this.src='/images/close.png'");
-        imgCell.append(img);
-
-        // 이름 셀 추가
-        const nameCell = $('<td class="item-name"></td>').text(item.name);
-
-        // 수량 셀 추가
-        const countCell = $('<td class="item-quantity"></td>').text(`${item.count}개`);
-
-        // 셀들을 행에 추가
-        row.append(imgCell, nameCell, countCell);
-
-        // 아이템 클릭 이벤트 추가
-        row.on('click', function () {
-            showItemDetails(item);
-        });
-
-        // 행을 테이블에 추가
-        tableBody.append(row);
-    }
-
-    function loadItemsByCategory(categoryIds, tableBodyId) {
-        const tableBody = $('#' + tableBodyId);
-        if (!tableBody.length) return;
-
-        // 사용자 아이템을 가져옵니다
-        $.ajax({
-            url: '/player/items/my-items',
-            type: 'GET',
-            success: function (userItems) {
-                console.log("사용자 아이템 데이터:", userItems);
-                console.log("현재 카테고리 IDs:", categoryIds);
-
-                if (userItems && userItems.length > 0) {
-                    // 사용자 아이템이 있으면 테이블을 비우고 사용자 아이템을 표시
-                    tableBody.empty();
-
-                    // 각 아이템에 대해 상세 정보를 가져옵니다
-                    const promises = userItems.map(userItem => {
-                        return new Promise((resolve, reject) => {
-                            // 아이템 ID로 아이템 상세 정보를 가져옵니다
-                            $.get(`/items/${userItem.itemId}`)
-                                .done(function (itemDetail) {
-                                    console.log(`아이템 ${userItem.itemId} 상세 정보:`, itemDetail);
-                                    // 사용자 아이템 정보와 아이템 상세 정보를 합칩니다
-                                    resolve({
-                                        ...userItem,
-                                        name: itemDetail.name || `아이템 ${userItem.itemId}`,
-                                        image: itemDetail.image || `/images/items/item_${userItem.itemId}.png`,
-                                        description: itemDetail.description,
-                                        flavorText: itemDetail.flavorText,
-                                        categoryId: itemDetail.categoryId
-                                    });
-                                })
-                                .fail(function (error) {
-                                    console.error(`아이템 ${userItem.itemId} 정보 가져오기 실패:`, error);
-                                    // 아이템 상세 정보를 가져오지 못한 경우
-                                    resolve({
-                                        ...userItem,
-                                        name: `아이템 ${userItem.itemId}`,
-                                        image: `/images/items/item_${userItem.itemId}.png`,
-                                        categoryId: -1 // 카테고리 정보를 가져오지 못한 경우
-                                    });
-                                });
-                        });
-                    });
-
-                    // 모든 아이템 정보를 가져온 후 화면에 표시합니다
-                    Promise.all(promises).then(itemsWithDetails => {
-                        // 현재 카테고리에 해당하는 아이템만 필터링
-                        const filteredItems = itemsWithDetails.filter(item =>
-                            categoryIds.includes(item.categoryId)
-                        );
-
-                        console.log("카테고리 필터링 후 아이템:", filteredItems);
-
-                        if (filteredItems.length > 0) {
-                            filteredItems.forEach(item => {
-                                // 아이템을 테이블에 추가
-                                addItemToTable(tableBody, item);
-                            });
-                        } else {
-                            // 해당 카테고리에 아이템이 없는 경우
-                            tableBody.html('<tr><td colspan="3">보유한 아이템이 없습니다.</td></tr>');
-                        }
-                    }).catch(error => {
-                        console.error("아이템 상세 정보를 가져오는 중 오류 발생:", error);
-                        tableBody.html('<tr><td colspan="3">아이템 정보를 불러오는 중 오류가 발생했습니다.</td></tr>');
-                    });
-                } else {
-                    // 사용자 아이템이 없으면 '보유한 아이템이 없습니다' 메시지 표시
-                    tableBody.html('<tr><td colspan="3">보유한 아이템이 없습니다.</td></tr>');
-                }
-            },
-            error: function (error) {
-                console.error("Error fetching user items:", error);
-                tableBody.html('<tr><td colspan="3">아이템 정보를 불러오는 중 오류가 발생했습니다.</td></tr>');
-            }
-        });
-    }
-
-    // 아이템 상세 정보 표시 함수
-    function showItemDetails(item) {
-        // 이미지 업데이트
-        $('.mypage-item-img img')
-            .attr('src', item.image || '/images/close.png')
-            .attr('alt', item.name)
-            .attr('onerror', "this.src='/images/close.png'");
-
-        // 이름 업데이트
-        $('.mypage-item-name').text(item.name);
-
-        // 설명 업데이트
-        $('.mypage-item-info').text(item.flavorText || '설명이 없습니다.');
-    }
-
     // 포켓몬 리스트 초기화 공통 함수
     function initializePokemonList(options) {
         const {
@@ -286,12 +123,12 @@ $(document).ready(function () {
             const scrollTop = $(this).scrollTop();
             const scrollDirection = scrollTop > lastScrollTop ? 'down' : 'up';
             lastScrollTop = scrollTop;
-            
+
             // 아래로 스크롤할 때만 데이터 로드
             if (scrollDirection === 'down') {
                 const scrollPosition = scrollTop + $(this).innerHeight();
                 const scrollHeight = $(this)[0].scrollHeight;
-                
+
                 // 디바운싱 적용
                 clearTimeout(scrollTimer);
                 scrollTimer = setTimeout(() => {
@@ -305,11 +142,11 @@ $(document).ready(function () {
         // 포켓몬 데이터 로드 함수
         function loadPokemonData() {
             isLoading = true;
-            
+
             // 타임스탬프 추가로 캐시 방지
             const timestamp = new Date().getTime();
             const url = `${dataUrl}?page=${currentPage}&size=${pageSize}&_=${timestamp}`;
-            
+
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -317,9 +154,9 @@ $(document).ready(function () {
                 cache: false,
                 success: function (response) {
                     console.log("API 응답:", response);
-                    
+
                     // 응답이 없거나 빈 배열인 경우
-                    if (!response || (Array.isArray(response) && response.length === 0) || 
+                    if (!response || (Array.isArray(response) && response.length === 0) ||
                         (response.data && Array.isArray(response.data) && response.data.length === 0)) {
                         hasMoreData = false;
                         isLoading = false;
@@ -328,10 +165,10 @@ $(document).ready(function () {
                         }
                         return;
                     }
-                    
+
                     // 추가 데이터 처리가 필요한 경우
                     if (additionalDataProcessor) {
-                        additionalDataProcessor(response, function(processedData) {
+                        additionalDataProcessor(response, function (processedData) {
                             if (processedData && processedData.length > 0) {
                                 processPokemonData(processedData);
                                 currentPage++;
@@ -345,9 +182,9 @@ $(document).ready(function () {
                         });
                     } else {
                         // 일반 포켓몬 데이터 처리 (도감 탭)
-                        let pokemonList = Array.isArray(response) ? response : 
-                                        (response.data && Array.isArray(response.data)) ? response.data : [];
-                                        
+                        let pokemonList = Array.isArray(response) ? response :
+                            (response.data && Array.isArray(response.data)) ? response.data : [];
+
                         if (pokemonList.length > 0) {
                             if (showOwnedStatus) {
                                 // 소유한 포켓몬 목록 가져오기
@@ -360,13 +197,13 @@ $(document).ready(function () {
                                         if (ownershipResponse.status === "success" && ownershipResponse.data) {
                                             // 소유한 포켓몬 ID 목록 생성
                                             const ownedPokemonIds = new Set(ownershipResponse.data.map(pokemon => pokemon.pokemonId));
-                                            
+
                                             // 포켓몬 데이터에 소유 여부 추가
                                             pokemonList.forEach(pokemon => {
                                                 pokemon.isOwned = ownedPokemonIds.has(pokemon.id);
                                             });
                                         }
-                                        
+
                                         processPokemonData(pokemonList);
                                         currentPage++;
                                         isLoading = false;
@@ -409,15 +246,15 @@ $(document).ready(function () {
                 console.log("처리할 포켓몬 데이터가 없습니다.");
                 return;
             }
-            
+
             console.log("처리할 포켓몬 데이터:", pokemonList);
-            
+
             pokemonList.forEach(pokemon => {
                 if (!pokemon) return;
-                
+
                 const pokemonId = pokemon.id || pokemon.pokemonId;
                 if (!pokemonId) return;
-                
+
                 if (!loadedPokemonIds.has(pokemonId)) {
                     loadedPokemonIds.add(pokemonId);
                     appendPokemonToContainer(pokemon);
@@ -435,9 +272,9 @@ $(document).ready(function () {
         function createPokemonElement(pokemon) {
             // 소유 여부에 따라 클래스 추가
             const ownershipClass = pokemon.isOwned ? 'owned' : 'not-owned';
-            
+
             const levelInfo = pokemon.level ? `<p>레벨: ${pokemon.level}</p>` : '';
-            
+
             const pokemonElement = $(`
                 <div class="pokemon-item ${ownershipClass}">
                     <img src="${pokemon.image}" alt="${pokemon.name}" onerror="this.src='/images/close.png'" />
@@ -445,14 +282,14 @@ $(document).ready(function () {
                     ${levelInfo}
                 </div>
             `);
-            
+
             // 포켓몬 클릭 이벤트 처리
             if (onPokemonClick) {
                 pokemonElement.on('click', function () {
                     onPokemonClick(pokemon);
                 });
             }
-            
+
             return pokemonElement;
         }
     }
@@ -460,40 +297,26 @@ $(document).ready(function () {
     // 도감 초기화 함수
     function initializePokedex() {
         initializePokedexButtons();
-        
+
         // 도감 포켓몬 리스트 초기화
         initializePokemonList({
             containerSelector: '.image-container',
             dataUrl: '/data/pokemon',
-            onPokemonClick: function(pokemon) {
+            onPokemonClick: function (pokemon) {
                 showPokemonDetails(pokemon.id);
             },
             showOwnedStatus: true
         });
     }
-    
-    // 원정대 초기화 함수
-    function initializeExpedition() {
-        initializePokedexButtons();
 
-        // 원정대 포켓몬 리스트 초기화
-        initializePokemonList({
-            containerSelector: '.image-container',
-            dataUrl: '/player/pokemon/me',
-            onPokemonClick: showExpeditionPokemonDetails,
-            showOwnedStatus: true,
-            additionalDataProcessor: processPlayerPokemonData
-        });
-    }
-    
     // 플레이어 포켓몬 데이터 처리 함수
     function processPlayerPokemonData(response, callback) {
         console.log("플레이어 포켓몬 데이터:", response);
-        
+
         // response가 배열인 경우 (이미 포켓몬 목록인 경우)
         if (Array.isArray(response)) {
             processPokemons(response);
-        } 
+        }
         // response가 객체이고 data 속성이 있는 경우
         else if (response && response.data) {
             processPokemons(response.data);
@@ -503,34 +326,35 @@ $(document).ready(function () {
             callback([]);
             return;
         }
-        
+
         function processPokemons(playerPokemons) {
             if (!playerPokemons || playerPokemons.length === 0) {
                 callback([]);
                 return;
             }
-            
+
             // 포켓몬 상세 정보 가져오기
             const promises = playerPokemons.map(playerPokemon => {
                 // pokemonId가 없는 경우 id를 사용
                 const pokemonId = playerPokemon.pokemonId || playerPokemon.id;
-                
+
                 if (!pokemonId) {
                     console.error('포켓몬 ID가 없습니다:', playerPokemon);
                     return Promise.resolve(null);
                 }
-                
+
                 return new Promise((resolve, reject) => {
                     $.ajax({
                         url: `/data/pokemon/${pokemonId}`,
                         type: 'GET',
                         dataType: 'json',
                         cache: false,
-                        success: function(pokemonDetail) {
+                        success: function (pokemonDetail) {
                             resolve({
                                 id: playerPokemon.id,
                                 pokemonId: pokemonId,
-                                name: pokemonDetail.name,
+                                name: playerPokemon.name || pokemonDetail.name, // 플레이어 포켓몬 이름 우선 사용
+                                originalName: pokemonDetail.name, // 원래 포켓몬 이름도 저장
                                 image: pokemonDetail.image,
                                 types: pokemonDetail.types,
                                 level: playerPokemon.level || 1,
@@ -544,12 +368,12 @@ $(document).ready(function () {
                                 isOwned: true
                             });
                         },
-                        error: function(error) {
+                        error: function (error) {
                             console.error(`포켓몬 ${pokemonId} 정보 가져오기 실패:`, error);
                             resolve({
                                 id: playerPokemon.id,
                                 pokemonId: pokemonId,
-                                name: `포켓몬 #${pokemonId}`,
+                                name: playerPokemon.name || `포켓몬 #${pokemonId}`, // 플레이어 포켓몬 이름 우선 사용
                                 image: `/images/pokemon/${pokemonId}.png`,
                                 level: playerPokemon.level || 1,
                                 isOwned: true
@@ -571,19 +395,6 @@ $(document).ready(function () {
                     callback([]);
                 });
         }
-    }
-    
-    // 원정대 포켓몬 상세 정보 표시 함수
-    function showExpeditionPokemonDetails(pokemon) {
-        // 상세 정보 모달 표시
-        const detailsModal = $('<div class="pokemon-details-modal"></div>');
-        detailsModal.html(detailsHtml);
-        $('body').append(detailsModal);
-
-        // 닫기 버튼 클릭 시 모달 닫기
-        detailsModal.find('.close-details').on('click', function () {
-            detailsModal.remove();
-        });
     }
 
     function initializePokedexViewTabs() {
@@ -711,6 +522,5 @@ $(document).ready(function () {
             event.preventDefault();
         }
     }
-
     document.onkeydown = NotReload;
 });

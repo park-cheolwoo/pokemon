@@ -14,4 +14,8 @@ public class IngamePokemonDTO extends EntityDTO {
 	private int hp;
 	private int slot;
 	
+	private String name;
+	private String image;
+	private int pokemonId;
+	
 }

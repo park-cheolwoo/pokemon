@@ -32,5 +32,7 @@
 
     <!-- JavaScript 코드 -->
     <script src="/js/mypage/mypage.js"></script>
+    <script src="/js/mypage/expedition.js"></script>
+    <script src="/js/mypage/mypage_item.js"></script>
 </body>
 </html>
