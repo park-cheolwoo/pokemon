@@ -10,6 +10,17 @@
   <title>특수던전</title>
 </head>
 <body>
+<script>
+  // JSP에서 sdungeon 객체를 JS 변수로 변환
+  var sdungeon = {
+    pokemon1Name: "${sdungeon.pokemon1Name}",
+    pokemon1Img: "${sdungeon.pokemon1Img}",
+    pokemon2Name: "${sdungeon.pokemon2Name}",
+    pokemon2Img: "${sdungeon.pokemon2Img}",
+    pokemon3Name: "${sdungeon.pokemon3Name}",
+    pokemon3Img: "${sdungeon.pokemon3Img}"
+  };
+</script>
   <div id="back"><img src="../images/play/back.png"/>
     <div id="dark">
       <!-- 첫 번째 문제 -->
@@ -80,3 +91,6 @@
       </div>
     </div> 
   </div>
+ </body>
+</html>
+  
