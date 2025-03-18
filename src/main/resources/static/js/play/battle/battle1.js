@@ -9,120 +9,6 @@ $(function() {
 	const btnContainer = $(".selection-box");
 	const textBox = $(".text-box");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	$.when(
-		$.ajax('/play/create/pokemon/habitat/2?maxLevel=10'),
-		$.ajax('/play/me/pokemon')
-	).then(function (enemy, my) {
-		const enemyData = enemy[0];
-		const myData = my[0];
-		let pokemonIdx = 0;
-		console.log(enemyData);
-		console.log(myData);
-
-		container.append(pokemonBlockForm("you", enemyData));
-		container.append(pokemonBlockForm("me", myData[pokemonIdx]));
-
-		$(container).one("transitionend", () => $(textBox).trigger("nextComment", [{comments: firstComments(myData[pokemonIdx].name, enemyData.name), callback: () => $(btnContainer).trigger("nextSelection")}]));
-
-		$(btnContainer).on("nextSelection", function (e, data) {
-			if (data === undefined) {
-				appendBtns(firstSelection(myData, pokemonIdx), false);
-				return;
-			}
-
-			appendBtns(data, true);
-		});
-
-		$(btnContainer).on("attackList", function (e, data) {
-			btnContainer.children(".selection-box__group").css({display: "none"});
-			btnContainer.find(".selection-box__btn").removeClass("active-btn");
-
-			appendBtns(attackSelection(data), true);
-		});
-
-		$(btnContainer).on("attack", function (e, data) {
-			$(this).children(".selection-box__group:not(.main-group)").remove();
-
-			$(".pokemon.you").addClass("damaged-pokemon");
-			setTimeout(() => $(".pokemon.you").removeClass("damaged-pokemon"), 1000);
-			const power = executeDamage(enemyData, data.typesId, data.power * (myData[pokemonIdx].level / 100));
-			let nextCommentData;
-			if (changeHp("you", power) > 0) {
-				nextCommentData = {
-					comments: attackComments(myData[pokemonIdx].name, enemyData.name, data.name, power),
-					callback: () => $(btnContainer).trigger("nextSelection")
-				};
-			} else {
-				nextCommentData = {
-					comments: stageClearComments(myData[pokemonIdx].name, enemyData.name, data.name, power),
-					callback: () => console.log("스테이지 클리어!!")
-				}
-			}
-			$(textBox).trigger("nextComment", [nextCommentData]);
-		});
-
-		$(btnContainer).on("changePokemon", function (e, data) {
-			$(btnContainer).children().remove();
-			$(container).children(".modal-container").remove();
-			pokemonIdx = data;
-			$(textBox).trigger("nextComment", [{comments: [[`${myData[pokemonIdx].name} (으)로 포켓몬 교체 !!`]], callback: () => {
-					const changePokemon = $(pokemonBlockForm("me", myData[pokemonIdx]));
-					changePokemon.css({opacity: 0});
-					togglePokemon("me", false);
-					setTimeout(() => {
-						container.children(".pokemon.me").remove();
-						container.append(changePokemon);
-
-						setTimeout(() => togglePokemon("me", true, () => $(textBox).trigger("nextComment", [{
-							comments: [[`가랏! ${myData[pokemonIdx].name} !`, `${myData[pokemonIdx].name} 은(는) 무엇을 할까?`]],
-							callback: () => $(btnContainer).trigger("nextSelection")
-						}])), 500);
-					}, 500);
-				}}]
-			);
-		});
-
-		function executeDamage(targetType, type, power) {
-			console.log(targetType, type, power);
-			return power;
-		}
-
-		container.addClass("active-device");
-	}).fail(function (e) {
-		console.log(e);
-	});
-
-	function pokemonBlockForm(part, data) {
-		const maleSprites = part === "you" ? data.pokemon.sprites.front_default : data.pokemon.sprites.back_default;
-		const femaleSprites = part === "you" ? data.pokemon.sprites.front_female : data.pokemon.sprites.back_female;
-		const hp = data.stats.find(stat => stat.id === 1).value;
-		return `
-			<div class="pokemon ${part}">
-				<div class="pokemon__info">
-					<div class="pokemon__info--level">LV ${data.level}</div>
-					<div class="pokemon__info--name">${data.name}</div>
-					<div class="pokemon__info--hp hp-bar">
-						<div class="hp-bar__value" data-value="${hp}" data-total="${hp}"></div>
-					</div>
-				</div>
-				<div class="pokemon-image">
-					<img src="${femaleSprites !== noImagePokemon && !data.gender ? femaleSprites : maleSprites }" />
-				</div>
-			</div>
-		`;
-	}
-
-	function appendBtns(btns, hasPrev) {
-		const btnGroup = $("<div>", {class: "selection-box__group"});
-
-		if (!hasPrev) {
-			$(btnContainer).children().remove();
-			btnGroup.addClass("main-group");
-=======
-=======
->>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 	$.ajax({
 		url: '/ingame/me/info',
 		dataType: 'json',
@@ -206,10 +92,7 @@ $(function() {
 		},
 		error: function(e) {
 			console.log(e);
->>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 		}
-<<<<<<< HEAD
-=======
 	});
 
 	function pokemonBlockForm(part, data) {
@@ -241,10 +124,6 @@ $(function() {
 			$(btnContainer).children().remove();
 			btnGroup.addClass("main-group");
 		}
-<<<<<<< HEAD
->>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
-=======
->>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 
 		btnGroup.html(btns.map(btn => {
 			const button = $("<div>", {class: "selection-box__btn"});

@@ -749,17 +749,18 @@ div.myPokemon-info-text-container {
     margin: 0;
     width: 350px;
     max-width: 800px;
-    margin-top: 10px;
+    margin-left: 35px;
     
 }
 
 .expedition-item {
+    position: relative;
     background-color: rgba(0, 0, 0, 0.5);  /* 반투명 검은색 배경 */
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 170px;  /* 이미지 크기와 맞추기 위해 카드 너비 설정 */
-    height: 180px;  /* 카드 높이 설정 */
+    width: 150px;  /* 이미지 크기와 맞추기 위해 카드 너비 설정 */
+    height: 150px;  /* 카드 높이 설정 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;  /* 내용이 위아래로 배치되도록 설정 */
@@ -767,8 +768,8 @@ div.myPokemon-info-text-container {
 }
 
 .expedition-img {
-    width: 150px;  /* 이미지 크기 150px */
-    height: 150px;  /* 이미지 크기 150px */
+    width: 100px;  /* 이미지 크기 150px */
+    height: 100px;  /* 이미지 크기 150px */
     border-radius: 8px;
     margin: 0 auto;  /* 이미지를 가운데로 정렬 */
 }
@@ -780,11 +781,11 @@ div.myPokemon-info-text-container {
 }
 
 .expedition-description {
-    font-size: 14px;
+    font-size: 20px;
     color: #fff;  /* 설명란 텍스트는 흰색 */
     background-color: rgba(0, 0, 0, 0.7);  /* 설명란 배경을 진한 검은색 */
     border-radius: 4px;
-    height: 14px;  /* 설명란 크기 지정 */
+    height: 20px;  /* 설명란 크기 지정 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -792,4 +793,104 @@ div.myPokemon-info-text-container {
 }
 
 
+/* 원정대 버튼 공통 스타일 */
+.expedition-btn {
+    width: 150px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    display: inline-block;
+}
 
+/* 저장 버튼 스타일 */
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.save-btn:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 수정 버튼 스타일 */
+.edit-btn {
+    background-color: #2196F3;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0b7dda;
+    transform: translateY(-2px);
+}
+
+.edit-btn:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 수정 모드에서의 원정대 아이템 스타일 */
+.expedition-item.editable {
+    cursor: pointer;
+    position: relative;
+}
+
+.expedition-item.editable:hover::before {
+    content: "✕";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    z-index: 10;
+}
+
+/* 원정대 포켓몬 삭제 버튼 스타일 */
+.remove-pokemon-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.remove-pokemon-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
