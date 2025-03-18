@@ -17,6 +17,10 @@ public interface IngameMapper {
 	
 	void updateIngameStatus(UpdateIngameDTO updateDTO);
 	
+	void updateStageId(UpdateIngameDTO updateDTO);
+
+	void updateMaxStageId(UpdateIngameDTO updateDTO);
+	
 	IngameDTO selectById(String id);
 	
 	List<IngameDTO> selectAll(PageRequestDTO page);

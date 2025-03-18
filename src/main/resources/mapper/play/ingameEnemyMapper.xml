@@ -28,18 +28,20 @@
   	INSERT INTO ingame_enemy
   		( id, player_id, pokemon_id, hp, lv )
   	VALUES
-  		( #{id}, #{playerId}, #{pokemonId}, #{hp}, #{lv} )
+  		( ingame_enemy_seq.NEXTVAL, #{playerId}, #{pokemonId}, #{hp}, #{lv} )
   </insert>
-  
+
   <insert id="insertAll" parameterType="java.util.List">
   	INSERT INTO ingame_enemy ( id, player_id, pokemon_id, hp, lv )
-  	<foreach collection="list" item="item" separator="UNION ALL">
-  		SELECT #{id}, #{playerId}, #{pokemonId}, #{hp}, #{lv} FROM DUAL
-  	</foreach>
+  	SELECT ingame_enemy_seq.NEXTVAL, a.* FROM (
+	<foreach collection="list" item="item" separator="UNION ALL">
+	 	SELECT #{item.playerId} AS player_id, #{item.pokemonId} AS pokemon_id, #{item.hp} AS hp, #{item.level} AS lv
+	 	FROM dual
+	</foreach>) a
   </insert>
   
-  <update id="updateHp" parameterType="int">
-  	UPDATE ingame_enemy SET hp = #{hp}
+  <update id="updateHp">
+  	UPDATE ingame_enemy SET hp = #{hp} WHERE id = #{id}
   </update>
   
   <delete id="deleteByPlayerId" parameterType="String">
