@@ -118,5 +118,4 @@ public class IngamePokemonServiceImpl implements IngamePokemonService {
 	public void save(IngamePokemonDTO ingamePokemon) {
 		ingamePokemonMapper.insert(ingamePokemon);
 	}
-
 }

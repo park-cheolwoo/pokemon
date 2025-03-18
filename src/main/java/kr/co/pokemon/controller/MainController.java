@@ -22,10 +22,11 @@ import kr.co.pokemon.player.service.PlayerService;
 @Controller
 public class MainController {
 	
-	@Autowired HttpSession session;
-	@Autowired SdungeonService sdungeonService;
 	@Autowired
 	private PlayerService playerService;
+	
+	@Autowired HttpSession session;
+	@Autowired SdungeonService sdungeonService;
 	
 	@GetMapping(value = "/")
 	public String index(HttpSession session, HttpServletResponse response) {

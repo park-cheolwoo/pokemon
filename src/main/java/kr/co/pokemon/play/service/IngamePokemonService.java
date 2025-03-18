@@ -3,7 +3,6 @@ package kr.co.pokemon.play.service;
 import java.util.List;
 
 import kr.co.pokemon.data.service.Getable;
-import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.play.dto.IngameEnemyDTO;
 import kr.co.pokemon.play.dto.IngamePokemonDTO;
 import kr.co.pokemon.play.dto.UpdateHpPokemonDTO;

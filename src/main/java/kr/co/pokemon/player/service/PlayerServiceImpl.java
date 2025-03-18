@@ -1,8 +1,6 @@
 package kr.co.pokemon.player.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.play.dao.IngameMapper;
-import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.player.dao.PlayerMapper;
 import kr.co.pokemon.player.dao.PlayerPokemonMapper;
 import kr.co.pokemon.player.dto.PlayerDTO;
