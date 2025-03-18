@@ -30,6 +30,6 @@ public interface PlayerMapper {
 
 	List<PlayerDTO> getByNickname(String keyword);
 	
-//	int countPlayerPokemons(String playerId);
+	int countPlayerPokemons(String playerId);
 	
 }
