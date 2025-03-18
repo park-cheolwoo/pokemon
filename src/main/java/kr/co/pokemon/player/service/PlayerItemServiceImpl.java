@@ -57,8 +57,13 @@ public class PlayerItemServiceImpl implements PlayerItemService {
 	    }
 	    
 	    @Override
-	    public void removeItem(int id) {
-	        playerItemMapper.delete(id);
-	    }
+			public void removeItem(int id) {
+				playerItemMapper.delete(id);
+			}
+			
+			@Override
+			public PlayerItemDTO getByPlayerIdAndItemId(String playerId, int itemId) {
+				return playerItemMapper.getByPlayerIdAndItemId(playerId, itemId);
+			}
 
 }
