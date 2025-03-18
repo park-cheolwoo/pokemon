@@ -21,8 +21,8 @@ import kr.co.pokemon.pokemon.dao.PokemonMapper;
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
 
-	@Autowired private SdungeonService sdungeonService;
-	
+    @Autowired private SdungeonService sdungeonService;
+    
     @Autowired
     private PlayerMapper playerMapper;
     
@@ -82,13 +82,13 @@ public class PlayerServiceImpl implements PlayerService {
         return "#" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9); // 랜덤 태그 생성
     }
 
-	@Override
-	public List<PlayerDTO> getByNickname(String keyword) {
-		return playerMapper.getByNickname(keyword);
-	}
+    @Override
+    public List<PlayerDTO> getByNickname(String keyword) {
+        return playerMapper.getByNickname(keyword);
+    }
 
-	@Override
-	public void insertIngameData(String id) {
-		ingameMapper.insertIngame(id);
-	}
+    @Override
+    public void insertIngameData(String id) {
+        ingameMapper.insertIngame(id);
+    }
 }

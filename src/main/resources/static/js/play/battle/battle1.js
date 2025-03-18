@@ -10,6 +10,7 @@ $(function() {
 	const textBox = $(".text-box");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	$.when(
 		$.ajax('/play/create/pokemon/habitat/2?maxLevel=10'),
 		$.ajax('/play/me/pokemon')
@@ -120,6 +121,8 @@ $(function() {
 			$(btnContainer).children().remove();
 			btnGroup.addClass("main-group");
 =======
+=======
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 	$.ajax({
 		url: '/ingame/me/info',
 		dataType: 'json',
@@ -238,6 +241,9 @@ $(function() {
 			$(btnContainer).children().remove();
 			btnGroup.addClass("main-group");
 		}
+<<<<<<< HEAD
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
+=======
 >>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 
 		btnGroup.html(btns.map(btn => {

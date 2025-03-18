@@ -183,7 +183,11 @@ $(function() {
 					for (let i = 0; i < data.length; i++) {
 						let statusText = data[i].isActive == 0 ? '활성화' : '비활성화';
 <<<<<<< HEAD
+<<<<<<< HEAD
 						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}"
+=======
+						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}">
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 =======
 						hdata += `<div class="pros_search pros_items" data-id="${data[i].id}">
 >>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
@@ -400,6 +404,10 @@ $(function() {
 					break;
 				default:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+					$(".pros_active").val($(".pros_active_first").text());
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 =======
 					$(".pros_active").val($(".pros_active_first").text());
 >>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
@@ -461,6 +469,7 @@ $(function() {
 					})
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			case "pokemon":
 				if (active == "on") { active = 0; } else { active = 1; }
 				console.log("active : " + active);
@@ -480,6 +489,39 @@ $(function() {
 					});
 				}
 				break;
+=======
+			break;
+			case "pokemon":
+				if (active == "on") { active = 0; } else { active = 1; }
+				console.log("active : " + active);
+				if (confirm(nickname + " 정보를 수정하시겠습니까?")) {
+					$.ajax({
+						url: "/admin/update/" + category + "/id/" + id,
+						type: "POST",
+						data: { "id": id, "name": nickname, "flavorText": intro, "isActive": active },
+						success: function (data) {
+							alert("수정되었습니다.");
+							setInterval(0.1);
+							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_list_img");
+							button.click();
+							if (active = 0) {
+								$(".pros_active_first").text("on");
+								$(".pros_active_on").show();
+								$(".pros_active_off").hide();
+							} else {
+								$(".pros_active_first").text("off");
+								$(".pros_active_on").hide();
+								$(".pros_active_off").show();
+							}
+							
+						},
+						error: function () {
+							alert("수정 실패");
+						}
+					});
+				}
+			break;
+>>>>>>> branch 'main' of https://github.com/park-cheolwoo/pokemon.git
 =======
 			break;
 			case "pokemon":

@@ -11,10 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngameDTO extends EntityDTO {
-    private String playerId;
-    private boolean isIngame;
-    private int stageId;
-    private int maxStageId;
-    private int selectionIdx;
-    private GameStageDTO stage;
+
+	private String playerId;
+	private boolean isIngame;
+	private int stageId;
+	private int maxStageId;
+	private int selectionIdx;
+	
+	private GameStageDTO stage;
+
 }

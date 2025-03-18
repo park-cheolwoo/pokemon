@@ -80,10 +80,4 @@ public class PlayServiceImpl implements PlayService {
 
 		return new CreatedPokemonDTO(pokemon, pokemon.getName(), random.nextBoolean(), level, hp, characteristic, abilities, attacks, stats, types);
 	}
-
-	@Override
-	public List<CreatedPokemonDTO> getIngamePokemons(String playerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

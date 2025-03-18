@@ -15,7 +15,7 @@ import kr.co.pokemon.play.dto.IngamePokemonDTO;
 
 @Service
 public class IngamePokemonServiceImpl implements IngamePokemonService {
-
+	
 	private DBTables dbTable = DBTables.INGAME_POKEMON;
 	
 	@Autowired
