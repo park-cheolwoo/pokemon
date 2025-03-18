@@ -32,22 +32,9 @@ public class PlayerServiceImpl implements PlayerService {
         return playerMapper.selectAll(pDTO);
     }
 
-//    @Override
-//    public PlayerDTO findById(int id) {
-//        Map<String, Object> map = new HashMap<>();
-//        PlayerDTO playerDto = playerMapper.selectById(id);
-//        map.put("playerDto", playerDto);
-//        return playerDto;
-//    }
-
     @Override
     public PlayerDTO getById(String id) {
         return playerMapper.selectById(id);
-    }
-
-    @Override
-    public PlayerDTO updatePlayer(int id,PlayerDTO player) {
-        throw new UnsupportedOperationException("아직 구현되지 않았습니다.");
     }
 
     @Override
@@ -93,6 +80,53 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
     public int countPlayerPokemon(String playerId) {
         return playerPokemonMapper.countPokemonByPlayerId(playerId);
+    }
+	
+	@Override
+    public void updateplayer(String sessionId, PlayerDTO playerDto) {
+        PlayerDTO existingPlayer = validateAndGetPlayer(sessionId);
+
+        if (playerDto.getLv() > 0 && playerDto.getLv() != existingPlayer.getLv()) {
+            existingPlayer.setLv(playerDto.getLv());
+        }
+        if (playerDto.getExperience() > 0 && playerDto.getExperience() != existingPlayer.getExperience()) {
+            existingPlayer.setExperience(playerDto.getExperience());
+        }
+        if (playerDto.getGameMoney() >= 0 && playerDto.getGameMoney() != existingPlayer.getGameMoney()) {
+            existingPlayer.setGameMoney(playerDto.getGameMoney());
+        }
+        if (playerDto.getRealMoney() >= 0 && playerDto.getRealMoney() != existingPlayer.getRealMoney()) {
+            existingPlayer.setRealMoney(playerDto.getRealMoney());
+        }
+        playerMapper.updateplayer(existingPlayer);
+    }
+
+    @Override
+    public void updateplayerLevel(String sessionId, int level) {
+        PlayerDTO player = validateAndGetPlayer(sessionId);
+        player.setLv(level);
+        playerMapper.updateplayer(player);
+    }
+
+    @Override
+    public void updateplayerExperience(String sessionId, int experience) {
+        PlayerDTO player = validateAndGetPlayer(sessionId);
+
+        player.setExperience(player.getExperience() + experience);
+        if (player.getExperience() >= 100) {
+            player.setExperience(player.getExperience() - 100); 
+            player.setLv(player.getLv() + 1); 
+        }
+
+        playerMapper.updateplayer(player);
+    }
+
+    private PlayerDTO validateAndGetPlayer(String id) {
+        PlayerDTO player = playerMapper.selectById(id);
+        if (player == null) {
+            throw new IllegalArgumentException("플레이어를 찾을 수 없습니다: " + id);
+        }
+        return player;
     }
 
 }

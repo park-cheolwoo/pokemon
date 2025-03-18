@@ -21,7 +21,7 @@ $(function() {
 			success: function(response) {
 				location.href = "/store";
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.error('Error:', error);
 			}
 		});
@@ -192,6 +192,28 @@ $(function() {
 	    }
 
 	    loadMinePokemons();
+	});
+	$(document).ready(function () {
+	    // 경험치 +150 버튼 클릭 이벤트
+	    $("#experienceBtn").click(function () {
+	        $.ajax({
+	            url: "/member/update/prexperience", // 경험치 업데이트 API 엔드포인트
+	            type: "POST",
+	            data: { experience: 150 }, // 서버에 전달할 데이터
+	            success: function (response) {
+	                if (response.status === "success") {
+	                    alert("경험치가 성공적으로 추가되었습니다!");
+	                    location.reload(); // 페이지 새로고침
+	                } else {
+	                    alert("경험치 추가 실패: " + response.message);
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                console.error("API 요청 실패:", error);
+	                alert("경험치 추가 중 오류가 발생했습니다.");
+	            }
+	        });
+	    });
 	});
 
 

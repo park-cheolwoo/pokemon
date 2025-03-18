@@ -15,7 +15,7 @@ public interface PlayerService {
 	
 	PlayerDTO getById(String id);
 
-	PlayerDTO updatePlayer(int id, PlayerDTO player);
+	void updateplayer(String sessionId, PlayerDTO playerDto);
 
 	void updatePlayerBySystem(PlayerDTO player);
 	
@@ -32,5 +32,9 @@ public interface PlayerService {
 	List<PlayerDTO> getByNickname(String keyword);
 
 	int countPlayerPokemon(String playerId);
+
+	void updateplayerLevel(String session_id, int level);
+
+	void updateplayerExperience(String session_id, int experience);
 
 }

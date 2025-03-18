@@ -20,7 +20,7 @@
         <div class="resources-container">
             <div class="resource-group">
                 <img src="/images/index/gold.png" class="resource-icon" alt="골드">
-                <img src="/images/index/wood_button3.png" class="wood-bg">
+                <img src=	"/images/index/wood_button3.png" class="wood-bg">
                 <h3 class="resource-info">${session_gameMoney} 원</h3>
             </div>
             <div class="resource-group">
@@ -57,6 +57,10 @@
                 <img src="/images/index/wood_button2.png" class="button-bg">
                 <button id="socialBtn" class="menu-btn">소셜</button>
             </div>
+            <div class="button-group">
+        <img src="/images/index/wood_button2.png" class="button-bg">
+        <button id="experienceBtn" class="menu-btn">경험치 +150</button>
+    </div>
         </div>
     </div>
 

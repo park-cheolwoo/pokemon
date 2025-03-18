@@ -4,87 +4,93 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.pokemon.player.dao.PlayerMapper">
 
-<resultMap id="dataResultMap" type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
-	<result column="id" property="id" />
-	<result column="nickname" property="nickname" />
-	<result column="lv" property="lv" />
-    <result column="game_money" property="gameMoney" />
-    <result column="real_money" property="realMoney" />
-    <result column="is_active" property="isActive" />
-    <result column="updated_at" property="updatedAt" />
-    <result column="created_at" property="createdAt" />
-</resultMap>
+	<resultMap id="dataResultMap"
+		type="kr.co.pokemon.player.dto.PlayerDTO" autoMapping="true">
+		<result column="id" property="id" />
+		<result column="nickname" property="nickname" />
+		<result column="lv" property="lv" />
+		<result column="game_money" property="gameMoney" />
+		<result column="real_money" property="realMoney" />
+		<result column="is_active" property="isActive" />
+		<result column="updated_at" property="updatedAt" />
+		<result column="created_at" property="createdAt" />
+	</resultMap>
 
-<select id="selectAll" resultMap="dataResultMap" parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
-    SELECT * FROM player ORDER BY nickname OFFSET ((#{page} - 1) * #{size}) ROWS FETCH NEXT #{size} ROWS ONLY
-</select>
+	<select id="selectAll" resultMap="dataResultMap"
+		parameterType="kr.co.pokemon.data.dto.PageRequestDTO">
+		SELECT * FROM player ORDER BY nickname OFFSET ((#{page} - 1) * #{size}) ROWS
+		FETCH NEXT #{size} ROWS ONLY
+	</select>
 
-<select id="selectById" resultMap="dataResultMap" parameterType="String">
-    select * from player where id = #{id}
-</select>
+	<select id="selectById" resultMap="dataResultMap"
+		parameterType="String">
+		select * from player where id = #{id}
+	</select>
 
-<select id="getByNickname" resultMap="dataResultMap" parameterType="String">
-	select * from player where nickname like '%' || #{keyword} || '%' ORDER BY nickname
-</select> 
+	<select id="getByNickname" resultMap="dataResultMap"
+		parameterType="String">
+		select * from player where nickname like '%' || #{keyword} || '%' ORDER BY
+		nickname
+	</select>
 
-<select id="getByNicknameAndTag" resultMap="dataResultMap" parameterType="String">
-	select * from player where nickname = #{keyword} and tag = #{tag}
-</select> 
+	<select id="getByNicknameAndTag" resultMap="dataResultMap"
+		parameterType="String">
+		select * from player where nickname = #{keyword} and tag = #{tag}
+	</select>
 
-<insert id="insertPlayer" parameterType="kr.co.pokemon.player.dto.PlayerDTO">
-    INSERT INTO player (id, nickname, password, tag, lv, game_money, real_money)
-    VALUES (
-        #{id, jdbcType=VARCHAR},
-        #{nickname, jdbcType=VARCHAR},
-        #{password, jdbcType=VARCHAR},
-        #{tag, jdbcType=VARCHAR},
-        #{lv, jdbcType=INTEGER},
-        #{gameMoney, jdbcType=INTEGER},
-        #{realMoney, jdbcType=INTEGER}
-    )
-</insert>
+	<insert id="insertPlayer"
+		parameterType="kr.co.pokemon.player.dto.PlayerDTO">
+		INSERT INTO player (id, nickname, password, tag, lv, game_money, real_money)
+		VALUES (
+		#{id, jdbcType=VARCHAR},
+		#{nickname, jdbcType=VARCHAR},
+		#{password, jdbcType=VARCHAR},
+		#{tag, jdbcType=VARCHAR},
+		#{lv, jdbcType=INTEGER},
+		#{gameMoney, jdbcType=INTEGER},
+		#{realMoney, jdbcType=INTEGER}
+		)
+	</insert>
 
 
-<update id="updatePlayer">
-    update player
-    set nickname = #{nickname},
-        tag = #{tag},
-        profile = #{profile},
-        password = #{password},
-        description = #{description}
-    where id = #{id}
-</update>
+	<update id="updateplayer" parameterType="kr.co.pokemon.player.dto.PlayerDTO">
+		update player
+		set lv = #{lv},
+		experience = #{experience},
+		game_money = #{gameMoney},
+		real_money = #{realMoney},
+		updated_at = sysdate
+		where id = #{id}
+	</update>
 
-<update id="updatePlayerBySystem">
-    update player
-    set lv = #{lv},
-        nickname = #{nickname},
-        game_money = #{gameMoney},
-        real_money = #{realMoney},
-        profile = #{profile},
-        is_active = #{isActive}
-    where id = #{id}
-</update>
+	<update id="updatePlayerBySystem">
+		update player
+		set lv = #{lv},
+		nickname = #{nickname},
+		game_money = #{gameMoney},
+		real_money = #{realMoney},
+		profile = #{profile},
+		is_active = #{isActive}
+		where id = #{id}
+	</update>
 
-<delete id="deletePlayer">
-    delete from player where id = #{id}
-</delete>
+	<delete id="deletePlayer">
+		delete from player where id = #{id}
+	</delete>
 
-<select id="selectLogin" resultMap="dataResultMap">
-    select * from player where id = #{id} and password = #{password}
-</select>
+	<select id="selectLogin" resultMap="dataResultMap">
+		select * from player where id = #{id} and password = #{password}
+	</select>
 
-<select id="chooseById" resultMap="dataResultMap">
-    select * from player where id = #{id}
-</select>
+	<select id="chooseById" resultMap="dataResultMap">
+		select * from player where id = #{id}
+	</select>
 
-<select id="findByTag" parameterType="String" resultMap="dataResultMap">
-        select * from player where tag = #{tag}
-    </select>
-<!--  
-<select id="countPlayerPokemons" resultType="int" parameterType="String">
-        select count(*) from player_pokemon where player_id = #{playerId}
-    </select>
--->
+	<select id="findByTag" parameterType="String"
+		resultMap="dataResultMap">
+		select * from player where tag = #{tag}
+	</select>
+	<!-- <select id="countPlayerPokemons" resultType="int" parameterType="String"> 
+		select count(*) from player_pokemon where player_id = #{playerId} </select> -->
 
 </mapper>
