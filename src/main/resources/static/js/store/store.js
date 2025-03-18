@@ -120,6 +120,7 @@ $(function() {
 		$(".item_total_count").val("1");
 		$(".item_total_cost").text($(".item_cost").text());
 		$(".item_buy_cost").text($(".item_total_cost").text().replace(",", ""));
+		$(".item_cost_warning").hide();
 		$(".item_buy_container").toggle();
 	});
 

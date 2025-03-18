@@ -365,7 +365,7 @@ body {
 }
 
 .pros_modal1{
-		width: 460px;
+		width: 500px;
 		font-size: 45px;
 		line-height: 45px;
 }
@@ -379,6 +379,9 @@ body {
 	top: 360px;
 	left: 1067px;
 	z-index: 40;
+}
+.pros_get_lv_input{
+	width:300px;
 }
 
 .pros_exe_frame {
