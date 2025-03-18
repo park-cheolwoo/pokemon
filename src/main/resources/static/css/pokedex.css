@@ -386,7 +386,7 @@ div.pokedexView-info-text-container {
 }
 
 .pokedexView-table {
-    width: 800px;
+    max-width: 800px;
     border-collapse: collapse;
     color: white;
     font-size: 28px;
@@ -408,7 +408,53 @@ div.pokedexView-info-text-container {
     height: 70px;  /* 셀 높이 */
 }
 
+/* 진화 트리 스타일 */
+#evolution-tree .evolution-pokemon {
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    transition: transform 0.3s ease;
+    width: 140px;
+    height: 180px;
+    align-items: center;
+}
 
+#evolution-tree .evolution-pokemon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#evolution-tree .evolution-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+#evolution-tree .evolution-name {
+    margin-top: 8px;
+    color: #333;
+    font-weight: bold;
+}
+
+#evolution-tree .evolution-pokemon-id {
+    margin-top: 6px;
+    color: #6d6d6d;
+}
+
+#evolution-tree .evolution-arrow {
+    text-align: center;
+    font-size: 28px;
+    color: #3498db;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
 
 /* ---------------------------- pokedexView css --------------------------- */
 

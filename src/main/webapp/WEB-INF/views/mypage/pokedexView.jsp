@@ -19,12 +19,13 @@
 		<div class="pokedexView-info-text-container">
 			<div class="tab-content" id="pokemon-info">
 				<table class="pokedexView-table">
-					
+					<!-- 포켓몬 기본 정보가 여기에 표시됩니다 -->
 				</table>
 			</div>
 			<div class="tab-content" id="evolution-tree">
-				<div class="evolution-chain-container">
-				</div>
+				<table class="pokedexView-table">
+					<!-- 진화 트리 정보가 여기에 표시됩니다 -->
+				</table>
 			</div>
 		</div>
 	</div>

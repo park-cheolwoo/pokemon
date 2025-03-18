@@ -23,6 +23,8 @@ import kr.co.pokemon.data.dto.DataDeleteDTO;
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.data.dto.TableInfoDTO;
 import kr.co.pokemon.data.model.DBTables;
+import kr.co.pokemon.pokemon.dto.PokemonDTO;
+import kr.co.pokemon.pokemon.service.PokemonService;
 
 @Service
 public class DataServiceImpl implements DataService {
@@ -43,11 +45,13 @@ public class DataServiceImpl implements DataService {
 	@Autowired
 	private DataSource dataSource;
 	
-	@Autowired
-	private ApplicationContext applicationContext;
+	private final DataInfoMapper dataInfoMapper;
+	private final ApplicationContext applicationContext;
 	
-	@Autowired
-	private DataInfoMapper dataInfoMapper;
+	public DataServiceImpl(DataInfoMapper dataInfoMapper, ApplicationContext applicationContext) {
+		this.dataInfoMapper = dataInfoMapper;
+		this.applicationContext = applicationContext;
+	}
 
 	@Override
 	public <D, S extends Getable<D>> List<D> getAll(PageRequestDTO page, Class<S> serviceClass) {
@@ -155,5 +159,11 @@ public class DataServiceImpl implements DataService {
 			e.getStackTrace();
 			return false;
 		}
+	}
+	
+	@Override
+	public List<PokemonDTO> getPokemonsByEvolutionId(int evolutionId) {
+		PokemonService pokemonService = applicationContext.getBean(PokemonService.class);
+		return pokemonService.getPokemonsByEvolutionId(evolutionId);
 	}
 }

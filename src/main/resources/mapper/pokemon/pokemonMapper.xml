@@ -92,16 +92,26 @@
   </insert>
   
   <select id="selectAllWithOwnership" resultMap="dataResultMap">
-    SELECT 
-      p.*,
-      CASE WHEN pp.pokemon_id IS NOT NULL THEN 1 ELSE 0 END AS is_owned
-    FROM 
-      pokemon p
-    LEFT JOIN 
-      player_pokemon pp ON p.id = pp.pokemon_id AND pp.player_id = #{playerId}
+    SELECT p.*, CASE WHEN pp.id IS NOT NULL THEN 1 ELSE 0 END as is_owned
+    FROM pokemon p
+    LEFT JOIN player_pokemon pp ON p.id = pp.pokemon_id AND pp.player_id = #{playerId}
+    ORDER BY p.id
     <if test="page != null">
       OFFSET ((#{page.page} - 1) * #{page.size}) ROWS FETCH NEXT #{page.size} ROWS ONLY
     </if>
   </select>
-
+  
+  <!-- 특정 진화 그룹에 속한 모든 포켓몬을 가져옵니다. -->
+  <select id="selectPokemonsByEvolutionId" resultMap="dataResultMap" parameterType="int">
+    SELECT p.*
+    FROM pokemon p
+    JOIN evolution e ON p.id = e.curr_id
+    WHERE p.evolution_id = #{evolutionId}
+    ORDER BY CASE WHEN e.prev_id IS NULL THEN 0 ELSE 1 END, e.id
+  </select>
+  
+  <!-- ID로 포켓몬을 조회합니다. -->
+  <select id="selectPokemonById" resultMap="dataResultMap" parameterType="int">
+    SELECT * FROM pokemon WHERE id = #{pokemonId}
+  </select>
 </mapper>

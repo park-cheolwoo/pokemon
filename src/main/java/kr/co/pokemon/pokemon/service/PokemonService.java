@@ -34,4 +34,12 @@ public interface PokemonService extends APIGetable<PokemonDTO> {
 
 
 	PokemonDTO minePokemonById(int pokemonId);
+	
+	/**
+	 * 특정 진화 그룹에 속한 모든 포켓몬을 가져옵니다.
+	 * 
+	 * @param evolutionId 진화 그룹 ID
+	 * @return 진화 그룹에 속한 포켓몬 리스트
+	 */
+	List<PokemonDTO> getPokemonsByEvolutionId(int evolutionId);
 }

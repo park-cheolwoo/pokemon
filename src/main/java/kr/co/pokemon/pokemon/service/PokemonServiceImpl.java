@@ -199,6 +199,11 @@ public class PokemonServiceImpl implements PokemonService {
 
 	@Override
 	public PokemonDTO minePokemonById(int pokemonId) {
-		return pokemonMapper.selectById(pokemonId);
+		return pokemonMapper.selectPokemonById(pokemonId);
+	}
+
+	@Override
+	public List<PokemonDTO> getPokemonsByEvolutionId(int evolutionId) {
+		return pokemonMapper.selectPokemonsByEvolutionId(evolutionId);
 	}
 }

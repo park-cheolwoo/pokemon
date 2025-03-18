@@ -213,6 +213,11 @@ public class DataController {
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	
+	@GetMapping(value = "/pokemon/evolution/{evolutionId}")
+	public ResponseEntity<List<PokemonDTO>> getPokemonsByEvolutionId(@PathVariable int evolutionId) {
+		return ResponseEntity.ok(dataService.getPokemonsByEvolutionId(evolutionId));
+	}
+	
 	@GetMapping(value = "/growth")
 	public List<GrowthDTO> getGrowth(PageRequestDTO page) {
 		if (page.getPage() < 0) page.setPage(0);
