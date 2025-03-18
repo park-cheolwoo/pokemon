@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.plan.service.SdungeonService;
+
 import kr.co.pokemon.play.dao.IngameMapper;
 import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.player.dao.PlayerMapper;
@@ -87,8 +88,11 @@ public class PlayerServiceImpl implements PlayerService {
         return playerMapper.getByNickname(keyword);
     }
 
+
     @Override
     public void insertIngameData(String id) {
         ingameMapper.insertIngame(id);
     }
+
+
 }
