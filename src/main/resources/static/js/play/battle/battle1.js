@@ -98,6 +98,8 @@ $(function() {
 	function pokemonBlockForm(part, data) {
 		const maleSprites = part === "you" ? data.pokemon.sprites.front_default : data.pokemon.sprites.back_default;
 		const femaleSprites = part === "you" ? data.pokemon.sprites.front_female : data.pokemon.sprites.back_female;
+		
+		console.log(data)
 		const hp = data.stats.find(stat => stat.id === 1).value;
 		return `
 			<div class="pokemon ${part}">

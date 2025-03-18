@@ -70,6 +70,9 @@
     SELECT * FROM player_item WHERE item_id = #{itemId}
   </select>
   
+  <select id="getByPlayerIdAndItemId" resultMap="dataResultMap">
+   SELECT * FROM player_item WHERE player_id = #{playerId} and item_id = #{itemId} </select>
+
   <select id="existById" resultType="int" parameterType="int">
     SELECT CASE
         WHEN EXISTS (SELECT 1 FROM player_item WHERE id = #{id}) THEN 1

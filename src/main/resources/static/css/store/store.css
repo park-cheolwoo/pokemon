@@ -129,6 +129,10 @@ body {
 	left: 1768px;
 }
 
+.item_buy_btn, .item_dscrb_btn{
+	display:none;
+}
+
 .item_dscrb_frame {
 	width: 509px;
 	height: 846px;
@@ -139,6 +143,7 @@ body {
 }
 
 .item_dscrb_img {
+	display:none;
 	width: 325px;
 	height: 325px;
 	position: absolute;
@@ -170,6 +175,7 @@ body {
 }
 
 .item_dscrb_coin {
+	display:none;
 	width: 50px;
 	height: 50px;
 	position: absolute;
@@ -332,7 +338,7 @@ body {
 	border-radius: 5px;
 }
 
-.item_list_name, .item_list_cat {
+.item_list_name, .item_list_cat, .item_list_cost {
 	display: none;
 }
 
@@ -387,7 +393,7 @@ body {
 	height: 50px;
 	position: absolute;
 	top: 404px;
-	left: 883px;
+	left: 875px;
 	z-index: 40;
 }
 
@@ -398,7 +404,7 @@ body {
 	text-align: right;
 	position: absolute;
 	top: 411px;
-	left: 922px;
+	left: 935px;
 	z-index: 40;
 }
 
@@ -574,7 +580,7 @@ body {
 	width: 204px;
 	height: 215px;
 	position: absolute;
-	top: 324px;
+	top: 337px;
 	left: 665px;
 	z-index: 40;
 }
@@ -584,7 +590,7 @@ body {
 	height: 115px;
 	background: white;
 	position: absolute;
-	top: 364px;
+	top: 377px;
 	left: 716px;
 	z-index: 45;
 }
@@ -611,7 +617,7 @@ body {
 }
 
 .item_describe_name {
-	width: 160px;
+	width: 300px;
 	height: 36px;
 	line-height: 36px;
 	text-align: left;
