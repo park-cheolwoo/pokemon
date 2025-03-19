@@ -11,5 +11,9 @@ public interface SdungeonService {
 	
 	// 특수던전 클리어 횟수 증가
 	void updateSdungeonCount(SdungeonDTO sdungeonDto);
+	
+	// 퀘스트에 sdungeon 정보 불러오기
+	SdungeonDTO getSdungeonInfo(String playerId);
+
 
 }

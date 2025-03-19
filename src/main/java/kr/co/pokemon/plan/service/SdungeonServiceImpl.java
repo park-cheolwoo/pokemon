@@ -109,5 +109,12 @@ public class SdungeonServiceImpl implements SdungeonService {
         sdungeonMapper.updateSdungeonCount(sdungeonDto);
     }
 
+	@Override // quest 에 sdungeon 정보 보내기
+	public SdungeonDTO getSdungeonInfo(String playerId) {
+		return sdungeonMapper.getSdungeonInfo(playerId);
+	}
+
+
+
     
 }

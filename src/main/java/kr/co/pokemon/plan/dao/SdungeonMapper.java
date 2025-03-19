@@ -123,4 +123,7 @@ public interface SdungeonMapper {
     
     // SdungeonDTO를 가져오는 메서드
     SdungeonDTO getSdungeonById(String playerId);
+
+    // 퀘스트에 sdungeon 정보 가져오기
+	SdungeonDTO getSdungeonInfo(String playerId);
 }
