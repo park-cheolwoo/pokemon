@@ -193,7 +193,27 @@ $(function() {
 
 	    loadMinePokemons();
 	});
+	function updateSessionDisplay() {
+	    $.ajax({
+	        url: "/member/sessionData",
+	        type: "GET",
+	        dataType: "json",
+	        success: function(data) {
+	            $(".player-info").text("Lv." + data.session_lv + " " + data.session_nickname);
+	            $(".resource-group:first .resource-info").text(Number(data.session_gameMoney).toLocaleString() + " 원");
+	            $(".resource-group:last .resource-info").text(Number(data.session_realMoney).toLocaleString() + " 원");
+	        },
+	        error: function(err) {
+	            console.error("세션 데이터 업데이트 실패:", err);
+	        }
+	    });
+	}
 
+	$(document).ready(function() {
+	    // 페이지 로드 시 자동으로 최신 세션 데이터를 업데이트합니다.
+	    updateSessionDisplay();
+	});
+	
 	$("#mypageBtn").click(function() { mypage(); });
 	$("#storeBtn").click(function() { store(); });
 	$("#playBtn").click(function() { play(); });
