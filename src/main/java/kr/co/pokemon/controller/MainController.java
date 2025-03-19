@@ -80,7 +80,12 @@ public class MainController {
 	}
 	
 	@GetMapping("/play/dungeon")
-	public String dungeon() {
+	public String dungeon(Model model) {
+		String sessionId = (String) session.getAttribute("session_id");
+		if (sessionId == null) {
+			return "redirect:/";
+		}
+		model.addAttribute("session_id", sessionId);
 		return "/play/dungeon";
 	}
 

@@ -10,6 +10,9 @@
   <title>일반던전</title>
 </head>
 <body>
+  <script>
+	const session_id = "${session_id}";
+  </script>
   <div id="back"><img src="../images/play/back.png"/>
     <div id="dark">
       <a href="/" class="get_out"><img src="../images/play/dungeon/ax.png"></a>
