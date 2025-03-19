@@ -20,7 +20,7 @@ $(function() {
 			return;
 		}
 
-		const { myPokemons, enemies, ingame, stageId, maxStageId, stage } = battleResponse[0];
+		const { playerId, myPokemons, enemies, ingame, stageId, maxStageId, stage } = battleResponse[0];
 		let selectionIdx = battleResponse[0].selectionIdx;
 
 		if (
@@ -35,7 +35,7 @@ $(function() {
 		$(container).css({backgroundImage: `url(/images/play/battle/${stage.habitat.name}.png)`});
 
 		if (enemies[0].hp === 0) {
-			$(container).trigger("stageClear", [{ stageId, maxStageId, stage, comments: [[`이미 ${enemies[0].name} 은(는) 쓰러져 있다 ..`]] }]);
+			$(container).trigger("stageClear", [{ playerId, stageId, maxStageId, stage, comments: [[`이미 ${enemies[0].name} 은(는) 쓰러져 있다 ..`]] }]);
 		} else {
 			container.append(pokemonBlockForm("you", enemies[0]));
 		}
@@ -100,7 +100,7 @@ $(function() {
 			if (hp > 0) {
 				callback = () => $(textBox).trigger("damaged");
 			} else {
-				callback = () => $(container).trigger("stageClear", [{ stageId, maxStageId, stage, comments: [[`야호! ${enemies[0].name} 을(를) 쓰러뜨렸다!`]] }]);
+				callback = () => $(container).trigger("stageClear", [{ playerId, stageId, maxStageId, stage, comments: [[`야호! ${enemies[0].name} 을(를) 쓰러뜨렸다!`]] }]);
 			}
 
 			$(textBox).trigger("nextComment", [{ comments: attackComments(myPokemons[selectionIdx].name, enemies[0].name, data.name, executedPower), isWait: true, callback }]);
@@ -181,7 +181,7 @@ $(function() {
 			if (Math.random() < percent - hpPercent) {
 				catchPokemon(enemies[0]);
 
-				$(container).trigger("stageClear", [{ stageId, maxStageId, stage, comments: [[`야호! ${enemies[0].name} 을(를) 잡았다 !`]] }]);
+				$(container).trigger("stageClear", [{ playerId, stageId, maxStageId, stage, comments: [[`야호! ${enemies[0].name} 을(를) 잡았다 !`]] }]);
 			} else {
 				$(textBox).trigger("nextComment", [{
 					comments: [[`${name} (으)로 시도했지만, 잡지 못했다 ..`]],
