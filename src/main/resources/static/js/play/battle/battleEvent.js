@@ -202,7 +202,7 @@ $(function () {
 	$(container).on("stageClear", function (e, data) {
 		setWaitComments(() => {
 			$(textBox).trigger("nextComment", [{
-				comments: [[`야호! ${data.enemyName} 을(를) 쓰러뜨렸다!`]],
+				comments: data.comments,
 				isWait: true,
 				callback: () => {
 					$(btnContainer).remove();
@@ -285,7 +285,7 @@ $(function () {
 		$.ajax({
 			url: '/ingame/maxStage',
 			type: 'POST',
-			data: JSON.stringify(stageId),
+			data: JSON.stringify(maxStage),
 			contentType: 'application/json',
 			error: function (e) {
 				console.log(e);

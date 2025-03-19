@@ -406,6 +406,23 @@ CREATE TABLE ingame_enemy (
 	CONSTRAINT fk_ingame_enemy_pokemon FOREIGN KEY(pokemon_id) REFERENCES pokemon (id) ON DELETE CASCADE
 );
 
+CREATE TABLE SDUNGEON(
+    id VARCHAR2(50) PRIMARY KEY,
+    gameMoney INT DEFAULT 0,
+    daily_clear_count INT DEFAULT 0,
+    weekly_clear_count INT DEFAULT 0,
+    total_count INT DEFAULT 0,
+    pokemon1_id NUMBER(10) DEFAULT 1,
+    pokemon1_name VARCHAR2(100) DEFAULT '이상해씨',
+    pokemon1_img VARCHAR2(255) DEFAULT 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
+    pokemon2_id NUMBER(10) DEFAULT 4,
+    pokemon2_name VARCHAR2(100) DEFAULT '파이리',
+    pokemon2_img VARCHAR2(255) DEFAULT 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
+    pokemon3_id NUMBER(10) DEFAULT 7,
+    pokemon3_name VARCHAR2(100) DEFAULT '꼬북이',
+    pokemon3_img VARCHAR2(255) DEFAULT 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png'
+);
+
 CREATE SEQUENCE types_relationship_seq
 	START WITH 1
 	INCREMENT BY 1
@@ -512,6 +529,13 @@ CREATE SEQUENCE own_pokemon_attack_seq
 ;
 
 CREATE SEQUENCE own_pokemon_stat_seq
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999
+;
+
+CREATE SEQUENCE player_item_seq
 	START WITH 1
 	INCREMENT BY 1
 	MINVALUE 1
