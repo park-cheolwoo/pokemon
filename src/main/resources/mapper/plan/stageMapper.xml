@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.pokemon.plan.dao.StageMapper">
+    
+ <!-- stageId에 해당하는 스테이지 정보를 가져오는 쿼리 -->
+    <select id="getStageById" resultType="kr.co.pokemon.plan.dto.StageDTO">
+        SELECT
+            stageid,
+            habitat_id AS habitatId,
+            money,
+            experience,
+            min_level AS minLevel,
+            max_level AS maxLevel
+        FROM
+            stages
+        WHERE
+            stageid  = #{stageId}
+    </select>
+
+</mapper>

@@ -72,12 +72,20 @@ public class MainController {
 
 	
 	@GetMapping("/play/quest")
-	public String quest() {
+	public String quest(Model model) {
+		String playerId = (String) session.getAttribute("session_id");
+		SdungeonDTO sdungeonDTO = sdungeonService.getSdungeonInfo(playerId);
+		 model.addAttribute("sdungeon", sdungeonDTO);
 		return "/play/quest";
 	}
 	
 	@GetMapping("/play/dungeon")
-	public String dungeon() {
+	public String dungeon(Model model) {
+		String sessionId = (String) session.getAttribute("session_id");
+		if (sessionId == null) {
+			return "redirect:/";
+		}
+		model.addAttribute("session_id", sessionId);
 		return "/play/dungeon";
 	}
 

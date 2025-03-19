@@ -537,6 +537,7 @@ CREATE SEQUENCE own_pokemon_stat_seq
 	MAXVALUE 99999
 ;
 
+
 CREATE SEQUENCE player_item_seq
 	START WITH 1
 	INCREMENT BY 1
