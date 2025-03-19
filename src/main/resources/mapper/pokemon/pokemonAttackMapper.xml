@@ -26,6 +26,16 @@
     SELECT * FROM pokemon_attack WHERE id = #{id}
   </select>
 
+  <select id="selectNoDamageAttackByPokemonId" resultMap="attackResultMap" parameterType="int">
+	SELECT
+		a.*, p.slot
+	FROM
+		pokemon_attack p
+	JOIN attack a ON a.id = p.attack_id
+	WHERE p.pokemon_id = #{pokemonId} AND a.damage = 0
+	ORDER BY p.slot DESC
+  </select>
+
   <select id="selectAttackByPokemonId" resultMap="attackResultMap" parameterType="int">
 	SELECT
 		a.*, p.slot

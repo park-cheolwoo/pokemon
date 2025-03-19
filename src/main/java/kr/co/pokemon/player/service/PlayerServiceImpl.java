@@ -117,12 +117,9 @@ public class PlayerServiceImpl implements PlayerService {
     public void updateplayerExperience(String sessionId, int experience) {
         PlayerDTO player = validateAndGetPlayer(sessionId);
 
-        player.setExperience(player.getExperience() + experience);
-        if (player.getExperience() >= 100) {
-            player.setExperience(player.getExperience() - 100); 
-            player.setLv(player.getLv() + 1); 
-        }
-
+        int totalExpr = player.getExperience() + experience;
+        player.setExperience(totalExpr % 100);
+        player.setLv((int)(totalExpr / 100) + player.getLv());
         playerMapper.updateplayer(player);
     }
 
@@ -134,5 +131,11 @@ public class PlayerServiceImpl implements PlayerService {
         return player;
     }
 
+    @Override
+    public void increaseGoldByPlayer(String sessionId, int gold) {
+    	PlayerDTO player = validateAndGetPlayer(sessionId);
+    	player.setGameMoney(player.getGameMoney() + gold);
+    	playerMapper.updateplayer(player);
+    }
 }
 

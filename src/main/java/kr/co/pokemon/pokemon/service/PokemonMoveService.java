@@ -9,6 +9,8 @@ import kr.co.pokemon.pokemon.dto.relationship.PokemonMoveDTO;
 
 public interface PokemonMoveService extends APIGetable<PokemonMoveDTO> {
 	
+	List<PokemonOwnAttack> selectNoDamageAttackByPokemonId(int pokemonId);
+
 	List<PokemonOwnAttack> getAttacksByPokemonId(int pokemonId);
 	
 	List<PokemonDTO> getPokemonByAttackId(int attackId);

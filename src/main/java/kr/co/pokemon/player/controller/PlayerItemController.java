@@ -87,4 +87,15 @@ public class PlayerItemController {
 
         return new ResponseEntity<>(playerItemService.getItemsInfoByPlayerId(playerId), HttpStatus.OK);
     }
+    
+    @PostMapping("/my-items/use")
+    public ResponseEntity<Integer> useItem(HttpServletRequest request, @RequestBody int playerItemId) {
+    	String playerId = (String) request.getSession().getAttribute("session_id");
+    	if (playerId == null) {
+    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    	}
+    	
+    	int count = playerItemService.useItem(playerId, playerItemId);
+    	return new ResponseEntity<Integer>(count, HttpStatus.OK);
+    }
 }

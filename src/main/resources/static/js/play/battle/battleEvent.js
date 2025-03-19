@@ -150,53 +150,38 @@ $(function () {
         popupModal(itemWrapper, isExit);
     });
 
-    $(btnContainer).on("itemList", function (e, data) {
-        const itemScroller = $("<div>", {class: "modal-wrapper__scroll"});
+	$(btnContainer).on("itemList", function (e, data) {
+	    const itemScroller = $("<div>", {class: "modal-wrapper__scroll"});
 		const itemWrapper = $("<div>", {class: "modal-wrapper__scroll--wrapper"});
-		itemWrapper.html(data.map(item => {
-			const itemContainer = $("<div>", {class: "modal-wrapper__item"});
-			itemContainer.html(`
-                <div class="modal-wrapper__item--title">${item.info.name}</div>
-                <div class="modal-wrapper__item--image small">
-                    <img src="${item.info.image}" />
-                </div>
-                <div class="modal-wrapper__item--count">${item.count} 개</div>
-			`);
+		
+		if (data.length > 0) {
+			itemWrapper.html(data.map((item, idx) => {
+				const itemContainer = $("<div>", {class: "modal-wrapper__item"});
+				itemContainer.html(`
+	                <div class="modal-wrapper__item--title">${item.info.name}</div>
+	                <div class="modal-wrapper__item--image small">
+	                    <img src="${item.info.image}" />
+	                </div>
+	                <div class="modal-wrapper__item--count">${item.count} 개</div>
+				`);
 
-			if (item.count > 0) {
-				itemContainer.addClass("active-item");
+				if (item.count > 0) {
+					itemContainer.addClass("active-item");
 
-				itemContainer.click(function () {
-					$(container).children(".modal-container").remove();
-					$(container).trigger("useItem", [item]);
-				});
-			}
+					itemContainer.click(function () {
+						$(container).children(".modal-container").remove();
+						$(container).trigger("useItem", [{ item, idx }]);
+					});
+				}
 
-			return itemContainer;
-		}));
+				return itemContainer;
+			}));			
+		} else {
+			itemWrapper.html($("<div>", {class: "modal-wrapper__no-content", text: "< 가지고 있는 아이템이 없다 >"}));
+		}
 
 		itemScroller.html(itemWrapper);
 		popupModal(itemScroller);
-    });
-
-	$(container).on("useItem", function (e, data) {
-		$(btnContainer).children().remove();
-		const { name, categoryId } = data.info;
-
-		let callback;
-		if (categoryId === 34) {
-			callback = () => $(container).trigger("catchPokemon", [data]);
-		} else if (categoryId === 27) {
-			callback = () => $(container).trigger("healPokemon", [data]);
-		}
-
-		$(textBox).trigger("nextComment", [{
-			comments: [[`${name} 을(를) 사용했다.`]],
-			isWait: true,
-			callback
-		}]);
-
-		setCountItem(data);
 	});
 	
 	$(container).on("stageClear", function (e, data) {
@@ -241,6 +226,7 @@ $(function () {
 									location.href = "/play/plist";
 								});
 
+								savePlayerCompensation(stage.money, stage.experience);
 								modalContents.html([modalForm, modalBtn]);
 								popupModal(modalContents, false);
 							});
@@ -292,11 +278,6 @@ $(function () {
 			}
 		});
 	}
-
-	function setCountItem(item) {
-		const { info } = item;
-		console.log(info.name, item.count);
-	}
 	
 	function setWaitComments(callback) {
 		$(textBox).addClass("wait");
@@ -316,6 +297,23 @@ $(function () {
 			const percent = hp / totalHp * 100;
 			hpBar.css({width: percent + "%", backgroundColor: `rgb(${(100 - percent) / 50 * 255}, ${percent / 50 * 255}, 0)`});
 		}, 100);
+	}
+	
+	function savePlayerCompensation(gold = 0, experience = 0) {
+		$.ajax({
+			url: `/member/update/prgold?gold=${gold}`,
+			type: 'POST',
+			error: function (e) {
+				console.log(e);
+			}
+		});
+		$.ajax({
+			url: `/member/update/prexperience?experience=${experience}`,
+			type: 'POST',
+			error: function (e) {
+				console.log(e);
+			}
+		});
 	}
 
 });
