@@ -28,10 +28,10 @@
   </insert>
   
   <insert id="insertAll" parameterType="java.util.List">
-  	INSERT INTO game_stage ( id, habitat_id, stage )
+  	INSERT INTO game_stage ( id, habitat_id, stage, money, experience, min_level, max_level )
   	SELECT game_stage_seq.NEXTVAL, a.* FROM (
   	<foreach collection="list" item="item" separator="UNION ALL">
-  			SELECT #{item.habitatId} AS habitat_id, #{item.stage} AS stage
+  			SELECT #{item.habitatId} AS habitat_id, #{item.stage} AS stage, #{item.money} AS money, #{item.experience} AS experience, #{item.minLevel} AS min_level, #{item.maxLevel} AS max_level
   			FROM dual
   	</foreach>) a
   </insert>

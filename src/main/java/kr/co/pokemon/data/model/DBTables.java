@@ -50,7 +50,9 @@ public enum DBTables {
 	
 	OWN_POKEMON_ABILITY("own_pokemon_ability", null, List.of(DBTables.PLAYER_POKEMON, DBTables.POKEMON_ABILITY)),
 	OWN_POKEMON_ATTACK("own_pokemon_attack", null, List.of(DBTables.PLAYER_POKEMON, DBTables.POKEMON_ATTACK)),
-	OWN_POKEMON_STAT("own_pokemon_stat", null, List.of(DBTables.PLAYER_POKEMON, DBTables.POKEMON_BASE_STAT))
+	OWN_POKEMON_STAT("own_pokemon_stat", null, List.of(DBTables.PLAYER_POKEMON, DBTables.POKEMON_BASE_STAT)),
+	
+	SDUNGEON("SDUNGEON", null, List.of())
 	
 	;
 
