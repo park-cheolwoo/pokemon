@@ -76,8 +76,6 @@ public class StoreRestController {
     System.out.println("gamemoney : " + pDTO.getGameMoney());
     map.put("cost", own_money - cost);
     map.put("result", "success");
-    // 비밀번호 세션 저장 방지
-    pDTO.setPassword("");
     session.invalidate();
     session.setAttribute("session_id", pDTO.getId());
     session.setAttribute("session_nickname", pDTO.getNickname());

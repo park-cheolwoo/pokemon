@@ -139,21 +139,23 @@ public class PlayerController {
     
     @ResponseBody
     @PostMapping(value = "/update/prgold")
-    public DataStatusDTO<Boolean> updatePlayerGold(@RequestParam String playerId, @RequestParam int gold, HttpSession session) {
-    	try {
-    		String session_id = (String) session.getAttribute("session_id");
-    		if (session_id != null) {
-    			playerService.increaseGoldByPlayer(playerId != null? playerId : session_id, gold);
-    			return new DataStatusDTO<>("success", true);
-    		}
-    		
-    		throw new IllegalArgumentException("유효하지 않은 세션입니다.");
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		return new DataStatusDTO<>("error", false, e.getMessage());
-    	}
-    	
+    public DataStatusDTO<Boolean> updatePlayerGold(@RequestParam String playerId, @RequestParam int gold,
+            HttpSession session) {
+        try {
+            String session_id = (String) session.getAttribute("session_id");
+            if (session_id != null) {
+                playerService.increaseGoldByPlayer(playerId != null ? playerId : session_id, gold);
+                return new DataStatusDTO<>("success", true);
+            }
+
+            throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataStatusDTO<>("error", false, e.getMessage());
+        }
+
     }
+    
     @ResponseBody
     @GetMapping("/sessionData")
     public Map<String, Object> getSessionData(HttpSession session) {
