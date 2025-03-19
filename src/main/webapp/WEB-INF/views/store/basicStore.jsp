@@ -181,7 +181,7 @@
 	  
 	  
 
-
+	<script src="/js/play/ingame.js"></script>
 </body>
 
 </html>

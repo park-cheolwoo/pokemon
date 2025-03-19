@@ -111,6 +111,7 @@
 		<img src='/images/close.png' class="close">
 		<button id="closeBtn" class="closebtn"></button>
 	</div>
+	<script src="/js/play/ingame.js"></script>
 	<script src="/js/index.js"></script>
 	<script src="/js/member/friend.js"></script>
 </body>

@@ -112,5 +112,6 @@
   </div>
   <!-- 모달 끝 -->
   <img src="/images/pros/home.png" class="pros_home_btn">
+  <script src="/js/play/ingame.js"></script>
 </body>
 </html>
