@@ -41,7 +41,7 @@ $(function() {
 		}
 
 		if (myPokemons[selectionIdx].hp === 0) {
-			$(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
+			$(container).trigger("pokemonDown", [{ playerId, myPokemons, selectionIdx }]);
 		} else {
 			container.append(pokemonBlockForm("me", myPokemons[selectionIdx]));
 
@@ -128,7 +128,7 @@ $(function() {
 			if (hp > 0) {
 				callback = () => $(btnContainer).trigger("nextSelection");
 			} else {
-				callback = () => $(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
+				callback = () => $(container).trigger("pokemonDown", [{ playerId, myPokemons, selectionIdx }]);
 			}
 
 			$(textBox).trigger("nextComment", [{ comments: attackComments(enemies[0].name, myPokemons[selectionIdx].name, attack.name, executedPower), isWait: true, callback }]);
@@ -252,7 +252,7 @@ $(function() {
 			if (damageFrom !== undefined) {
 				const info = damageFrom.find(t => t.type == type);
 				if (info !== undefined && info.damage !== undefined) {
-					const commentTail = ["효과는 굉장했다!", "평범했다.", "효과가 별로인듯 하다 .."];
+					const commentTail = ["효과가 별로인듯 하다 ..", "평범했다.", "효과는 굉장했다!"];
 					return {
 						power: Math.round(power * info.damage),
 						comments: commentTail[info.damage]

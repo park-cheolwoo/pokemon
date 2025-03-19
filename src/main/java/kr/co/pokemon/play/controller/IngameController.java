@@ -18,6 +18,7 @@ import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.play.dto.IngameEnemyDTO;
 import kr.co.pokemon.play.dto.IngameInfoDTO;
 import kr.co.pokemon.play.dto.IngamePokemonDTO;
+import kr.co.pokemon.play.dto.PlayerIdDTO;
 import kr.co.pokemon.play.dto.UpdateHpPokemonDTO;
 import kr.co.pokemon.play.service.IngamePokemonService;
 import kr.co.pokemon.play.service.IngameService;
@@ -125,6 +126,17 @@ public class IngameController {
 		}
 
 		return ingamePokemonService.deleteEnemies(session_id);
+	}
+	
+	@PostMapping(value = "/pokemon/reset")
+	public boolean resetIngamePokemonHp(@RequestBody PlayerIdDTO playerId) {
+		try {
+			ingameService.resetIngamePokemon(playerId.getPlayerId());
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@PostMapping(value = "/pokemon/hp")
