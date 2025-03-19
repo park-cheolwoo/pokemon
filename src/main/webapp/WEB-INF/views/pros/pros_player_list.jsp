@@ -60,7 +60,7 @@
   <img src="/images/container.png" class="pros_container_frame2">
   <div class="pros_blur"></div>
   
-  <img src="/images/pros/setting.png" class="pros_update_flag pros_update_btn" /> 
+  <!-- <img src="/images/pros/setting.png" class="pros_update_flag pros_update_btn" />  -->
   <img src="/images/pros/retry.png" class="pros_reload_btn2" />
 
 
