@@ -17,6 +17,8 @@ public interface PokemonAttackMapper {
 	
 	PokemonMoveDTO selectById(int id);
 	
+	List<PokemonOwnAttack> selectNoDamageAttackByPokemonId(int pokemonId);
+
 	List<PokemonOwnAttack> selectAttackByPokemonId(int pokemonId);
 
 	List<PokemonOwnAttack> selectByPokemonIdAndTypeId(Map<String, Integer> pokemonIdAndTypeId);

@@ -87,6 +87,10 @@ public class PlayServiceImpl implements PlayService {
 		List<PokemonOwnAttack> attacks = pokemonMoveService.getAttacksByPokemonId(pokemon.getId());
 		List<PokemonOwnAbility> abilities = abilityService.getAbilitiesByPokemonId(pokemon.getId());
 		List<PokemonOwnType> types = typesService.getTypesByPokemonId(pokemon.getId());
+		
+		if (attacks.size() == 0) {
+			attacks = pokemonMoveService.selectNoDamageAttackByPokemonId(pokemon.getId());
+		}
 
 		int level = minLevel + random.nextInt((maxLevel - minLevel) + 1);
 		int hp = stats.stream().filter(stat -> stat.getId() == 1).map(PokemonOwnStat::getValue).findFirst().orElse(0);

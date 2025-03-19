@@ -212,6 +212,40 @@ $(function() {
 			}]);
 
 		});
+		
+
+		$(container).on("useItem", function (e, data) {
+			$(btnContainer).children().remove();
+			const { item, idx } = data;
+			const { id } = item;
+			const { name, categoryId } = item.info;
+
+			let callback;
+			if (categoryId === 34) {
+				callback = () => $(container).trigger("catchPokemon", [item]);
+			} else if (categoryId === 27) {
+				callback = () => $(container).trigger("healPokemon", [item]);
+			}
+
+			$(textBox).trigger("nextComment", [{
+				comments: [[`${name} 을(를) 사용했다.`]],
+				isWait: true,
+				callback
+			}]);
+
+			$.ajax({
+				url: '/player/items/my-items/use',
+				type: 'POST',
+				data: JSON.stringify(id),
+				contentType: 'application/json',
+				success: function (data) {
+					itemResponse[0][idx].count = data;
+				},
+				error: function (e) {
+					console.log(e);
+				}
+			});
+		});
 
 		function executeDamage(targetTypeInfo, type, power) {
 			const { damageFrom } = targetTypeInfo;

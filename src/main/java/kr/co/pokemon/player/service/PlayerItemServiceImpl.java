@@ -70,6 +70,26 @@ public class PlayerItemServiceImpl implements PlayerItemService {
 	    }
 	    
 	    @Override
+	    public int useItem(String playerId, int playerItemId) {
+	    	PlayerItemDTO playerItem = playerItemMapper.selectById(playerItemId);
+	    	if (playerItem == null) {
+	    		return 0;
+	    	}
+	    	int count = playerItem.getCount() - 1;
+	    	
+	    	if (playerItem.getPlayerId().equals(playerId)) {
+	    		if (count <= 0) {
+	    			playerItemMapper.delete(playerItem.getId());
+	    			return 0;
+	    		}
+	    		playerItem.setCount(count);
+	    		playerItemMapper.update(playerItem);
+	    		return count;
+	    	}
+	    	return 0;
+	    }
+	    
+	    @Override
 			public void removeItem(int id) {
 				playerItemMapper.delete(id);
 			}

@@ -91,6 +91,13 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 	public void insert(PokemonMoveDTO dto) {
 		pokemonAttackMapper.insert(dto);
 	}
+	
+	@Override
+	public List<PokemonOwnAttack> selectNoDamageAttackByPokemonId(int pokemonId) {
+		List<PokemonOwnAttack> list = pokemonAttackMapper.selectNoDamageAttackByPokemonId(pokemonId);
+		list.forEach(attack -> attack.setTypes(typesService.getById(attack.getTypesId())));
+		return list;
+	}
 
 	@Override
 	public List<PokemonOwnAttack> getAttacksByPokemonId(int pokemonId) {
