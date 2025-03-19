@@ -46,7 +46,7 @@
 
   <select id="selectItemsByPlayerId" resultMap="itemResultMap" parameterType="String">
     SELECT
-      i.*
+      i.*, p.count
     FROM player_item p
     JOIN item i ON i.id = p.item_id
     WHERE p.player_id = #{playerId}
