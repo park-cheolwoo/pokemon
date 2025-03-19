@@ -3,11 +3,13 @@ package kr.co.pokemon.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping(value = "/mypage")
 public class MypageController {
-    
+
     // 마이페이지 초기 화면
     @GetMapping("/mypage")
     public String mypage() {
@@ -33,12 +35,12 @@ public class MypageController {
     }
 
     @GetMapping("/pokedexView")
-    public String pokedexView() {
-    	return "/mypage/pokedexView";  // pokedexView.jsp 반환
+    public String pokedexView(@RequestParam(value = "id", required = false) Long pokemonId) {
+        return "/mypage/pokedexView";  // pokedexView.jsp 반환
     }
 
     @GetMapping("/myPokemon")
     public String myPokemon() {
-    	return "/mypage/myPokemon";  // pokedexView.jsp 반환
+        return "/mypage/myPokemon";  // pokedexView.jsp 반환
     }
 }

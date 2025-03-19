@@ -426,12 +426,18 @@ $(document).ready(function () {
 
     function initializePokedexButtons() {
         const viewBarContainer = $('.view-bar-container');
+        let selectedPokemonId = null;
 
         // '자세히' 버튼 클릭 시
         const detailButton = viewBarContainer.find('div:nth-child(1)');
         detailButton.on('click', function () {
-            history.pushState(null, '', '/mypage/pokedexView');
-            loadPage('/mypage/pokedexView');
+            // 선택된 포켓몬 ID가 있는 경우에만 페이지 이동
+            if (selectedPokemonId) {
+                history.pushState(null, '', `/mypage/pokedexView?id=${selectedPokemonId}`);
+                loadPage('/mypage/pokedexView');
+            } else {
+                console.warn('선택된 포켓몬이 없습니다.');
+            }
         });
 
         // '내 포켓몬' 버튼 클릭 시
@@ -440,6 +446,11 @@ $(document).ready(function () {
             history.pushState(null, '', '/mypage/myPokemon');
             loadPage('/mypage/myPokemon');
         });
+
+        // 전역 변수로 선택된 포켓몬 ID를 저장하는 함수 추가
+        window.setSelectedPokemonId = function(pokemonId) {
+            selectedPokemonId = pokemonId;
+        };
     }
 
     function initializeMyPokemonTabs() {
@@ -470,6 +481,9 @@ $(document).ready(function () {
     }
 
     function showPokemonDetails(pokemonId) {
+        // 선택된 포켓몬 ID 저장
+        window.setSelectedPokemonId(pokemonId);
+        
         // 포켓몬 상세 정보 가져오기
         $.get(`/data/pokemon/${pokemonId}`)
             .done(function (pokemon) {
