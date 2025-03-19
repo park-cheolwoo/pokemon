@@ -1,6 +1,13 @@
 $(function() {
 	
 	let countflag = 0;
+	let playerId = `${session_id}`;
+	$(document).ready(function () {
+		if (playerId == "") {
+			alert("잘못된 접근입니다.");
+			location.href = "/member/login";
+		}
+	});
 
 	// 우측 상단 버튼 클릭 // 
 	$(document).on("click", ".item_category_grow", function () {
@@ -229,8 +236,7 @@ $(function() {
 		let id = $(".item_list_img.selected").closest(".shop_items").data("id");
 		let count = Number($(".item_total_count").val());
 		let cost = Number($(".item_total_cost").text().replace(",",""));
-		let playerId = `${session_id}`;
-		alert("playerId : " + playerId);
+		playerId = `${session_id}`;
 		$.ajax({
 			url: "/store/buy/" + id,
 			type: "POST",
