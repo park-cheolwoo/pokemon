@@ -389,7 +389,7 @@ CREATE TABLE ingame_pokemon (
 	created_at DATE DEFAULT SYSDATE NOT NULL,
 	
 	CONSTRAINT fk_ingame_pokemon_player FOREIGN KEY(player_id) REFERENCES player (id) ON DELETE CASCADE,
-	CONSTRAINT fk_ingame_pokemon_pokemon FOREIGN KEY(id) REFERENCES player_pokemon (id) ON DELETE CASCADE
+	CONSTRAINT fk_ingame_pokemon_pokemon FOREIGN KEY(id) REFERENCES player_pokemon (id) ON DELETE CASCADE,
 	CONSTRAINT unique_player_slot UNIQUE (player_id, slot)
 );
 

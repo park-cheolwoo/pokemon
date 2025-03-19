@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
@@ -22,6 +23,18 @@ import kr.co.pokemon.pokemon.dto.relationship.PokemonHabitatDTO;
 public class HabitatServiceImpl implements HabitatService {
 	
 	private final DBTables dbTable = DBTables.HABITAT;
+	
+	@Value("${poketmon.stage-count}")
+	private int stageCount;
+	
+	@Value("${poketmon.stage-gold-increment}")
+	private int stageGoldIncrement;
+	
+	@Value("${poketmon.stage-exp-increment}")
+	private int stageExpIncrement;
+	
+	@Value("${poketmon.stage-level-increment}")
+	private int stageLevelIncrement;
 
 	@Autowired
 	private DataService dataService;
@@ -56,6 +69,7 @@ public class HabitatServiceImpl implements HabitatService {
 	@Override
 	public int insertDataFromAPI(List<HabitatDTO> list) throws Exception {
 		List<PokemonHabitatDTO> pokemonHabitats = new ArrayList<>();
+		List<GameStageDTO> gameStages = new ArrayList<>();
 
 		list.stream().forEach(dto -> {
 			dto.setOriginalName(dto.getName());
@@ -68,6 +82,10 @@ public class HabitatServiceImpl implements HabitatService {
 					
 				}
 			});
+			
+			for (int i = 0; i < stageCount; i++) {
+				gameStages.add(new GameStageDTO(dto.getId(), i + 1, (stageGoldIncrement * i) + (dto.getId() * 10), (stageExpIncrement * i) + (dto.getId() * 10), (dto.getId() - 1) * stageLevelIncrement + (i * 5), (dto.getId() - 1) * stageLevelIncrement + (i * 5) + 5, dto));
+			}
 		});
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
 			habitatMapper.insertAll(list);
@@ -75,7 +93,7 @@ public class HabitatServiceImpl implements HabitatService {
 				pokemonHabitatMapper.insertAll(pokemonHabitats);
 				if (dataService.deleteAllData(DBTables.GAME_STAGE.getTableName())) {
 					if (dataService.recreateSequence(DBTables.GAME_STAGE.getTableName())) {
-						gameStageMapper.insertAll(list.stream().map(habitat -> new GameStageDTO(habitat.getId(), 1, 0, 0, 0, 0, null)).toList());
+						gameStageMapper.insertAll(gameStages);
 					}
 				}
 
