@@ -76,7 +76,9 @@ public class PlayServiceImpl implements PlayService {
 		GameStageDTO stage = gameStageService.getById(stageId);
 		CreatedPokemonDTO enemy = createPokemonByHabitatId(stage.getHabitatId(), stage.getMinLevel(), stage.getMaxLevel());
 		
-		ingamePokemonService.saveIngameEnemies(List.of(new IngameEnemyDTO(playerId, enemy.getPokemon().getId(), enemy.getHp(), enemy.getLevel())));
+		PokemonOwnStat hp = enemy.getStats().stream().filter(stat -> stat.getId() == 1).findFirst().get();
+		hp.setValue(hp.getTotal());
+		ingamePokemonService.saveIngameEnemies(List.of(new IngameEnemyDTO(playerId, enemy.getPokemon().getId(), hp.getValue(), enemy.getLevel())));
 	}
 
 	private CreatedPokemonDTO getAllInfoCreating(PokemonDTO pokemon, int minLevel, int maxLevel) {

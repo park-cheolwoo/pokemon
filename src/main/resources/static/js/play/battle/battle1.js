@@ -287,14 +287,15 @@ $(function() {
 			const maleSprites = part === "you" ? data.pokemon.sprites.front_default : data.pokemon.sprites.back_default;
 			const femaleSprites = part === "you" ? data.pokemon.sprites.front_female : data.pokemon.sprites.back_female;
 
-			const totalHp = data.stats.find(stat => stat.id === 1).value;
+			const maxHp = data.stats.find(stat => stat.id === 1);
+			const totalHp = part === "me" ? maxHp.value : maxHp.total;
 			const pokemon = $("<div>", {class: `pokemon ${part}`});
 			pokemon.html(`
 					<div class="pokemon__info">
 						<div class="pokemon__info--level">LV ${data.level}</div>
 						<div class="pokemon__info--name">${data.name}</div>
 						<div class="pokemon__info--hp hp-bar">
-							<div class="hp-bar__value" data-value="${data.hp}" data-total="${totalHp < data.hp ? data.hp : totalHp}"></div>
+							<div class="hp-bar__value" data-value="${data.hp}" data-total="${totalHp}"></div>
 						</div>
 					</div>
 					<div class="pokemon-image">
