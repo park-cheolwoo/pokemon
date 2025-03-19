@@ -1,97 +1,3 @@
-const habitatButtons = document.querySelectorAll('.habitat-btn');
-const difficultyButtons = document.querySelectorAll('.difficulty-btn');
-const environmentImage = document.getElementById('environment-image');
-const subtitle = document.querySelector('.subtitle');
-const explanation = document.querySelector('.explanation');
-
-const habitatButtonTextMap = {
-    "cave": "동굴",
-    "forest": "숲",
-    "grassland": "목초지",
-    "mountain": "산",
-    "rare": "희귀한",
-    "rough-terrain": "거친",
-    "sea": "바다",
-    "urban": "도시",
-    "waters-edge": "물가"
-};
-
-const difficultyButtonTextMap = {
-    "1 단계": "1",
-    "2 단계": "2",
-    "3 단계": "3",
-    "4 단계": "4",
-    "5 단계": "5",
-    "6 단계": "6"
-};
-
-let selectedHabitat = '';
-let selectedDifficulty = '';
-
-// 페이지가 로드될 때 자동으로 동굴과 1단계 버튼을 클릭 상태로 설정합니다.
-document.addEventListener('DOMContentLoaded', () => {
-  // 초기 선택 상태로 '동굴' 버튼을 클릭합니다.
-  const initialHabitatButton = document.querySelector('.habitat-btn[data-habitat="cave"]');
-  if (initialHabitatButton) {
-    initialHabitatButton.click();
-  }
-
-  // 초기 선택 상태로 '1 단계' 버튼을 클릭합니다.
-  const initialDifficultyButton = document.querySelector('.difficulty-btn[data-level="1"]');
-  if (initialDifficultyButton) {
-    initialDifficultyButton.click();
-  }
-});
-
-// 각 habitat 버튼에 클릭 이벤트를 추가합니다.
-habitatButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    // 클릭한 habitat 버튼의 텍스트를 selectedHabitat에 저장합니다.
-    selectedHabitat = button.textContent;
-    // subtitle을 업데이트합니다.
-    if (selectedHabitat && selectedDifficulty) {
-      subtitle.textContent = `${selectedHabitat} ${selectedDifficulty}`;
-    }
-  });
-});
-
-// 각 difficulty 버튼에 클릭 이벤트를 추가합니다.
-difficultyButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    // 클릭한 difficulty 버튼의 텍스트를 selectedDifficulty에 저장합니다.
-    selectedDifficulty = button.textContent;
-    // subtitle을 업데이트합니다.
-    if (selectedHabitat && selectedDifficulty) {
-      subtitle.textContent = `${selectedHabitat} ${selectedDifficulty}`;
-    }
-
-    // 각 difficulty에 맞는 설명을 업데이트합니다.
-    switch (button.getAttribute('data-level')) {
-      case '1':
-        explanation.textContent = 'Lv.1 ~ Lv.5';
-        break;
-      case '2':
-        explanation.textContent = 'Lv.6 ~ Lv.10';
-        break;
-      case '3':
-        explanation.textContent = 'Lv.11 ~ Lv.15';
-        break;
-      case '4':
-        explanation.textContent = 'Lv.16 ~ Lv.20';
-        break;
-      case '5':
-        explanation.textContent = 'Lv.21 ~ Lv.25';
-        break;
-      case '6':
-        explanation.textContent = 'Lv.26 ~ Lv.30';
-        break;
-      default:
-        explanation.textContent = 'Lv.1 ~ Lv.5';
-    }
-  });
-});
-
-
 $(function() {
     let selectedHabitat = "";
     let selectedDifficulty = "";
@@ -124,7 +30,7 @@ $(function() {
     }
 
     $.ajax({
-        url: "/game-stage/all",
+        url: "/game-stage/all?size=1000",
         type: "GET",
         success: function(stage) {
             if (stage !== undefined) {
@@ -166,10 +72,14 @@ $(function() {
                     // 🏆 해당 서식지에 맞는 스테이지만 필터링 후 버튼 추가
                     stage.forEach(s => {
                         if (s.habitatId == habitatId) {
-                            const sBtn = `<button class="difficulty-btn" data-stage="${s.stage}" data-level="${s.stage}"
-                                style="background-image: url(../images/play/dungeon/Difficulty_level.png);">
-                                ${s.stage} 단계</button>`;
-                            $("#difficulty-level-container").append(sBtn);
+							const sbtn = $("<button>", {class: "difficulty-btn", id: s.id, text: `${s.stage} 단계` });
+							
+							sbtn.css({backgroundImage: "url(/images/play/dungeon/Difficulty_level.png)"});
+							
+							sbtn.attr("data-min", s.minLevel);
+							sbtn.attr("data-max", s.maxLevel);
+
+                            $("#difficulty-level-container").append(sbtn);
                         }
                     });
 
@@ -186,36 +96,37 @@ $(function() {
                 $(document).on("click", ".difficulty-btn", function() {
                     $(".difficulty-btn").css("background-image", "url(../images/play/dungeon/Difficulty_level.png)");
                     $(this).css("background-image", "url(../images/play/dungeon/Difficulty_level_1.png)");
+					const id = $(this).attr("id");
+					const minLevel = $(this).attr("data-min");
+					const maxLevel = $(this).attr("data-max");
 
                     selectedDifficulty = $(this).text();
                     updateSubtitle();
 
                     const level = $(this).data("level");
-                    $(".explanation").text(difficultyLevels[level] || "Lv.1 ~ Lv.5");
+                    $(".explanation").text(`Lv. ${minLevel} ~ Lv. ${maxLevel}` || "Lv.1 ~ Lv.5");
+					
+					$("#dungeon_go").attr("data-id", id);
                 });
 
 				// 🎮 던전 입장 버튼 클릭 이벤트
 				$(document).on("click", "#dungeon_go", function() {
 				    const selectedDifficultyButton = $(".difficulty-btn[style*='Difficulty_level_1.png']");
+					const go_id = $(this).attr("data-id");
 				    
-				    if (!selectedDifficultyButton.length) {
+				    if (go_id === undefined) {
 				        alert("난이도를 선택해주세요!");
 				        return;
 				    }
 
-				    const stageData = {
-				        stage: selectedDifficultyButton.data("stage") // 선택된 난이도의 stage 값 가져오기
-				    };
-
-				    console.log("보낼 데이터:", stageData); // 디버깅용
-
 				    $.ajax({
-				        url: "/ingame/stage",
+				        url: `/ingame/stage/${go_id}`,
 				        type: "POST",
-				        data: JSON.stringify(stageData),
+				        data: session_id,
 				        contentType: "application/json",
-				        success: function() {
-				            location.href = "/play/battle1"; // 성공 시 페이지 이동
+				        success: function(data) {
+							console.log(data);
+				            location.href = "/play/battle1";
 				        },
 				        error: function(xhr, status, error) {
 				            console.error("전송 실패:", error);
