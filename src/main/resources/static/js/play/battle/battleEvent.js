@@ -203,7 +203,6 @@ $(function () {
 					$.ajax({ url: `/member/update/prgold?playerId=${playerId}&gold=${stage.money}`, type: 'POST' }),
 					$.ajax({ url: `/member/update/prexperience?playerId=${playerId}&experience=${stage.experience}`, type: 'POST' })
 				).then(function (d1, d2, d3, d4) {
-					console.log(d1, d2, d3, d4);
 					if (d1 !== undefined) {
 						$(".pokemon.you").animate({opacity: 0}, 1000, function () {
 							const modalContents = $("<div>", {class: "modal-wrapper__content"});
@@ -245,12 +244,11 @@ $(function () {
 	});
 	
 	$(container).on("pokemonDown", function (e, data) {
-		const { myPokemons, selectionIdx } = data;
+		const { playerId, myPokemons, selectionIdx } = data;
 		
-		console.log(myPokemons, selectionIdx);
-		
-		if (myPokemons.every(pokemon => pokemon.hp == 0)) {
+		if (myPokemons.every(pokemon => pokemon.hp <= 0)) {
 			alert("모든 포켓몬이 쓰러졌습니다 ..");
+			resetIngamePokemon(playerId);
 			location.href = "/";
 			return;
 		}
@@ -277,6 +275,19 @@ $(function () {
 				console.log(e);
 			}
 		});
+	}
+	
+	function resetIngamePokemon(playerId) {
+		$.ajax({
+			url: '/ingame/pokemon/reset',
+			type: 'POST',
+			data: JSON.stringify({ playerId }),
+			contentType: 'application/json',
+			error: function (e) {
+				console.log(e);
+			}
+		});
+		$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'});
 	}
 	
 	function setWaitComments(callback) {
