@@ -28,5 +28,7 @@ public interface PlayerItemService{
     
     void updateItem(PlayerItemDTO playerItem);
     
+    int useItem(String playerId, int playerItemId);
+    
     void removeItem(int id);
 }

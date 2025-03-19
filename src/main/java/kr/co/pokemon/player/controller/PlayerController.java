@@ -120,20 +120,39 @@ public class PlayerController {
         }
     }
 
+    @ResponseBody
     @PostMapping(value = "/update/prexperience")
     public DataStatusDTO<Boolean> updatePlayerExperience(@RequestParam int experience, HttpSession session) {
         try {
             String session_id = (String) session.getAttribute("session_id");
             if (session_id != null) {
-                // 플레이어 경험치 업데이트
                 playerService.updateplayerExperience(session_id, experience);
                 return new DataStatusDTO<>("success", true);
             }
+
             throw new IllegalArgumentException("유효하지 않은 세션입니다.");
         } catch (Exception e) {
             e.printStackTrace();
             return new DataStatusDTO<>("error", false, e.getMessage());
         }
+    }
+    
+    @ResponseBody
+    @PostMapping(value = "/update/prgold")
+    public DataStatusDTO<Boolean> updatePlayerGold(@RequestParam int gold, HttpSession session) {
+    	try {
+    		String session_id = (String) session.getAttribute("session_id");
+    		if (session_id != null) {
+    			playerService.increaseGoldByPlayer(session_id, gold);
+    			return new DataStatusDTO<>("success", true);
+    		}
+    		
+    		throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new DataStatusDTO<>("error", false, e.getMessage());
+    	}
+    	
     }
 
 }

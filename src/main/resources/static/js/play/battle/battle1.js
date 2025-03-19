@@ -212,6 +212,40 @@ $(function() {
 			}]);
 
 		});
+		
+
+		$(container).on("useItem", function (e, data) {
+			$(btnContainer).children().remove();
+			const { item, idx } = data;
+			const { id } = item;
+			const { name, categoryId } = item.info;
+
+			let callback;
+			if (categoryId === 34) {
+				callback = () => $(container).trigger("catchPokemon", [item]);
+			} else if (categoryId === 27) {
+				callback = () => $(container).trigger("healPokemon", [item]);
+			}
+
+			$(textBox).trigger("nextComment", [{
+				comments: [[`${name} 을(를) 사용했다.`]],
+				isWait: true,
+				callback
+			}]);
+
+			$.ajax({
+				url: '/player/items/my-items/use',
+				type: 'POST',
+				data: JSON.stringify(id),
+				contentType: 'application/json',
+				success: function (data) {
+					itemResponse[0][idx].count = data;
+				},
+				error: function (e) {
+					console.log(e);
+				}
+			});
+		});
 
 		function executeDamage(targetTypeInfo, type, power) {
 			const { damageFrom } = targetTypeInfo;
@@ -253,14 +287,15 @@ $(function() {
 			const maleSprites = part === "you" ? data.pokemon.sprites.front_default : data.pokemon.sprites.back_default;
 			const femaleSprites = part === "you" ? data.pokemon.sprites.front_female : data.pokemon.sprites.back_female;
 
-			const totalHp = data.stats.find(stat => stat.id === 1).value;
+			const maxHp = data.stats.find(stat => stat.id === 1);
+			const totalHp = part === "me" ? maxHp.value : maxHp.total;
 			const pokemon = $("<div>", {class: `pokemon ${part}`});
 			pokemon.html(`
 					<div class="pokemon__info">
 						<div class="pokemon__info--level">LV ${data.level}</div>
 						<div class="pokemon__info--name">${data.name}</div>
 						<div class="pokemon__info--hp hp-bar">
-							<div class="hp-bar__value" data-value="${data.hp}" data-total="${totalHp < data.hp ? data.hp : totalHp}"></div>
+							<div class="hp-bar__value" data-value="${data.hp}" data-total="${totalHp}"></div>
 						</div>
 					</div>
 					<div class="pokemon-image">

@@ -84,7 +84,7 @@ public class HabitatServiceImpl implements HabitatService {
 			});
 			
 			for (int i = 0; i < stageCount; i++) {
-				gameStages.add(new GameStageDTO(dto.getId(), i + 1, (stageGoldIncrement * i) + (dto.getId() * 10), (stageExpIncrement * i) + (dto.getId() * 10), (dto.getId() - 1) * stageLevelIncrement + (i * 5), (dto.getId() - 1) * stageLevelIncrement + (i * 5) + 5, dto));
+				gameStages.add(new GameStageDTO(dto.getId(), i + 1, (stageGoldIncrement * i) + (dto.getId() * 50), (stageExpIncrement * i) + (dto.getId() * 10), (dto.getId() - 1) * stageLevelIncrement + (i * 5), (dto.getId() - 1) * stageLevelIncrement + (i * 5) + 5, dto));
 			}
 		});
 		if (dataService.deleteAllData(dbTable.getTableName(), list.stream().map(dto -> dto.getId()).toList())) {
