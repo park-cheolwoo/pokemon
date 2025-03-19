@@ -51,7 +51,7 @@ public class StoreRestController {
     // 유저의 현재 가격 확인
     PlayerDTO pDTO = playerService.getById(playerId);
     Map<String, Object> map = new HashMap<String, Object>();
-    if (pDTO == null || pDTO.getGameMoney() <= 0) {
+    if (pDTO == null || pDTO.getGameMoney() < cost) {
       System.out.println("유저 정보 없음 또는 게임머니 부족");
       map.put("result", "fail");
       return map;
