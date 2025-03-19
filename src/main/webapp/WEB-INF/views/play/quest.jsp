@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../css/play/quest.css">
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script src="../js/play/quest/quest.js" defer></script>
   <title>quest</title>
 </head>
@@ -105,6 +106,7 @@
       </div>
     </div>
   </div>
+  <script src="/js/play/ingame.js"></script>
   <script>
   // sdungeon.dailyClearCount 값이 1 이상인 경우
   const dailyClearCount = ${sdungeon.dailyClearCount};  // 이 값은 서버에서 JSP로 전달된 값이어야 합니다.

@@ -39,7 +39,7 @@
   </div>
 	
   <img src="/images/pros/home.png" class="pros_home_btn">
-  
+  <script src="/js/play/ingame.js"></script>
 </body>
 
 </html>

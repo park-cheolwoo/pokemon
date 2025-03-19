@@ -32,6 +32,7 @@
       </div>
     </div>  
   </div>
+  <script src="/js/play/ingame.js"></script>
   <script src="../js/play/dungeon/dungeon.js" defer></script>
 </body>
 </html>

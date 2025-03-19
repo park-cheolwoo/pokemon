@@ -91,6 +91,7 @@
       </div>
     </div> 
   </div>
+  <script src="/js/play/ingame.js"></script>
  </body>
 </html>
   

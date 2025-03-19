@@ -34,4 +34,5 @@
 </div>
 
 <!-- pokedexView.js 스크립트 추가 -->
+<script src="/js/play/ingame.js"></script>
 <script src="/js/mypage/pokedexView.js"></script>
