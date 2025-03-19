@@ -261,7 +261,7 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 
 	@Override
 	@Transactional
-	public void saveSelectedPokemon(String sessionId, int pokemonId) {
+	public void saveSelectedPokemon(String sessionId, int pokemonId, String nickname) {
 		PokemonDTO pokemon = pokemonService.minePokemonById(pokemonId);
 		if(pokemon == null) {
 			throw new IllegalArgumentException("존재하지 않는 포켓몬입니다.");
@@ -269,11 +269,14 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 		PlayerPokemonDTO playerPokemon = new PlayerPokemonDTO();
 		playerPokemon.setPlayerId(sessionId);
 		playerPokemon.setPokemonId(pokemonId);
-		playerPokemon.setName(pokemon.getName());
+		if (nickname != null && !nickname.trim().isEmpty()) {
+	        playerPokemon.setName(nickname.trim());
+	    } else {
+	        playerPokemon.setName(pokemon.getName());
+	    }
 		playerPokemon.setGender(random.nextBoolean());
 		playerPokemon.setLevel(5);
 		playerPokemon.setExperience(0);
-		playerPokemon.setCharacteristicId(1);
 		
 		save(playerPokemon);
 		

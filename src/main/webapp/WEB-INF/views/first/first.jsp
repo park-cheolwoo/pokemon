@@ -26,7 +26,7 @@
       <img src="../images/first/starting3.png" alt="Starting 7" />
     </div>
     
-    <div id="deep_dark" onclick="hideDark()">
+    <div id="deep_dark">
       <div class="nameboard">
         <img src="../images/first/nameboard.png"/>
         <div id="chat_1"></div> 

@@ -48,4 +48,21 @@ public interface PokemonMapper {
 	 * @return 소유 여부가 포함된 포켓몬 리스트
 	 */
 	List<PokemonDTO> selectAllWithOwnership(@Param("playerId") Long playerId, @Param("page") PageRequestDTO page);
+	
+	/**
+	 * 특정 진화 그룹에 속한 모든 포켓몬을 가져옵니다.
+	 * evolution 테이블의 prev_id가 NULL인 포켓몬을 첫 번째로 정렬합니다.
+	 * 
+	 * @param evolutionId 진화 그룹 ID
+	 * @return 진화 그룹에 속한 포켓몬 리스트
+	 */
+	List<PokemonDTO> selectPokemonsByEvolutionId(int evolutionId);
+	
+	/**
+	 * ID로 포켓몬을 조회합니다.
+	 * 
+	 * @param pokemonId 포켓몬 ID
+	 * @return 포켓몬 정보
+	 */
+	PokemonDTO selectPokemonById(int pokemonId);
 }
