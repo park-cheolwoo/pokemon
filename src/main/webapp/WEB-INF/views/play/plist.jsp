@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../css/play/plist.css">
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <title>play</title>
 </head>
 <body>
@@ -62,5 +63,6 @@
       alert("플레이어 레벨이 부족합니다");
     });
   </script>
+  <script src="/js/play/ingame.js"></script>
 </body>
 </html>
