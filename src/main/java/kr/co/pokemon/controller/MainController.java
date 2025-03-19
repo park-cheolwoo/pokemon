@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -78,6 +80,41 @@ public class MainController {
 		 model.addAttribute("sdungeon", sdungeonDTO);
 		return "/play/quest";
 	}
+	
+	@ResponseBody
+	@PostMapping(value = "/play/quest/increaseMoney")
+	public String increasePlayerMoney() {
+	    try {
+	    	String playerId = (String) session.getAttribute("session_id");
+	        System.out.println("Received playerId: " + playerId);
+	        
+	        // 플레이어 ID를 사용하여 게임머니 증가
+	        playerService.increaseGoldByPlayer(playerId, 500);  // 500 게임머니 증가
+	        
+	        return "success";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error: " + e.getMessage();  // 예외 메시지 출력
+	    }
+	}
+	@ResponseBody
+	@PostMapping(value = "/play/sdungeon/increaseMoney")
+	public String ncreasePlayerMoney() {
+	    try {
+	    	String playerId = (String) session.getAttribute("session_id");
+	        System.out.println("Received playerId: " + playerId);
+	        
+	        // 플레이어 ID를 사용하여 게임머니 증가
+	        playerService.increaseGoldByPlayer(playerId, 1000);  
+	        
+	        return "success";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error: " + e.getMessage();  // 예외 메시지 출력
+	    }
+	}
+
+	
 	
 	@GetMapping("/play/dungeon")
 	public String dungeon(Model model) {

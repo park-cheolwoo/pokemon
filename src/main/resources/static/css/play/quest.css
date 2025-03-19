@@ -125,7 +125,7 @@
   position: relative;
 }
 
-.qlist button {
+.qlist button{
   width: 45px;
   height: 48px;
   background: none;
@@ -135,6 +135,9 @@
   position: absolute;
   bottom: 40px;
   right: 43px;
+}
+.chack2-button {
+  display: none;
 }
 .qlist .questdetail{
   position: absolute;
