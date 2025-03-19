@@ -421,6 +421,8 @@ CREATE TABLE SDUNGEON(
     pokemon3_id NUMBER(10) DEFAULT 7,
     pokemon3_name VARCHAR2(100) DEFAULT '꼬북이',
     pokemon3_img VARCHAR2(255) DEFAULT 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png'
+	
+	CONSTRAINT fk_sdungeon_player FOREIGN KEY (id) REFERENCES player (id) ON DELETE CASCADE
 );
 
 CREATE SEQUENCE types_relationship_seq

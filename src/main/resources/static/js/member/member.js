@@ -40,7 +40,10 @@ $(function() {
 			}
 		});
 	}
-
+	$(document).on("keypress", ".pwtext", function(event) {
+			if (event.keyCode == 13) { $("#loginBtn").click(); }
+		});
+	
 	// 회원가입창에서 로그인 화면으로 돌아가기
 	function backBtn() {
 		window.location.href = "/member/login";
