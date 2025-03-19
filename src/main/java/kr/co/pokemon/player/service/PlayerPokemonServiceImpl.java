@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,7 +107,7 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 
 	@Override
 	@Transactional
-	public void save(PlayerPokemonDTO playerPokemon) {
+	public int save(PlayerPokemonDTO playerPokemon) {
 		if (playerPokemon.getCharacteristicId() == 0) {
 			playerPokemon.setCharacteristicId(1);
 		}
@@ -134,7 +135,11 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 		updateCharacteristic.put("id", playerPokemon.getId());
 		updateCharacteristic.put("characteristicId", characteristic.getId());
 
-		ownPokemonStats.forEach(ownPokemonStat -> ownPokemonStatMapper.insert(ownPokemonStat));
+		AtomicInteger hp = new AtomicInteger(0);
+		ownPokemonStats.forEach(ownPokemonStat -> {
+			ownPokemonStatMapper.insert(ownPokemonStat);
+			if (ownPokemonStat.getStatId() == 1) hp.set(ownPokemonStat.getValue());
+		});
 		playerPokemonMapper.updateNameByCharacteristicById(updateCharacteristic);
 		
 		if (playerPokemon.getAbilities() != null) {
@@ -146,7 +151,8 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 		} else {
 			saveRandomAttack(playerPokemon.getId(), playerPokemon.getPokemonId());
 		}
-
+		
+		return hp.get();
 	}
 	
 	private void saveAbilities(int playerPokemonId, int pokemonId, List<Integer> abilityIds) {
@@ -278,14 +284,14 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 		playerPokemon.setLevel(5);
 		playerPokemon.setExperience(0);
 		
-		save(playerPokemon);
+		int hp = save(playerPokemon);
 		
 		IngamePokemonDTO ingamePokemon = new IngamePokemonDTO();
 		ingamePokemon.setId(playerPokemon.getId());
 		ingamePokemon.setPlayerId(sessionId);
-		ingamePokemon.setHp(100);
+		ingamePokemon.setHp(hp);
 		ingamePokemon.setSlot(0);
-		
+
 		ingamePokemonService.save(ingamePokemon);
 	}
 

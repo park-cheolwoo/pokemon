@@ -252,7 +252,7 @@ $(function() {
 			if (damageFrom !== undefined) {
 				const info = damageFrom.find(t => t.type == type);
 				if (info !== undefined && info.damage !== undefined) {
-					const commentTail = ["효과는 굉장했다!", "평범했다.", "효과가 별로인듯 하다 .."];
+					const commentTail = ["효과가 별로인듯 하다 ..", "평범했다.", "효과는 굉장했다!"];
 					return {
 						power: Math.round(power * info.damage),
 						comments: commentTail[info.damage]
