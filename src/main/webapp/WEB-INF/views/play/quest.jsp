@@ -56,6 +56,16 @@
             <div class="compensationdetail1">500</div>
             <button><img src="../images/play/quest/chack1.png"/></button>
           </div>
+          <div class="qlist" style="background-image: url('../images/play/quest/questgold.png'); background-repeat: no-repeat;">
+            <div class="questdetail">특수던전 10회 (0/10)</div>
+            <div class="compensationdetail1">500</div>
+            <button><img src="../images/play/quest/chack1.png"/></button>
+          </div>
+          <div class="qlist" style="background-image: url('../images/play/quest/questgold.png'); background-repeat: no-repeat;">
+            <div class="questdetail">요일던전 10회 (0/10)</div>
+            <div class="compensationdetail1">500</div>
+            <button><img src="../images/play/quest/chack1.png"/></button>
+          </div>
         </div>
         <div id="questlist2" style="display: none;">
           <div class="qlist" style="background-image: url('../images/play/quest/questgold.png'); background-repeat: no-repeat;">
@@ -73,6 +83,16 @@
             <div class="compensationdetail2">1000</div>
             <button><img src="../images/play/quest/chack1.png"/></button>
           </div>
+          <div class="qlist" style="background-image: url('../images/play/quest/questgold.png'); background-repeat: no-repeat;">
+            <div class="questdetail">특수던전 100회 (0/100)</div>
+            <div class="compensationdetail2">1000</div>
+            <button><img src="../images/play/quest/chack1.png"/></button>
+          </div>
+          <div class="qlist" style="background-image: url('../images/play/quest/questgold.png'); background-repeat: no-repeat;">
+            <div class="questdetail">요일던전 100회 (0/100)</div>
+            <div class="compensationdetail2">1000</div>
+            <button><img src="../images/play/quest/chack1.png"/></button>
+          </div>
         </div>
         <div id="questlist3" style="display: none;">
           <div class="qlist" style="background-image: url('../images/play/quest/questsujeong.png'); background-repeat: no-repeat;">
@@ -87,6 +107,16 @@
           </div>
           <div class="qlist" style="background-image: url('../images/play/quest/questsujeong.png'); background-repeat: no-repeat;">
             <div class="questdetail">${quest.total1}요일던전 20회클리어 (${sdungeon.totalCount}/20)</div>
+            <div class="compensationdetail3">10</div>
+            <button><img src="../images/play/quest/chack1.png"/></button>
+          </div>
+          <div class="qlist" style="background-image: url('../images/play/quest/questsujeong.png'); background-repeat: no-repeat;">
+            <div class="questdetail">스킬 1000회 사용</div>
+            <div class="compensationdetail3">10</div>
+            <button><img src="../images/play/quest/chack1.png"/></button>
+          </div>
+          <div class="qlist" style="background-image: url('../images/play/quest/questsujeong.png'); background-repeat: no-repeat;">
+            <div class="questdetail">아이템 1000회 사용</div>
             <div class="compensationdetail3">10</div>
             <button><img src="../images/play/quest/chack1.png"/></button>
           </div>

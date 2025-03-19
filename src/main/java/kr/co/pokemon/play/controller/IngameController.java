@@ -37,7 +37,7 @@ public class IngameController {
 	@GetMapping(value = "/me")
 	public IngameDTO getMyIngame() {
 		String session_id = (String) session.getAttribute("session_id");
-		if (session_id.isBlank()) {
+		if (session_id == null) {
 			return null;
 		}
 
@@ -47,7 +47,7 @@ public class IngameController {
 	@GetMapping(value = "/me/info")
 	public IngameInfoDTO getMyIngameInfo() {
 		String session_id = (String) session.getAttribute("session_id");
-		if (session_id.isBlank()) {
+		if (session_id == null) {
 			return null;
 		}
 
@@ -57,7 +57,7 @@ public class IngameController {
 	@PostMapping(value = "/status")
 	public boolean setIngame(@RequestBody Boolean isIngame) {
 		String session_id = (String) session.getAttribute("session_id");
-		if (session_id.isBlank()) {
+		if (session_id == null) {
 			return false;
 		}
 		
