@@ -93,7 +93,7 @@
     <img src="/images/close.png" class="pros_active_off" /> 
     
 
-    <h4 class="pros_intro text"></h4>
+    <!--<h4 class="pros_intro text"></h4>-->
 	
 	
 	
