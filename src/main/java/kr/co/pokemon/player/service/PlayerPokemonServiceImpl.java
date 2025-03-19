@@ -236,7 +236,7 @@ public class PlayerPokemonServiceImpl implements PlayerPokemonService {
 	public List<PokemonOwnStat> getRandomStatsByPokemonId(int pokemonId) {
 		return pokemonService.getStatsByPokemonId(pokemonId).stream().map(baseStat -> {
 			int minValue = Math.max((int)(baseStat.getValue() * 0.7), 1);
-			int randomValue = baseStat.getValue() - random.nextInt(baseStat.getValue()) + minValue;
+			int randomValue = random.nextInt(baseStat.getValue() - minValue + 1) + minValue;
 			PokemonOwnStat stat = new PokemonOwnStat(randomValue, baseStat.getValue());
 			stat.setId(baseStat.getStatId());
 

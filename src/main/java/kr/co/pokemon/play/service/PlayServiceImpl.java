@@ -76,7 +76,9 @@ public class PlayServiceImpl implements PlayService {
 		GameStageDTO stage = gameStageService.getById(stageId);
 		CreatedPokemonDTO enemy = createPokemonByHabitatId(stage.getHabitatId(), stage.getMinLevel(), stage.getMaxLevel());
 		
-		ingamePokemonService.saveIngameEnemies(List.of(new IngameEnemyDTO(playerId, enemy.getPokemon().getId(), enemy.getHp(), enemy.getLevel())));
+		PokemonOwnStat hp = enemy.getStats().stream().filter(stat -> stat.getId() == 1).findFirst().get();
+		hp.setValue(hp.getTotal());
+		ingamePokemonService.saveIngameEnemies(List.of(new IngameEnemyDTO(playerId, enemy.getPokemon().getId(), hp.getValue(), enemy.getLevel())));
 	}
 
 	private CreatedPokemonDTO getAllInfoCreating(PokemonDTO pokemon, int minLevel, int maxLevel) {
@@ -87,6 +89,10 @@ public class PlayServiceImpl implements PlayService {
 		List<PokemonOwnAttack> attacks = pokemonMoveService.getAttacksByPokemonId(pokemon.getId());
 		List<PokemonOwnAbility> abilities = abilityService.getAbilitiesByPokemonId(pokemon.getId());
 		List<PokemonOwnType> types = typesService.getTypesByPokemonId(pokemon.getId());
+		
+		if (attacks.size() == 0) {
+			attacks = pokemonMoveService.selectNoDamageAttackByPokemonId(pokemon.getId());
+		}
 
 		int level = minLevel + random.nextInt((maxLevel - minLevel) + 1);
 		int hp = stats.stream().filter(stat -> stat.getId() == 1).map(PokemonOwnStat::getValue).findFirst().orElse(0);

@@ -94,6 +94,15 @@ main {
     align-items: center;
 }
 
+.modal-wrapper__no-content {
+	grid-column-start: 4 span;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    color: white;
+}
+
 .modal-wrapper__content--item-title {
     font-size: 18px;
     color: #79d3ff;

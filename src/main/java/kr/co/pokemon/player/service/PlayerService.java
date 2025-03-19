@@ -3,15 +3,11 @@ package kr.co.pokemon.player.service;
 import java.util.List;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
-import kr.co.pokemon.player.dto.FriendDTO;
-//import kr.co.pokemon.player.controller.Player;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 public interface PlayerService {
 	
 	List<PlayerDTO> getAll(PageRequestDTO pDTO);
-	
-	//PlayerDTO findById(int id);
 	
 	PlayerDTO getById(String id);
 
@@ -36,5 +32,7 @@ public interface PlayerService {
 	void updateplayerLevel(String session_id, int level);
 
 	void updateplayerExperience(String session_id, int experience);
+	
+	void increaseGoldByPlayer(String session_id, int gold);
 
 }
