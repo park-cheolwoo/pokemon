@@ -1,5 +1,7 @@
 $(function() {
 	
+	let countflag = 0;
+
 	// 우측 상단 버튼 클릭 // 
 	$(document).on("click", ".item_category_grow", function () {
 		$(".item_list .text").removeClass("cat_on");
@@ -121,6 +123,8 @@ $(function() {
 		$(".item_total_cost").text($(".item_cost").text());
 		$(".item_buy_cost").text($(".item_total_cost").text().replace(",", ""));
 		$(".item_cost_warning").hide();
+		countChk();
+		costChk(countflag);
 		$(".item_buy_container").toggle();
 	});
 
@@ -136,7 +140,7 @@ $(function() {
 			(cost * (count+1)).toLocaleString()
 		);
 		countChk();
-		costChk();
+		costChk(countflag);
 	});
 
 	$(document).on("click", ".lower_yes", function() {
@@ -147,7 +151,7 @@ $(function() {
 			(cost * (count - 1)).toLocaleString()
 		);
 		countChk();
-		costChk();
+		costChk(countflag);
 	});
 
 	$(document).on("input", ".item_total_count", function() {
@@ -158,43 +162,53 @@ $(function() {
 			(cost * count ).toLocaleString()
 		);
 		countChk();
-		costChk();
+		costChk(countflag);
 	});
 
 	const countChk = () => {
+		countflag = 0;
 		let count = Number($(".item_total_count").val());
-		if (count >= 99) {
+		if (count == 99) {
 			$(".item_upper").attr("src", "/images/store/gray-up.png");
 			$(".item_upper").removeClass("upper_yes");
+			countflag = 0;
 			return false;
 		}
-		else if (count <= 0) {
+		else if (count == 0) { 
 			$(".item_lower").attr("src", "/images/store/gray-down.png");
 			$(".item_lower").removeClass("lower_yes");
 			$(".item_buy_yes").attr("src", "/images/store/gray-check.png");
 			$(".item_buy_yes").removeClass("buy_ok");
+			countflag = 1;
 			return false;
-		} else {
+		}
+		else {
 			$(".item_upper").attr("src", "/images/store/yellow-up.png");
 			$(".item_upper").addClass("upper_yes");
 			$(".item_lower").attr("src", "/images/store/yellow-down.png");
 			$(".item_lower").addClass("lower_yes");
 			$(".item_buy_yes").attr("src", "/images/store/green-check.png");
 			$(".item_buy_yes").addClass("buy_ok");
+			countflag = 0;
 		}
 	}
 
-	const costChk = () => { 
-		let deposit = Number($(".game_money").text().replace(",", ""));
+	const costChk = (countflag) => { 
 		let cost = Number($(".item_total_cost").text().replace(",", ""));
-		if (cost > deposit) {
-			$(".item_cost_warning").show();
-			$(".item_buy_yes").attr("src", "/images/store/gray-check.png");
-			$(".item_buy_yes").removeClass("buy_ok");
-		} else {
-			$(".item_cost_warning").hide();
-			$(".item_buy_yes").attr("src", "/images/store/green-check.png");
-			$(".item_buy_yes").addClass("buy_ok");
+		if (countflag == 0) {
+			let deposit = Number($(".game_money").text().replace(",", ""));
+			if (cost > deposit) {
+				$(".item_cost_warning").show();
+				$(".item_buy_yes").attr("src", "/images/store/gray-check.png");
+				$(".item_buy_yes").removeClass("buy_ok");
+			} else {
+				$(".item_cost_warning").hide();
+				$(".item_buy_yes").attr("src", "/images/store/green-check.png");
+				$(".item_buy_yes").addClass("buy_ok");
+			}
+		} else if (countflag == 1 && cost == 0) { 
+				console.log("costChk : countflag = 1 / cost = 0")
+			  $(".item_cost_warning").hide();
 		}
 
 	}
@@ -203,6 +217,7 @@ $(function() {
 		let name = $(".item_dscrb_name").text();
 		let count = Number($(".item_total_count").val());
 		let cost = $(".item_total_cost").text();
+		console.log("count : " + count + " / cost : " + cost);
 		$(".item_buy_container").toggle();
 		$(".item_confirm_name").text(name);
 		$(".item_confirm_count").text(count + " 개를");
@@ -222,12 +237,17 @@ $(function() {
 			data: { "playerId": playerId, "itemId": id, "count": count , "cost":cost},
 			dataType: "json",
 			success: function (data) {
-				alert("구매 완료하였습니다.");
-				$(".game_money").text(Number(data.cost).toLocaleString());
-				// session_gameMoney 값 수정
-				session_money = Number(data.cost).toLocaleString();
-				$(".item_confirm_container").hide();
-			},
+				if (data.result == "success") {
+					alert("구매 완료하였습니다.");
+					$(".game_money").text(Number(data.cost).toLocaleString());
+					// session_gameMoney 값 수정
+					session_money = Number(data.cost).toLocaleString();
+					$(".item_confirm_container").hide();
+				} else { 
+					alert("구입에 실패하였습니다.");
+					$(".item_confirm_container").hide();
+				}
+				},
 			error: function () { alert("실패"); }
 		});
 	});
