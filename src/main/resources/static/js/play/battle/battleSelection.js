@@ -1,4 +1,4 @@
-export const firstSelection = (myPokemons, idx) => {
+export const firstSelection = (myPokemons, idx, items) => {
     return [
         {
             text: "싸운다",
@@ -21,7 +21,7 @@ export const firstSelection = (myPokemons, idx) => {
             text: "아이템",
             event: {
                 name: "itemList",
-                data: []
+                data: items
             }
         }
     ];

@@ -58,6 +58,19 @@ main {
     z-index: 10;
 }
 
+.modal-wrapper__scroll {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.modal-wrapper__scroll--wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
 .modal-wrapper__content {
 	position: relative;
     display: flex;
@@ -157,8 +170,18 @@ main {
     align-items: center;
 }
 
+.modal-wrapper__item--image.small {
+    height: 40px;
+}
+
 .modal-wrapper__item--image img {
     max-height: 70px;
+}
+
+.modal-wrapper__item--count {
+    font-size: 14px;
+    color: #2196F3;
+    margin-bottom: 20px;
 }
 
 .modal-wrapper__item.active-item:hover {

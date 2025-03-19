@@ -17,11 +17,3 @@ export const attackComments = (myPokemonName, enemyName, attackName, executedPow
         [executedPower.comments, `${enemyName}는 ${executedPower.power}의 데미지를 입었다.`]
     ];
 }
-
-export const stageClearComments = (myPokemonName, enemyName, attackName, executedPower) => {
-    return [
-        [`${myPokemonName} 이(가) ${attackName} 공격 !`],
-        [executedPower.comments, `${enemyName}는 ${executedPower.power}의 데미지를 입었다.`],
-        [`야호! ${enemyName} 을(를) 쓰러뜨렸다!`]
-    ];
-}

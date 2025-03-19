@@ -19,6 +19,8 @@ public interface PokemonAttackMapper {
 	
 	List<PokemonOwnAttack> selectAttackByPokemonId(int pokemonId);
 
+	List<PokemonOwnAttack> selectByPokemonIdAndTypeId(Map<String, Integer> pokemonIdAndTypeId);
+
 	List<PokemonDTO> selectPokemonByAttackId(int attackId);
 	
 	List<Integer> selectByIds(List<Integer> ids);

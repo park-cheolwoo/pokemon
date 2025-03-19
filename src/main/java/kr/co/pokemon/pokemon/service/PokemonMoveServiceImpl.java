@@ -103,7 +103,16 @@ public class PokemonMoveServiceImpl implements PokemonMoveService {
 	public List<PokemonDTO> getPokemonByAttackId(int attackId) {
 		return pokemonAttackMapper.selectPokemonByAttackId(attackId);
 	}
-	
+
+	@Override
+	public List<PokemonOwnAttack> getAttacksByPokemonIdAndTypeId(int pokemonId, int typeId) {
+		Map<String, Integer> pokemonIdAndTypeId = new HashMap<>();
+		pokemonIdAndTypeId.put("pokemonId", pokemonId);
+		pokemonIdAndTypeId.put("typesId", typeId);
+
+		return pokemonAttackMapper.selectByPokemonIdAndTypeId(pokemonIdAndTypeId);
+	}
+
 	@Override
 	public boolean existAttackAndPokemonId(int pokemonId, int attackId) {
 		Map<String, Integer> existMap = new HashMap<>();

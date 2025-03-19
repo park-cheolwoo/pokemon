@@ -26,8 +26,7 @@ public class StoreController {
 		List<Integer> categoryList = Arrays.asList(1, 10, 11, 26, 27, 28, 29, 30, 33, 34, 37);
 		List<ItemDTO> filteredList = new ArrayList<ItemDTO>();
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println(categoryList.contains(list.get(i).getCategoryId()));
-			if (categoryList.contains(list.get(i).getCategoryId()) && list.get(i).getIsActive() == 0) {
+			if (categoryList.contains(list.get(i).getCategoryId()) && list.get(i).getIsActive() == 0 && list.get(i).getCost() > 0) {
 				filteredList.add(list.get(i)); // Add matching items to the new list
 			}
 		}

@@ -47,7 +47,16 @@ public class StoreRestController {
  
   @ResponseBody
   @PostMapping("/buy/{id}")
-  public Map<String, Object>  buyItem(String playerId, int itemId, int count , int cost) {
+  public Map<String, Object> buyItem(String playerId, int itemId, int count, int cost) {
+    // 유저의 현재 가격 확인
+    PlayerDTO pDTO = playerService.getById(playerId);
+    Map<String, Object> map = new HashMap<String, Object>();
+    if (pDTO == null || pDTO.getGameMoney() < cost) {
+      System.out.println("유저 정보 없음 또는 게임머니 부족");
+      map.put("result", "fail");
+      return map;
+    }
+    // 유저의 현재 소유 아이템 확인 후 추가
     PlayerItemDTO piDTO = playerItemService.getByPlayerIdAndItemId(playerId, itemId);
     if (piDTO == null) {
       PlayerItemDTO playerItem = new PlayerItemDTO();
@@ -60,13 +69,11 @@ public class StoreRestController {
       piDTO.setCount(own_count + count);
       playerItemService.updateItem(piDTO);
     }
-    PlayerDTO pDTO = playerService.getById(playerId);
-
+    // 유저의 게임 머니 삭감
     int own_money = pDTO.getGameMoney();
     pDTO.setGameMoney(own_money - cost);
     playerService.updatePlayerBySystem(pDTO);
     System.out.println("gamemoney : " + pDTO.getGameMoney());
-    Map<String, Object> map = new HashMap<String, Object>();
     map.put("cost", own_money - cost);
     map.put("result", "success");
     // 비밀번호 세션 저장 방지

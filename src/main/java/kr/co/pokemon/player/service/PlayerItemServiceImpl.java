@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.item.dto.ItemDTO;
+import kr.co.pokemon.item.service.ItemService;
 import kr.co.pokemon.player.dao.relationship.PlayerItemMapper;
+import kr.co.pokemon.player.dto.PlayerOwnItem;
 import kr.co.pokemon.player.dto.relationship.PlayerItemDTO;
 
 @Service
@@ -15,8 +17,10 @@ public class PlayerItemServiceImpl implements PlayerItemService {
 
 	   @Autowired
 	    private PlayerItemMapper playerItemMapper;
-	    
-	    @Override
+	@Autowired
+	private ItemService itemService;
+
+	@Override
 	    public List<PlayerItemDTO> getAll(PageRequestDTO page) {
 	        return playerItemMapper.selectAll(page);
 	    }
@@ -40,8 +44,17 @@ public class PlayerItemServiceImpl implements PlayerItemService {
 	    public List<PlayerItemDTO> getByItemId(int itemId) {
 	        return playerItemMapper.selectByItemId(itemId);
 	    }
-	    
-	    @Override
+
+	@Override
+	public List<PlayerOwnItem> getItemsInfoByPlayerId(String playerId) {
+		return playerItemMapper.selectByPlayerId(playerId).stream()
+			.map(playerItem -> {
+				ItemDTO itemDTO = itemService.getById(playerItem.getItemId());
+				return new PlayerOwnItem(playerItem, itemDTO);
+			}).toList();
+	}
+
+	@Override
 	    public void addItem(PlayerItemDTO playerItem) {
 	        playerItemMapper.insert(playerItem);
 	    }
