@@ -158,6 +158,7 @@ public class IngameServiceImpl implements IngameService {
 		ingamePokemonService.getIngamePokemons(playerId).forEach(ingamePokemon -> {
 			int hp = playerPokemonService.getById(ingamePokemon.getId()).getStats().stream().filter(stat -> stat.getId() == 1).findFirst().get().getValue();
 			ingamePokemonService.updateIngamePokemonHp(new UpdateHpPokemonDTO(ingamePokemon.getId(), hp));
+			ingamePokemonService.deleteEnemies(playerId);
 		});
 	}
 	

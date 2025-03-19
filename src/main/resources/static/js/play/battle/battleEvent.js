@@ -287,6 +287,7 @@ $(function () {
 				console.log(e);
 			}
 		});
+		$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'});
 	}
 	
 	function setWaitComments(callback) {
