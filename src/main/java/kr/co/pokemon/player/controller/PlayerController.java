@@ -122,11 +122,11 @@ public class PlayerController {
 
     @ResponseBody
     @PostMapping(value = "/update/prexperience")
-    public DataStatusDTO<Boolean> updatePlayerExperience(@RequestParam int experience, HttpSession session) {
+    public DataStatusDTO<Boolean> updatePlayerExperience(@RequestParam String playerId, @RequestParam int experience, HttpSession session) {
         try {
             String session_id = (String) session.getAttribute("session_id");
             if (session_id != null) {
-                playerService.updateplayerExperience(session_id, experience);
+                playerService.updateplayerExperience(playerId != null? playerId : session_id, experience);
                 return new DataStatusDTO<>("success", true);
             }
 
@@ -139,11 +139,11 @@ public class PlayerController {
     
     @ResponseBody
     @PostMapping(value = "/update/prgold")
-    public DataStatusDTO<Boolean> updatePlayerGold(@RequestParam int gold, HttpSession session) {
+    public DataStatusDTO<Boolean> updatePlayerGold(@RequestParam String playerId, @RequestParam int gold, HttpSession session) {
     	try {
     		String session_id = (String) session.getAttribute("session_id");
     		if (session_id != null) {
-    			playerService.increaseGoldByPlayer(session_id, gold);
+    			playerService.increaseGoldByPlayer(playerId != null? playerId : session_id, gold);
     			return new DataStatusDTO<>("success", true);
     		}
     		
