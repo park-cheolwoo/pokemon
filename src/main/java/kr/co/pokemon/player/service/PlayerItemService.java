@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
 import kr.co.pokemon.item.dto.ItemDTO;
+import kr.co.pokemon.player.dto.PlayerOwnItem;
 import kr.co.pokemon.player.dto.relationship.PlayerItemDTO;
 
 public interface PlayerItemService{
@@ -16,6 +17,8 @@ public interface PlayerItemService{
     List<PlayerItemDTO> getByPlayerId(String playerId);
     
     List<PlayerItemDTO> getByItemId(int itemId);
+
+    List<PlayerOwnItem> getItemsInfoByPlayerId(String playerId);
 
     PlayerItemDTO getByPlayerIdAndItemId(String playerId, int itemId); 
     

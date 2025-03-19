@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.player.dto.PlayerOwnItem;
 import kr.co.pokemon.player.dto.relationship.PlayerItemDTO;
 import kr.co.pokemon.player.service.PlayerItemService;
 
@@ -75,5 +76,15 @@ public class PlayerItemController {
         String playerId = (String) request.getSession().getAttribute("session_id"); // 세션에서 플레이어 ID 가져오기
         List<PlayerItemDTO> items = playerItemService.getByPlayerId(playerId);
         return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping("/my-items/info")
+    public ResponseEntity<List<PlayerOwnItem>> getItemsInfo(HttpServletRequest request) {
+        String playerId = (String) request.getSession().getAttribute("session_id");
+        if (playerId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return new ResponseEntity<>(playerItemService.getItemsInfoByPlayerId(playerId), HttpStatus.OK);
     }
 }

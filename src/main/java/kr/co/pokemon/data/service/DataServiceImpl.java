@@ -33,7 +33,7 @@ public class DataServiceImpl implements DataService {
 				"pokemon_ability_seq", "pokemon_types_seq", "pokemon_attack_seq",
 				"pokemon_base_stat_seq", "pokemon_habitat_seq", "egg_group_pokemon_seq",
 				"evolution_seq", "evolution_detail_seq", "player_pokemon_seq", "game_stage_seq", "ingame_enemy_seq",
-				"own_pokemon_ability_seq", "own_pokemon_attack_seq", "own_pokemon_stat_seq"
+				"own_pokemon_ability_seq", "own_pokemon_attack_seq", "own_pokemon_stat_seq", "player_item_seq"
 		)
 	);
 	
