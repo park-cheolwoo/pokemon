@@ -41,7 +41,7 @@ $(function() {
 		}
 
 		if (myPokemons[selectionIdx].hp === 0) {
-			$(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
+			$(container).trigger("pokemonDown", [{ playerId, myPokemons, selectionIdx }]);
 		} else {
 			container.append(pokemonBlockForm("me", myPokemons[selectionIdx]));
 
@@ -128,7 +128,7 @@ $(function() {
 			if (hp > 0) {
 				callback = () => $(btnContainer).trigger("nextSelection");
 			} else {
-				callback = () => $(container).trigger("pokemonDown", [{ myPokemons, selectionIdx }]);
+				callback = () => $(container).trigger("pokemonDown", [{ playerId, myPokemons, selectionIdx }]);
 			}
 
 			$(textBox).trigger("nextComment", [{ comments: attackComments(enemies[0].name, myPokemons[selectionIdx].name, attack.name, executedPower), isWait: true, callback }]);

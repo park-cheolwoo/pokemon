@@ -13,6 +13,7 @@ import kr.co.pokemon.play.dto.CreatedPokemonDTO;
 import kr.co.pokemon.play.dto.IngameDTO;
 import kr.co.pokemon.play.dto.IngameInfoDTO;
 import kr.co.pokemon.play.dto.IngamePokemonDTO;
+import kr.co.pokemon.play.dto.UpdateHpPokemonDTO;
 import kr.co.pokemon.play.dto.UpdateIngameDTO;
 import kr.co.pokemon.player.dto.PlayerPokemonDTO;
 import kr.co.pokemon.player.service.PlayerPokemonService;
@@ -150,6 +151,14 @@ public class IngameServiceImpl implements IngameService {
 			
 			return generatedPokemon;
 		}).toList();
+	}
+	
+	@Override
+	public void resetIngamePokemon(String playerId) {
+		ingamePokemonService.getIngamePokemons(playerId).forEach(ingamePokemon -> {
+			int hp = playerPokemonService.getById(ingamePokemon.getId()).getStats().stream().filter(stat -> stat.getId() == 1).findFirst().get().getValue();
+			ingamePokemonService.updateIngamePokemonHp(new UpdateHpPokemonDTO(ingamePokemon.getId(), hp));
+		});
 	}
 	
 	@Override
