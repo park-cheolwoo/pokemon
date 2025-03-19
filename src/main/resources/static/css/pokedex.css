@@ -314,6 +314,8 @@ body>div>div.mypage-banner-container>a {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     /* 한 줄에 5개의 이미지를 배치 */
+    grid-auto-rows: 200px;
+    /* 그리드 간격을 200px로 고정 */
     gap: 5px;
     /* 이미지 간 간격 */
     overflow-y: scroll;

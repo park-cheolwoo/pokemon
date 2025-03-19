@@ -4,6 +4,7 @@ let selectedPokemonId = null;
 let selectedPokemonName = ''; 
 let selectedNickname = ''; 
 
+
 // 엔터키를 눌렀을 때 텍스트를 변경하는 함수
 document.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') { // Enter 키가 눌렸을 때
@@ -116,6 +117,7 @@ function savePokemonData() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       pokemonId: selectedPokemonId,
+	  nickname: selectedNickname
     }),
   })
     .then((response) => response.json())

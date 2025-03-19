@@ -195,15 +195,16 @@ public class PlayerPokemonController {
 
 
 	@PostMapping(value ="/select")
-	public DataStatusDTO<Boolean> selectPokemon(@RequestBody Map<String, Integer> payload){
+	public DataStatusDTO<Boolean> selectPokemon(@RequestBody Map<String, Object> payload){
 		try {
 			String sessionId = (String) session.getAttribute("session_id");
 			if(sessionId == null) {
 				throw new IllegalArgumentException("유효하지 않은 세션입니다.");
 			}
 			
-			int pokemonId = payload.get("pokemonId");
-			playerPokemonService.saveSelectedPokemon(sessionId, pokemonId);
+			int pokemonId = (Integer) payload.get("pokemonId");
+			String nickname = payload.get("nickname") != null ? payload.get("nickname").toString() : null;
+			playerPokemonService.saveSelectedPokemon(sessionId, pokemonId, nickname);
 			return new DataStatusDTO<>("success",true);
 		}catch(Exception e) {
 			e.printStackTrace();
