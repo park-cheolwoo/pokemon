@@ -175,15 +175,24 @@ function updateEvolutionInfo(evolutionData) {
         </tr>
     `);
     
-    // 진화 체인을 한 줄에 표시하기 위한 행 추가
-    let evolutionRow = $('<tr></tr>');
-    evolutionTable.append(evolutionRow);
+    // 한 줄에 최대 포켓몬 카드 수 (화살표 제외)
+    const maxCardsPerRow = 3;
     
-    // 각 진화 단계 포켓몬 표시
+    // 포켓몬 데이터를 처리
+    let currentRow;
+    let currentCardCount = 0;
+    
     evolutionData.forEach((pokemon, index) => {
-        // 진화 화살표 추가 (첫 번째 포켓몬 제외)
-        if (index > 0) {
-            evolutionRow.append(`
+        // 새로운 행이 필요한 경우 (첫 번째 포켓몬이거나 최대 카드 수를 초과한 경우)
+        if (index === 0 || currentCardCount >= maxCardsPerRow) {
+            currentRow = $('<tr></tr>');
+            evolutionTable.append(currentRow);
+            currentCardCount = 0;
+        }
+        
+        // 진화 화살표 추가 (첫 번째 포켓몬 제외, 그리고 새 줄의 첫 번째 포켓몬이 아닌 경우)
+        if (index > 0 && currentCardCount > 0) {
+            currentRow.append(`
                 <td class="evolution-arrow">
                     →
                 </td>
@@ -191,7 +200,7 @@ function updateEvolutionInfo(evolutionData) {
         }
         
         // 포켓몬 이미지와 이름 추가
-        evolutionRow.append(`
+        currentRow.append(`
             <td class="evolution-pokemon">
                 <img src="${pokemon.image}" 
                      alt="${pokemon.name}" 
@@ -201,5 +210,8 @@ function updateEvolutionInfo(evolutionData) {
                 <div class="evolution-pokemon-id">No.${pokemon.id}</div>
             </td>
         `);
+        
+        // 카드 카운트 증가
+        currentCardCount++;
     });
 }

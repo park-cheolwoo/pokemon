@@ -18,30 +18,35 @@
 
 /* ------------------------ 배너 css -------------------------- */
 /* 기존 .mypage-banner 내의 탭 스타일 적용 */
-.mypage-banner .banner-item, #content-container > div.mypage-container > ul > li {
+.mypage-banner .banner-item,
+#content-container>div.mypage-container>ul>li {
     cursor: pointer;
     padding: 10px 20px;
     border-bottom: 2px solid transparent;
-    transition: transform 0.2s ease; /* 크기 변화를 위한 애니메이션 추가 */
+    transition: transform 0.2s ease;
+    /* 크기 변화를 위한 애니메이션 추가 */
 }
 
-.mypage-banner .banner-item.active, 
-#content-container > div.mypage-container > div.mypage-banner-tab .banner-item.active {
-    transform: scale(1.03); /* 크기 약간 키우기 */
+.mypage-banner .banner-item.active,
+#content-container>div.mypage-container>div.mypage-banner-tab .banner-item.active {
+    transform: scale(1.03);
+    /* 크기 약간 키우기 */
 }
 
 
 
 /* 기본 상태와 hover 상태에서의 애니메이션 */
-.mypage-banner .banner-item span, 
-#content-container > div.mypage-container > ul > li > span {
-    transition: font-size 0.3s ease; /* 폰트 크기 변화 애니메이션 */
+.mypage-banner .banner-item span,
+#content-container>div.mypage-container>ul>li>span {
+    transition: font-size 0.3s ease;
+    /* 폰트 크기 변화 애니메이션 */
 }
 
 /* hover 시 커지는 효과 */
-.mypage-banner .banner-item span:hover, 
-#content-container > div.mypage-container > ul > li > span:hover {
-    font-size: 35px; /* 폰트 크기를 키워줍니다 */
+.mypage-banner .banner-item span:hover,
+#content-container>div.mypage-container>ul>li>span:hover {
+    font-size: 35px;
+    /* 폰트 크기를 키워줍니다 */
 }
 
 
@@ -50,12 +55,14 @@
 
 
 /* 활성화된 탭에 대한 스타일 추가 */
-.mypage-banner .banner-item.active, #content-container > div.mypage-container > ul > li.banner-item.active{
-    transform: scale(1.05); /* 활성화된 탭 크기를 약간 키워주는 효과 */
+.mypage-banner .banner-item.active,
+#content-container>div.mypage-container>ul>li.banner-item.active {
+    transform: scale(1.05);
+    /* 활성화된 탭 크기를 약간 키워주는 효과 */
 }
 
 /* 아이템 탭 스타일 (몬스터볼, 회복 아이템, 배틀 아이템) */
-#content-container > div.mypage-container > div.mypage-banner-tab {
+#content-container>div.mypage-container>div.mypage-banner-tab {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,7 +73,7 @@
 }
 
 /* 기본 탭 스타일: yellow-bar */
-#content-container > div.mypage-container > div.mypage-banner-tab .banner-item{
+#content-container>div.mypage-container>div.mypage-banner-tab .banner-item {
     position: relative;
     text-align: center;
     width: 292px;
@@ -78,7 +85,8 @@
     align-items: center;
     font-size: 32px;
     color: white;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* 애니메이션 추가 */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    /* 애니메이션 추가 */
 }
 
 
@@ -114,7 +122,7 @@
 
 }
 
-body > div > div.mypage-banner-container > a{
+body>div>div.mypage-banner-container>a {
     position: relative;
     margin: 0 0 0 0;
     background-image: url('/images/close.png');
@@ -164,7 +172,7 @@ body > div > div.mypage-banner-container > a{
     color: white;
 }
 
-.banner-item.active span{
+.banner-item.active span {
     background-image: url('/images/green-bar.png');
 }
 
@@ -191,20 +199,23 @@ body > div > div.mypage-banner-container > a{
 }
 
 /* 포켓몬 정보 */
-#content-container > div > div.poke-info-container > div.poke-infoview-container {
+#content-container>div>div.poke-info-container>div.poke-infoview-container {
     width: 575px;
     height: 362px;
     background-image: url('/images/wood-container.png');
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
-    flex-direction: column; /* 자식 요소를 세로로 정렬 */
-    justify-content: center; /* 수직 중앙 정렬 */
-    align-items: center; /* 수평 중앙 정렬 */
+    flex-direction: column;
+    /* 자식 요소를 세로로 정렬 */
+    justify-content: center;
+    /* 수직 중앙 정렬 */
+    align-items: center;
+    /* 수평 중앙 정렬 */
 }
 
 /* 포켓몬 이미지 */
-#content-container > div > div.poke-info-container > div.poke-img {
+#content-container>div>div.poke-info-container>div.poke-img {
     width: 575px;
     height: 360px;
     display: flex;
@@ -212,44 +223,52 @@ body > div > div.mypage-banner-container > a{
     align-items: center;
 }
 
-#content-container > div > div.poke-info-container > div.poke-img img {
+#content-container>div>div.poke-info-container>div.poke-img img {
     height: 360px;
-    object-fit: cover; /* 이미지 비율을 유지하며 크기 조정 */
+    object-fit: cover;
+    /* 이미지 비율을 유지하며 크기 조정 */
 }
 
-#content-container > div > div.poke-info-container > div.poke-infoview-container > h4 {
-    color: white; /* 텍스트 색상 (배경과 대비되게 설정) */
-    font-size: 32px; /* 텍스트 크기 조정 */
+#content-container>div>div.poke-info-container>div.poke-infoview-container>h4 {
+    color: white;
+    /* 텍스트 색상 (배경과 대비되게 설정) */
+    font-size: 32px;
+    /* 텍스트 크기 조정 */
 }
 
-#content-container > div > div.poke-info-container > div.poke-infoview-container > div:nth-child(2){
+#content-container>div>div.poke-info-container>div.poke-infoview-container>div:nth-child(2) {
     display: flex;
-    flex-direction: row; /* 수평 방향으로 정렬 */
-    justify-content: space-between; /* 요소 간의 간격을 균등하게 배분 */
-    align-items: center; /* 세로 중앙 정렬 */
+    flex-direction: row;
+    /* 수평 방향으로 정렬 */
+    justify-content: space-between;
+    /* 요소 간의 간격을 균등하게 배분 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
     color: white;
     font-size: 20px;
     width: 450px;
     height: 50px;
-    margin: 10px 0; /* 위아래 여백 추가 */
-    padding: 5px; /* 내부 여백 추가 */
+    margin: 10px 0;
+    /* 위아래 여백 추가 */
+    padding: 5px;
+    /* 내부 여백 추가 */
 }
 
-#content-container > div > div.poke-info-container > div.poke-infoview-container > div:nth-child(3) {
+#content-container>div>div.poke-info-container>div.poke-infoview-container>div:nth-child(3) {
     width: 450px;
     height: 150px;
     color: white;
     font-size: 20px;
 }
 
-#content-container > div.poke-info-container > div.view-bar-container{
+#content-container>div.poke-info-container>div.view-bar-container {
     display: flex;
     justify-content: space-between;
     width: 400px;
     margin-left: 80px;
 }
 
-#content-container > div.poke-info-container > div.view-bar-container > div{
+#content-container>div.poke-info-container>div.view-bar-container>div {
     width: 175px;
     height: 60px;
     position: relative;
@@ -259,7 +278,7 @@ body > div > div.mypage-banner-container > a{
     /* 텍스트와 이미지를 수직으로 가운데 정렬 */
 }
 
-#content-container > div.poke-info-container > div.view-bar-container > div > span{
+#content-container>div.poke-info-container>div.view-bar-container>div>span {
     position: absolute;
     /* 텍스트를 절대 위치로 설정 */
     top: 50%;
@@ -272,7 +291,7 @@ body > div > div.mypage-banner-container > a{
     /* 텍스트 색상 (배경과 대비되게 설정) */
     font-size: 16px;
     /* 텍스트 크기 조정 */
-    
+
 }
 
 
@@ -380,32 +399,37 @@ body > div > div.mypage-banner-container > a{
 
 div.pokedexView-info-text-container {
     display: flex;
-	font-size: 32px;
-	justify-content: center;
+    font-size: 32px;
+    justify-content: center;
     margin-top: 30px;
 }
 
 .pokedexView-table {
     max-width: 800px;
-    border-collapse: collapse;
     color: white;
     font-size: 28px;
+    border-collapse: separate;
+    border-spacing: 10px 10px;
 }
 
 .pokedexView-table th,
 .pokedexView-table td {
     padding: 8px;
-    text-align: left;  /* 수평 정렬 */
-    vertical-align: middle;  /* 수직 정렬 */
+    text-align: left;
+    /* 수평 정렬 */
+    vertical-align: middle;
+    /* 수직 정렬 */
 }
 
 .pokedexView-table td:first-child {
-    width: 250px; /* 제목 열의 너비를 줄임 */
+    width: 250px;
+    /* 제목 열의 너비를 줄임 */
     text-align: center;
 }
 
 .pokedexView-table td {
-    height: 70px;  /* 셀 높이 */
+    height: 60px;
+    /* 셀 높이 */
 }
 
 /* 진화 트리 스타일 */
@@ -454,6 +478,37 @@ div.pokedexView-info-text-container {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    height: 210px;
+    width: 140px;
+}
+
+.evolution-container {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* 웹킷 기반 브라우저에서 세로 스크롤바 스타일 */
+.evolution-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.evolution-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.evolution-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.evolution-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 10px;
 }
 
 /* ---------------------------- pokedexView css --------------------------- */
@@ -463,14 +518,14 @@ div.pokedexView-info-text-container {
 
 /* ---------------------------- myPokemon css ------------------------------ */
 div.myPokemon-info-text-container {
-	width: 800px;
-	height: 450px;
-	padding: 10px;
-	position: relative;
-	top: 5%;
-	left: 11%;
-	font-size: 32px;
-	color: white;
+    width: 800px;
+    height: 450px;
+    padding: 10px;
+    position: relative;
+    top: 5%;
+    left: 11%;
+    font-size: 32px;
+    color: white;
 }
 
 .myPokemon-table {
@@ -483,17 +538,21 @@ div.myPokemon-info-text-container {
 .myPokemon-table th,
 .myPokemon-table td {
     padding: 8px;
-    text-align: left;  /* 수평 정렬 */
-    vertical-align: middle;  /* 수직 정렬 */
+    text-align: left;
+    /* 수평 정렬 */
+    vertical-align: middle;
+    /* 수직 정렬 */
 }
 
 .myPokemon-table td:first-child {
-    width: 250px; /* 제목 열의 너비를 줄임 */
+    width: 250px;
+    /* 제목 열의 너비를 줄임 */
     text-align: center;
 }
 
 .myPokemon-table td {
-    height: 70px;  /* 셀 높이 */
+    height: 70px;
+    /* 셀 높이 */
 }
 
 /* ---------------------------- myPokemon css ------------------------------ */
@@ -540,55 +599,62 @@ div.myPokemon-info-text-container {
     overflow-y: scroll;
 }
 
-#content-container > div.item-view-info-container > div.mypage-item-img {
+#content-container>div.item-view-info-container>div.mypage-item-img {
     width: 575px;
     height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;  
+    margin-top: 80px;
 }
 
-#content-container > div.item-view-info-container > div.mypage-item-img > img {
+#content-container>div.item-view-info-container>div.mypage-item-img>img {
     width: 250px;
 }
 
-#content-container > div.item-view-info-container > div.mypage-item-text-container {
+#content-container>div.item-view-info-container>div.mypage-item-text-container {
     width: 575px;
     height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 40px;
-    
+
 }
-#content-container > div.item-view-info-container > div.mypage-item-text-container > div {
+
+#content-container>div.item-view-info-container>div.mypage-item-text-container>div {
     width: 400px;
     height: 300px;
     display: flex;
-    flex-direction: column;  /* 세로 방향으로 아이템 배치 */
-    justify-content: top;  /* 세로 방향으로 중앙 정렬 */
-    align-items: center;      /* 가로 방향으로 중앙 정렬 */
+    flex-direction: column;
+    /* 세로 방향으로 아이템 배치 */
+    justify-content: top;
+    /* 세로 방향으로 중앙 정렬 */
+    align-items: center;
+    /* 가로 방향으로 중앙 정렬 */
     color: white;
-    background-color: rgba(0, 0, 0, 0.5); /* 검정색, 50% 투명도 */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 검정색, 50% 투명도 */
     border-radius: 10%;
-    
+
 }
 
-#content-container > div.item-view-info-container > div.mypage-item-text-container > div > div.mypage-item-name {
+#content-container>div.item-view-info-container>div.mypage-item-text-container>div>div.mypage-item-name {
     font-size: 32px;
     margin-top: 20px;
     width: 350px;
     text-align: center;
-    word-wrap: break-word;  /* 또는 overflow-wrap: break-word; */
+    word-wrap: break-word;
+    /* 또는 overflow-wrap: break-word; */
 }
 
-#content-container > div.item-view-info-container > div.mypage-item-text-container > div > div.mypage-item-info {
+#content-container>div.item-view-info-container>div.mypage-item-text-container>div>div.mypage-item-info {
     font-size: 20px;
     margin-top: 20px;
     width: 350px;
     text-align: center;
-    word-wrap: break-word;  /* 또는 overflow-wrap: break-word; */
+    word-wrap: break-word;
+    /* 또는 overflow-wrap: break-word; */
 }
 
 
@@ -597,11 +663,16 @@ div.myPokemon-info-text-container {
 /* 포켓몬 리스트 테이블 */
 .poke-info-text-container {
     display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    height: 400px; /* 최대 높이 설정 */
-    padding-right: 20px; /* 스크롤바와 내용 간 간격 */
-    text-align: center; /* 테이블 내 텍스트 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    height: 400px;
+    /* 최대 높이 설정 */
+    padding-right: 20px;
+    /* 스크롤바와 내용 간 간격 */
+    text-align: center;
+    /* 테이블 내 텍스트 중앙 정렬 */
     margin-top: 60px;
 }
 
@@ -640,16 +711,20 @@ div.myPokemon-info-text-container {
 
 /* 포켓몬 소유 여부에 따른 스타일 */
 .pokemon-item.not-owned {
-    opacity: 0.6; /* 소유하지 않은 포켓몬은 투명도를 낮춰 어둡게 표시 */
-    filter: grayscale(50%); /* 흑백 필터 적용 */
+    opacity: 0.6;
+    /* 소유하지 않은 포켓몬은 투명도를 낮춰 어둡게 표시 */
+    filter: grayscale(50%);
+    /* 흑백 필터 적용 */
 }
 
 .pokemon-item.not-owned img {
-    filter: brightness(0.7); /* 이미지 밝기 낮추기 */
+    filter: brightness(0.7);
+    /* 이미지 밝기 낮추기 */
 }
 
 .pokemon-item.not-owned p {
-    color: #777; /* 텍스트 색상을 회색으로 변경 */
+    color: #777;
+    /* 텍스트 색상을 회색으로 변경 */
 }
 
 /* 호버 효과 - 마우스를 올렸을 때 원래 모습으로 돌아오도록 */
@@ -676,24 +751,28 @@ div.myPokemon-info-text-container {
 
 .item-table {
     width: 100%;
-    table-layout: fixed; /* 테이블 레이아웃을 고정합니다 */
+    table-layout: fixed;
+    /* 테이블 레이아웃을 고정합니다 */
     border-collapse: collapse;
 }
 
 
 .item-table th:first-child,
 .item-table td:first-child {
-  width: 50px; /* 첫 번째 열(이미지) 너비 */
+    width: 50px;
+    /* 첫 번째 열(이미지) 너비 */
 }
 
 .item-table th:nth-child(2),
 .item-table td:nth-child(2) {
-  width: 100px; /* 두 번째 열(이름) 너비 */
+    width: 100px;
+    /* 두 번째 열(이름) 너비 */
 }
 
 .item-table th:last-child,
 .item-table td:last-child {
-  width: 50px; /* 세 번째 열(수량) 너비 */
+    width: 50px;
+    /* 세 번째 열(수량) 너비 */
 }
 
 .item-table tr {
@@ -741,18 +820,21 @@ div.myPokemon-info-text-container {
     width: 575px;
     background-image: url('/images/item-container.png');
     background-repeat: no-repeat;
-    background-size: 580px 770px; /* 너비는 700px로, 높이는 자동 조정 */
+    background-size: 580px 770px;
+    /* 너비는 700px로, 높이는 자동 조정 */
     position: relative;
     align-items: center;
     margin-top: 42px;
 }
 
 .tab-content.active {
-    display: block; /* active 클래스가 있을 때만 보이도록 설정 */
+    display: block;
+    /* active 클래스가 있을 때만 보이도록 설정 */
 }
 
 .tab-content {
-    display: none; /* 기본적으로 모든 테이블 숨기기 */
+    display: none;
+    /* 기본적으로 모든 테이블 숨기기 */
 }
 
 
@@ -782,52 +864,68 @@ div.myPokemon-info-text-container {
 }
 
 .expedition-list {
-    list-style-type: none;  /* 기본 리스트 스타일 제거 */
-    display: grid;  /* 그리드로 배치 */
-    grid-template-columns: repeat(2, 1fr); /* 2개의 열 */
-    grid-template-rows: repeat(3, 1fr);    /* 3개의 행 */
-    gap: 10px;  /* 카드 간격 */
+    list-style-type: none;
+    /* 기본 리스트 스타일 제거 */
+    display: grid;
+    /* 그리드로 배치 */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2개의 열 */
+    grid-template-rows: repeat(3, 1fr);
+    /* 3개의 행 */
+    gap: 10px;
+    /* 카드 간격 */
     padding: 0;
     margin: 0;
     width: 350px;
     max-width: 800px;
     margin-left: 35px;
-    
+
 }
 
 .expedition-item {
     position: relative;
-    background-color: rgba(0, 0, 0, 0.5);  /* 반투명 검은색 배경 */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 반투명 검은색 배경 */
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 150px;  /* 이미지 크기와 맞추기 위해 카드 너비 설정 */
-    height: 150px;  /* 카드 높이 설정 */
+    width: 150px;
+    /* 이미지 크기와 맞추기 위해 카드 너비 설정 */
+    height: 150px;
+    /* 카드 높이 설정 */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;  /* 내용이 위아래로 배치되도록 설정 */
+    justify-content: space-between;
+    /* 내용이 위아래로 배치되도록 설정 */
     padding: 10px;
 }
 
 .expedition-img {
-    width: 100px;  /* 이미지 크기 150px */
-    height: 100px;  /* 이미지 크기 150px */
+    width: 100px;
+    /* 이미지 크기 150px */
+    height: 100px;
+    /* 이미지 크기 150px */
     border-radius: 8px;
-    margin: 0 auto;  /* 이미지를 가운데로 정렬 */
+    margin: 0 auto;
+    /* 이미지를 가운데로 정렬 */
 }
 
 .expedition-img img {
     width: 100%;
     border-radius: 8px;
-    margin: 0 auto;  /* 이미지를 가운데로 정렬 */
+    margin: 0 auto;
+    /* 이미지를 가운데로 정렬 */
 }
 
 .expedition-description {
     font-size: 20px;
-    color: #fff;  /* 설명란 텍스트는 흰색 */
-    background-color: rgba(0, 0, 0, 0.7);  /* 설명란 배경을 진한 검은색 */
+    color: #fff;
+    /* 설명란 텍스트는 흰색 */
+    background-color: rgba(0, 0, 0, 0.7);
+    /* 설명란 배경을 진한 검은색 */
     border-radius: 4px;
-    height: 20px;  /* 설명란 크기 지정 */
+    height: 20px;
+    /* 설명란 크기 지정 */
     display: flex;
     justify-content: center;
     align-items: center;
