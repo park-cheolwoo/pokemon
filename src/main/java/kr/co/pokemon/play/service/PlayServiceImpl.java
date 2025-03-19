@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokemon.play.dto.CreatedPokemonDTO;
+import kr.co.pokemon.play.dto.GameStageDTO;
+import kr.co.pokemon.play.dto.IngameEnemyDTO;
 import kr.co.pokemon.play.dto.PokemonOwnAbility;
 import kr.co.pokemon.play.dto.PokemonOwnAttack;
 import kr.co.pokemon.play.dto.PokemonOwnStat;
@@ -24,27 +26,30 @@ import kr.co.pokemon.pokemon.service.TypesService;
 public class PlayServiceImpl implements PlayService {
 
 	@Autowired
-	PokemonService pokemonService;
+	private PokemonService pokemonService;
 	
 	@Autowired
-	HabitatService habitatService;
+	private HabitatService habitatService;
 	
 	@Autowired
-	AbilityService abilityService;
+	private GameStageService gameStageService;
 	
 	@Autowired
-	PokemonMoveService pokemonMoveService;
+	private AbilityService abilityService;
+	
+	@Autowired
+	private PokemonMoveService pokemonMoveService;
 
 	@Autowired
-	PlayerPokemonService playerPokemonService;
+	private PlayerPokemonService playerPokemonService;
 	
 	@Autowired
-	IngamePokemonService ingamePokemonService;
+	private IngamePokemonService ingamePokemonService;
 
 	@Autowired
-	TypesService typesService;
+	private TypesService typesService;
 	
-	Random random = new Random();
+	private Random random = new Random();
 
 	@Override
 	public CreatedPokemonDTO createPokemon(int pokemonId, int minLevel, int maxLevel) {
@@ -64,6 +69,14 @@ public class PlayServiceImpl implements PlayService {
 		}
 
 		return getAllInfoCreating(pokemons.get(random.nextInt(pokemons.size())), minLevel, maxLevel);
+	}
+	
+	@Override
+	public void saveIngameEnemyByStageId(String playerId, int stageId) {
+		GameStageDTO stage = gameStageService.getById(stageId);
+		CreatedPokemonDTO enemy = createPokemonByHabitatId(stage.getHabitatId(), stage.getMinLevel(), stage.getMaxLevel());
+		
+		ingamePokemonService.saveIngameEnemies(List.of(new IngameEnemyDTO(playerId, enemy.getPokemon().getId(), enemy.getHp(), enemy.getLevel())));
 	}
 
 	private CreatedPokemonDTO getAllInfoCreating(PokemonDTO pokemon, int minLevel, int maxLevel) {
