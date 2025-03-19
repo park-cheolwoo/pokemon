@@ -122,11 +122,11 @@ public class PlayerController {
 
     @ResponseBody
     @PostMapping(value = "/update/prexperience")
-    public DataStatusDTO<Boolean> updatePlayerExperience(@RequestParam int experience, HttpSession session) {
+    public DataStatusDTO<Boolean> updatePlayerExperience(@RequestParam String playerId, @RequestParam int experience, HttpSession session) {
         try {
             String session_id = (String) session.getAttribute("session_id");
             if (session_id != null) {
-                playerService.updateplayerExperience(session_id, experience);
+                playerService.updateplayerExperience(playerId != null? playerId : session_id, experience);
                 return new DataStatusDTO<>("success", true);
             }
 
@@ -139,11 +139,11 @@ public class PlayerController {
     
     @ResponseBody
     @PostMapping(value = "/update/prgold")
-    public DataStatusDTO<Boolean> updatePlayerGold(@RequestParam int gold, HttpSession session) {
+    public DataStatusDTO<Boolean> updatePlayerGold(@RequestParam String playerId, @RequestParam int gold, HttpSession session) {
     	try {
     		String session_id = (String) session.getAttribute("session_id");
     		if (session_id != null) {
-    			playerService.increaseGoldByPlayer(session_id, gold);
+    			playerService.increaseGoldByPlayer(playerId != null? playerId : session_id, gold);
     			return new DataStatusDTO<>("success", true);
     		}
     		
@@ -154,5 +154,25 @@ public class PlayerController {
     	}
     	
     }
-
+    @ResponseBody
+    @GetMapping("/sessionData")
+    public Map<String, Object> getSessionData(HttpSession session) {
+        String sessionId = (String) session.getAttribute("session_id");
+        if (sessionId == null) {
+            throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+        }
+        PlayerDTO player = playerService.getById(sessionId);
+        setSessionAttributes(session, player);
+        
+        Map<String, Object> sessionData = new HashMap<>();
+        sessionData.put("session_id", player.getId());
+        sessionData.put("session_nickname", player.getNickname());
+        sessionData.put("session_tag", player.getTag());
+        sessionData.put("session_lv", player.getLv());
+        sessionData.put("session_experience", player.getExperience());
+        sessionData.put("session_gameMoney", player.getGameMoney());
+        sessionData.put("session_realMoney", player.getRealMoney());
+        
+        return sessionData;
+    }
 }

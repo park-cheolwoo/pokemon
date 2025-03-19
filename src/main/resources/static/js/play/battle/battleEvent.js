@@ -185,72 +185,70 @@ $(function () {
 	});
 	
 	$(container).on("stageClear", function (e, data) {
-		setWaitComments(() => {
-			$(textBox).trigger("nextComment", [{
-				comments: data.comments,
-				isWait: true,
-				callback: () => {
-					$(btnContainer).remove();
-					$(textBox).remove();
-					const { stageId, maxStageId, stage } = data;
+		$(textBox).trigger("nextComment", [{
+			comments: data.comments,
+			isWait: true,
+			callback: () => {
+				$(btnContainer).remove();
+				$(textBox).remove();
+				const { playerId, stageId, maxStageId, stage } = data;
 
-					if (maxStageId < stageId) {
-						setMaxStage(stageId);
-					}
+				if (maxStageId < stageId) {
+					setMaxStage(stageId);
+				}
 
-					$.when(
-						$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'}),
-						$.ajax({url: '/ingame/enemy/delete', type: 'POST'})
-					).then(function (data) {
-						if (data) {
-							$(".pokemon.you").animate({opacity: 0}, 1000, function () {
-								const modalContents = $("<div>", {class: "modal-wrapper__content"});
-								const modalForm = `
-									<div class="modal-wrapper__content--title">스테이지 클리어</div>
-									<div class="modal-wrapper__content--content">
-										<div class="modal-wrapper__content--item-title">보상</div>
-										<div class="modal-wrapper__content--item">
-											<span>
-												<img src="/images/store/coin.png" />
-											</span>
-											<span>${stage.money}</span>
-										</div>
-										<div class="modal-wrapper__content--item">
-											<span>EXP : </span>
-											<span>${stage.experience}</span>
-										</div>
+				$.when(
+					$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'}),
+					$.ajax({url: '/ingame/enemy/delete', type: 'POST'}),
+					$.ajax({ url: `/member/update/prgold?playerId=${playerId}&gold=${stage.money}`, type: 'POST' }),
+					$.ajax({ url: `/member/update/prexperience?playerId=${playerId}&experience=${stage.experience}`, type: 'POST' })
+				).then(function (d1, d2, d3, d4) {
+					if (d1 !== undefined) {
+						$(".pokemon.you").animate({opacity: 0}, 1000, function () {
+							const modalContents = $("<div>", {class: "modal-wrapper__content"});
+							const modalForm = `
+								<div class="modal-wrapper__content--title">스테이지 클리어</div>
+								<div class="modal-wrapper__content--content">
+									<div class="modal-wrapper__content--item-title">보상</div>
+									<div class="modal-wrapper__content--item">
+										<span>
+											<img src="/images/store/coin.png" />
+										</span>
+										<span>${stage.money}</span>
 									</div>
-								`;
-								const modalBtn = $("<div>", {class: "modal-wrapper__content--btn", text: "나가기"});
-								modalBtn.click(function() {
-									location.href = "/play/plist";
-								});
-
-								savePlayerCompensation(stage.money, stage.experience);
-								modalContents.html([modalForm, modalBtn]);
-								popupModal(modalContents, false);
+									<div class="modal-wrapper__content--item">
+										<span>EXP : </span>
+										<span>${stage.experience}</span>
+									</div>
+								</div>
+							`;
+							const modalBtn = $("<div>", {class: "modal-wrapper__content--btn", text: "나가기"});
+							modalBtn.click(function() {
+								location.href = "/play/plist";
 							});
-						} else {
-							alert("서버와의 연결이 좋지 않습니다 ..");
-							location.href = "/";
-						}
-					}).fail(function (e) {
-						console.log(e);
+
+							modalContents.html([modalForm, modalBtn]);
+							popupModal(modalContents, false);
+						});
+					} else {
 						alert("서버와의 연결이 좋지 않습니다 ..");
 						location.href = "/";
-					});
-				}
-			}]);
-		});
+					}
+				}).fail(function (e) {
+					console.log(e);
+					alert("서버와의 연결이 좋지 않습니다 ..");
+					location.href = "/";
+				});
+			}
+		}]);
 	});
 	
 	$(container).on("pokemonDown", function (e, data) {
-		const { myPokemons, selectionIdx } = data;
+		const { playerId, myPokemons, selectionIdx } = data;
 		
-		console.log(myPokemons, selectionIdx);
-		
-		if (myPokemons.every(pokemon => pokemon.hp == 0)) {
+		if (myPokemons.every(pokemon => pokemon.hp <= 0)) {
 			alert("모든 포켓몬이 쓰러졌습니다 ..");
+			resetIngamePokemon(playerId);
 			location.href = "/";
 			return;
 		}
@@ -279,6 +277,19 @@ $(function () {
 		});
 	}
 	
+	function resetIngamePokemon(playerId) {
+		$.ajax({
+			url: '/ingame/pokemon/reset',
+			type: 'POST',
+			data: JSON.stringify({ playerId }),
+			contentType: 'application/json',
+			error: function (e) {
+				console.log(e);
+			}
+		});
+		$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'});
+	}
+	
 	function setWaitComments(callback) {
 		$(textBox).addClass("wait");
 
@@ -297,23 +308,6 @@ $(function () {
 			const percent = hp / totalHp * 100;
 			hpBar.css({width: percent + "%", backgroundColor: `rgb(${(100 - percent) / 50 * 255}, ${percent / 50 * 255}, 0)`});
 		}, 100);
-	}
-	
-	function savePlayerCompensation(gold = 0, experience = 0) {
-		$.ajax({
-			url: `/member/update/prgold?gold=${gold}`,
-			type: 'POST',
-			error: function (e) {
-				console.log(e);
-			}
-		});
-		$.ajax({
-			url: `/member/update/prexperience?experience=${experience}`,
-			type: 'POST',
-			error: function (e) {
-				console.log(e);
-			}
-		});
 	}
 
 });

@@ -18,7 +18,7 @@ public interface PlayerPokemonService {
 
 	int getIdByPokemonIdAndPlayerId(int pokemonId, int playerId);
 
-	void save(PlayerPokemonDTO playerPokemon);
+	int save(PlayerPokemonDTO playerPokemon);
 	
 	void updateName(int id, String name);
 	

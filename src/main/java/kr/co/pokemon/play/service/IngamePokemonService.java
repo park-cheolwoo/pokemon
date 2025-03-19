@@ -19,7 +19,6 @@ public interface IngamePokemonService extends Getable<IngamePokemonDTO> {
 	
 	List<IngameEnemyDTO> getIngameEnemies(String playerId);
 	
-	
 	void updateIngamePokemonHp(UpdateHpPokemonDTO updateHp);
 
 	void updateIngameEnemyHp(UpdateHpPokemonDTO updateHp);
