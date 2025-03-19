@@ -154,5 +154,25 @@ public class PlayerController {
     	}
     	
     }
-
+    @ResponseBody
+    @GetMapping("/sessionData")
+    public Map<String, Object> getSessionData(HttpSession session) {
+        String sessionId = (String) session.getAttribute("session_id");
+        if (sessionId == null) {
+            throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+        }
+        PlayerDTO player = playerService.getById(sessionId);
+        setSessionAttributes(session, player);
+        
+        Map<String, Object> sessionData = new HashMap<>();
+        sessionData.put("session_id", player.getId());
+        sessionData.put("session_nickname", player.getNickname());
+        sessionData.put("session_tag", player.getTag());
+        sessionData.put("session_lv", player.getLv());
+        sessionData.put("session_experience", player.getExperience());
+        sessionData.put("session_gameMoney", player.getGameMoney());
+        sessionData.put("session_realMoney", player.getRealMoney());
+        
+        return sessionData;
+    }
 }

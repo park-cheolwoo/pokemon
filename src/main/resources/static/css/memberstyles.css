@@ -1,15 +1,16 @@
 /* 로그인배경 설정 */
 .login-container {
-	position:relative;
-	background:url("../images/index/background.png") no-repeat center top /cover; 
-    display: flex;
-    height: 100vh;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh;
+  background: url("../images/index/background.png") no-repeat center top / cover;
+  position: relative;
 }
+
 /* 로그인 박스 */
 .login-box {
-	position: absolute;
-	top: 28.7%;
-  	left: 36.6%;
+	position: relative;
     background:rgb(255, 255, 255, 0.4);
     border-radius: 50px;
     text-align: center;
@@ -100,17 +101,16 @@
 }
 /*회원가입창 배경 */
 .join-container {
+	display: flex;
+  	align-items: center; 
+  	justify-content: center; 
 	position:relative;
 	background:url("../images/index/background.png") no-repeat center top /cover; 
-	margin : 0 auto;
-    display: flex;
     height: 100vh;
 }
 /* 회원가입창 박스 */
 .join-box {
-	position: absolute;
-	top: 18.1%;
-  	left: 36.6%;
+	position: relative;
     background:rgb(255, 255, 255, 0.4);
     border-radius: 50px;
     text-align: center;
@@ -200,7 +200,7 @@
 /*로그인창돌아가기*/
 .backbtn{
 	position: absolute;
-	top: 92%;
+	bottom:2%;
   	left: 35%;
   	width:30%;
 	height:5%;
