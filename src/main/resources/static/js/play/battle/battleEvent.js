@@ -154,8 +154,8 @@ $(function () {
 	    const itemScroller = $("<div>", {class: "modal-wrapper__scroll"});
 		const itemWrapper = $("<div>", {class: "modal-wrapper__scroll--wrapper"});
 
-		if (data.filter(item => item.info.categoryId === 27 || item.info.categoryId === 34).length > 0) {
-			itemWrapper.html(data.filter(item => item.info.categoryId === 27 || item.info.categoryId === 34).map((item, idx) => {
+		if (data.filter(item => [11, 27, 34].includes(item.info.categoryId)).length > 0) {
+			itemWrapper.html(data.filter(item => [11, 27, 34].includes(item.info.categoryId)).map((item, idx) => {
 				const itemContainer = $("<div>", {class: "modal-wrapper__item"});
 				itemContainer.html(`
 	                <div class="modal-wrapper__item--title">${item.info.name}</div>

@@ -224,6 +224,8 @@ $(function() {
 				callback = () => $(container).trigger("catchPokemon", [item]);
 			} else if (categoryId === 27) {
 				callback = () => $(container).trigger("healPokemon", [item]);
+			} else if (categoryId === 11) {
+				callback = () => $(container).trigger("exit", [true]);
 			}
 			
 			$.ajax({
@@ -246,10 +248,14 @@ $(function() {
 			});
 		});
 		
-		$(container).on("exit", function() {
+		$(container).on("exit", function(data) {
 			$(btnContainer).children().remove();
+			
+			if (data === false) {
+				data = Math.random() < 0.5;
+			}
 
-			if(Math.random() < 0.5) {
+			if(data) {
 				$(textBox).trigger("nextComment", { comments: exitComments(), isWait: true,
 					callback: () => {
 						$(btnContainer).remove();
