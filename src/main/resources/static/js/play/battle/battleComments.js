@@ -17,3 +17,9 @@ export const attackComments = (myPokemonName, enemyName, attackName, executedPow
         [executedPower.comments, `${enemyName} 은(는) ${executedPower.power}의 데미지를 입었다.`]
     ];
 }
+
+export const exitComments = () => {
+	return [
+		["무사히 도망쳤다."]
+	]
+}
