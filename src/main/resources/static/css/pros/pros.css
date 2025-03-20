@@ -323,7 +323,7 @@ body {
 	z-index: 35;
 }
 
-.pros_update_btn {
+.pros_update_btn, .pros_more_btn3 {
 	cursor: pointer;
 	width: 110px;
 	height: 110px;
