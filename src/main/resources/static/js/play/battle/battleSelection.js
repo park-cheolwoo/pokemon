@@ -27,7 +27,8 @@ export const firstSelection = (myPokemons, idx, items) => {
         {
             text: "도망가기",
             event: {
-                name: "exit"
+                name: "exit",
+				data: {isExit: false}
             }
         }
     ];
