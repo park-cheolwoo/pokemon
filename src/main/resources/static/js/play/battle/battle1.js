@@ -174,11 +174,12 @@ $(function() {
 
 		$(container).on("catchPokemon", function (e, data) {
 			const { name, cost } = data.info;
-			const totalHp = enemies[0].stats.find(stat => stat.id === 1).value;
+			const totalHp = enemies[0].stats.find(stat => stat.id === 1).total;
 			const hpPercent = enemies[0].hp / totalHp;
 			const percent = Math.max(cost / 1000, 0.4);
-
-			if (Math.random() < percent - hpPercent) {
+			const totalPercent = Math.max(percent - hpPercent, 0.3);
+			
+			if (Math.random() < totalPercent) {
 				catchPokemon(enemies[0]);
 
 				$(container).trigger("stageClear", [{ playerId, stageId, maxStageId, stage, comments: [[`야호! ${enemies[0].name} 을(를) 잡았다 !`]] }]);
@@ -193,21 +194,19 @@ $(function() {
 		});
 
 		$(container).on("healPokemon", function (e, data) {
-			let { fling_power } = data.info;
-			if (fling_power === undefined) {
-				fling_power = 10;
-			}
+			let { cost } = data.info;
 
+			const healValue = Math.min(Math.floor(cost / 20), 60);
 			const totalHp = myPokemons[selectionIdx].stats.find(stat => stat.id === 1).value;
 			const prevHp = myPokemons[selectionIdx].hp;
-			const hp = Math.min(prevHp + fling_power, totalHp);
+			const hp = Math.min(prevHp + healValue, totalHp);
 
 			ingamePokemonHp(myPokemons[selectionIdx].id, hp);
 			myPokemons[selectionIdx].hp = hp;
 			changeHp("me", prevHp - hp);
 
 			$(textBox).trigger("nextComment", [{
-				comments: [[`${myPokemons[selectionIdx].name} 은(는) ${hp - prevHp} 만큼 회복했다.`]],
+				comments: [[`${myPokemons[selectionIdx].name} 은(는) ${totalHp === hp ? "모두" : hp - prevHp + "만큼"} 회복했다.`]],
 				callback: () => $(btnContainer).trigger("nextSelection")
 			}]);
 
@@ -226,20 +225,20 @@ $(function() {
 			} else if (categoryId === 27) {
 				callback = () => $(container).trigger("healPokemon", [item]);
 			}
-
-			$(textBox).trigger("nextComment", [{
-				comments: [[`${name} 을(를) 사용했다.`]],
-				isWait: true,
-				callback
-			}]);
-
+			
 			$.ajax({
 				url: '/player/items/my-items/use',
 				type: 'POST',
 				data: JSON.stringify(id),
 				contentType: 'application/json',
 				success: function (data) {
-					itemResponse[0][idx].count = data;
+					itemResponse[0].filter(item => item.id === id)[0].count = data;
+		
+					$(textBox).trigger("nextComment", [{
+						comments: [[`${name} 을(를) 사용했다.`]],
+						isWait: true,
+						callback
+					}]);
 				},
 				error: function (e) {
 					console.log(e);
