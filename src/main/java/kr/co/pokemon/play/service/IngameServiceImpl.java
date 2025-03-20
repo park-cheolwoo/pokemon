@@ -198,10 +198,12 @@ public class IngameServiceImpl implements IngameService {
 					pokemons.add(existingPokemon);
 				} else {
 					// 새로운 포켓몬 생성
+					int hp = playerPokemonService.getById(pokemonId).getStats().stream().filter(stat -> stat.getId() == 1).findFirst().get().getValue();
+
 					IngamePokemonDTO pokemon = new IngamePokemonDTO();
 					pokemon.setId(pokemonId);
 					pokemon.setPlayerId(playerId);
-					pokemon.setHp(100); // 기본 HP 설정
+					pokemon.setHp(hp); // 기본 HP 설정
 					pokemon.setSlot(i); // 슬롯 설정
 					pokemons.add(pokemon);
 				}
