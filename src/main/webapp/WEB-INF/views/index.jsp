@@ -21,12 +21,12 @@
             <div class="resource-group">
                 <img src="/images/index/gold.png" class="resource-icon" alt="골드">
                 <img src=	"/images/index/wood_button3.png" class="wood-bg">
-                <h3 class="resource-info">${session_gameMoney} 원</h3>
+                <h3 class="resource-info">${session_gameMoney}</h3>
             </div>
             <div class="resource-group">
                 <img src="/images/index/diamond.png" class="resource-icon" alt="다이아몬드">
                 <img src="/images/index/wood_button3.png" class="wood-bg">
-                <h3 class="resource-info">${session_realMoney} 원</h3>
+                <h3 class="resource-info">${session_realMoney}</h3>
             </div>
                 <div style="position: relative; width: 111px; height: 111px;">
                 <img src="/images/index/option.png" class="option">
