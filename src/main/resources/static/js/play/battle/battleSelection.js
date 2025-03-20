@@ -23,6 +23,12 @@ export const firstSelection = (myPokemons, idx, items) => {
                 name: "itemList",
                 data: items
             }
+        },
+        {
+            text: "도망가기",
+            event: {
+                name: "exit"
+            }
         }
     ];
 }
