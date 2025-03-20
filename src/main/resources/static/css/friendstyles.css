@@ -17,7 +17,7 @@
 .flist-box{
 	position: relative;
   	width:53%;
-  	height: 70vh;	
+  	height: 80vh;	
   	z-index:1;
   	background : url('/images/index/flist.png') no-repeat center center/ cover;
 }
