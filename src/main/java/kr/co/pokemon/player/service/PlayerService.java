@@ -3,6 +3,7 @@ package kr.co.pokemon.player.service;
 import java.util.List;
 
 import kr.co.pokemon.data.dto.PageRequestDTO;
+import kr.co.pokemon.player.dto.ClearDungeonDTO;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 public interface PlayerService {
@@ -34,5 +35,7 @@ public interface PlayerService {
 	void updateplayerExperience(String session_id, int experience);
 	
 	void increaseGoldByPlayer(String session_id, int gold);
+	
+	void clearDungeon(ClearDungeonDTO clearDungeon);
 
 }

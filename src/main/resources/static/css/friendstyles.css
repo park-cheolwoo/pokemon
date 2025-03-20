@@ -17,7 +17,7 @@
 .flist-box{
 	position: relative;
   	width:53%;
-  	height: 80vh;	
+  	height: 70vh;	
   	z-index:1;
   	background : url('/images/index/flist.png') no-repeat center center/ cover;
 }
@@ -157,7 +157,7 @@
 .myprofile{
 	position: absolute;
 	top: 5%;
-	left:40%;
+	left:42%;
 	font-size:36px;
 	color:white;
 }
@@ -168,16 +168,16 @@
 }
 .myprofilecode{
 	position: absolute;
-	top: 19%;
-	left:28%;
-	font-size:34px;
+	top: 20%;
+	left:29%;
+	font-size:32px;
 	color:white;
 	word-spacing: 20px;
 }
 .fiendprofile{
 	position: absolute;
 	top: 45%;
-	left:40%;
+	left:43%;
 	font-size:36px;
 	color:white;
 }
@@ -188,7 +188,7 @@
 }
 .friendcode{
 	position: absolute;
-	top: 58%;
+	top: 59%;
 	left:27%;
 	font-size:34px;
 	color:white;

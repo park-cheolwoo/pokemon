@@ -203,23 +203,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	    console.error('Error:', error);
 	    alert('서버와의 통신 중 오류가 발생했습니다.');
 	  });
-	    const playerId = '${session.getAttribute("session_id")}'; // 세션에서 playerId 가져오기
-	    // 서버에 POST 요청 보내기
-	    fetch('/play/quest/increaseMoney', {
-	      method: 'POST',
-	      headers: {
-	        'Content-Type': 'application/x-www-form-urlencoded'
-	      },
-	      body: `playerId=${playerId}`  // playerId 파라미터를 서버로 전송
-	    })
-	    .then(response => response.text())
-	    .catch(error => {
-	      console.error('Error:', error);
-	      alert('오류가 발생했습니다.');
-	    });
-	  });
-
-
+    const playerId = '${session.getAttribute("session_id")}'; // 세션에서 playerId 가져오기
+    // 서버에 POST 요청 보내기
+    fetch('/play/sdungeon/increaseMoney', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `playerId=${playerId}`  // playerId 파라미터를 서버로 전송
+    })
+    .then(response => response.text())
+    .catch(error => {
+      console.error('Error:', error);
+      alert('오류가 발생했습니다.');
+    });
+  });
 });
 	function showSchang(schangNumber) {
 	  const allSchangs = document.querySelectorAll('.schang1, .schang2, .schang3, .schang4');
