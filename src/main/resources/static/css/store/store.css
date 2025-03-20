@@ -98,14 +98,14 @@ body {
 .game_money {
 	position: absolute;
 	top: 91px;
-	left: 919px;
+	left: 878px;
 	z-index: 10;
 }
 
 .real_money {
 	position: absolute;
 	top: 91px;
-	left: 1351px;
+	left: 1308px;
 	z-index: 5;
 }
 

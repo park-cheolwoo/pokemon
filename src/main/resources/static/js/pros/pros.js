@@ -105,7 +105,7 @@ $(function() {
 			type: "POST",
 			dataType: "json",
 			success: function(data) {
-				alert("새로고침 하였습니다.");
+				//alert("새로고침 하였습니다.");
 				console.log(data);
 				let hdata = ``;
 				$(".pros_items").remove();
@@ -152,7 +152,7 @@ $(function() {
 				let id = $(".pros_get_id").val();
 				let button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_more_btn");
 				button.click();
-				alert('새로고침 되었습니다.');
+				//alert('새로고침 되었습니다.');
 				break;
 			case "pokemon":
 				let id2 = $(".pros_get_id").val();
@@ -174,7 +174,7 @@ $(function() {
 			data: { "keyword": keyword },
 			dataType: "json",
 			success: function(data) {
-				alert("성공");
+				//alert("성공");
 				console.log(data);
 				let hdata = ``;
 				switch(category){
@@ -444,7 +444,7 @@ $(function() {
 						type: "POST",
 						data: { "id": id, "nickname": nickname, "lv": lv, "gameMoney": coin, "realMoney": ruby, "profile": intro, "isActive": active },
 						success: function (data) {
-							alert("수정되었습니다.");
+							//alert("수정되었습니다.");
 							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_more_btn");
 							button.click();
 						},
@@ -463,7 +463,7 @@ $(function() {
 						type: "POST",
 						data: { "id": id, "name": nickname, "flavorText": intro, "isActive": active },
 						success: function (data) {
-							alert("수정되었습니다.");
+							//alert("수정되었습니다.");
 							setInterval(0.1);
 							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_list_img");
 							button.click();
@@ -493,7 +493,7 @@ $(function() {
 						type: "POST",
 						data: { "id": id, "name": nickname, "flavorText": intro, "isActive": active },
 						success: function (data) {
-							alert("수정되었습니다.");
+							//alert("수정되었습니다.");
 							const button = $(".pros_items" + "[data-id=" + id + "]").find(".pros_list_img");
 							button.click();
 						},
