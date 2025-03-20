@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.pokemon.data.dto.DataStatusDTO;
+import kr.co.pokemon.player.dto.ClearDungeonDTO;
 import kr.co.pokemon.player.dto.PlayerDTO;
 import kr.co.pokemon.player.service.PlayerService;
 
@@ -154,6 +155,24 @@ public class PlayerController {
             return new DataStatusDTO<>("error", false, e.getMessage());
         }
 
+    }
+    
+    @ResponseBody
+    @PostMapping(value = "/clearDungeon")
+    public DataStatusDTO<Boolean> updateClearDungeon(@RequestBody ClearDungeonDTO clearDungeon, HttpSession session) {
+    	try {
+    		String session_id = (String) session.getAttribute("session_id");
+    		if (session_id != null) {
+    			playerService.clearDungeon(clearDungeon);
+    			return new DataStatusDTO<>("success", true);
+    		}
+    		
+    		throw new IllegalArgumentException("유효하지 않은 세션입니다.");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new DataStatusDTO<>("error", false, e.getMessage());
+    	}
+    	
     }
     
     @ResponseBody

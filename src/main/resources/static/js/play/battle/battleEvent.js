@@ -200,8 +200,7 @@ $(function () {
 				$.when(
 					$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'}),
 					$.ajax({url: '/ingame/enemy/delete', type: 'POST'}),
-					$.ajax({ url: `/member/update/prgold?playerId=${playerId}&gold=${stage.money}`, type: 'POST' }),
-					$.ajax({ url: `/member/update/prexperience?playerId=${playerId}&experience=${stage.experience}`, type: 'POST' })
+					$.ajax({url: '/member/clearDungeon', type: 'POST', data: JSON.stringify({playerId, gold: stage.money, experience: stage.experience }), contentType: 'application/json'})
 				).then(function (d1, d2, d3, d4) {
 					if (d1 !== undefined) {
 						$(".pokemon.you").animate({opacity: 0}, 1000, function () {

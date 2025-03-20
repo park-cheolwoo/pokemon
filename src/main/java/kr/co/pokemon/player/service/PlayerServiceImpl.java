@@ -12,6 +12,7 @@ import kr.co.pokemon.plan.service.SdungeonService;
 import kr.co.pokemon.play.dao.IngameMapper;
 import kr.co.pokemon.player.dao.PlayerMapper;
 import kr.co.pokemon.player.dao.PlayerPokemonMapper;
+import kr.co.pokemon.player.dto.ClearDungeonDTO;
 import kr.co.pokemon.player.dto.PlayerDTO;
 
 @Service
@@ -135,6 +136,29 @@ public class PlayerServiceImpl implements PlayerService {
     public void increaseGoldByPlayer(String sessionId, int gold) {
     	PlayerDTO player = validateAndGetPlayer(sessionId);
     	player.setGameMoney(player.getGameMoney() + gold);
+    	playerMapper.updateplayer(player);
+    }
+
+    @Override
+    public void clearDungeon(ClearDungeonDTO clearDungeon) {
+    	PlayerDTO player = validateAndGetPlayer(clearDungeon.getPlayerId());
+    	int gold = player.getGameMoney();
+    	int experience = player.getExperience();
+    	int level = 0;
+
+    	if (clearDungeon.getGold() > 0) {
+    		gold += clearDungeon.getGold();
+    	}
+    	
+    	if (clearDungeon.getExperience() > 0) {
+    		int total = experience + clearDungeon.getExperience();
+    		experience = total % 100;
+    		level = (int)(total / 100);
+    	}
+
+    	player.setLv(level + player.getLv());
+    	player.setGameMoney(gold);
+    	player.setExperience(experience);
     	playerMapper.updateplayer(player);
     }
 }
