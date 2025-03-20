@@ -24,19 +24,16 @@
             e.stopPropagation(); // 이벤트 버블링 방지
             
             const expeditionItem = $(this).closest('.expedition-item');
-            const pokemonName = expeditionItem.find('.expedition-description').text();
             
-            if (confirm(`${pokemonName}을(를) 원정대에서 제거하시겠습니까?`)) {
-                // 포켓몬 제거
-                expeditionItem.find('img').attr('src', '');
-                expeditionItem.find('img').attr('alt', '');
-                expeditionItem.find('.expedition-description').text('');
-                expeditionItem.removeAttr('data-pokemon-id');
-                $(this).remove(); // 삭제 버튼 제거
-                
-                // 원정대 변경 감지 및 버튼 상태 업데이트
-                expeditionUpdateButtons();
-            }
+            // 포켓몬 제거 (confirm 대화상자 없이 바로 삭제)
+            expeditionItem.find('img').attr('src', '');
+            expeditionItem.find('img').attr('alt', '');
+            expeditionItem.find('.expedition-description').text('');
+            expeditionItem.removeAttr('data-pokemon-id');
+            $(this).remove(); // 삭제 버튼 제거
+            
+            // 원정대 변경 감지 및 버튼 상태 업데이트
+            expeditionUpdateButtons();
         });
     });
 
@@ -348,7 +345,6 @@
             data: JSON.stringify(expeditionPokemonIds),
             success: function(response) {
                 console.log('원정대 리스트 저장 성공:', response);
-                alert('원정대 리스트가 성공적으로 저장되었습니다.');
                 
                 // 저장 후 버튼 상태 업데이트
                 $('#save-expedition-btn').prop('disabled', true);
@@ -356,6 +352,12 @@
                 
                 // 모든 X 버튼 제거
                 $('.remove-pokemon-btn').remove();
+                
+                // editable 클래스 제거
+                $('.expedition-item').removeClass('editable');
+                
+                // 인라인 스타일 제거 (만약 있다면)
+                $('style:contains(".expedition-item:not([data-pokemon-id]) .remove-pokemon-btn")').remove();
                 
                 // 원정대 초기 상태 저장 (수정 감지용)
                 expeditionSaveInitialState();
@@ -417,24 +419,47 @@
         // 수정 모드 활성화 로직
         $('.expedition-item').addClass('editable');
         
-        // 수정 모드에서는 포켓몬 제거 가능하도록 클릭 이벤트 추가
-        $('.expedition-item.editable').on('click', function() {
+        // 먼저 기존 이벤트 핸들러와 버튼 제거
+        $('.expedition-item.editable').off('click');
+        $('.remove-pokemon-btn').remove();
+        
+        // 포켓몬이 있는 아이템에만 X 버튼 추가
+        $('.expedition-item.editable').each(function() {
             const pokemonId = $(this).attr('data-pokemon-id');
             if (pokemonId) {
-                if (confirm('이 포켓몬을 원정대에서 제거하시겠습니까?')) {
+                // X 버튼 추가
+                const removeBtn = $('<button class="remove-pokemon-btn">X</button>');
+                $(this).append(removeBtn);
+                
+                // X 버튼에 클릭 이벤트 추가
+                removeBtn.on('click', function(e) {
+                    e.stopPropagation(); // 이벤트 버블링 방지
+                    
                     // 포켓몬 제거
-                    $(this).find('img').attr('src', '');
-                    $(this).find('img').attr('alt', '');
-                    $(this).find('.expedition-description').text('');
-                    $(this).removeAttr('data-pokemon-id');
-                    $(this).find('.remove-pokemon-btn').remove(); // 삭제 버튼 제거
+                    const item = $(this).parent();
+                    item.find('img').attr('src', '');
+                    item.find('img').attr('alt', '');
+                    item.find('.expedition-description').text('');
+                    item.removeAttr('data-pokemon-id');
+                    $(this).remove(); // 삭제 버튼 제거
                     
                     // 원정대 변경 감지 및 버튼 상태 업데이트
                     expeditionUpdateButtons();
-                }
+                });
             }
         });
         
-        alert('원정대 수정 모드가 활성화되었습니다. 제거할 포켓몬을 클릭하세요.');
+        // 인라인 스타일 추가 - 빈 슬롯에 호버 효과 방지
+        $('<style>')
+            .prop('type', 'text/css')
+            .html(`
+                .expedition-item:not([data-pokemon-id]) .remove-pokemon-btn { 
+                    display: none !important; 
+                }
+                .expedition-item:not([data-pokemon-id]):hover .remove-pokemon-btn { 
+                    display: none !important; 
+                }
+            `)
+            .appendTo('head');
     }
 })();
