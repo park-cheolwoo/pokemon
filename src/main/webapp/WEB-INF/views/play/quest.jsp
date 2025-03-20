@@ -44,7 +44,7 @@
 
         <div id="questlist1">
           <div class="qlist" style="background-image: url('../images/play/quest/questgold.png'); background-repeat: no-repeat;">
-            <div class="questdetail">일일던전 5회클리어  (${sdungeon.weeklyClearCount}/5)</div>
+            <div class="questdetail">일반던전 5회클리어  (${sdungeon.weeklyClearCount}/5)</div>
             <div class="compensationdetail1">500</div>
             <button onclick="location.href='/play/dungeon'"><img src="../images/play/quest/chack1.png"/></button>
           </div>
@@ -62,7 +62,7 @@
         </div>
         <div id="questlist2" style="display: none;">
           <div class="qlist" style="background-image: url('../images/play/quest/questgold.png'); background-repeat: no-repeat;">
-            <div class="questdetail">${quest.weekly1}일일던전 20회클리어  (${sdungeon.weeklyClearCount}/20)</div>
+            <div class="questdetail">${quest.weekly1}일반던전 20회클리어  (${sdungeon.weeklyClearCount}/20)</div>
             <div class="compensationdetail2">1000</div>
             <button onclick="location.href='/play/dungeon'"><img src="../images/play/quest/chack1.png"/></button>
           </div>
@@ -79,7 +79,7 @@
         </div>
         <div id="questlist3" style="display: none;">
           <div class="qlist" style="background-image: url('../images/play/quest/questsujeong.png'); background-repeat: no-repeat;">
-            <div class="questdetail">${quest.total1}일일던전 50회클리어 (${sdungeon.totalCount}/50)</div>
+            <div class="questdetail">${quest.total1}일반던전 50회클리어 (${sdungeon.totalCount}/50)</div>
             <div class="compensationdetail3">10</div>
             <button onclick="location.href='/play/dungeon'"><img src="../images/play/quest/chack1.png"/></button>
           </div>

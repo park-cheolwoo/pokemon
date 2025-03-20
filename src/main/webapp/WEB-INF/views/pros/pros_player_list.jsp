@@ -60,7 +60,8 @@
   <img src="/images/container.png" class="pros_container_frame2">
   <div class="pros_blur"></div>
   
-  <img src="/images/pros/setting.png" class="pros_update_flag pros_update_btn" /> 
+  <!-- <img src="/images/pros/setting.png" class="pros_update_flag pros_update_btn" /> -->
+  <img src="/images/pros/circle_dropbar.png" class="pros_more_btn3">
   <img src="/images/pros/retry.png" class="pros_reload_btn2" />
 
 
@@ -93,8 +94,8 @@
     <img src="/images/close.png" class="pros_active_off" /> 
     
 
-    <h4 class="pros_intro text"></h4>
-	
+    <!--<h4 class="pros_intro text"></h4>-->
+    
 	
 	
 	<form name="updateFrm" method="post" class="updateFrm">
@@ -110,6 +111,7 @@
 	</form>
 	<img src="/images/close.png" class="pros_profile_view_exit">
   </div>
+  
   <!-- 모달 끝 -->
   <img src="/images/pros/home.png" class="pros_home_btn">
   <script src="/js/play/ingame.js"></script>
