@@ -14,6 +14,6 @@ export const ingameComments = (myPokemonName) => {
 export const attackComments = (myPokemonName, enemyName, attackName, executedPower) => {
     return [
         [`${myPokemonName} 이(가) ${attackName} 공격 !`],
-        [executedPower.comments, `${enemyName}는 ${executedPower.power}의 데미지를 입었다.`]
+        [executedPower.comments, `${enemyName} 은(는) ${executedPower.power}의 데미지를 입었다.`]
     ];
 }

@@ -153,9 +153,9 @@ $(function () {
 	$(btnContainer).on("itemList", function (e, data) {
 	    const itemScroller = $("<div>", {class: "modal-wrapper__scroll"});
 		const itemWrapper = $("<div>", {class: "modal-wrapper__scroll--wrapper"});
-		
-		if (data.length > 0) {
-			itemWrapper.html(data.map((item, idx) => {
+
+		if (data.filter(item => item.info.categoryId === 27 || item.info.categoryId === 34).length > 0) {
+			itemWrapper.html(data.filter(item => item.info.categoryId === 27 || item.info.categoryId === 34).map((item, idx) => {
 				const itemContainer = $("<div>", {class: "modal-wrapper__item"});
 				itemContainer.html(`
 	                <div class="modal-wrapper__item--title">${item.info.name}</div>
@@ -177,7 +177,7 @@ $(function () {
 				return itemContainer;
 			}));			
 		} else {
-			itemWrapper.html($("<div>", {class: "modal-wrapper__no-content", text: "< 가지고 있는 아이템이 없다 >"}));
+			itemWrapper.html($("<div>", {class: "modal-wrapper__no-content", text: "< 사용할 수 있는 아이템이 없다 >"}));
 		}
 
 		itemScroller.html(itemWrapper);
