@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" type="text/css" href="/css/pros/pros.css">
-  <link rel="stylesheet" type="text/css" href="/css/styles.css">
-  <link rel="stylesheet" type="text/css" href="/css/reset.css">
+  <link type="text/css" rel="stylesheet" href="/css/styles.css"> <!-- 공통 스타일 -->
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="/js/pros/pros.js"></script>
 </head>

@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="../css/play/quest.css">
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script src="../js/play/quest/quest.js" defer></script>
+  <link type="text/css" rel="stylesheet" href="/css/styles.css"> <!-- 공통 스타일 -->
   <title>quest</title>
 </head>
 <body>
