@@ -91,7 +91,8 @@ $(function() {
 				$(".pokemon.me").removeClass("right-attack-pokemon");
 			}, 1000);
 
-			const executedPower = executeDamage(enemies[0].types[0], data.typesId, data.power * (myPokemons[selectionIdx].level / 50));
+			const totalAttack = myPokemons[selectionIdx].stats.find(stat => stat.id === 2).value;
+			const executedPower = executeDamage(enemies[0].types[0], data.typesId, data.power * (myPokemons[selectionIdx].level / 50) + Math.floor(totalAttack / 5));
 			const hp = changeHp("you", executedPower.power);
 			ingameEnemyHp(enemies[0].id, hp);
 			enemies[0].hp = hp;
@@ -119,7 +120,8 @@ $(function() {
 				$(container).removeClass("shake-device");
 			}, 1000);
 
-			const executedPower = executeDamage(myPokemons[selectionIdx].types[0], attack.typesId, attack.power * (enemies[0].level / 50));
+			const totalAttack = myPokemons[selectionIdx].stats.find(stat => stat.id === 2).value;
+			const executedPower = executeDamage(myPokemons[selectionIdx].types[0], attack.typesId, attack.power * (enemies[0].level / 50) + Math.floor(totalAttack / 5));
 			const hp = changeHp("me", executedPower.power);
 			ingamePokemonHp(myPokemons[selectionIdx].id, hp);
 			myPokemons[selectionIdx].hp = hp;
