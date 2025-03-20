@@ -200,8 +200,8 @@ $(function() {
 	        dataType: "json",
 	        success: function(data) {
 	            $(".player-info").text("Lv." + data.session_lv + " " + data.session_nickname);
-	            $(".resource-group:first .resource-info").text(Number(data.session_gameMoney).toLocaleString() + " 원");
-	            $(".resource-group:last .resource-info").text(Number(data.session_realMoney).toLocaleString() + " 원");
+	            $(".resource-group:first .resource-info").text(Number(data.session_gameMoney).toLocaleString());
+	            $(".resource-group:last .resource-info").text(Number(data.session_realMoney).toLocaleString());
 	        },
 	        error: function(err) {
 	            console.error("세션 데이터 업데이트 실패:", err);
