@@ -1,4 +1,4 @@
-import {firstComments, ingameComments, attackComments } from './battleComments.js';
+import {firstComments, ingameComments, attackComments, exitComments } from './battleComments.js';
 import { firstSelection, attackSelection } from  './battleSelection.js';
 import './battleEvent.js';
 
@@ -244,6 +244,32 @@ $(function() {
 					console.log(e);
 				}
 			});
+		});
+		
+		$(container).on("exit", function() {
+			$(btnContainer).children().remove();
+
+			if(Math.random() < 0.5) {
+				$(textBox).trigger("nextComment", { comments: exitComments(), isWait: true,
+					callback: () => {
+						$(btnContainer).remove();
+						$(textBox).remove();
+
+						$.when(
+							$.ajax({url: '/ingame/status', type: 'POST', data: JSON.stringify(false), contentType: 'application/json'}),
+							$.ajax({url: '/ingame/enemy/delete', type: 'POST'})
+						).then(function () {
+							location.href = "/";
+						});
+					}
+				})
+			} else {
+				$(textBox).trigger("nextComment", { comments: [["도망 칠 수 없다 .."]], isWait: true,
+					callback: () => {
+						$(textBox).trigger("damaged");
+					}
+				});
+			}
 		});
 
 		function executeDamage(targetTypeInfo, type, power) {
