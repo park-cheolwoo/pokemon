@@ -208,6 +208,8 @@ public class IngameServiceImpl implements IngameService {
 					pokemons.add(pokemon);
 				}
 			}
+
+			updateSelectionIdx(playerId, 0);
 			
 			// 포켓몬 목록 저장
 			return ingamePokemonService.saveIngamePokemons(pokemons);
