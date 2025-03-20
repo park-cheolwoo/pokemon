@@ -11,6 +11,7 @@
   <title>Document</title>
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/store/store.css">
+  <link type="text/css" rel="stylesheet" href="/css/styles.css"> <!-- 공통 스타일 -->
   <script src="/js/store/store.js"></script>
 </head>
 

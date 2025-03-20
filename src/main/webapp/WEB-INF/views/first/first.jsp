@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../css/first/first.css">
+  <link type="text/css" rel="stylesheet" href="/css/styles.css"> <!-- 공통 스타일 -->
   <script src="../js/first/first.js" defer></script>
   <title>첫만남</title>
 </head>
